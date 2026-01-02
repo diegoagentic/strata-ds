@@ -665,6 +665,23 @@
           "height": {
             "value": "{spacing.16}"
           }
+        },
+        "icon": {
+          "padding-x": {
+            "value": "0"
+          },
+          "padding-y": {
+            "value": "0"
+          },
+          "font-size": {
+            "value": "{fontSize.sm}"
+          },
+          "height": {
+            "value": "{spacing.10}"
+          },
+          "width": {
+            "value": "{spacing.10}"
+          }
         }
       },
       "primary": {
@@ -1870,6 +1887,23 @@
           },
           "height": {
             "value": "{spacing.16}"
+          }
+        },
+        "icon": {
+          "padding-x": {
+            "value": "0"
+          },
+          "padding-y": {
+            "value": "0"
+          },
+          "font-size": {
+            "value": "{fontSize.sm}"
+          },
+          "height": {
+            "value": "{spacing.10}"
+          },
+          "width": {
+            "value": "{spacing.10}"
           }
         }
       },

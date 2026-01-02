@@ -2,6 +2,7 @@
 import '../styles/index.css';
 
 export { Button, buttonVariants, type ButtonProps } from './ui/Button';
+export { ButtonGroup, type ButtonGroupProps } from './ui/ButtonGroup';
 export { Input, inputVariants, type InputProps } from './ui/Input';
 export {
     Card,

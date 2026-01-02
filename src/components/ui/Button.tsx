@@ -30,6 +30,7 @@ const buttonVariants = cva(
                 md: 'h-[var(--button-sizes-md-height)] px-[var(--button-sizes-md-padding-x)] text-[var(--button-sizes-md-font-size)] rounded-[var(--button-primary-border-radius)]',
                 lg: 'h-[var(--button-sizes-lg-height)] px-[var(--button-sizes-lg-padding-x)] text-[var(--button-sizes-lg-font-size)] rounded-[var(--button-primary-border-radius)]',
                 xl: 'h-[var(--button-sizes-xl-height)] px-[var(--button-sizes-xl-padding-x)] text-[var(--button-sizes-xl-font-size)] rounded-[var(--button-primary-border-radius)]',
+                icon: 'h-[var(--button-sizes-icon-height)] w-[var(--button-sizes-icon-width)] p-0 text-[var(--button-sizes-icon-font-size)] rounded-[var(--button-primary-border-radius)]',
             },
         },
         defaultVariants: {

@@ -203,6 +203,11 @@
   --button-sizes-xl-padding-y: 1rem;
   --button-sizes-xl-font-size: 1.125rem;
   --button-sizes-xl-height: 4rem;
+  --button-sizes-icon-padding-x: 0;
+  --button-sizes-icon-padding-y: 0;
+  --button-sizes-icon-font-size: 0.875rem;
+  --button-sizes-icon-height: 2.5rem;
+  --button-sizes-icon-width: 2.5rem;
   --button-primary-background: #18181b;
   --button-primary-background-hover: #27272a;
   --button-primary-background-active: #3f3f46;

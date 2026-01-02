@@ -1,3 +1,4 @@
+import { Plus, Settings, Download, Trash } from 'lucide-react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { Button } from './Button';
@@ -16,7 +17,7 @@ const meta = {
         },
         size: {
             control: 'radio',
-            options: ['sm', 'md', 'lg', 'xl'],
+            options: ['sm', 'md', 'lg', 'xl', 'icon'],
         },
         disabled: {
             control: 'boolean',
@@ -74,4 +75,34 @@ export const Sizes: Story = {
     args: {
         variant: 'primary',
     },
+};
+
+export const IconButtons: Story = {
+    render: () => (
+        <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-3">
+                <span className="text-sm font-medium text-gray-500">Primary</span>
+                <div className="flex gap-2">
+                    <Button size="icon" variant="primary"><Plus className="h-4 w-4" /></Button>
+                    <Button size="icon" variant="primary"><Settings className="h-4 w-4" /></Button>
+                    <Button size="icon" variant="primary"><Download className="h-4 w-4" /></Button>
+                </div>
+            </div>
+            <div className="flex flex-col gap-3">
+                <span className="text-sm font-medium text-gray-500">Ghost</span>
+                <div className="flex gap-2">
+                    <Button size="icon" variant="ghost"><Plus className="h-4 w-4" /></Button>
+                    <Button size="icon" variant="ghost"><Settings className="h-4 w-4" /></Button>
+                    <Button size="icon" variant="ghost"><Download className="h-4 w-4" /></Button>
+                </div>
+            </div>
+            <div className="flex flex-col gap-3">
+                <span className="text-sm font-medium text-gray-500">Destructive</span>
+                <div className="flex gap-2">
+                    <Button size="icon" variant="destructive"><Trash className="h-4 w-4" /></Button>
+                    <Button size="icon" variant="destructive"><Trash className="h-4 w-4" /></Button>
+                </div>
+            </div>
+        </div>
+    )
 };
