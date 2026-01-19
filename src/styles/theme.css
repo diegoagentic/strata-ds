@@ -122,6 +122,14 @@
   --font-sans: var(--fontFamily-sans);
   --font-serif: var(--fontFamily-serif);
   --font-mono: var(--fontFamily-mono);
+
+  /* Glassmorphism */
+  --color-glass-navbar: var(--glass-background-navbar);
+  --color-glass-navbar-border: var(--glass-border-navbar);
+  --color-glass-popover: var(--glass-background-popover);
+  --color-glass-popover-border: var(--glass-border-popover);
+  --blur-glass-xl: var(--glass-blur-xl);
+  --shadow-glass-lg: var(--glass-shadow-lg);
 }
 
 @layer base {

@@ -1,60 +1,44 @@
 import { useState, useEffect } from 'react';
-import { Moon, Sun, ChevronRight } from 'lucide-react';
+import { Moon, Sun } from 'lucide-react';
 import { OverviewView } from './components/OverviewView';
-import { APIViewImproved } from './components/APIViewImproved';
-import { MCPView } from './components/MCPView';
-import { ArchitectureAnalysisView } from './components/ArchitectureAnalysisView';
 import { ColorsView } from './components/ColorsView';
+import { TransparencyView } from './components/TransparencyView';
 import { TypographyView } from './components/TypographyView';
-import { DataTablesView } from './components/DataTablesView';
-import { PageHeadingsView } from './components/PageHeadingsView';
-import { FileUploadView } from './components/FileUploadView';
-import { RoadmapView } from './components/RoadmapView';
 import { SpacingView } from './components/SpacingView';
-import { StatsView } from './components/StatsView';
 import { BordersView } from './components/BordersView';
 import { ShadowsView } from './components/ShadowsView';
 import { ButtonsView } from './components/ButtonsView';
 import { BadgesView } from './components/BadgesView';
 import { AvatarsView } from './components/AvatarsView';
-import { DividersView } from './components/DividersView';
-import { NavbarsView } from './components/NavbarsView';
 import { AlertsView } from './components/AlertsView';
-import { StackedListsView } from './components/StackedListsView';
-import { AppShellsView } from './components/AppShellsView';
-import { ActionPanelsView } from './components/ActionPanelsView';
-import { ModalsView } from './components/ModalsView';
-import { SlideOversView } from './components/SlideOversView';
-import { FeedsView } from './components/FeedsView';
-import { DescriptionsView } from './components/DescriptionsView';
-import { FormLayoutsView } from './components/FormLayoutsView';
-import { InputGroupsView } from './components/InputGroupsView';
-import { SelectsView } from './components/SelectsView';
 import { BreadcrumbsView } from './components/BreadcrumbsView';
 import { DropdownsView } from './components/DropdownsView';
-import { DragDropView } from './components/DragDropView';
-import { DataVisualizationView } from './components/DataVisualizationView';
-import { FigmaExportGuide } from './components/FigmaExportGuide';
-import { AdminPanel } from './components/AdminPanel';
+import { InputGroupsView } from './components/InputGroupsView';
+import { FieldsView } from './components/FieldsView';
+import { CheckboxesView } from './components/CheckboxesView';
+import { RadioGroupsView } from './components/RadioGroupsView';
+import { SwitchesView } from './components/SwitchesView';
+import { SelectsView } from './components/SelectsView';
+import { DataTablesView } from './components/DataTablesView';
 
-type ViewType = 
+import { TextareaView } from './components/TextareaView';
+import { ModalsView } from './components/ModalsView';
+
+type ViewType =
   | 'overview'
-  | 'api'
-  | 'mcp'
-  | 'admin'
-  | 'roadmap'
   | 'colors'
+  | 'transparency'
   | 'spacing'
   | 'typography'
   | 'borders'
   | 'shadows'
-  | 'app-shells'
-  | 'page-headings'
-  | 'navbars'
   | 'buttons'
   | 'badges'
   | 'avatars'
   | 'dividers'
+  | 'app-shells'
+  | 'page-headings'
+  | 'navbars'
   | 'action-panels'
   | 'data-tables'
   | 'stacked-lists'
@@ -63,7 +47,12 @@ type ViewType =
   | 'descriptions'
   | 'form-layouts'
   | 'input-groups'
+  | 'fields'
+  | 'checkboxes'
+  | 'radio-groups'
+  | 'switches'
   | 'selects'
+  | 'textarea'
   | 'file-upload'
   | 'modals'
   | 'slide-overs'
@@ -72,7 +61,11 @@ type ViewType =
   | 'dropdowns'
   | 'drag-drop'
   | 'data-visualization'
-  | 'figma-export-guide';
+  | 'figma-export-guide'
+  | 'admin'
+  | 'api'
+  | 'mcp'
+  | 'roadmap';
 
 interface NavItem {
   id: ViewType;
@@ -99,17 +92,11 @@ function App() {
 
   const navSections: NavSection[] = [
     {
-      title: 'Developer Tools',
-      items: [
-        { id: 'api', label: 'REST API' },
-        { id: 'mcp', label: 'Model Context Protocol' },
-      ],
-    },
-    {
       title: 'Foundations',
       items: [
-        { id: 'roadmap', label: 'System Overview' },
-        { id: 'colors', label: 'Color & Transparency' },
+        { id: 'overview', label: 'Overview' },
+        { id: 'colors', label: 'Colors' },
+        { id: 'transparency', label: 'Transparency' },
         { id: 'spacing', label: 'Spacing/Grid' },
         { id: 'typography', label: 'Typography' },
         { id: 'borders', label: 'Borders & Radius' },
@@ -143,8 +130,13 @@ function App() {
       title: 'Forms',
       items: [
         { id: 'form-layouts', label: 'Layouts' },
+        { id: 'fields', label: 'Fields' },
         { id: 'input-groups', label: 'Input Groups' },
+        { id: 'checkboxes', label: 'Checkboxes' },
+        { id: 'radio-groups', label: 'Radio Groups' },
+        { id: 'switches', label: 'Switches' },
         { id: 'selects', label: 'Selects' },
+        { id: 'textarea', label: 'Textarea' },
         { id: 'file-upload', label: 'File Upload (OCR)' },
       ],
     },
@@ -176,15 +168,11 @@ function App() {
       ],
     },
     {
-      title: 'Export',
+      title: 'Developer Tools',
       items: [
+        { id: 'api', label: 'REST API' },
+        { id: 'mcp', label: 'Model Context Protocol' },
         { id: 'figma-export-guide', label: 'Figma Export Guide' },
-      ],
-    },
-    {
-      title: 'Admin',
-      items: [
-        { id: 'admin', label: 'Admin Panel' },
       ],
     },
   ];
@@ -193,26 +181,14 @@ function App() {
     switch (currentView) {
       case 'overview':
         return <OverviewView />;
-      case 'api':
-        return <APIViewImproved />;
-      case 'mcp':
-        return <MCPView />;
       case 'colors':
         return <ColorsView />;
+      case 'transparency':
+        return <TransparencyView />;
       case 'typography':
         return <TypographyView />;
-      case 'data-tables':
-        return <DataTablesView />;
-      case 'page-headings':
-        return <PageHeadingsView />;
-      case 'file-upload':
-        return <FileUploadView />;
-      case 'roadmap':
-        return <RoadmapView />;
       case 'spacing':
         return <SpacingView />;
-      case 'stats':
-        return <StatsView />;
       case 'borders':
         return <BordersView />;
       case 'shadows':
@@ -223,44 +199,31 @@ function App() {
         return <BadgesView />;
       case 'avatars':
         return <AvatarsView />;
-      case 'dividers':
-        return <DividersView />;
-      case 'navbars':
-        return <NavbarsView />;
       case 'alerts':
         return <AlertsView />;
-      case 'stacked-lists':
-        return <StackedListsView />;
-      case 'app-shells':
-        return <AppShellsView />;
-      case 'action-panels':
-        return <ActionPanelsView />;
       case 'breadcrumbs':
         return <BreadcrumbsView />;
       case 'dropdowns':
         return <DropdownsView />;
-      case 'drag-drop':
-        return <DragDropView />;
-      case 'modals':
-        return <ModalsView />;
-      case 'slide-overs':
-        return <SlideOversView />;
-      case 'feeds':
-        return <FeedsView />;
-      case 'descriptions':
-        return <DescriptionsView />;
-      case 'form-layouts':
-        return <FormLayoutsView />;
       case 'input-groups':
         return <InputGroupsView />;
+      case 'fields':
+        return <FieldsView />;
+      case 'checkboxes':
+        return <CheckboxesView />;
+      case 'radio-groups':
+        return <RadioGroupsView />;
+      case 'switches':
+        return <SwitchesView />;
       case 'selects':
         return <SelectsView />;
-      case 'data-visualization':
-        return <DataVisualizationView />;
-      case 'figma-export-guide':
-        return <FigmaExportGuide />;
-      case 'admin':
-        return <AdminPanel />;
+      case 'data-tables':
+        return <DataTablesView />;
+      case 'textarea':
+        return <TextareaView />;
+
+      case 'modals':
+        return <ModalsView />;
       default:
         return (
           <div>
@@ -289,7 +252,7 @@ function App() {
   return (
     <div className="flex h-screen bg-zinc-50 dark:bg-zinc-950">
       {/* Sidebar */}
-      <aside className="w-[280px] bg-white dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-800 flex flex-col fixed h-full">
+      <aside className="w-[280px] bg-white dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-800 flex flex-col fixed h-full z-50">
         {/* Logo Header */}
         <div className="px-6 py-5 border-b border-zinc-200 dark:border-zinc-800">
           <div className="flex items-center gap-3 mb-1">
@@ -309,21 +272,6 @@ function App() {
 
         {/* Navigation */}
         <nav className="flex-1 overflow-y-auto px-3 py-4">
-          {/* Overview */}
-          <div className="mb-6">
-            <button
-              onClick={() => setCurrentView('overview')}
-              className={`w-full text-left px-3 py-2 rounded-md text-sm font-semibold transition-colors relative ${
-                currentView === 'overview'
-                  ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-zinc-800 dark:before:bg-zinc-50 before:rounded-r'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 hover:text-zinc-900 dark:hover:text-zinc-50'
-              }`}
-            >
-              Overview
-            </button>
-          </div>
-
-          {/* Nav Sections */}
           {navSections.map((section, idx) => (
             <div key={idx} className="mb-6">
               <div className="px-3 mb-2 text-xs uppercase tracking-wider font-bold text-zinc-500 dark:text-zinc-400">
@@ -334,11 +282,10 @@ function App() {
                   <button
                     key={item.id}
                     onClick={() => setCurrentView(item.id)}
-                    className={`w-full text-left px-3 py-2 rounded-md text-sm font-semibold transition-colors relative ${
-                      currentView === item.id
-                        ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-zinc-800 dark:before:bg-zinc-50 before:rounded-r'
-                        : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 hover:text-zinc-900 dark:hover:text-zinc-50'
-                    }`}
+                    className={`w-full text-left px-3 py-2 rounded-md text-sm font-semibold transition-colors relative ${currentView === item.id
+                      ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-zinc-800 dark:before:bg-zinc-50 before:rounded-r'
+                      : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 hover:text-zinc-900 dark:hover:text-zinc-50'
+                      }`}
                   >
                     {item.label}
                   </button>
@@ -381,7 +328,7 @@ function App() {
 
       {/* Toast Notification */}
       {toastVisible && (
-        <div className="fixed bottom-6 right-6 bg-zinc-900 dark:bg-zinc-800 text-zinc-50 rounded-md shadow-lg p-4 flex items-center gap-3 border border-zinc-700">
+        <div className="fixed bottom-6 right-6 bg-zinc-900 dark:bg-zinc-800 text-zinc-50 rounded-md shadow-lg p-4 flex items-center gap-3 border border-zinc-700 z-50">
           <div className="w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">
             <svg
               className="w-4 h-4 text-white"

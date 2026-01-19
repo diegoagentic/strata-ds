@@ -1,9 +1,8 @@
-import { Check, X, Sun, Moon } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import { CopyButton } from './CopyButton';
-import { useState } from 'react';
 
 export function TypographyView() {
-  const [previewMode, setPreviewMode] = useState<'light' | 'dark'>('light');
+
 
   const typeScales = [
     {
@@ -111,44 +110,18 @@ export function TypographyView() {
             Inter font family type scale with semantic tokens for consistent text hierarchy.
           </p>
         </div>
-        
-        {/* Dark Mode Toggle */}
-        <div className="flex items-center gap-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg p-1">
-          <button
-            onClick={() => setPreviewMode('light')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold text-sm transition-all ${ 
-              previewMode === 'light'
-                ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-50 shadow-sm'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50'
-            }`}
-          >
-            <Sun className="w-4 h-4" />
-            Light Mode
-          </button>
-          <button
-            onClick={() => setPreviewMode('dark')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold text-sm transition-all ${ 
-              previewMode === 'dark'
-                ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-50 shadow-sm'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50'
-            }`}
-          >
-            <Moon className="w-4 h-4" />
-            Dark Mode
-          </button>
-        </div>
+
       </div>
+
 
       {/* Font Family */}
       <div className="mb-12">
         <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
           Font Family
         </h2>
-        {/* Preview Container with forced mode */}
-        <div className={previewMode === 'dark' ? 'dark' : ''}>
-          <div className={`rounded-xl p-6 transition-colors duration-300 ${
-            previewMode === 'dark' ? 'bg-zinc-950' : 'bg-zinc-50'
-          }`}>
+        {/* Preview Container */}
+        <div>
+          <div className="rounded-xl p-6 transition-colors duration-300 bg-zinc-50 dark:bg-zinc-950">
             <div className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-md p-6 transition-all duration-300">
               <div className="flex items-start gap-6">
                 <div className="flex-1">
@@ -182,96 +155,93 @@ export function TypographyView() {
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
           8-level hierarchy for text sizing and line-height. Primary scales (Display, H1, H2, Body Base, Body Small) cover 90% of use cases.
         </p>
-        
-        {/* Preview Container with forced mode */}
-        <div className={previewMode === 'dark' ? 'dark' : ''}>
-          <div className={`rounded-xl p-6 transition-colors duration-300 ${
-            previewMode === 'dark' ? 'bg-zinc-950' : 'bg-zinc-50'
-          }`}>
+
+        {/* Preview Container */}
+        <div>
+          <div className="rounded-xl p-6 transition-colors duration-300 bg-zinc-50 dark:bg-zinc-950">
             <div className="space-y-3">
               {typeScales.map((scale) => (
                 <div
                   key={scale.primitive}
-                  className={`bg-white dark:bg-zinc-800 border rounded-md p-6 transition-all duration-300 ${
-                    scale.primary
-                      ? 'border-zinc-300 dark:border-zinc-600'
-                      : 'border-zinc-200 dark:border-zinc-700'
-                  }`}
+                  className={`bg-white dark:bg-zinc-800 border rounded-md p-6 transition-all duration-300 ${scale.primary
+                    ? 'border-zinc-300 dark:border-zinc-600'
+                    : 'border-zinc-200 dark:border-zinc-700'
+                    }`}
                 >
-              <div className="grid grid-cols-12 gap-6 items-center">
-                {/* Visual Sample */}
-                <div className="col-span-3">
-                  <div className={`${scale.className} text-zinc-900 dark:text-zinc-100`}>
-                    {scale.sample}
+                  <div className="grid grid-cols-12 gap-6 items-center">
+                    {/* Visual Sample */}
+                    <div className="col-span-3">
+                      <div className={`${scale.className} text-zinc-900 dark:text-zinc-100`}>
+                        {scale.sample}
+                      </div>
+                    </div>
+
+                    {/* Primitive */}
+                    <div className="col-span-2">
+                      <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                        Primitive
+                      </div>
+                      <code className="text-sm font-mono font-semibold text-zinc-900 dark:text-zinc-100">
+                        {scale.primitive}
+                      </code>
+                    </div>
+
+                    {/* Token */}
+                    <div className="col-span-2">
+                      <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                        Token
+                      </div>
+                      <code className="text-xs font-mono bg-zinc-100 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 rounded border border-transparent dark:border-zinc-700">
+                        {scale.token}
+                      </code>
+                    </div>
+
+                    {/* Specs */}
+                    <div className="col-span-2">
+                      <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                        Size / Line Height
+                      </div>
+                      <div className="text-xs text-zinc-600 dark:text-zinc-300">
+                        {scale.size}
+                      </div>
+                      <div className="text-xs text-zinc-600 dark:text-zinc-300">
+                        LH: {scale.lineHeight}
+                      </div>
+                    </div>
+
+                    {/* Copy Button */}
+                    <div className="col-span-2 flex justify-center">
+                      <CopyButton
+                        formats={[
+                          { label: 'PX', value: scale.size.split(' / ')[0], description: 'Pixel value' },
+                          { label: 'REM', value: scale.size.split(' / ')[1], description: 'REM value' },
+                          { label: 'Token', value: scale.token, description: 'Design system token' },
+                          { label: 'CSS Class', value: scale.className, description: 'Tailwind CSS class' },
+                          { label: 'Primitive', value: scale.primitive, description: 'Primitive token reference' },
+                        ]}
+                        size="sm"
+                      />
+                    </div>
+
+                    {/* Badge */}
+                    <div className="col-span-1 flex justify-end">
+                      {scale.primary && (
+                        <span className="text-xs font-semibold text-zinc-800 dark:text-zinc-100 bg-zinc-200 dark:bg-zinc-600 px-2 py-1 rounded whitespace-nowrap border border-transparent dark:border-zinc-500">
+                          Primary
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Usage */}
+                  <div className="mt-4 pt-4 border-t border-zinc-200 dark:border-zinc-700">
+                    <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                      Usage
+                    </div>
+                    <span className="text-sm text-zinc-600 dark:text-zinc-300">{scale.usage}</span>
                   </div>
                 </div>
-
-                {/* Primitive */}
-                <div className="col-span-2">
-                  <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                    Primitive
-                  </div>
-                  <code className="text-sm font-mono font-semibold text-zinc-900 dark:text-zinc-100">
-                    {scale.primitive}
-                  </code>
-                </div>
-
-                {/* Token */}
-                <div className="col-span-2">
-                  <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                    Token
-                  </div>
-                  <code className="text-xs font-mono bg-zinc-100 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 rounded border border-transparent dark:border-zinc-700">
-                    {scale.token}
-                  </code>
-                </div>
-
-                {/* Specs */}
-                <div className="col-span-2">
-                  <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                    Size / Line Height
-                  </div>
-                  <div className="text-xs text-zinc-600 dark:text-zinc-300">
-                    {scale.size}
-                  </div>
-                  <div className="text-xs text-zinc-600 dark:text-zinc-300">
-                    LH: {scale.lineHeight}
-                  </div>
-                </div>
-
-                {/* Copy Button */}
-                <div className="col-span-2 flex justify-center">
-                  <CopyButton
-                    formats={[
-                      { label: 'PX', value: scale.size.split(' / ')[0], description: 'Pixel value' },
-                      { label: 'REM', value: scale.size.split(' / ')[1], description: 'REM value' },
-                      { label: 'Token', value: scale.token, description: 'Design system token' },
-                      { label: 'CSS Class', value: scale.className, description: 'Tailwind CSS class' },
-                      { label: 'Primitive', value: scale.primitive, description: 'Primitive token reference' },
-                    ]}
-                    size="sm"
-                  />
-                </div>
-
-                {/* Badge */}
-                <div className="col-span-1 flex justify-end">
-                  {scale.primary && (
-                    <span className="text-xs font-semibold text-zinc-800 dark:text-zinc-100 bg-zinc-200 dark:bg-zinc-600 px-2 py-1 rounded whitespace-nowrap border border-transparent dark:border-zinc-500">
-                      Primary
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              {/* Usage */}
-              <div className="mt-4 pt-4 border-t border-zinc-200 dark:border-zinc-700">
-                <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                  Usage
-                </div>
-                <span className="text-sm text-zinc-600 dark:text-zinc-300">{scale.usage}</span>
-              </div>
-            </div>
-          ))}
+              ))}
             </div>
           </div>
         </div>
@@ -285,71 +255,68 @@ export function TypographyView() {
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
           4 weight variations for emphasis and hierarchy. Semibold (600) and Bold (700) are most commonly used.
         </p>
-        
-        {/* Preview Container with forced mode */}
-        <div className={previewMode === 'dark' ? 'dark' : ''}>
-          <div className={`rounded-xl p-6 transition-colors duration-300 ${
-            previewMode === 'dark' ? 'bg-zinc-950' : 'bg-zinc-50'
-          }`}>
+
+        {/* Preview Container */}
+        <div>
+          <div className="rounded-xl p-6 transition-colors duration-300 bg-zinc-50 dark:bg-zinc-950">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {fontWeights.map((weight) => (
                 <div
                   key={weight.primitive}
-                  className={`bg-white dark:bg-zinc-800 border rounded-md p-5 transition-all duration-300 ${
-                    weight.primary
-                      ? 'border-zinc-300 dark:border-zinc-600'
-                      : 'border-zinc-200 dark:border-zinc-700'
-                  }`}
+                  className={`bg-white dark:bg-zinc-800 border rounded-md p-5 transition-all duration-300 ${weight.primary
+                    ? 'border-zinc-300 dark:border-zinc-600'
+                    : 'border-zinc-200 dark:border-zinc-700'
+                    }`}
                 >
-              <div className="flex items-center justify-between mb-4">
-                <div className={`text-2xl text-zinc-900 dark:text-zinc-100 ${weight.className}`}>
-                  {weight.name}
-                </div>
-                <div className="flex items-center gap-2">
-                  <CopyButton
-                    formats={[
-                      { label: 'Value', value: weight.primitive, description: 'Font weight value' },
-                      { label: 'Token', value: weight.token, description: 'Design system token' },
-                      { label: 'CSS Class', value: weight.className, description: 'Tailwind CSS class' },
-                    ]}
-                    size="sm"
-                  />
-                  {weight.primary && (
-                    <span className="text-xs font-semibold text-zinc-800 dark:text-zinc-100 bg-zinc-200 dark:bg-zinc-600 px-2 py-1 rounded border border-transparent dark:border-zinc-500">
-                      Primary
-                    </span>
-                  )}
-                </div>
-              </div>
-              
-              <div className="space-y-2">
-                <div>
-                  <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                    Primitive
+                  <div className="flex items-center justify-between mb-4">
+                    <div className={`text-2xl text-zinc-900 dark:text-zinc-100 ${weight.className}`}>
+                      {weight.name}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CopyButton
+                        formats={[
+                          { label: 'Value', value: weight.primitive, description: 'Font weight value' },
+                          { label: 'Token', value: weight.token, description: 'Design system token' },
+                          { label: 'CSS Class', value: weight.className, description: 'Tailwind CSS class' },
+                        ]}
+                        size="sm"
+                      />
+                      {weight.primary && (
+                        <span className="text-xs font-semibold text-zinc-800 dark:text-zinc-100 bg-zinc-200 dark:bg-zinc-600 px-2 py-1 rounded border border-transparent dark:border-zinc-500">
+                          Primary
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  <code className="text-sm font-mono text-zinc-900 dark:text-zinc-100">
-                    {weight.primitive}
-                  </code>
-                </div>
-                
-                <div>
-                  <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                    Token
+
+                  <div className="space-y-2">
+                    <div>
+                      <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                        Primitive
+                      </div>
+                      <code className="text-sm font-mono text-zinc-900 dark:text-zinc-100">
+                        {weight.primitive}
+                      </code>
+                    </div>
+
+                    <div>
+                      <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                        Token
+                      </div>
+                      <code className="text-xs font-mono bg-zinc-100 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 rounded border border-transparent dark:border-zinc-700">
+                        {weight.token}
+                      </code>
+                    </div>
+
+                    <div>
+                      <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                        Usage
+                      </div>
+                      <span className="text-sm text-zinc-600 dark:text-zinc-300">{weight.usage}</span>
+                    </div>
                   </div>
-                  <code className="text-xs font-mono bg-zinc-100 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 rounded border border-transparent dark:border-zinc-700">
-                    {weight.token}
-                  </code>
                 </div>
-                
-                <div>
-                  <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                    Usage
-                  </div>
-                  <span className="text-sm text-zinc-600 dark:text-zinc-300">{weight.usage}</span>
-                </div>
-              </div>
-            </div>
-          ))}
+              ))}
             </div>
           </div>
         </div>
@@ -363,10 +330,10 @@ export function TypographyView() {
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
           Semantic text color tokens for consistent contrast and hierarchy.
         </p>
-        
+
         <div className="grid grid-cols-1 gap-3">
           {[
-            { 
+            {
               name: 'Primary Text',
               token: 'text-primary',
               light: 'zinc-900',
@@ -374,7 +341,7 @@ export function TypographyView() {
               usage: 'Headings, primary content',
               primary: true
             },
-            { 
+            {
               name: 'Secondary Text',
               token: 'text-secondary',
               light: 'zinc-600',
@@ -382,14 +349,14 @@ export function TypographyView() {
               usage: 'Body text, descriptions',
               primary: true
             },
-            { 
+            {
               name: 'Tertiary Text',
               token: 'text-tertiary',
               light: 'zinc-500',
               dark: 'zinc-500',
               usage: 'Captions, metadata, disabled',
             },
-            { 
+            {
               name: 'Placeholder Text',
               token: 'text-placeholder',
               light: 'zinc-400',
@@ -399,11 +366,10 @@ export function TypographyView() {
           ].map((textColor) => (
             <div
               key={textColor.token}
-              className={`bg-white dark:bg-zinc-900 border rounded-md p-5 flex items-center gap-6 ${
-                textColor.primary
-                  ? 'border-zinc-800 dark:border-zinc-600'
-                  : 'border-zinc-200 dark:border-zinc-800'
-              }`}
+              className={`bg-white dark:bg-zinc-900 border rounded-md p-5 flex items-center gap-6 ${textColor.primary
+                ? 'border-zinc-800 dark:border-zinc-600'
+                : 'border-zinc-200 dark:border-zinc-800'
+                }`}
             >
               <div className="w-48">
                 <div className="text-sm font-semibold text-zinc-900 dark:text-zinc-50 mb-1">

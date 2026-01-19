@@ -14,11 +14,11 @@ export interface CodeViewerProps {
   figmaTokens?: Record<string, Record<string, string>>;
 }
 
-export function CodeViewer({ 
-  title, 
-  react, 
-  html, 
-  css, 
+export function CodeViewer({
+  title,
+  react,
+  html,
+  css,
   prompt,
   enableFigmaExport = false,
   figmaSpecs,
@@ -61,7 +61,7 @@ export function CodeViewer({
               cssCode={css}
             />
           )}
-          
+
           {/* Copy Button */}
           <button
             onClick={handleCopy}
@@ -87,11 +87,10 @@ export function CodeViewer({
         <button
           key="react"
           onClick={() => setActiveTab('react')}
-          className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded transition-colors whitespace-nowrap ${
-            activeTab === 'react'
+          className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded transition-colors whitespace-nowrap ${activeTab === 'react'
               ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 shadow-sm'
               : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 hover:bg-zinc-200 dark:hover:bg-zinc-800'
-          }`}
+            }`}
         >
           <Code2 className="w-4 h-4" />
           React
@@ -99,11 +98,10 @@ export function CodeViewer({
         <button
           key="html"
           onClick={() => setActiveTab('html')}
-          className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded transition-colors whitespace-nowrap ${
-            activeTab === 'html'
+          className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded transition-colors whitespace-nowrap ${activeTab === 'html'
               ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 shadow-sm'
               : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 hover:bg-zinc-200 dark:hover:bg-zinc-800'
-          }`}
+            }`}
         >
           <FileCode className="w-4 h-4" />
           HTML
@@ -111,11 +109,10 @@ export function CodeViewer({
         <button
           key="css"
           onClick={() => setActiveTab('css')}
-          className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded transition-colors whitespace-nowrap ${
-            activeTab === 'css'
+          className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded transition-colors whitespace-nowrap ${activeTab === 'css'
               ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 shadow-sm'
               : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 hover:bg-zinc-200 dark:hover:bg-zinc-800'
-          }`}
+            }`}
         >
           <Palette className="w-4 h-4" />
           CSS
@@ -123,11 +120,10 @@ export function CodeViewer({
         <button
           key="prompt"
           onClick={() => setActiveTab('prompt')}
-          className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded transition-colors whitespace-nowrap ${
-            activeTab === 'prompt'
+          className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded transition-colors whitespace-nowrap ${activeTab === 'prompt'
               ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 shadow-sm'
               : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 hover:bg-zinc-200 dark:hover:bg-zinc-800'
-          }`}
+            }`}
         >
           <Sparkles className="w-4 h-4" />
           AI Prompt
@@ -135,13 +131,19 @@ export function CodeViewer({
       </div>
 
       {/* Code Content */}
-      <div className="p-6 overflow-x-auto">
+      <div className="hidden">
+        {/* Helper to keep the language class logic if needed for copy or other tools, 
+            but visual rendering is now handled by CodeBlock below */}
         <pre className="text-sm leading-relaxed">
           <code className={`language-${activeTab === 'prompt' ? 'text' : activeTab}`}>
             {currentContent}
           </code>
         </pre>
       </div>
+      <CodeBlock
+        code={currentContent}
+        language={activeTab === 'prompt' ? 'text' : activeTab}
+      />
     </div>
   );
 }
@@ -155,19 +157,20 @@ interface CodeBlockProps {
 
 export function CodeBlock({ code, language = 'react', showLineNumbers = false }: CodeBlockProps) {
   const lines = code.split('\n');
-  
+
   const getColorForToken = (line: string): string => {
     if (language === 'text') return 'text-zinc-700 dark:text-zinc-300';
-    if (line.trim().startsWith('//')) return 'text-zinc-500 dark:text-zinc-400';
-    if (line.includes('import ') || line.includes('export ')) return 'text-purple-600 dark:text-purple-400';
-    if (line.includes('const ') || line.includes('let ') || line.includes('var ')) return 'text-blue-600 dark:text-blue-400';
-    if (line.includes('className=')) return 'text-emerald-600 dark:text-emerald-400';
-    if (line.includes('<') || line.includes('/>') || line.includes('</')) return 'text-indigo-600 dark:text-indigo-400';
-    return 'text-zinc-900 dark:text-zinc-50';
+    if (line.trim().startsWith('//') || line.trim().startsWith('/*') || line.trim().startsWith('*') || line.trim().startsWith('<!--')) return 'text-zinc-500 dark:text-zinc-400';
+    if (line.includes('import ') || line.includes('export ') || line.includes('from ')) return 'text-purple-600 dark:text-purple-300';
+    if (line.includes('const ') || line.includes('let ') || line.includes('var ') || line.includes('function ') || line.includes('return ')) return 'text-blue-600 dark:text-blue-300';
+    if (line.includes('className=') || line.includes('class=')) return 'text-emerald-600 dark:text-emerald-300';
+    if (line.includes('<') || line.includes('/>') || line.includes('</') || line.includes('>')) return 'text-indigo-600 dark:text-indigo-300';
+    if (line.includes(':') && !line.includes('//')) return 'text-sky-600 dark:text-sky-300'; // Props/CSS properties
+    return 'text-zinc-900 dark:text-zinc-100';
   };
 
   return (
-    <div className="bg-zinc-900 dark:bg-zinc-950 rounded-lg overflow-hidden">
+    <div className="bg-zinc-50 dark:bg-zinc-950 rounded-lg overflow-hidden border-t border-zinc-200 dark:border-zinc-800">
       <div className="overflow-x-auto">
         <pre className="p-4 text-sm leading-relaxed">
           {lines.map((line, index) => (

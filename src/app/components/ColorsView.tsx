@@ -1,9 +1,7 @@
-import { CheckCircle2, AlertTriangle, AlertCircle, Info, Check, X, Sun, Moon } from 'lucide-react';
-import { CopyButton, CopyFormat } from './CopyButton';
-import { useState } from 'react';
+import { CheckCircle2, AlertTriangle, AlertCircle, Info, Check, X } from 'lucide-react';
+import { CopyButton } from './CopyButton';
 
 export function ColorsView() {
-  const [previewMode, setPreviewMode] = useState<'light' | 'dark'>('light');
 
   // Helper function to convert hex to RGB
   const hexToRgb = (hex: string): string => {
@@ -41,83 +39,83 @@ export function ColorsView() {
   };
 
   const zincScale = [
-    { 
+    {
       primitive: '50',
-      token: 'color-neutral-50',
+      token: 'zinc-50',
       hex: '#fafafa',
       usage: 'Backgrounds, subtle overlays',
       light: true
     },
-    { 
+    {
       primitive: '100',
-      token: 'color-neutral-100',
+      token: 'zinc-100',
       hex: '#f4f4f5',
       usage: 'Hover states, secondary backgrounds',
       light: true
     },
-    { 
+    {
       primitive: '200',
-      token: 'color-neutral-200',
+      token: 'zinc-200',
       hex: '#e4e4e7',
       usage: 'Borders (light mode default)',
       light: true,
       primary: true
     },
-    { 
+    {
       primitive: '300',
-      token: 'color-neutral-300',
+      token: 'zinc-300',
       hex: '#d4d4d8',
       usage: 'Border hover states, dividers',
       light: true
     },
-    { 
+    {
       primitive: '400',
-      token: 'color-neutral-400',
+      token: 'zinc-400',
       hex: '#a1a1aa',
       usage: 'Placeholder text, disabled states',
       light: true
     },
-    { 
+    {
       primitive: '500',
-      token: 'color-neutral-500',
+      token: 'zinc-500',
       hex: '#71717a',
       usage: 'Secondary text, captions',
       dark: true,
       primary: true
     },
-    { 
+    {
       primitive: '600',
-      token: 'color-neutral-600',
+      token: 'zinc-600',
       hex: '#52525b',
       usage: 'Body text, primary icons',
       dark: true
     },
-    { 
+    {
       primitive: '700',
-      token: 'color-neutral-700',
+      token: 'zinc-700',
       hex: '#3f3f46',
       usage: 'Border hover (dark mode)',
       dark: true
     },
-    { 
+    {
       primitive: '800',
-      token: 'color-neutral-800',
+      token: 'zinc-800',
       hex: '#27272a',
       usage: 'Borders (dark mode default)',
       dark: true,
       primary: true
     },
-    { 
+    {
       primitive: '900',
-      token: 'color-neutral-900',
+      token: 'zinc-900',
       hex: '#18181b',
       usage: 'Headings, primary text (light mode)',
       dark: true,
       primary: true
     },
-    { 
+    {
       primitive: '950',
-      token: 'color-neutral-950',
+      token: 'zinc-950',
       hex: '#09090b',
       usage: 'Backgrounds (dark mode)',
       dark: true
@@ -127,7 +125,7 @@ export function ColorsView() {
   const semanticColors = [
     {
       name: 'Success',
-      token: 'color-semantic-success',
+      token: 'emerald-600',
       primitive: 'emerald-600',
       hex: '#10b981',
       usage: 'Success messages, completed states, positive actions',
@@ -140,7 +138,7 @@ export function ColorsView() {
     },
     {
       name: 'Warning',
-      token: 'color-semantic-warning',
+      token: 'amber-600',
       primitive: 'amber-600',
       hex: '#f59e0b',
       usage: 'Warning states, caution alerts, pending actions',
@@ -153,7 +151,7 @@ export function ColorsView() {
     },
     {
       name: 'Error',
-      token: 'color-semantic-error',
+      token: 'red-600',
       primitive: 'red-600',
       hex: '#ef4444',
       usage: 'Error messages, destructive actions, critical alerts',
@@ -166,7 +164,7 @@ export function ColorsView() {
     },
     {
       name: 'Info',
-      token: 'color-semantic-info',
+      token: 'blue-600',
       primitive: 'blue-600',
       hex: '#3b82f6',
       usage: 'Informational messages, help text, neutral notifications',
@@ -290,32 +288,6 @@ export function ColorsView() {
             Zinc neutral palette with semantic feedback colors and data visualization tokens.
           </p>
         </div>
-        
-        {/* Dark Mode Toggle */}
-        <div className="flex items-center gap-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg p-1">
-          <button
-            onClick={() => setPreviewMode('light')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold text-sm transition-all ${ 
-              previewMode === 'light'
-                ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-50 shadow-sm'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50'
-            }`}
-          >
-            <Sun className="w-4 h-4" />
-            Light Mode
-          </button>
-          <button
-            onClick={() => setPreviewMode('dark')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold text-sm transition-all ${ 
-              previewMode === 'dark'
-                ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-50 shadow-sm'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50'
-            }`}
-          >
-            <Moon className="w-4 h-4" />
-            Dark Mode
-          </button>
-        </div>
       </div>
 
       {/* Neutral Palette */}
@@ -326,101 +298,98 @@ export function ColorsView() {
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
           11-step greyscale foundation for backgrounds, borders, and text. Primary tokens (200, 500, 800, 900) are most commonly used.
         </p>
-        
-        {/* Preview Container with forced mode */}
-        <div className={previewMode === 'dark' ? 'dark' : ''}>
-          <div className={`rounded-xl p-6 transition-colors duration-300 ${
-            previewMode === 'dark' ? 'bg-zinc-950' : 'bg-zinc-50'
-          }`}>
+
+        {/* Preview Container */}
+        <div>
+          <div className="rounded-xl p-6 transition-colors duration-300 bg-background border border-border">
             <div className="space-y-3 mb-8">
               {zincScale.map((color) => (
                 <div
                   key={color.primitive}
-                  className={`bg-white dark:bg-zinc-800 border rounded-md p-5 flex items-center gap-6 transition-all duration-300 ${
-                    color.primary
-                      ? 'border-zinc-300 dark:border-zinc-600'
-                      : 'border-zinc-200 dark:border-zinc-700'
-                  }`}
+                  className={`bg-card border rounded-md p-5 flex items-center gap-6 transition-all duration-300 ${color.primary
+                    ? 'border-border-strong'
+                    : 'border-border'
+                    }`}
                 >
-                {/* Visual Swatch */}
-                <div
-                  className="w-20 h-14 rounded border border-zinc-300 dark:border-zinc-700 flex-shrink-0"
-                  style={{ backgroundColor: color.hex }}
-                />
-                
-                {/* Primitive Value */}
-                <div className="w-16">
-                  <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                    Primitive
-                  </div>
-                  <code className="text-sm font-mono font-semibold text-zinc-900 dark:text-zinc-100">
-                    {color.primitive}
-                  </code>
-                </div>
-
-                {/* Token */}
-                <div className="w-48">
-                  <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                    Token
-                  </div>
-                  <code className="text-xs font-mono bg-zinc-100 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 rounded border border-transparent dark:border-zinc-700">
-                    {color.token}
-                  </code>
-                </div>
-
-                {/* Hex Value */}
-                <div className="w-24">
-                  <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                    Hex
-                  </div>
-                  <span className="text-sm font-mono text-zinc-600 dark:text-zinc-300">{color.hex}</span>
-                </div>
-
-                {/* RGB Value */}
-                <div className="w-24">
-                  <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                    RGB
-                  </div>
-                  <span className="text-sm font-mono text-zinc-600 dark:text-zinc-300">{hexToRgb(color.hex)}</span>
-                </div>
-
-                {/* HSL Value */}
-                <div className="w-24">
-                  <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                    HSL
-                  </div>
-                  <span className="text-sm font-mono text-zinc-600 dark:text-zinc-300">{hexToHsl(color.hex)}</span>
-                </div>
-
-                {/* Usage */}
-                <div className="flex-1">
-                  <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                    Usage
-                  </div>
-                  <span className="text-sm text-zinc-600 dark:text-zinc-300">{color.usage}</span>
-                </div>
-
-                {/* Copy Button */}
-                <div className="flex-shrink-0">
-                  <CopyButton
-                    formats={[
-                      { label: 'HEX', value: color.hex, description: 'Hexadecimal color code' },
-                      { label: 'RGB', value: hexToRgb(color.hex), description: 'RGB color format' },
-                      { label: 'HSL', value: hexToHsl(color.hex), description: 'HSL color format' },
-                      { label: 'Token', value: color.token, description: 'Design system token' },
-                    ]}
-                    size="sm"
+                  {/* Visual Swatch */}
+                  <div
+                    className="w-20 h-14 rounded border border-zinc-300 dark:border-zinc-700 flex-shrink-0"
+                    style={{ backgroundColor: color.hex }}
                   />
-                </div>
 
-                {/* Badge */}
-                {color.primary && (
-                  <span className="text-xs font-semibold text-zinc-800 dark:text-zinc-100 bg-zinc-200 dark:bg-zinc-600 px-2 py-1 rounded flex-shrink-0 border border-transparent dark:border-zinc-500">
-                    Primary
-                  </span>
-                )}
-              </div>
-            ))}
+                  {/* Primitive Value */}
+                  <div className="w-16">
+                    <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                      Primitive
+                    </div>
+                    <code className="text-sm font-mono font-semibold text-zinc-900 dark:text-zinc-100">
+                      {color.primitive}
+                    </code>
+                  </div>
+
+                  {/* Token */}
+                  <div className="w-48">
+                    <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                      Token
+                    </div>
+                    <code className="text-xs font-mono bg-zinc-100 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 rounded border border-transparent dark:border-zinc-700">
+                      {color.token}
+                    </code>
+                  </div>
+
+                  {/* Hex Value */}
+                  <div className="w-24">
+                    <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                      Hex
+                    </div>
+                    <span className="text-sm font-mono text-zinc-600 dark:text-zinc-300">{color.hex}</span>
+                  </div>
+
+                  {/* RGB Value */}
+                  <div className="w-24">
+                    <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                      RGB
+                    </div>
+                    <span className="text-sm font-mono text-zinc-600 dark:text-zinc-300">{hexToRgb(color.hex)}</span>
+                  </div>
+
+                  {/* HSL Value */}
+                  <div className="w-24">
+                    <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                      HSL
+                    </div>
+                    <span className="text-sm font-mono text-zinc-600 dark:text-zinc-300">{hexToHsl(color.hex)}</span>
+                  </div>
+
+                  {/* Usage */}
+                  <div className="flex-1">
+                    <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                      Usage
+                    </div>
+                    <span className="text-sm text-zinc-600 dark:text-zinc-300">{color.usage}</span>
+                  </div>
+
+                  {/* Copy Button */}
+                  <div className="flex-shrink-0">
+                    <CopyButton
+                      formats={[
+                        { label: 'HEX', value: color.hex, description: 'Hexadecimal color code' },
+                        { label: 'RGB', value: hexToRgb(color.hex), description: 'RGB color format' },
+                        { label: 'HSL', value: hexToHsl(color.hex), description: 'HSL color format' },
+                        { label: 'Token', value: color.token, description: 'Design system token' },
+                      ]}
+                      size="sm"
+                    />
+                  </div>
+
+                  {/* Badge */}
+                  {color.primary && (
+                    <span className="text-xs font-semibold text-zinc-800 dark:text-zinc-100 bg-zinc-200 dark:bg-zinc-600 px-2 py-1 rounded flex-shrink-0 border border-transparent dark:border-zinc-500">
+                      Primary
+                    </span>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -429,17 +398,15 @@ export function ColorsView() {
       {/* Semantic Colors */}
       <div className="mb-12">
         <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
-          Semantic Colors
+          Processing / Feedback Colors
         </h2>
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
           Feedback and status colors for user interface communication.
         </p>
-        
-        {/* Preview Container with forced mode */}
-        <div className={previewMode === 'dark' ? 'dark' : ''}>
-          <div className={`rounded-xl p-6 transition-colors duration-300 ${
-            previewMode === 'dark' ? 'bg-zinc-950' : 'bg-zinc-50'
-          }`}>
+
+        {/* Preview Container */}
+        <div>
+          <div className="rounded-xl p-6 transition-colors duration-300 bg-background border border-border">
             <div className="grid grid-cols-1 gap-4 mb-8">
               {semanticColors.map((color) => {
                 const Icon = color.icon;
@@ -448,62 +415,62 @@ export function ColorsView() {
                     key={color.name}
                     className={`${color.bg} border ${color.border} rounded-md p-5 transition-all duration-300`}
                   >
-                  <div className="flex items-start gap-6">
-                    {/* Icon + Visual */}
-                    <div className="flex items-center gap-3 w-32 flex-shrink-0">
-                      <Icon className={`w-6 h-6 ${color.iconColor}`} />
-                      <div>
-                        <div className={`text-sm font-semibold ${color.text}`}>
-                          {color.name}
+                    <div className="flex items-start gap-6">
+                      {/* Icon + Visual */}
+                      <div className="flex items-center gap-3 w-32 flex-shrink-0">
+                        <Icon className={`w-6 h-6 ${color.iconColor}`} />
+                        <div>
+                          <div className={`text-sm font-semibold ${color.text}`}>
+                            {color.name}
+                          </div>
+                          <div className={`text-xs ${color.subtext}`}>
+                            {color.hex}
+                          </div>
                         </div>
-                        <div className={`text-xs ${color.subtext}`}>
-                          {color.hex}
+                      </div>
+
+                      {/* Token */}
+                      <div className="w-56">
+                        <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                          Token
                         </div>
+                        <code className="text-xs font-mono bg-white/50 dark:bg-black/20 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 rounded">
+                          {color.token}
+                        </code>
                       </div>
-                    </div>
 
-                    {/* Token */}
-                    <div className="w-56">
-                      <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                        Token
+                      {/* Primitive */}
+                      <div className="w-32">
+                        <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                          Primitive
+                        </div>
+                        <code className="text-xs font-mono text-zinc-700 dark:text-zinc-300">
+                          {color.primitive}
+                        </code>
                       </div>
-                      <code className="text-xs font-mono bg-white/50 dark:bg-black/20 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 rounded">
-                        {color.token}
-                      </code>
-                    </div>
 
-                    {/* Primitive */}
-                    <div className="w-32">
-                      <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                        Primitive
+                      {/* Usage */}
+                      <div className="flex-1">
+                        <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                          Usage
+                        </div>
+                        <span className="text-sm text-zinc-600 dark:text-zinc-400">{color.usage}</span>
                       </div>
-                      <code className="text-xs font-mono text-zinc-700 dark:text-zinc-300">
-                        {color.primitive}
-                      </code>
-                    </div>
 
-                    {/* Usage */}
-                    <div className="flex-1">
-                      <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                        Usage
+                      {/* Copy Button */}
+                      <div className="flex-shrink-0">
+                        <CopyButton
+                          formats={[
+                            { label: 'HEX', value: color.hex, description: 'Hexadecimal color code' },
+                            { label: 'RGB', value: hexToRgb(color.hex), description: 'RGB color format' },
+                            { label: 'HSL', value: hexToHsl(color.hex), description: 'HSL color format' },
+                            { label: 'Token', value: color.token, description: 'Design system token' },
+                          ]}
+                          size="sm"
+                        />
                       </div>
-                      <span className="text-sm text-zinc-600 dark:text-zinc-400">{color.usage}</span>
-                    </div>
-
-                    {/* Copy Button */}
-                    <div className="flex-shrink-0">
-                      <CopyButton
-                        formats={[
-                          { label: 'HEX', value: color.hex, description: 'Hexadecimal color code' },
-                          { label: 'RGB', value: hexToRgb(color.hex), description: 'RGB color format' },
-                          { label: 'HSL', value: hexToHsl(color.hex), description: 'HSL color format' },
-                          { label: 'Token', value: color.token, description: 'Design system token' },
-                        ]}
-                        size="sm"
-                      />
                     </div>
                   </div>
-                </div>
                 );
               })}
             </div>
@@ -519,12 +486,10 @@ export function ColorsView() {
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
           Chart and graph color palette for clear data differentiation. Each family includes 5-step scales optimized for various use cases and WCAG AA compliant.
         </p>
-        
-        {/* Preview Container with forced mode */}
-        <div className={previewMode === 'dark' ? 'dark' : ''}>
-          <div className={`rounded-xl p-6 transition-colors duration-300 ${
-            previewMode === 'dark' ? 'bg-zinc-950' : 'bg-zinc-50'
-          }`}>
+
+        {/* Preview Container */}
+        <div>
+          <div className="rounded-xl p-6 transition-colors duration-300 bg-background border border-border">
             {dataVizColorFamilies.map((family) => (
               <div key={family.name} className="mb-8">
                 {/* Family Header */}
@@ -545,11 +510,10 @@ export function ColorsView() {
                   {family.scales.map((color) => (
                     <div
                       key={color.step}
-                      className={`bg-white dark:bg-zinc-800 border rounded-md p-5 transition-all duration-300 ${
-                        color.primary
-                          ? 'border-zinc-300 dark:border-zinc-600'
-                          : 'border-zinc-200 dark:border-zinc-700'
-                      }`}
+                      className={`bg-white dark:bg-zinc-800 border rounded-md p-5 transition-all duration-300 ${color.primary
+                        ? 'border-zinc-300 dark:border-zinc-600'
+                        : 'border-zinc-200 dark:border-zinc-700'
+                        }`}
                     >
                       {/* Row 1: Visual Info + Core Tokens */}
                       <div className="flex items-center gap-6 mb-4">
@@ -558,7 +522,7 @@ export function ColorsView() {
                           className="w-20 h-14 rounded border border-zinc-300 dark:border-zinc-700 flex-shrink-0"
                           style={{ backgroundColor: color.hex }}
                         />
-                        
+
                         {/* Step Value */}
                         <div className="w-16">
                           <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
@@ -619,11 +583,10 @@ export function ColorsView() {
                             </span>
                           )}
                           {color.contrast && (
-                            <span className={`text-xs font-semibold px-2 py-1 rounded ${
-                              color.contrast === 'AAA'
-                                ? 'text-emerald-800 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/30 border border-emerald-300 dark:border-emerald-800'
-                                : 'text-blue-800 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/30 border border-blue-300 dark:border-blue-800'
-                            }`}>
+                            <span className={`text-xs font-semibold px-2 py-1 rounded ${color.contrast === 'AAA'
+                              ? 'text-emerald-800 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/30 border border-emerald-300 dark:border-emerald-800'
+                              : 'text-blue-800 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/30 border border-blue-300 dark:border-blue-800'
+                              }`}>
                               {color.contrast}
                             </span>
                           )}

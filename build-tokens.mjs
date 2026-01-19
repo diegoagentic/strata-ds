@@ -6,18 +6,20 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Read all token files
-function readTokens(dir) {
+// Read all token files with optional exclusion
+function readTokens(dir, exclude = []) {
     const tokens = {};
-    const files = fs.readdirSync(dir, { recursive: true });
+    if (fs.existsSync(dir)) {
+        const files = fs.readdirSync(dir, { recursive: true });
 
-    files.forEach(file => {
-        if (file.endsWith('.json')) {
-            const fullPath = path.join(dir, file);
-            const content = JSON.parse(fs.readFileSync(fullPath, 'utf8'));
-            Object.assign(tokens, content);
-        }
-    });
+        files.forEach(file => {
+            if (file.endsWith('.json') && !exclude.includes(path.basename(file))) {
+                const fullPath = path.join(dir, file);
+                const content = JSON.parse(fs.readFileSync(fullPath, 'utf8'));
+                Object.assign(tokens, content);
+            }
+        });
+    }
 
     return tokens;
 }
@@ -124,7 +126,8 @@ const dirs = [
 ];
 
 dirs.forEach(dir => {
-    const tokens = readTokens(dir);
+    // Exclude colors-dark.json from light mode build to prevent shadow overrides
+    const tokens = readTokens(dir, ['colors-dark.json']);
     deepMerge(lightTokens, tokens);
 });
 
@@ -158,6 +161,58 @@ fs.writeFileSync(
 fs.writeFileSync(
     path.join(cssDir, 'variables-dark.css'),
     generateCSS(resolvedDark, 'dark')
+);
+
+// Generate Tailwind v4 Theme Mapping
+function generateTailwindTheme(tokens) {
+    const lines = ['@theme {'];
+
+    // Helper to check if a value is a color
+    const isColor = (key, value) => {
+        return key.includes('color') ||
+            key.includes('background') ||
+            key.includes('text') ||
+            key.includes('border') ||
+            (value.startsWith('#') ||
+                value.startsWith('rgb') ||
+                value.startsWith('hsl')) && !key.startsWith('shadow');
+    };
+
+    for (const [key, value] of Object.entries(tokens)) {
+        // We map the token name (e.g., color-zinc-900) to the variable (var(--color-zinc-900))
+        // giving it precedence in Tailwind's theme
+        if (isColor(key, value)) {
+            // If key doesn't start with color-, prepend it so Tailwind picks it up as a color utility
+            const themeKey = key.startsWith('color-') ? key : `color-${key}`;
+            lines.push(`  --${themeKey}: var(--${key});`);
+        } else if (key.startsWith('shadow')) {
+            lines.push(`  --${key}: var(--${key});`);
+        } else if (key.startsWith('spacing')) {
+            lines.push(`  --${key}: var(--${key});`);
+        } else if (key.startsWith('fontSize')) {
+            lines.push(`  --${key.replace('fontSize-', 'text-')}: var(--${key});`);
+        } else if (key.startsWith('fontWeight')) {
+            lines.push(`  --${key}: var(--${key});`);
+        } else if (key.startsWith('borderRadius')) {
+            lines.push(`  --${key.replace('borderRadius-', 'radius-')}: var(--${key});`);
+        }
+        // Add more mappings as needed (shadows, fonts, etc.)
+    }
+
+    // Explicitly alias gray to zinc to match Catalyst standards
+    const scales = ['50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950'];
+    scales.forEach(scale => {
+        lines.push(`  --color-gray-${scale}: var(--color-zinc-${scale});`);
+    });
+
+    lines.push('}');
+    return lines.join('\n');
+}
+
+console.log('🎨 Generating Tailwind v4 Theme...');
+fs.writeFileSync(
+    path.join(cssDir, 'theme-v4.css'),
+    generateTailwindTheme(resolvedLight)
 );
 
 // Write TypeScript file

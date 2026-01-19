@@ -1,9 +1,8 @@
-import { Check, X, Sun, Moon } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import { CopyButton } from './CopyButton';
-import { useState } from 'react';
 
 export function SpacingView() {
-  const [previewMode, setPreviewMode] = useState<'light' | 'dark'>('light');
+
 
   const spacingScale = [
     { primitive: '0', token: 'spacing-0', value: '0px', usage: 'No spacing, reset margins/padding', rem: '0rem' },
@@ -47,33 +46,10 @@ export function SpacingView() {
             Base-8 spacing system with grid layout tokens for consistent spacing and structure.
           </p>
         </div>
-        
-        {/* Dark Mode Toggle */}
-        <div className="flex items-center gap-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg p-1">
-          <button
-            onClick={() => setPreviewMode('light')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold text-sm transition-all ${ 
-              previewMode === 'light'
-                ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-50 shadow-sm'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50'
-            }`}
-          >
-            <Sun className="w-4 h-4" />
-            Light Mode
-          </button>
-          <button
-            onClick={() => setPreviewMode('dark')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold text-sm transition-all ${ 
-              previewMode === 'dark'
-                ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-50 shadow-sm'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50'
-            }`}
-          >
-            <Moon className="w-4 h-4" />
-            Dark Mode
-          </button>
-        </div>
+
       </div>
+
+
 
       {/* Spacing Scale */}
       <div className="mb-12">
@@ -83,21 +59,18 @@ export function SpacingView() {
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
           12-step scale based on 4px (0.25rem) increments. Primary values (2, 3, 4, 6, 8, 12) cover most use cases.
         </p>
-        
-        {/* Preview Container with forced mode */}
-        <div className={previewMode === 'dark' ? 'dark' : ''}>
-          <div className={`rounded-xl p-6 transition-colors duration-300 ${
-            previewMode === 'dark' ? 'bg-zinc-950' : 'bg-zinc-50'
-          }`}>
+
+        {/* Preview Container */}
+        <div>
+          <div className="rounded-xl p-6 transition-colors duration-300 bg-zinc-50 dark:bg-zinc-950">
             <div className="space-y-3">
               {spacingScale.map((space) => (
                 <div
                   key={space.primitive}
-                  className={`bg-white dark:bg-zinc-800 border rounded-md p-5 transition-all duration-300 ${
-                    space.primary
-                      ? 'border-zinc-300 dark:border-zinc-600'
-                      : 'border-zinc-200 dark:border-zinc-700'
-                  }`}
+                  className={`bg-white dark:bg-zinc-800 border rounded-md p-5 transition-all duration-300 ${space.primary
+                    ? 'border-zinc-300 dark:border-zinc-600'
+                    : 'border-zinc-200 dark:border-zinc-700'
+                    }`}
                 >
                   <div className="flex items-center gap-6">
                     {/* Visual Bar */}
@@ -240,16 +213,15 @@ export function SpacingView() {
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
           CSS Grid column configurations for responsive layouts. 12-column and 6-column are primary choices.
         </p>
-        
+
         <div className="space-y-4">
           {gridColumns.map((grid) => (
             <div
               key={grid.primitive}
-              className={`bg-white dark:bg-zinc-900 border rounded-md p-5 ${
-                grid.primary
-                  ? 'border-zinc-800 dark:border-zinc-600'
-                  : 'border-zinc-200 dark:border-zinc-800'
-              }`}
+              className={`bg-white dark:bg-zinc-900 border rounded-md p-5 ${grid.primary
+                ? 'border-zinc-800 dark:border-zinc-600'
+                : 'border-zinc-200 dark:border-zinc-800'
+                }`}
             >
               <div className="flex items-center gap-6 mb-4">
                 {/* Primitive */}
@@ -327,16 +299,15 @@ export function SpacingView() {
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
           Maximum width tokens for content containers. Large (1024px) and Extra Large (1280px) are most common.
         </p>
-        
+
         <div className="space-y-3">
           {containerSizes.map((container) => (
             <div
               key={container.primitive}
-              className={`bg-white dark:bg-zinc-900 border rounded-md p-5 ${
-                container.primary
-                  ? 'border-zinc-800 dark:border-zinc-600'
-                  : 'border-zinc-200 dark:border-zinc-800'
-              }`}
+              className={`bg-white dark:bg-zinc-900 border rounded-md p-5 ${container.primary
+                ? 'border-zinc-800 dark:border-zinc-600'
+                : 'border-zinc-200 dark:border-zinc-800'
+                }`}
             >
               <div className="flex items-center gap-6">
                 {/* Primitive */}

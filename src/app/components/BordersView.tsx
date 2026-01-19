@@ -1,9 +1,8 @@
-import { Check, X, Sun, Moon } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import { CopyButton } from './CopyButton';
-import { useState } from 'react';
 
 export function BordersView() {
-  const [previewMode, setPreviewMode] = useState<'light' | 'dark'>('light');
+
 
   // Helper function to convert HEX to RGB
   const hexToRgb = (hex: string): string => {
@@ -26,7 +25,7 @@ export function BordersView() {
     if (max !== min) {
       const d = max - min;
       s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-      
+
       switch (max) {
         case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
         case g: h = ((b - r) / d + 2) / 6; break;
@@ -58,26 +57,26 @@ export function BordersView() {
   ];
 
   const borderColors = [
-    { 
+    {
       primitive: 'neutral-200',
       token: 'border-default-light',
       hex: '#e4e4e7',
       usage: 'Default border (light mode)',
       primary: true
     },
-    { 
+    {
       primitive: 'neutral-300',
       token: 'border-hover-light',
       hex: '#d4d4d8',
       usage: 'Hover border (light mode)'
     },
-    { 
+    {
       primitive: 'neutral-700',
       token: 'border-hover-dark',
       hex: '#3f3f46',
       usage: 'Hover border (dark mode)'
     },
-    { 
+    {
       primitive: 'neutral-800',
       token: 'border-default-dark',
       hex: '#27272a',
@@ -97,33 +96,9 @@ export function BordersView() {
             Border width, radius, and color tokens for consistent edge treatment and shape definition.
           </p>
         </div>
-        
-        {/* Dark Mode Toggle */}
-        <div className="flex items-center gap-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg p-1">
-          <button
-            onClick={() => setPreviewMode('light')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold text-sm transition-all ${ 
-              previewMode === 'light'
-                ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-50 shadow-sm'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50'
-            }`}
-          >
-            <Sun className="w-4 h-4" />
-            Light Mode
-          </button>
-          <button
-            onClick={() => setPreviewMode('dark')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold text-sm transition-all ${ 
-              previewMode === 'dark'
-                ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-50 shadow-sm'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50'
-            }`}
-          >
-            <Moon className="w-4 h-4" />
-            Dark Mode
-          </button>
-        </div>
+
       </div>
+
 
       {/* Border Widths */}
       <div className="mb-12">
@@ -133,16 +108,15 @@ export function BordersView() {
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
           5-step scale for border thickness. 1px and 2px are primary choices for most UI elements.
         </p>
-        
+
         <div className="space-y-3">
           {borderWidths.map((border) => (
             <div
               key={border.primitive}
-              className={`bg-white dark:bg-zinc-900 border rounded-md p-5 flex items-center gap-6 ${
-                border.primary
-                  ? 'border-zinc-800 dark:border-zinc-600'
-                  : 'border-zinc-200 dark:border-zinc-800'
-              }`}
+              className={`bg-white dark:bg-zinc-900 border rounded-md p-5 flex items-center gap-6 ${border.primary
+                ? 'border-zinc-800 dark:border-zinc-600'
+                : 'border-zinc-200 dark:border-zinc-800'
+                }`}
             >
               {/* Visual Example */}
               <div className="w-32 h-16 bg-zinc-50 dark:bg-zinc-800 rounded flex items-center justify-center">
@@ -222,16 +196,15 @@ export function BordersView() {
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
           9-step scale for corner rounding. Base (4px), Medium (6px), Large (8px), and Full are primary options.
         </p>
-        
+
         <div className="space-y-3">
           {borderRadius.map((radius) => (
             <div
               key={radius.primitive}
-              className={`bg-white dark:bg-zinc-900 border rounded-md p-5 ${
-                radius.primary
-                  ? 'border-zinc-800 dark:border-zinc-600'
-                  : 'border-zinc-200 dark:border-zinc-800'
-              }`}
+              className={`bg-white dark:bg-zinc-900 border rounded-md p-5 ${radius.primary
+                ? 'border-zinc-800 dark:border-zinc-600'
+                : 'border-zinc-200 dark:border-zinc-800'
+                }`}
             >
               <div className="flex items-center gap-6">
                 {/* Visual Example */}
@@ -311,16 +284,15 @@ export function BordersView() {
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
           Semantic border color tokens from the neutral palette for mode-aware boundaries.
         </p>
-        
+
         <div className="space-y-3">
           {borderColors.map((color) => (
             <div
               key={color.token}
-              className={`bg-white dark:bg-zinc-900 border rounded-md p-5 ${
-                color.primary
-                  ? 'border-zinc-800 dark:border-zinc-600'
-                  : 'border-zinc-200 dark:border-zinc-800'
-              }`}
+              className={`bg-white dark:bg-zinc-900 border rounded-md p-5 ${color.primary
+                ? 'border-zinc-800 dark:border-zinc-600'
+                : 'border-zinc-200 dark:border-zinc-800'
+                }`}
             >
               {/* Row 1: Visual + Main Info */}
               <div className="flex items-center gap-6 mb-3">

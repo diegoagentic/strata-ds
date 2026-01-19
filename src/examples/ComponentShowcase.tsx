@@ -30,15 +30,15 @@ export function ComponentShowcase() {
     const [inputValue, setInputValue] = useState('');
 
     return (
-        <div className="min-h-screen bg-[var(--color-background-primary)] p-8">
+        <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 p-8">
             <div className="max-w-6xl mx-auto space-y-12">
 
                 {/* Header */}
                 <div className="text-center">
-                    <h1 className="text-4xl font-bold text-[var(--color-text-primary)] mb-2">
+                    <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
                         White Label Design System
                     </h1>
-                    <p className="text-[var(--color-text-secondary)]">
+                    <p className="text-zinc-600 dark:text-zinc-400">
                         Token-based components with easy theming
                     </p>
                 </div>
@@ -155,46 +155,7 @@ export function ComponentShowcase() {
                     </CardContent>
                 </Card>
 
-                {/* Theme Customization Example */}
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Theme Customization</CardTitle>
-                        <CardDescription>
-                            Override tokens to create custom themes
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                        <ThemeProvider
-                            theme={{
-                                '--button-primary-background': '#8B5CF6',
-                                '--button-primary-background-hover': '#7C3AED',
-                                '--button-primary-text': '#FFFFFF',
-                                '--badge-success-background': '#D1FAE5',
-                                '--badge-success-text': '#065F46',
-                            }}
-                        >
-                            <div className="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg space-y-3">
-                                <p className="text-sm font-semibold">Custom Purple Theme:</p>
-                                <div className="flex flex-wrap gap-2">
-                                    <Button variant="primary">Custom Primary</Button>
-                                    <Badge variant="success">Custom Success</Badge>
-                                </div>
-                            </div>
-                        </ThemeProvider>
-
-                        <div className="mt-4">
-                            <pre className="text-xs bg-gray-100 dark:bg-gray-800 p-3 rounded overflow-x-auto">
-                                {`<ThemeProvider theme={{
-  '--button-primary-background': '#8B5CF6',
-  '--button-primary-background-hover': '#7C3AED',
-  '--button-primary-text': '#FFFFFF',
-}}>
-  <Button variant="primary">Custom Button</Button>
-</ThemeProvider>`}
-                            </pre>
-                        </div>
-                    </CardContent>
-                </Card>
+                {/* Theme Customization Example - REMOVED (Strict Catalyst Mode uses utility classes) */}
 
             </div>
 

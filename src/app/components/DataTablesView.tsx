@@ -1,166 +1,258 @@
-import { Search, Filter, Plus } from 'lucide-react';
+import { Search, Filter, Plus, MoreHorizontal } from 'lucide-react';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "./ui/table"
+import { Button } from "./ui/button"
+import { CodeViewer } from './CodeViewer';
 
 export function DataTablesView() {
   const tableData = [
     {
-      id: 1,
-      name: 'Lindsay Walton',
-      title: 'Front-end Developer',
-      status: 'Active',
-      role: 'Member',
+      invoice: "INV001",
+      paymentStatus: "Paid",
+      totalAmount: "$250.00",
+      paymentMethod: "Credit Card",
     },
     {
-      id: 2,
-      name: 'Courtney Henry',
-      title: 'Designer',
-      status: 'Active',
-      role: 'Admin',
+      invoice: "INV002",
+      paymentStatus: "Pending",
+      totalAmount: "$150.00",
+      paymentMethod: "PayPal",
     },
     {
-      id: 3,
-      name: 'Tom Cook',
-      title: 'Director of Product',
-      status: 'Offline',
-      role: 'Member',
+      invoice: "INV003",
+      paymentStatus: "Unpaid",
+      totalAmount: "$350.00",
+      paymentMethod: "Bank Transfer",
     },
     {
-      id: 4,
-      name: 'Whitney Francis',
-      title: 'Copywriter',
-      status: 'Active',
-      role: 'Member',
+      invoice: "INV004",
+      paymentStatus: "Paid",
+      totalAmount: "$450.00",
+      paymentMethod: "Credit Card",
     },
     {
-      id: 5,
-      name: 'Leonard Krasner',
-      title: 'Senior Designer',
-      status: 'Active',
-      role: 'Owner',
+      invoice: "INV005",
+      paymentStatus: "Paid",
+      totalAmount: "$550.00",
+      paymentMethod: "PayPal",
     },
     {
-      id: 6,
-      name: 'Floyd Miles',
-      title: 'Principal Designer',
-      status: 'Offline',
-      role: 'Member',
+      invoice: "INV006",
+      paymentStatus: "Pending",
+      totalAmount: "$200.00",
+      paymentMethod: "Bank Transfer",
+    },
+    {
+      invoice: "INV007",
+      paymentStatus: "Unpaid",
+      totalAmount: "$300.00",
+      paymentMethod: "Credit Card",
     },
   ];
+
+  const basicTableReact = `import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+
+const invoices = [
+  {
+    invoice: "INV001",
+    paymentStatus: "Paid",
+    totalAmount: "$250.00",
+    paymentMethod: "Credit Card",
+  },
+  // ...
+]
+
+export function TableDemo() {
+  return (
+    <Table>
+      <TableCaption>A list of your recent invoices.</TableCaption>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="w-[100px]">Invoice</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead>Method</TableHead>
+          <TableHead className="text-right">Amount</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {invoices.map((invoice) => (
+          <TableRow key={invoice.invoice}>
+            <TableCell className="font-medium">{invoice.invoice}</TableCell>
+            <TableCell>{invoice.paymentStatus}</TableCell>
+            <TableCell>{invoice.paymentMethod}</TableCell>
+            <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  )
+}`;
+
+  const basicTableHTML = `<!-- Table Component -->
+<div class="relative w-full overflow-x-auto">
+  <table class="w-full caption-bottom text-sm">
+    <caption class="mt-4 text-sm text-zinc-500 dark:text-zinc-400">
+      A list of your recent invoices.
+    </caption>
+    <thead class="[&_tr]:border-b border-zinc-200 dark:border-zinc-800">
+      <tr class="border-b border-zinc-200 dark:border-zinc-800 transition-colors hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50">
+        <th class="h-10 px-2 text-left align-middle font-medium text-zinc-950 dark:text-zinc-50 [&:has([role=checkbox])]:pr-0 w-[100px]">
+          Invoice
+        </th>
+        <th class="h-10 px-2 text-left align-middle font-medium text-zinc-950 dark:text-zinc-50 [&:has([role=checkbox])]:pr-0">
+          Status
+        </th>
+        <!-- ... -->
+      </tr>
+    </thead>
+    <tbody class="[&_tr:last-child]:border-0">
+      <tr class="border-b border-zinc-200 dark:border-zinc-800 transition-colors hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50">
+        <td class="p-2 align-middle font-medium">INV001</td>
+        <td class="p-2 align-middle">Paid</td>
+        <!-- ... -->
+      </tr>
+    </tbody>
+  </table>
+</div>`;
+
+  const basicTableCSS = `@theme {
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-200: #e4e4e7;
+  --color-zinc-500: #71717a;
+  --color-zinc-950: #09090b;
+}
+
+.table {
+  width: 100%;
+  caption-side: bottom;
+  font-size: 0.875rem;
+}
+
+.table-header th {
+  height: 2.5rem;
+  padding: 0 0.5rem;
+  text-align: left;
+  font-weight: 500;
+  color: var(--color-zinc-950);
+}
+
+.table-row {
+  border-bottom: 1px solid var(--color-zinc-200);
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.table-row:hover {
+  background-color: rgb(244 244 245 / 0.5); /* zinc-100/50 */
+}
+
+.table-cell {
+  padding: 0.5rem;
+  vertical-align: middle;
+}
+`;
+
+  const basicTablePrompt = `# AI PROMPT: Generate Table Component
+## CONTEXT
+Data display table.
+
+## API
+\`\`\`tsx
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Header</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>Cell</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+\`\`\`
+
+## SPECS
+- Border: Zinc-200
+- Header: Text Zinc-950, Font Medium
+- Row: Hover Zinc-100/50
+- Cell: Padding p-2`;
 
   return (
     <div>
       <div className="mb-8">
         <h1 className="text-4xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
-          Data Tables
+          Table
         </h1>
         <p className="text-zinc-500 dark:text-zinc-400">
-          High-density table patterns with tight spacing for enterprise data display.
+          A responsive table component.
         </p>
       </div>
 
-      {/* Table Card */}
-      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md shadow-sm">
-        {/* Header Actions */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-zinc-200 dark:border-zinc-800">
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
-              <input
-                type="text"
-                placeholder="Search members..."
-                className="pl-9 pr-4 py-2 bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-md text-sm text-zinc-900 dark:text-zinc-50 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-400 dark:focus:ring-zinc-600"
-              />
-            </div>
-            <button className="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-md text-sm font-semibold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors">
-              <Filter className="w-4 h-4" />
-              Filter
-            </button>
-          </div>
-          <button className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-800 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 rounded-md text-sm font-semibold hover:bg-zinc-700 dark:hover:bg-zinc-200 transition-colors">
-            <Plus className="w-4 h-4" />
-            Add Asset
-          </button>
-        </div>
-
-        {/* Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-zinc-50 dark:bg-zinc-800/50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300">
-                  Name
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300">
-                  Title
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300">
-                  Status
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300">
-                  Role
-                </th>
-                <th className="px-6 py-3 text-right text-xs font-bold uppercase tracking-wider text-zinc-700 dark:text-zinc-300">
-                  <span className="sr-only">Edit</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800">
-              {tableData.map((row, index) => (
-                <tr
-                  key={row.id}
-                  className={`hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors ${
-                    index % 2 === 0 ? 'bg-white dark:bg-zinc-900' : 'bg-zinc-50/50 dark:bg-zinc-900/50'
-                  }`}
-                >
-                  <td className="px-6 py-3 whitespace-nowrap text-sm font-semibold text-zinc-900 dark:text-zinc-50">
-                    {row.name}
-                  </td>
-                  <td className="px-6 py-3 whitespace-nowrap text-sm text-zinc-500 dark:text-zinc-400">
-                    {row.title}
-                  </td>
-                  <td className="px-6 py-3 whitespace-nowrap">
-                    <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-                        row.status === 'Active'
-                          ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-300'
-                          : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300'
-                      }`}
-                    >
-                      {row.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-3 whitespace-nowrap text-sm text-zinc-500 dark:text-zinc-400">
-                    {row.role}
-                  </td>
-                  <td className="px-6 py-3 whitespace-nowrap text-right text-sm">
-                    <a
-                      href="#"
-                      className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-semibold"
-                    >
-                      Edit
-                    </a>
-                  </td>
-                </tr>
+      {/* Basic Table */}
+      <div className="mb-12">
+        <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
+          Basic Usage
+        </h2>
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-6">
+          <Table>
+            <TableCaption>A list of your recent invoices.</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[100px]">Invoice</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Method</TableHead>
+                <TableHead className="text-right">Amount</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {tableData.map((invoice) => (
+                <TableRow key={invoice.invoice}>
+                  <TableCell className="font-medium">{invoice.invoice}</TableCell>
+                  <TableCell>{invoice.paymentStatus}</TableCell>
+                  <TableCell>{invoice.paymentMethod}</TableCell>
+                  <TableCell className="text-right">{invoice.totalAmount}</TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
 
-        {/* Footer */}
-        <div className="px-6 py-4 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
-          <div className="text-sm text-zinc-500 dark:text-zinc-400">
-            Showing <span className="font-semibold text-zinc-900 dark:text-zinc-50">6</span> of{' '}
-            <span className="font-semibold text-zinc-900 dark:text-zinc-50">24</span> results
-          </div>
-          <div className="flex gap-2">
-            <button className="px-3 py-1 border border-zinc-300 dark:border-zinc-700 rounded text-sm font-semibold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
-              Previous
-            </button>
-            <button className="px-3 py-1 border border-zinc-300 dark:border-zinc-700 rounded text-sm font-semibold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors">
-              Next
-            </button>
-          </div>
+        <div className="mt-6">
+          <CodeViewer
+            title="Table"
+            react={basicTableReact}
+            html={basicTableHTML}
+            css={basicTableCSS}
+            prompt={basicTablePrompt}
+            enableFigmaExport={true}
+            figmaSpecs={{
+              border: '1px solid Zinc-200',
+              padding: '8px',
+              headerHeight: '40px',
+              rowHover: 'Zinc-100 / 50%',
+            }}
+          />
         </div>
       </div>
+
     </div>
   );
 }

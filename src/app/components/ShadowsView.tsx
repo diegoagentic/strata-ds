@@ -1,16 +1,15 @@
-import { Check, X, Sun, Moon } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 import { CopyButton } from './CopyButton';
-import { useState } from 'react';
 
 export function ShadowsView() {
-  const [previewMode, setPreviewMode] = useState<'light' | 'dark'>('light');
+
 
   const shadowLevels = [
     {
       primitive: 'sm',
       token: 'shadow-sm',
       value: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-      darkValue: '0 1px 2px 0 rgba(0, 0, 0, 0.3)',
+      darkValue: '0 1px 2px 0 rgba(255, 255, 255, 0.1)',
       usage: 'Subtle elevation for cards, dropdowns, tooltips',
       elevation: '1dp',
       zIndex: 'z-10',
@@ -19,7 +18,7 @@ export function ShadowsView() {
       primitive: 'md',
       token: 'shadow-md',
       value: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-      darkValue: '0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3)',
+      darkValue: '0 4px 6px -1px rgba(255, 255, 255, 0.15), 0 2px 4px -2px rgba(255, 255, 255, 0.15)',
       usage: 'Standard elevation for cards, popovers, floating elements',
       elevation: '4dp',
       zIndex: 'z-20',
@@ -29,7 +28,7 @@ export function ShadowsView() {
       primitive: 'lg',
       token: 'shadow-lg',
       value: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-      darkValue: '0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3)',
+      darkValue: '0 10px 15px -3px rgba(255, 255, 255, 0.2), 0 4px 6px -4px rgba(255, 255, 255, 0.2)',
       usage: 'Higher elevation for modals, slide-overs, overlays',
       elevation: '8dp',
       zIndex: 'z-30',
@@ -39,7 +38,7 @@ export function ShadowsView() {
       primitive: 'xl',
       token: 'shadow-xl',
       value: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-      darkValue: '0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.4)',
+      darkValue: '0 20px 25px -5px rgba(255, 255, 255, 0.25), 0 8px 10px -6px rgba(255, 255, 255, 0.25)',
       usage: 'Maximum elevation for command palettes, critical dialogs',
       elevation: '16dp',
       zIndex: 'z-50',
@@ -57,33 +56,9 @@ export function ShadowsView() {
             4-level shadow system with z-index tokens for consistent depth and elevation hierarchy.
           </p>
         </div>
-        
-        {/* Dark Mode Toggle */}
-        <div className="flex items-center gap-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg p-1">
-          <button
-            onClick={() => setPreviewMode('light')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold text-sm transition-all ${ 
-              previewMode === 'light'
-                ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-50 shadow-sm'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50'
-            }`}
-          >
-            <Sun className="w-4 h-4" />
-            Light Mode
-          </button>
-          <button
-            onClick={() => setPreviewMode('dark')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md font-semibold text-sm transition-all ${ 
-              previewMode === 'dark'
-                ? 'bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-50 shadow-sm'
-                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50'
-            }`}
-          >
-            <Moon className="w-4 h-4" />
-            Dark Mode
-          </button>
-        </div>
+
       </div>
+
 
       {/* Shadow Scale */}
       <div className="mb-12">
@@ -93,16 +68,15 @@ export function ShadowsView() {
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
           Progressive elevation levels based on Material Design principles. Medium (md) and Large (lg) are primary choices.
         </p>
-        
+
         <div className="space-y-6">
           {shadowLevels.map((shadow) => (
             <div
               key={shadow.primitive}
-              className={`bg-white dark:bg-zinc-900 border rounded-md p-6 ${
-                shadow.primary
-                  ? 'border-zinc-800 dark:border-zinc-600'
-                  : 'border-zinc-200 dark:border-zinc-800'
-              }`}
+              className={`bg-white dark:bg-zinc-900 border rounded-md p-6 ${shadow.primary
+                ? 'border-zinc-800 dark:border-zinc-600'
+                : 'border-zinc-200 dark:border-zinc-800'
+                }`}
             >
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                 {/* Info Section */}
@@ -116,7 +90,7 @@ export function ShadowsView() {
                         {shadow.primitive}
                       </code>
                     </div>
-                    
+
                     <div className="ml-4">
                       <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
                         Token
@@ -323,7 +297,7 @@ export function ShadowsView() {
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
           Standardized z-index values that correspond to elevation levels for proper stacking order.
         </p>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { primitive: '10', token: 'z-index-base', usage: 'Base elevated elements', shadow: 'shadow-sm' },
@@ -333,11 +307,10 @@ export function ShadowsView() {
           ].map((zIndex) => (
             <div
               key={zIndex.primitive}
-              className={`bg-white dark:bg-zinc-900 border rounded-md p-5 ${
-                zIndex.primary
-                  ? 'border-zinc-800 dark:border-zinc-600'
-                  : 'border-zinc-200 dark:border-zinc-800'
-              }`}
+              className={`bg-white dark:bg-zinc-900 border rounded-md p-5 ${zIndex.primary
+                ? 'border-zinc-800 dark:border-zinc-600'
+                : 'border-zinc-200 dark:border-zinc-800'
+                }`}
             >
               <div className="mb-3">
                 <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
@@ -347,7 +320,7 @@ export function ShadowsView() {
                   {zIndex.primitive}
                 </code>
               </div>
-              
+
               <div className="mb-3">
                 <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
                   Token
