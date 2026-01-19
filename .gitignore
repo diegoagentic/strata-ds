@@ -32,3 +32,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Daily Summary
+DAILY_SUMMARY.md
