@@ -38,6 +38,33 @@ export function ColorsView() {
     return `hsl(${Math.round(h * 360)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
   };
 
+  const brandScale = [
+    { primitive: '50', token: 'brand-50', hex: '#fdfee7', usage: 'Subtle backgrounds', light: true },
+    { primitive: '100', token: 'brand-100', hex: '#faffc2', usage: 'Light backgrounds', light: true },
+    { primitive: '200', token: 'brand-200', hex: '#f5ff92', usage: 'Interactive hover (light)', light: true },
+    { primitive: '300', token: 'brand-300', hex: '#edff58', usage: 'Highlights', light: true },
+    { primitive: '400', token: 'brand-400', hex: '#d6ff3c', usage: 'Primary Brand Color (Volt)', light: true, primary: true },
+    { primitive: '500', token: 'brand-500', hex: '#b4eb00', usage: 'Interactive states', dark: true },
+    { primitive: '600', token: 'brand-600', hex: '#8bc200', usage: 'Borders, accents', dark: true },
+    { primitive: '700', token: 'brand-700', hex: '#679600', usage: 'Dark accents', dark: true },
+    { primitive: '800', token: 'brand-800', hex: '#507206', usage: 'Text on light brand bg', dark: true },
+    { primitive: '950', token: 'brand-950', hex: '#233502', usage: 'Darkest brand background', dark: true },
+  ];
+
+  const slateScale = [
+    { primitive: '50', token: 'slate-50', hex: '#f8fafc', usage: 'Subtle backgrounds (Admin/Secondary)', light: true },
+    { primitive: '100', token: 'slate-100', hex: '#f1f5f9', usage: 'Muted backgrounds', light: true },
+    { primitive: '200', token: 'slate-200', hex: '#e2e8f0', usage: 'Muted borders', light: true, primary: true },
+    { primitive: '300', token: 'slate-300', hex: '#cbd5e1', usage: 'Disabled states', light: true },
+    { primitive: '400', token: 'slate-400', hex: '#94a3b8', usage: 'Placeholders', light: true },
+    { primitive: '500', token: 'slate-500', hex: '#64748b', usage: 'Muted text', dark: true, primary: true },
+    { primitive: '600', token: 'slate-600', hex: '#475569', usage: 'Secondary body text', dark: true },
+    { primitive: '700', token: 'slate-700', hex: '#334155', usage: 'Dark muted borders', dark: true },
+    { primitive: '800', token: 'slate-800', hex: '#1e293b', usage: 'Dark secondary backgrounds', dark: true, primary: true },
+    { primitive: '900', token: 'slate-900', hex: '#0f172a', usage: 'Darkest muted background', dark: true },
+    { primitive: '950', token: 'slate-950', hex: '#020617', usage: 'Deepest background', dark: true },
+  ];
+
   const zincScale = [
     {
       primitive: '50',
@@ -263,18 +290,6 @@ export function ColorsView() {
         { step: '500', hex: '#f97316', token: 'color-chart-accent-3-500', primitive: 'orange-500', usage: 'Accent data points', contrast: 'AA', primary: true },
       ],
     },
-    {
-      name: 'Muted',
-      description: 'Slate spectrum for subtle, non-intrusive data representation',
-      usage: 'Disabled states, background data, neutral fills, inactive series',
-      scales: [
-        { step: '100', hex: '#f1f5f9', token: 'color-chart-muted-100', primitive: 'slate-100', usage: 'Backgrounds, disabled fills', contrast: 'AAA' },
-        { step: '200', hex: '#e2e8f0', token: 'color-chart-muted-200', primitive: 'slate-200', usage: 'Inactive states', contrast: 'AA' },
-        { step: '300', hex: '#cbd5e1', token: 'color-chart-muted-300', primitive: 'slate-300', usage: 'Placeholder data', contrast: 'AA' },
-        { step: '400', hex: '#94a3b8', token: 'color-chart-muted-400', primitive: 'slate-400', usage: 'Background series', contrast: 'AA', primary: true },
-        { step: '500', hex: '#64748b', token: 'color-chart-muted-500', primitive: 'slate-500', usage: 'Muted data', contrast: 'AA', primary: true },
-      ],
-    },
   ];
 
   return (
@@ -290,13 +305,243 @@ export function ColorsView() {
         </div>
       </div>
 
+      {/* Brand Palette */}
+      <div className="mb-12">
+        <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
+          Brand Palette (Volt Lime)
+        </h2>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
+          The primary signal color for Strata. Used for high-priority actions, accents, and branding elements.
+        </p>
+
+        {/* Preview Container */}
+        <div>
+          <div className="rounded-xl p-6 transition-colors duration-300 bg-background border border-border">
+            <div className="space-y-3 mb-8">
+              {brandScale.map((color) => (
+                <div
+                  key={color.primitive}
+                  className={`bg-card border rounded-md p-5 flex items-center gap-6 transition-all duration-300 ${color.primary
+                    ? 'border-brand-400 ring-1 ring-brand-400'
+                    : 'border-border'
+                    }`}
+                >
+                  {/* Visual Swatch */}
+                  <div
+                    className="w-20 h-14 rounded border border-zinc-200 dark:border-zinc-700 flex-shrink-0 relative overflow-hidden"
+                    style={{ backgroundColor: color.hex }}
+                  >
+                    {color.primary && (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="w-2 h-2 rounded-full bg-black/20" />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Primitive Value */}
+                  <div className="w-16">
+                    <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                      Step
+                    </div>
+                    <code className="text-sm font-mono font-semibold text-zinc-900 dark:text-zinc-100">
+                      {color.primitive}
+                    </code>
+                  </div>
+
+                  {/* Token */}
+                  <div className="w-48">
+                    <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                      Token
+                    </div>
+                    <code className="text-xs font-mono bg-zinc-100 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 rounded border border-transparent dark:border-zinc-700">
+                      {color.token}
+                    </code>
+                  </div>
+
+                  {/* Hex Value */}
+                  <div className="w-24">
+                    <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                      Hex
+                    </div>
+                    <span className="text-sm font-mono text-zinc-600 dark:text-zinc-300">{color.hex}</span>
+                  </div>
+
+                  {/* Usage */}
+                  <div className="flex-1">
+                    <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                      Usage
+                    </div>
+                    <span className="text-sm text-zinc-600 dark:text-zinc-300">{color.usage}</span>
+                  </div>
+
+                  {/* Copy Button */}
+                  <div className="flex-shrink-0">
+                    <CopyButton
+                      formats={[
+                        { label: 'HEX', value: color.hex, description: 'Hexadecimal color code' },
+                        { label: 'Token', value: color.token, description: 'Design system token' },
+                      ]}
+                      size="sm"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Harmony & Accessibility */}
+      <div className="mb-12">
+        <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
+          Harmony & Accessibility
+        </h2>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
+          Optimized pairings for Brand, Neutral (Zinc), and Muted (Slate) colors across modes.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Light Mode: Brand Background */}
+          <div className="rounded-xl border border-zinc-200 overflow-hidden">
+            <div className="bg-brand-200 p-8 flex flex-col items-center justify-center text-center h-40">
+              <h3 className="text-zinc-900 font-bold text-lg mb-1">Brand Soft</h3>
+              <p className="text-zinc-800 text-sm">Background: brand-200</p>
+              <p className="text-zinc-900 text-sm font-semibold">Text: zinc-900</p>
+            </div>
+            <div className="bg-white p-4 border-t border-zinc-200">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                <span className="text-xs font-semibold text-zinc-600">WCAG AA Pass</span>
+              </div>
+              <p className="text-xs text-zinc-500">Optimal for light mode cards/sections.</p>
+            </div>
+          </div>
+
+          {/* Dark Mode: Brand Signal */}
+          <div className="rounded-xl border border-zinc-800 overflow-hidden">
+            <div className="bg-zinc-900 p-8 flex flex-col items-center justify-center text-center h-40 relative">
+              <div className="absolute top-4 right-4 text-brand-400">
+                <CheckCircle2 className="w-6 h-6" />
+              </div>
+              <h3 className="text-brand-400 font-bold text-lg mb-1">Brand Signal</h3>
+              <p className="text-zinc-400 text-sm">Background: zinc-900</p>
+              <p className="text-brand-400 text-sm font-semibold">Accent: brand-400</p>
+            </div>
+            <div className="bg-zinc-950 p-4 border-t border-zinc-800">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                <span className="text-xs font-semibold text-zinc-400">High Contrast</span>
+              </div>
+              <p className="text-xs text-zinc-500">Best for icons, borders, and text accents in dark mode.</p>
+            </div>
+          </div>
+
+          {/* Scale Harmony */}
+          <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
+            <div className="bg-zinc-50 dark:bg-zinc-900 p-8 flex flex-col justify-center h-40 gap-2">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded bg-zinc-500 flex items-center justify-center text-white text-xs">Zn</div>
+                <span className="text-sm font-mono text-zinc-500">Zinc (Neutral)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded bg-slate-500 flex items-center justify-center text-white text-xs">Sl</div>
+                <span className="text-sm font-mono text-slate-500">Slate (Muted)</span>
+              </div>
+            </div>
+            <div className="bg-white dark:bg-zinc-950 p-4 border-t border-zinc-200 dark:border-zinc-800">
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                Use Zinc for sharp UI elements. Use Slate for secondary/administrative data to reduce visual noise.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Secondary Palette (Muted/Slate) */}
+      <div className="mb-12">
+        <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
+          Secondary Palette (Slate)
+        </h2>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
+          Cooler, muted greyscale for administrative interfaces, disabled states, and secondary information. Distinct from the sharp Zinc neutral palette.
+        </p>
+        <div>
+          <div className="rounded-xl p-6 transition-colors duration-300 bg-background border border-border">
+            <div className="space-y-3 mb-8">
+              {slateScale.map((color) => (
+                <div
+                  key={color.primitive}
+                  className={`bg-card border rounded-md p-5 flex items-center gap-6 transition-all duration-300 ${color.primary
+                    ? 'border-slate-400/50 ring-1 ring-slate-400/20'
+                    : 'border-border'
+                    }`}
+                >
+                  {/* Visual Swatch */}
+                  <div
+                    className="w-20 h-14 rounded border border-zinc-200 dark:border-zinc-700 flex-shrink-0"
+                    style={{ backgroundColor: color.hex }}
+                  />
+
+                  {/* Primitive Value */}
+                  <div className="w-16">
+                    <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                      Step
+                    </div>
+                    <code className="text-sm font-mono font-semibold text-zinc-900 dark:text-zinc-100">
+                      {color.primitive}
+                    </code>
+                  </div>
+
+                  {/* Token */}
+                  <div className="w-48">
+                    <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                      Token
+                    </div>
+                    <code className="text-xs font-mono bg-zinc-100 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 rounded border border-transparent dark:border-zinc-700">
+                      {color.token}
+                    </code>
+                  </div>
+
+                  {/* Hex Value */}
+                  <div className="w-24">
+                    <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                      Hex
+                    </div>
+                    <span className="text-sm font-mono text-zinc-600 dark:text-zinc-300">{color.hex}</span>
+                  </div>
+
+                  {/* Usage */}
+                  <div className="flex-1">
+                    <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                      Usage
+                    </div>
+                    <span className="text-sm text-zinc-600 dark:text-zinc-300">{color.usage}</span>
+                  </div>
+
+                  {/* Copy Button */}
+                  <div className="flex-shrink-0">
+                    <CopyButton
+                      formats={[
+                        { label: 'HEX', value: color.hex, description: 'Hexadecimal color code' },
+                        { label: 'Token', value: color.token, description: 'Design system token' },
+                      ]}
+                      size="sm"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Neutral Palette */}
       <div className="mb-12">
         <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
-          Neutral Palette
+          Neutral Palette (Zinc)
         </h2>
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
-          11-step greyscale foundation for backgrounds, borders, and text. Primary tokens (200, 500, 800, 900) are most commonly used.
+          11-step sharp greyscale foundation for primary backgrounds, borders, and text.
         </p>
 
         {/* Preview Container */}

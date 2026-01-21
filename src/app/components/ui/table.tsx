@@ -1,116 +1,62 @@
-"use client";
+import * as React from "react"
+import { cn } from "./utils"
 
-import * as React from "react";
-
-import { cn } from "./utils";
-
-function Table({ className, ...props }: React.ComponentProps<"table">) {
+export function Table({ className, striped, dense, ...props }: React.ComponentPropsWithoutRef<"table"> & { striped?: boolean; dense?: boolean }) {
   return (
-    <div
-      data-slot="table-container"
-      className="relative w-full overflow-x-auto"
-    >
+    <div className="relative w-full overflow-x-auto">
       <table
-        data-slot="table"
-        className={cn("w-full caption-bottom text-sm", className)}
         {...props}
+        className={cn(
+          "w-full text-left text-sm",
+          striped && "[&_tbody_tr:nth-child(even)]:bg-zinc-950/[2.5%] dark:[&_tbody_tr:nth-child(even)]:bg-white/[2.5%]",
+          dense ? "[&_td]:py-2 [&_th]:py-2" : "[&_td]:py-4 [&_th]:py-4",
+          className
+        )}
       />
     </div>
-  );
+  )
 }
 
-function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
-  return (
-    <thead
-      data-slot="table-header"
-      className={cn("[&_tr]:border-b border-zinc-200 dark:border-zinc-800", className)}
-      {...props}
-    />
-  );
+export function TableHeader({ className, ...props }: React.ComponentPropsWithoutRef<"thead">) {
+  return <thead {...props} className={cn("text-zinc-500 dark:text-zinc-400 border-b border-zinc-950/10 dark:border-white/10", className)} />
 }
 
-function TableBody({ className, ...props }: React.ComponentProps<"tbody">) {
-  return (
-    <tbody
-      data-slot="table-body"
-      className={cn("[&_tr:last-child]:border-0", className)}
-      {...props}
-    />
-  );
+export function TableBody({ className, ...props }: React.ComponentPropsWithoutRef<"tbody">) {
+  return <tbody {...props} className={cn(className)} />
 }
 
-function TableFooter({ className, ...props }: React.ComponentProps<"tfoot">) {
-  return (
-    <tfoot
-      data-slot="table-footer"
-      className={cn(
-        "bg-zinc-100/50 dark:bg-zinc-800/50 border-t border-zinc-200 dark:border-zinc-800 font-medium [&>tr]:last:border-b-0",
-        className,
-      )}
-      {...props}
-    />
-  );
-}
-
-function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
+export function TableRow({ className, ...props }: React.ComponentPropsWithoutRef<"tr">) {
   return (
     <tr
-      data-slot="table-row"
-      className={cn(
-        "hover:bg-zinc-100/50 dark:hover:bg-zinc-800/50 data-[state=selected]:bg-zinc-100 dark:data-[state=selected]:bg-zinc-800 border-b border-zinc-200 dark:border-zinc-800 transition-colors",
-        className,
-      )}
       {...props}
+      className={cn(
+        "border-b border-zinc-950/5 dark:border-white/5 last:border-none hover:bg-zinc-950/[2.5%] dark:hover:bg-white/[2.5%] transition-colors",
+        className
+      )}
     />
-  );
+  )
 }
 
-function TableHead({ className, ...props }: React.ComponentProps<"th">) {
+export function TableHead({ className, ...props }: React.ComponentPropsWithoutRef<"th">) {
   return (
     <th
-      data-slot="table-head"
-      className={cn(
-        "text-zinc-950 dark:text-zinc-50 h-10 px-2 text-left align-middle font-medium whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
-        className,
-      )}
       {...props}
+      className={cn(
+        "px-4 font-medium text-zinc-500 dark:text-zinc-400",
+        className
+      )}
     />
-  );
+  )
 }
 
-function TableCell({ className, ...props }: React.ComponentProps<"td">) {
+export function TableCell({ className, ...props }: React.ComponentPropsWithoutRef<"td">) {
   return (
     <td
-      data-slot="table-cell"
+      {...props}
       className={cn(
-        "p-2 align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
-        className,
+        "px-4 text-zinc-950 dark:text-white",
+        className
       )}
-      {...props}
     />
-  );
+  )
 }
-
-function TableCaption({
-  className,
-  ...props
-}: React.ComponentProps<"caption">) {
-  return (
-    <caption
-      data-slot="table-caption"
-      className={cn("text-zinc-500 dark:text-zinc-400 mt-4 text-sm", className)}
-      {...props}
-    />
-  );
-}
-
-export {
-  Table,
-  TableHeader,
-  TableBody,
-  TableFooter,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableCaption,
-};

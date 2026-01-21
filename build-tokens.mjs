@@ -195,6 +195,8 @@ function generateTailwindTheme(tokens) {
             lines.push(`  --${key}: var(--${key});`);
         } else if (key.startsWith('borderRadius')) {
             lines.push(`  --${key.replace('borderRadius-', 'radius-')}: var(--${key});`);
+        } else if (key.startsWith('fontFamily')) {
+            lines.push(`  --font-${key.replace('fontFamily-', '')}: var(--${key});`);
         }
         // Add more mappings as needed (shadows, fonts, etc.)
     }

@@ -1,6 +1,157 @@
 {
   "light": {
     "color": {
+      "background": {
+        "value": "{color.mono.offWhite}"
+      },
+      "foreground": {
+        "value": "{color.mono.offBlack}"
+      },
+      "card": {
+        "value": "{color.mono.offWhite}"
+      },
+      "card-foreground": {
+        "value": "{color.mono.offBlack}"
+      },
+      "popover": {
+        "value": "{color.mono.offWhite}"
+      },
+      "popover-foreground": {
+        "value": "{color.mono.offBlack}"
+      },
+      "primary": {
+        "value": "{color.brand.lime}"
+      },
+      "primary-foreground": {
+        "value": "{color.mono.offBlack}"
+      },
+      "secondary": {
+        "value": "{color.zinc.100}"
+      },
+      "secondary-foreground": {
+        "value": "{color.zinc.900}"
+      },
+      "muted": {
+        "value": "{color.zinc.100}"
+      },
+      "muted-foreground": {
+        "value": "{color.zinc.500}"
+      },
+      "accent": {
+        "value": "{color.zinc.100}"
+      },
+      "accent-foreground": {
+        "value": "{color.zinc.900}"
+      },
+      "destructive": {
+        "value": "{color.red.500}"
+      },
+      "destructive-foreground": {
+        "value": "{color.white}"
+      },
+      "border": {
+        "value": "{color.zinc.200}"
+      },
+      "input": {
+        "value": "{color.zinc.200}"
+      },
+      "input-background": {
+        "value": "{color.zinc.100}"
+      },
+      "ring": {
+        "value": "{color.zinc.500}"
+      },
+      "chart-1": {
+        "value": "{color.indigo.500}"
+      },
+      "chart-2": {
+        "value": "{color.green.500}"
+      },
+      "chart-3": {
+        "value": "{color.red.500}"
+      },
+      "chart-4": {
+        "value": "{color.amber.500}"
+      },
+      "chart-5": {
+        "value": "{color.indigo.400}"
+      },
+      "sidebar": {
+        "value": "{color.mono.offWhite}"
+      },
+      "sidebar-foreground": {
+        "value": "{color.mono.offBlack}"
+      },
+      "sidebar-primary": {
+        "value": "{color.brand.lime}"
+      },
+      "sidebar-primary-foreground": {
+        "value": "{color.mono.offBlack}"
+      },
+      "sidebar-accent": {
+        "value": "{color.zinc.100}"
+      },
+      "sidebar-accent-foreground": {
+        "value": "{color.zinc.900}"
+      },
+      "sidebar-border": {
+        "value": "{color.zinc.200}"
+      },
+      "sidebar-ring": {
+        "value": "{color.zinc.500}"
+      },
+      "brand": {
+        "50": {
+          "value": "#fdfee7"
+        },
+        "100": {
+          "value": "#faffc2"
+        },
+        "200": {
+          "value": "#f5ff92"
+        },
+        "300": {
+          "value": "#edff58"
+        },
+        "400": {
+          "value": "#d6ff3c"
+        },
+        "500": {
+          "value": "#b4eb00"
+        },
+        "600": {
+          "value": "#8bc200"
+        },
+        "700": {
+          "value": "#679600"
+        },
+        "800": {
+          "value": "#507206"
+        },
+        "900": {
+          "value": "#425e0b"
+        },
+        "950": {
+          "value": "#233502"
+        },
+        "lime": {
+          "value": "#d6ff3c"
+        }
+      },
+      "mono": {
+        "offBlack": {
+          "value": "#0B0B0C"
+        },
+        "deepGraphite": {
+          "value": "#1E1E22"
+        },
+        "softGray": {
+          "value": "#C8C8C8"
+        },
+        "offWhite": {
+          "value": "#F4F4F1"
+        }
+      },
       "zinc": {
         "50": {
           "value": "#fafafa"
@@ -34,6 +185,41 @@
         },
         "950": {
           "value": "#09090b"
+        }
+      },
+      "slate": {
+        "50": {
+          "value": "#f8fafc"
+        },
+        "100": {
+          "value": "#f1f5f9"
+        },
+        "200": {
+          "value": "#e2e8f0"
+        },
+        "300": {
+          "value": "#cbd5e1"
+        },
+        "400": {
+          "value": "#94a3b8"
+        },
+        "500": {
+          "value": "#64748b"
+        },
+        "600": {
+          "value": "#475569"
+        },
+        "700": {
+          "value": "#334155"
+        },
+        "800": {
+          "value": "#1e293b"
+        },
+        "900": {
+          "value": "#0f172a"
+        },
+        "950": {
+          "value": "#020617"
         }
       },
       "red": {
@@ -350,6 +536,9 @@
       }
     },
     "fontFamily": {
+      "brand": {
+        "value": "'PP Monument Extended', sans-serif"
+      },
       "sans": {
         "value": "Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
       },
@@ -473,6 +662,157 @@
   },
   "dark": {
     "color": {
+      "background": {
+        "value": "{color.mono.offBlack}"
+      },
+      "foreground": {
+        "value": "{color.mono.offWhite}"
+      },
+      "card": {
+        "value": "{color.mono.offBlack}"
+      },
+      "card-foreground": {
+        "value": "{color.mono.offWhite}"
+      },
+      "popover": {
+        "value": "{color.mono.offBlack}"
+      },
+      "popover-foreground": {
+        "value": "{color.mono.offWhite}"
+      },
+      "primary": {
+        "value": "{color.brand.lime}"
+      },
+      "primary-foreground": {
+        "value": "{color.mono.offBlack}"
+      },
+      "secondary": {
+        "value": "{color.mono.deepGraphite}"
+      },
+      "secondary-foreground": {
+        "value": "{color.mono.offWhite}"
+      },
+      "muted": {
+        "value": "{color.mono.deepGraphite}"
+      },
+      "muted-foreground": {
+        "value": "{color.zinc.400}"
+      },
+      "accent": {
+        "value": "{color.mono.deepGraphite}"
+      },
+      "accent-foreground": {
+        "value": "{color.mono.offWhite}"
+      },
+      "destructive": {
+        "value": "{color.red.900}"
+      },
+      "destructive-foreground": {
+        "value": "{color.red.50}"
+      },
+      "border": {
+        "value": "{color.mono.deepGraphite}"
+      },
+      "input": {
+        "value": "{color.mono.deepGraphite}"
+      },
+      "input-background": {
+        "value": "{color.mono.deepGraphite}"
+      },
+      "ring": {
+        "value": "{color.zinc.400}"
+      },
+      "chart-1": {
+        "value": "{color.indigo.500}"
+      },
+      "chart-2": {
+        "value": "{color.green.500}"
+      },
+      "chart-3": {
+        "value": "{color.red.500}"
+      },
+      "chart-4": {
+        "value": "{color.amber.500}"
+      },
+      "chart-5": {
+        "value": "{color.indigo.400}"
+      },
+      "sidebar": {
+        "value": "{color.mono.offBlack}"
+      },
+      "sidebar-foreground": {
+        "value": "{color.mono.offWhite}"
+      },
+      "sidebar-primary": {
+        "value": "{color.brand.lime}"
+      },
+      "sidebar-primary-foreground": {
+        "value": "{color.mono.offBlack}"
+      },
+      "sidebar-accent": {
+        "value": "{color.mono.deepGraphite}"
+      },
+      "sidebar-accent-foreground": {
+        "value": "{color.mono.offWhite}"
+      },
+      "sidebar-border": {
+        "value": "{color.mono.deepGraphite}"
+      },
+      "sidebar-ring": {
+        "value": "{color.zinc.400}"
+      },
+      "brand": {
+        "50": {
+          "value": "#fdfee7"
+        },
+        "100": {
+          "value": "#faffc2"
+        },
+        "200": {
+          "value": "#f5ff92"
+        },
+        "300": {
+          "value": "#edff58"
+        },
+        "400": {
+          "value": "#d6ff3c"
+        },
+        "500": {
+          "value": "#b4eb00"
+        },
+        "600": {
+          "value": "#8bc200"
+        },
+        "700": {
+          "value": "#679600"
+        },
+        "800": {
+          "value": "#507206"
+        },
+        "900": {
+          "value": "#425e0b"
+        },
+        "950": {
+          "value": "#233502"
+        },
+        "lime": {
+          "value": "#d6ff3c"
+        }
+      },
+      "mono": {
+        "offBlack": {
+          "value": "#0B0B0C"
+        },
+        "deepGraphite": {
+          "value": "#1E1E22"
+        },
+        "softGray": {
+          "value": "#C8C8C8"
+        },
+        "offWhite": {
+          "value": "#F4F4F1"
+        }
+      },
       "zinc": {
         "50": {
           "value": "#fafafa"
@@ -506,6 +846,41 @@
         },
         "950": {
           "value": "#09090b"
+        }
+      },
+      "slate": {
+        "50": {
+          "value": "#f8fafc"
+        },
+        "100": {
+          "value": "#f1f5f9"
+        },
+        "200": {
+          "value": "#e2e8f0"
+        },
+        "300": {
+          "value": "#cbd5e1"
+        },
+        "400": {
+          "value": "#94a3b8"
+        },
+        "500": {
+          "value": "#64748b"
+        },
+        "600": {
+          "value": "#475569"
+        },
+        "700": {
+          "value": "#334155"
+        },
+        "800": {
+          "value": "#1e293b"
+        },
+        "900": {
+          "value": "#0f172a"
+        },
+        "950": {
+          "value": "#020617"
         }
       },
       "red": {
@@ -692,25 +1067,25 @@
     },
     "shadow": {
       "sm": {
-        "value": "0 1px 2px 0 rgb(255 255 255 / 0.1)"
+        "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)"
       },
       "base": {
-        "value": "0 1px 3px 0 rgb(255 255 255 / 0.1), 0 1px 2px -1px rgb(255 255 255 / 0.1)"
+        "value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)"
       },
       "md": {
-        "value": "0 4px 6px -1px rgb(255 255 255 / 0.15), 0 2px 4px -2px rgb(255 255 255 / 0.15)"
+        "value": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)"
       },
       "lg": {
-        "value": "0 10px 15px -3px rgb(255 255 255 / 0.2), 0 4px 6px -4px rgb(255 255 255 / 0.2)"
+        "value": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)"
       },
       "xl": {
-        "value": "0 20px 25px -5px rgb(255 255 255 / 0.25), 0 8px 10px -6px rgb(255 255 255 / 0.25)"
+        "value": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)"
       },
       "2xl": {
-        "value": "0 25px 50px -12px rgb(255 255 255 / 0.35)"
+        "value": "0 25px 50px -12px rgb(0 0 0 / 0.25)"
       },
       "inner": {
-        "value": "inset 0 2px 4px 0 rgb(255 255 255 / 0.05)"
+        "value": "inset 0 2px 4px 0 rgb(0 0 0 / 0.05)"
       },
       "none": {
         "value": "none"
@@ -822,6 +1197,9 @@
       }
     },
     "fontFamily": {
+      "brand": {
+        "value": "'PP Monument Extended', sans-serif"
+      },
       "sans": {
         "value": "Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
       },

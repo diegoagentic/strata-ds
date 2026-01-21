@@ -624,6 +624,53 @@ Generate following Strata DS specifications.`;
         </p>
       </div>
 
+      {/* Brand Button */}
+      <div className="mb-12">
+        <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
+          Brand Button
+        </h2>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
+          High-visibility primary action button using the Volt Lime brand color. Optimized for accessibility with dark text in both modes or light backgrounds.
+        </p>
+
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-800 dark:border-zinc-600 rounded-md p-6">
+          <div className="flex items-center gap-6 mb-4">
+            <div className="w-32">
+              <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2">
+                Variant
+              </div>
+              <code className="text-sm font-mono font-semibold text-zinc-900 dark:text-zinc-50">
+                Brand
+              </code>
+            </div>
+            <div className="flex-1">
+              <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2">
+                Usage
+              </div>
+              <span className="text-sm text-zinc-600 dark:text-zinc-400">
+                Major conversion actions (e.g., "Upgrade", "Buy Now", "Sign Up").
+              </span>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-3 mb-6">
+            <button className="px-4 py-2 bg-brand-200 text-zinc-900 font-semibold rounded-md hover:bg-brand-300 dark:bg-brand-400 dark:text-zinc-900 dark:hover:bg-brand-500 transition-colors">
+              Brand Action
+            </button>
+            <button className="px-4 py-2 bg-brand-200 text-zinc-900 font-semibold rounded-md hover:bg-brand-300 dark:bg-brand-400 dark:text-zinc-900 dark:hover:bg-brand-500 transition-colors flex items-center gap-2">
+              <Plus className="w-4 h-4" />
+              With Icon
+            </button>
+          </div>
+          <CodeViewer
+            title="Brand Button"
+            react={`<Button variant="brand">Brand Action</Button>`}
+            html={`<button class="bg-brand-200 dark:bg-brand-400 text-zinc-900 ...">Brand Action</button>`}
+            css={`.btn-brand { background-color: #f5ff92; color: #18181b; }`}
+            prompt="Generate a brand-colored primary button."
+          />
+        </div>
+      </div>
+
       {/* Button Variants */}
       <div className="mb-12">
         <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
@@ -632,7 +679,7 @@ Generate following Strata DS specifications.`;
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
           6 button styles for different emphasis levels and contexts.
         </p>
-        
+
         <div className="space-y-6">
           {/* Primary */}
           <div className="bg-white dark:bg-zinc-900 border border-zinc-800 dark:border-zinc-600 rounded-md p-6">
@@ -673,7 +720,7 @@ Generate following Strata DS specifications.`;
                 Disabled
               </button>
             </div>
-            
+
             {/* Code Viewer */}
             <CodeViewer
               title="Primary Button"
@@ -747,7 +794,7 @@ Generate following Strata DS specifications.`;
                 <Settings className="w-4 h-4" />
               </button>
             </div>
-            
+
             {/* Code Viewer */}
             <CodeViewer
               title="Secondary Button"
@@ -815,7 +862,7 @@ Generate following Strata DS specifications.`;
                 Email
               </button>
             </div>
-            
+
             {/* Code Viewer */}
             <CodeViewer
               title="Outline Button"
@@ -883,7 +930,7 @@ Generate following Strata DS specifications.`;
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
-            
+
             {/* Code Viewer */}
             <CodeViewer
               title="Ghost Button"
@@ -951,7 +998,7 @@ Generate following Strata DS specifications.`;
                 Delete Outline
               </button>
             </div>
-            
+
             {/* Code Viewer */}
             <CodeViewer
               title="Destructive Button"
@@ -1017,7 +1064,7 @@ Generate following Strata DS specifications.`;
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
-            
+
             {/* Code Viewer */}
             <CodeViewer
               title="Link Button"
@@ -1059,7 +1106,7 @@ Generate following Strata DS specifications.`;
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
           4 size options from compact to large. Medium is the default size.
         </p>
-        
+
         <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md p-6">
           <div className="flex flex-wrap items-end gap-4">
             <div className="text-center">
@@ -1088,6 +1135,26 @@ Generate following Strata DS specifications.`;
             </div>
           </div>
         </div>
+
+        <div className="mt-6">
+          <CodeViewer
+            title="Button Sizes"
+            react={`{/* Small */}
+<button className="px-3 py-1.5. text-sm ..">Small</button>
+
+{/* Medium */}
+<button className="px-4 py-2 ...">Medium</button>
+
+{/* Large */}
+<button className="px-5 py-2.5 text-lg ...">Large</button>
+
+{/* Extra Large */}
+<button className="px-6 py-3 text-xl ...">Extra Large</button>`}
+            html={`<!-- Button Size Examples -->`}
+            css={`/* Utility classes */`}
+            prompt="Generate button size variants."
+          />
+        </div>
       </div>
 
       {/* Icon Buttons */}
@@ -1098,7 +1165,7 @@ Generate following Strata DS specifications.`;
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
           Square buttons with icons only for compact interfaces.
         </p>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Primary Icon */}
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md p-6">
@@ -1150,6 +1217,40 @@ Generate following Strata DS specifications.`;
               </button>
             </div>
           </div>
+          {/* Brand Icon */}
+          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md p-6">
+            <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-3">
+              Brand
+            </div>
+            <div className="flex gap-2">
+              <button className="w-10 h-10 bg-brand-200 text-zinc-900 rounded-md hover:bg-brand-300 dark:bg-brand-400 dark:text-zinc-900 dark:hover:bg-brand-500 transition-colors flex items-center justify-center">
+                <Plus className="w-5 h-5" />
+              </button>
+              <button className="w-10 h-10 bg-brand-200 text-zinc-900 rounded-md hover:bg-brand-300 dark:bg-brand-400 dark:text-zinc-900 dark:hover:bg-brand-500 transition-colors flex items-center justify-center">
+                <Settings className="w-5 h-5" />
+              </button>
+              <button className="w-10 h-10 bg-brand-200 text-zinc-900 rounded-md hover:bg-brand-300 dark:bg-brand-400 dark:text-zinc-900 dark:hover:bg-brand-500 transition-colors flex items-center justify-center">
+                <Download className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <CodeViewer
+            title="Icon Buttons"
+            react={`{/* Primary Icon */}
+<button className="w-10 h-10 bg-zinc-900 text-white ..."><Plus /></button>
+
+{/* Brand Icon */}
+<button className="w-10 h-10 bg-brand-200 text-zinc-900 ..."><Plus /></button>
+
+{/* Ghost Icon */}
+<button className="w-10 h-10 hover:bg-zinc-100 ..."><Plus /></button>`}
+            html={`<!-- Icon Buttons -->`}
+            css={`/* Icon button styles */`}
+            prompt="Generate icon buttons."
+          />
         </div>
       </div>
 
@@ -1161,7 +1262,7 @@ Generate following Strata DS specifications.`;
         <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
           Connected buttons for related actions.
         </p>
-        
+
         <div className="space-y-6">
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md p-6">
             <div className="inline-flex rounded-md shadow-sm" role="group">
@@ -1193,7 +1294,42 @@ Generate following Strata DS specifications.`;
               </button>
             </div>
           </div>
+
+          {/* Brand Group */}
+          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md p-6">
+            <div className="inline-flex rounded-md shadow-sm" role="group">
+              <button className="px-4 py-2 bg-brand-200 dark:bg-brand-400 text-zinc-900 font-semibold rounded-l-md border-r border-brand-300 dark:border-brand-500 hover:bg-brand-300 dark:hover:bg-brand-500 transition-colors">
+                Left
+              </button>
+              <button className="px-4 py-2 bg-brand-200 dark:bg-brand-400 text-zinc-900 font-semibold border-r border-brand-300 dark:border-brand-500 hover:bg-brand-300 dark:hover:bg-brand-500 transition-colors">
+                Middle
+              </button>
+              <button className="px-4 py-2 bg-brand-200 dark:bg-brand-400 text-zinc-900 font-semibold rounded-r-md hover:bg-brand-300 dark:hover:bg-brand-500 transition-colors">
+                Right
+              </button>
+            </div>
+          </div>
         </div>
+
+        <CodeViewer
+          title="Button Groups"
+          react={`{/* Group 1 */}
+<div className="inline-flex rounded-md shadow-sm" role="group">
+  <button className="rounded-l-md ...">Save</button>
+  <button className="...">Preview</button>
+  <button className="rounded-r-md ...">Publish</button>
+</div>
+
+{/* Brand Group */}
+<div className="inline-flex rounded-md shadow-sm" role="group">
+  <button className="bg-brand-200 ...">Left</button>
+  <button className="...">Middle</button>
+  <button className="bg-brand-200 ...">Right</button>
+</div>`}
+          html={`<!-- Button Group -->`}
+          css={`/* Button group styles */`}
+          prompt="Generate button group."
+        />
       </div>
 
       {/* Usage Guidelines */}

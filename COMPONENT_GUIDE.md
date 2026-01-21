@@ -2,7 +2,29 @@
 
 ## Overview
 
-The White Label Design System provides a comprehensive set of token-based React components. All components use CSS custom properties for styling, making them easily themeable and customizable.
+The Strata Design System provides a comprehensive set of token-based React components. All components use CSS custom properties for styling, making them easily themeable and customizable.
+
+## Foundations
+
+### Color System
+
+Strata uses a functional color system designed for clarity and hierarchy.
+
+- **Volt Lime (`#D6FF3C`)**: The primary signal color. Used for active states, primary actions in dark mode, and high-priority indicators.
+- **Monochrome**: A strict palette of Off-Black (`#0B0B0C`), Deep Graphite (`#1E1E22`), and Soft Gray (`#C8C8C8`) for structural elements.
+- **Semantic Mapping**: Tokens like `--background`, `--foreground`, and `--primary` automatically shift between Light and Dark modes.
+
+### Typography
+
+- **Primary (Body)**: `Inter` is used for all UI text, ensuring high legibility at small sizes.
+- **Brand (Display)**: `PP Monument Extended` is used for H1-H3 headers and feature titles to establish brand identity.
+
+### Accessibility
+
+- **Contrast**: Text on Volt Lime must always be **Black** (#000000) or **Off-Black** (#0B0B0C) to meet AAA contrast requirements.
+- **Dark Mode**: All components support dark mode out of the box.
+
+---
 
 ## Core Components
 

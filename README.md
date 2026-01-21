@@ -1,129 +1,84 @@
-# White Label Design System
+# Strata Design System
 
-A production-ready, token-based React component library with full TypeScript support and dark mode.
+A technical, functional, and precise design system operating as the intelligence layer that unifies data, workflows, and AI across the ecosystem. Built with React, TypeScript, and a robust token architecture.
 
 ## Features
 
-- 🎨 **30+ Components** - Production-ready UI components
-- 🎯 **Token-Based** - 201 design tokens for easy customization
-- 🌗 **Dark Mode** - Built-in dark mode support
-- 📦 **Tree-Shakeable** - Optimized bundle size
-- 🔷 **TypeScript** - Full type safety
-- ♿ **Accessible** - ARIA compliant components
-- 🎭 **Themeable** - Easy customization via CSS variables
+- 🎨 **Strata Identity** - Implements the "Volt Lime" signal color and strict Monochrome palette.
+- 🎯 **Token-Based** - Comprehensive JSON-based token architecture (Primitive -> Semantic -> Component).
+- 🔠 **Typography** - "Inter" for system clarity and "PP Monument Extended" for brand presence.
+- 🌗 **Dark Mode** - Built-in dark mode with deep graphite tones.
+- 📦 **Tree-Shakeable** - Optimized bundle size.
+- 🔷 **TypeScript** - Full type safety.
+- ♿ **Accessible** - ARIA compliant components.
 
 ## Installation
 
 ```bash
-npm install @whitebrand/design-system
+npm install @strata/design-system
 ```
 
 ## Quick Start
 
 ```tsx
-import { Button, Card, CardHeader, CardTitle, CardContent } from '@whitebrand/design-system';
-import '@whitebrand/design-system/styles';
+import { Button, Card, CardHeader, CardTitle, CardContent } from '@strata/design-system';
+import '@strata/design-system/styles';
 
 function App() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Welcome</CardTitle>
+        <CardTitle className="font-brand">Welcome to Strata</CardTitle>
       </CardHeader>
       <CardContent>
-        <Button variant="primary">Get Started</Button>
+        <Button variant="primary">Initialize System</Button>
       </CardContent>
     </Card>
   );
 }
 ```
 
+## Documentation
+
+### Foundations
+- **Colors**: Volt Lime (#D6FF3C) signal color, Monochrome structural palette.
+- **Typography**: Inter (Body), PP Monument Extended (Display).
+- **Branding**: Official logo assets and usage guidelines.
+
+For detailed component documentation, see [COMPONENT_GUIDE.md](./COMPONENT_GUIDE.md).
+
 ## Components
 
-### Core UI (5)
+### Core UI
 - Button, Input, Card, Badge, Modal
 
-### Forms (7)
+### Forms
 - Checkbox, Switch, Label, Textarea, Select, Radio, RadioGroup
 
-### Feedback (3)
+### Feedback
 - Alert, Progress, Tooltip
 
-### Navigation (2)
+### Navigation
 - Breadcrumb, Pagination
 
-### Data Display (2)
+### Data Display
 - Table, Accordion, Avatar
 
-### Overlays (4)
+### Overlays
 - Dropdown, Dialog, Popover, Toast
 
-### Layout & Utilities (7)
-- Separator, Tabs, Skeleton, Spinner, Slider, AspectRatio, ScrollArea
+### Layout & Utilities
+- Sidebar, Separator, Tabs, Skeleton, Spinner, Slider, ScrollArea
 
 ## Theming
 
-Customize the design system using CSS variables:
-
-```tsx
-import { ThemeProvider } from '@whitebrand/design-system';
-
-const customTheme = {
-  '--button-primary-background': '#8B5CF6',
-  '--button-primary-text': '#FFFFFF',
-  '--color-interactive-default': '#8B5CF6',
-};
-
-<ThemeProvider theme={customTheme}>
-  <App />
-</ThemeProvider>
-```
-
-Or globally in CSS:
+Customize the design system using the generated CSS tokens:
 
 ```css
 :root {
-  --button-primary-background: #8B5CF6;
-  --color-interactive-default: #8B5CF6;
+  --color-brand-lime: #D6FF3C;
+  --font-brand: 'PP Monument Extended', sans-serif;
 }
-
-.dark {
-  --button-primary-background: #A78BFA;
-}
-```
-
-## Design Tokens
-
-Access design tokens programmatically:
-
-```tsx
-import { tokens } from '@whitebrand/design-system/tokens';
-
-console.log(tokens['color-interactive-default']); // #18181b
-```
-
-## Documentation
-
-For detailed component documentation, see [COMPONENT_GUIDE.md](./COMPONENT_GUIDE.md)
-
-## TypeScript
-
-Full TypeScript support with exported types:
-
-```tsx
-import type { ButtonProps, CardProps } from '@whitebrand/design-system';
-```
-
-## Tree-Shaking
-
-Import only what you need:
-
-```tsx
-// ✅ Tree-shakeable
-import { Button, Input } from '@whitebrand/design-system';
-
-// ❌ Imports everything
-import * as DS from '@whitebrand/design-system';
 ```
 
 ## Browser Support
@@ -135,15 +90,4 @@ import * as DS from '@whitebrand/design-system';
 
 ## License
 
-MIT © [Your Name]
-
-## Contributing
-
-Contributions are welcome! Please read our contributing guidelines.
-
-## Links
-
-- [Documentation](https://github.com/yourusername/whitebrand-design-system)
-- [Component Guide](./COMPONENT_GUIDE.md)
-- [NPM Package](https://www.npmjs.com/package/@whitebrand/design-system)
-- [Issues](https://github.com/yourusername/whitebrand-design-system/issues)
+MIT © Strata Team

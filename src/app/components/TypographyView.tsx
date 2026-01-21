@@ -1,4 +1,8 @@
 import { Check, X } from 'lucide-react';
+import { Heading, Subheading } from './ui/heading';
+import { Text, Strong } from './ui/text';
+import { Link } from './ui/link';
+import { CodeViewer } from './CodeViewer';
 import { CopyButton } from './CopyButton';
 
 export function TypographyView() {
@@ -114,33 +118,119 @@ export function TypographyView() {
       </div>
 
 
-      {/* Font Family */}
+      {/* Components */}
       <div className="mb-12">
         <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
-          Font Family
+          Typography Components
         </h2>
-        {/* Preview Container */}
-        <div>
-          <div className="rounded-xl p-6 transition-colors duration-300 bg-zinc-50 dark:bg-zinc-950">
-            <div className="bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-md p-6 transition-all duration-300">
-              <div className="flex items-start gap-6">
-                <div className="flex-1">
-                  <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2">
-                    Primary Typeface
-                  </div>
-                  <div className="text-2xl font-bold text-zinc-900 dark:text-zinc-100 mb-2">
-                    Inter
-                  </div>
-                  <p className="text-sm text-zinc-500 dark:text-zinc-300 mb-4">
-                    A contemporary sans-serif optimized for screen readability with excellent OpenType features.
-                  </p>
-                  <code className="text-xs font-mono bg-zinc-100 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 rounded border border-transparent dark:border-zinc-700">
-                    font-family-base: 'Inter', system-ui, sans-serif
-                  </code>
-                </div>
-                <div className="text-6xl font-bold text-zinc-300 dark:text-zinc-600">
-                  Aa
-                </div>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
+          Standardized React components for consistent text rendering.
+        </p>
+
+        <div className="space-y-8">
+          {/* Headings */}
+          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-8">
+            <div className="max-w-2xl">
+              <Heading level={1} className="mb-4">Standard Page Heading (H1)</Heading>
+              <Subheading level={2} className="mb-2">Logical Subheading (H2)</Subheading>
+              <Text>
+                This is a standard paragraph using the <Strong>Text</Strong> component.
+                It includes support for <Strong>Strong</Strong> emphasis and <Link href="#">navigational links</Link> that follow the system's design tokens.
+              </Text>
+            </div>
+          </div>
+
+          <CodeViewer
+            title="Typography Components"
+            react={`import { Heading, Subheading } from "@/components/ui/heading"
+import { Text, Strong } from "@/components/ui/text"
+import { Link } from "@/components/ui/link"
+
+export function TypographyDemo() {
+  return (
+    <>
+      <Heading level={1}>Heading 1</Heading>
+      <Subheading level={2}>Subheading</Subheading>
+      <Text>
+        Standard body text with <Strong>important</Strong> content 
+        and a <Link href="#">link</Link>.
+      </Text>
+    </>
+  )
+}`}
+            html={`<h1 class="text-2xl/8 font-semibold sm:text-xl/8 text-zinc-950 dark:text-white">Heading 1</h1>
+<h2 class="text-base/7 font-semibold text-zinc-950 sm:text-sm/6 dark:text-white">Subheading</h2>
+<p class="text-base/6 text-zinc-500 sm:text-sm/6 dark:text-zinc-400">
+  Standard body text with <strong class="font-semibold text-zinc-950 dark:text-white">important</strong> content 
+  and a <a class="text-zinc-950 underline decoration-zinc-950/20 underline-offset-4 hover:decoration-zinc-950/50 dark:text-white dark:decoration-white/20 dark:hover:decoration-white/50" href="#">link</a>.
+</p>`}
+            css={`.text {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: var(--color-zinc-500);
+}
+
+.heading-1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-zinc-950);
+}`}
+            prompt={`# AI PROMPT: Typography Components
+## CONTEXT
+Implement Heading, Text, and Link components using Zinc primitives.
+
+## SPECS
+- Text: text-base/6, zinc-500
+- Heading 1: text-2xl/8 font-semibold
+- Link: underline decoration-zinc-950/20`}
+          />
+        </div>
+      </div>
+
+      {/* Font Family */}
+      <div className="mb-12">
+        <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
+          Font Families
+        </h2>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
+          Primary typographic voices for the Strata interface.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Brand Font */}
+          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-8 overflow-hidden relative group">
+            <div className="absolute top-0 right-0 p-4 opacity-50 font-brand text-9xl leading-none text-zinc-100 dark:text-zinc-800 pointer-events-none select-none -mr-4 -mt-4">
+              Aa
+            </div>
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50">Brand Font</h3>
+                <code className="text-xs font-mono px-2 py-1 bg-zinc-100 dark:bg-zinc-800 rounded text-zinc-600 dark:text-zinc-400">font-brand</code>
+              </div>
+              <div className="text-3xl font-brand font-bold text-zinc-900 dark:text-zinc-50 mb-4">PP Monument Extended</div>
+              <div className="space-y-2 text-sm text-zinc-600 dark:text-zinc-400">
+                <p>Used for: <strong>Headings, Display text, Marketing headers</strong></p>
+                <p className="font-brand uppercase tracking-wider text-xs">ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+                <p className="font-brand font-bold">1234567890</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Body Font */}
+          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-8 overflow-hidden relative group">
+            <div className="absolute top-0 right-0 p-4 opacity-50 font-sans text-9xl leading-none text-zinc-100 dark:text-zinc-800 pointer-events-none select-none -mr-4 -mt-4">
+              Aa
+            </div>
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50">Body Font</h3>
+                <code className="text-xs font-mono px-2 py-1 bg-zinc-100 dark:bg-zinc-800 rounded text-zinc-600 dark:text-zinc-400">font-sans</code>
+              </div>
+              <div className="text-3xl font-sans font-medium text-zinc-900 dark:text-zinc-50 mb-4">Inter</div>
+              <div className="space-y-2 text-sm text-zinc-600 dark:text-zinc-400">
+                <p>Used for: <strong>Body text, UI elements, Data grid</strong></p>
+                <p className="font-sans">ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz</p>
+                <p className="font-sans font-medium">1234567890</p>
               </div>
             </div>
           </div>

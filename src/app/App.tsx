@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { OverviewView } from './components/OverviewView';
+import { BrandingView } from './components/BrandingView';
 import { ColorsView } from './components/ColorsView';
 import { TransparencyView } from './components/TransparencyView';
 import { TypographyView } from './components/TypographyView';
@@ -9,6 +10,7 @@ import { BordersView } from './components/BordersView';
 import { ShadowsView } from './components/ShadowsView';
 import { ButtonsView } from './components/ButtonsView';
 import { BadgesView } from './components/BadgesView';
+import { CardsView } from './components/CardsView';
 import { AvatarsView } from './components/AvatarsView';
 import { AlertsView } from './components/AlertsView';
 import { BreadcrumbsView } from './components/BreadcrumbsView';
@@ -20,12 +22,38 @@ import { RadioGroupsView } from './components/RadioGroupsView';
 import { SwitchesView } from './components/SwitchesView';
 import { SelectsView } from './components/SelectsView';
 import { DataTablesView } from './components/DataTablesView';
+import { NavbarsView } from './components/NavbarsView';
 
 import { TextareaView } from './components/TextareaView';
 import { ModalsView } from './components/ModalsView';
+import { DividersView } from './components/DividersView';
+import { ActionPanelsView } from './components/ActionPanelsView';
+import { DragDropView } from './components/DragDropView';
+import { DataVisualizationView } from './components/DataVisualizationView';
+import { DescriptionsView } from './components/DescriptionsView';
+import { StackedListsView } from './components/StackedListsView';
+import { FeedsView } from './components/FeedsView';
+import { StatsView } from './components/StatsView';
+import { FileUploadView } from './components/FileUploadView';
+import { FormLayoutsView } from './components/FormLayoutsView';
+import { AppShellsView } from './components/AppShellsView';
+import { SlideOversView } from './components/SlideOversView';
+import { PageHeadingsView } from './components/PageHeadingsView';
+import { AdvancedFormsView } from './components/AdvancedFormsView';
+import { EcommerceView } from './components/EcommerceView';
+import {
+  Sidebar,
+  SidebarHeader,
+  SidebarBody,
+  SidebarFooter,
+  SidebarSection,
+  SidebarItem,
+  SidebarLabel
+} from './components/ui/sidebar';
 
 type ViewType =
   | 'overview'
+  | 'branding'
   | 'colors'
   | 'transparency'
   | 'spacing'
@@ -33,12 +61,15 @@ type ViewType =
   | 'borders'
   | 'shadows'
   | 'buttons'
+  | 'action-center'
+  | 'cards'
   | 'badges'
   | 'avatars'
+  | 'avatars'
   | 'dividers'
+  | 'navbars'
   | 'app-shells'
   | 'page-headings'
-  | 'navbars'
   | 'action-panels'
   | 'data-tables'
   | 'stacked-lists'
@@ -65,11 +96,15 @@ type ViewType =
   | 'admin'
   | 'api'
   | 'mcp'
+  | 'advanced-forms'
+  | 'ecommerce'
   | 'roadmap';
 
 interface NavItem {
   id: ViewType;
   label: string;
+  path?: string;
+  isNew?: boolean;
 }
 
 interface NavSection {
@@ -95,6 +130,7 @@ function App() {
       title: 'Foundations',
       items: [
         { id: 'overview', label: 'Overview' },
+        { id: 'branding', label: 'Branding & Assets' },
         { id: 'colors', label: 'Colors' },
         { id: 'transparency', label: 'Transparency' },
         { id: 'spacing', label: 'Spacing/Grid' },
@@ -106,7 +142,9 @@ function App() {
     {
       title: 'Application UI',
       items: [
-        { id: 'buttons', label: 'Buttons' },
+        { id: 'buttons', label: 'Buttons', path: '/buttons' },
+        { id: 'action-center', label: 'Action Center', path: '/action-center', isNew: true },
+        { id: 'cards', label: 'Cards', path: '/cards' },
         { id: 'badges', label: 'Badges' },
         { id: 'avatars', label: 'Avatars' },
         { id: 'dividers', label: 'Dividers' },
@@ -114,6 +152,14 @@ function App() {
         { id: 'page-headings', label: 'Page Headings' },
         { id: 'navbars', label: 'Navbars' },
         { id: 'action-panels', label: 'Action Panels' },
+        { id: 'slide-overs', label: 'Slide-overs' },
+      ],
+    },
+    {
+      title: 'Interaction & Data',
+      items: [
+        { id: 'drag-drop', label: 'Drag & Drop' },
+        { id: 'data-visualization', label: 'Data Visualization' },
       ],
     },
     {
@@ -181,6 +227,8 @@ function App() {
     switch (currentView) {
       case 'overview':
         return <OverviewView />;
+      case 'branding':
+        return <BrandingView />;
       case 'colors':
         return <ColorsView />;
       case 'transparency':
@@ -195,6 +243,10 @@ function App() {
         return <ShadowsView />;
       case 'buttons':
         return <ButtonsView />;
+      case 'action-center':
+        return <ActionPanelsView />;
+      case 'cards':
+        return <CardsView />;
       case 'badges':
         return <BadgesView />;
       case 'avatars':
@@ -219,11 +271,39 @@ function App() {
         return <SelectsView />;
       case 'data-tables':
         return <DataTablesView />;
+      case 'navbars':
+        return <NavbarsView />;
       case 'textarea':
         return <TextareaView />;
 
       case 'modals':
         return <ModalsView />;
+      case 'slide-overs':
+        return <SlideOversView />;
+      case 'drag-drop':
+        return <DragDropView />;
+      case 'data-visualization':
+        return <DataVisualizationView />;
+      case 'dividers':
+        return <DividersView />;
+      case 'descriptions':
+        return <DescriptionsView />;
+      case 'stacked-lists':
+        return <StackedListsView />;
+      case 'feeds':
+        return <FeedsView />;
+      case 'stats':
+        return <StatsView />;
+      case 'action-panels':
+        return <ActionPanelsView />;
+      case 'file-upload':
+        return <FileUploadView />;
+      case 'form-layouts':
+        return <FormLayoutsView />;
+      case 'app-shells':
+        return <AppShellsView />;
+      case 'page-headings':
+        return <PageHeadingsView />;
       default:
         return (
           <div>
@@ -252,9 +332,8 @@ function App() {
   return (
     <div className="flex h-screen bg-zinc-50 dark:bg-zinc-950">
       {/* Sidebar */}
-      <aside className="w-[280px] bg-white dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-800 flex flex-col fixed h-full z-50">
-        {/* Logo Header */}
-        <div className="px-6 py-5 border-b border-zinc-200 dark:border-zinc-800">
+      <Sidebar className="w-[280px] fixed h-full z-50">
+        <SidebarHeader className="px-6 py-5">
           <div className="flex items-center gap-3 mb-1">
             <div className="w-10 h-10 bg-zinc-800 dark:bg-zinc-700 rounded-md flex items-center justify-center">
               <span className="text-zinc-50 font-bold text-lg">ST</span>
@@ -268,35 +347,30 @@ function App() {
               </div>
             </div>
           </div>
-        </div>
+        </SidebarHeader>
 
-        {/* Navigation */}
-        <nav className="flex-1 overflow-y-auto px-3 py-4">
+        <SidebarBody>
           {navSections.map((section, idx) => (
-            <div key={idx} className="mb-6">
-              <div className="px-3 mb-2 text-xs uppercase tracking-wider font-bold text-zinc-500 dark:text-zinc-400">
+            <div key={idx} className="mb-6 last:mb-0">
+              <SidebarLabel>
                 {section.title}
-              </div>
-              <div className="space-y-1">
+              </SidebarLabel>
+              <SidebarSection>
                 {section.items.map((item) => (
-                  <button
+                  <SidebarItem
                     key={item.id}
+                    current={currentView === item.id}
                     onClick={() => setCurrentView(item.id)}
-                    className={`w-full text-left px-3 py-2 rounded-md text-sm font-semibold transition-colors relative ${currentView === item.id
-                      ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-zinc-800 dark:before:bg-zinc-50 before:rounded-r'
-                      : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 hover:text-zinc-900 dark:hover:text-zinc-50'
-                      }`}
                   >
                     {item.label}
-                  </button>
+                  </SidebarItem>
                 ))}
-              </div>
+              </SidebarSection>
             </div>
           ))}
-        </nav>
+        </SidebarBody>
 
-        {/* Theme Toggle Footer */}
-        <div className="px-3 py-4 border-t border-zinc-200 dark:border-zinc-800">
+        <SidebarFooter className="px-3 py-4">
           <button
             onClick={() => {
               setDarkMode(!darkMode);
@@ -316,8 +390,8 @@ function App() {
               </>
             )}
           </button>
-        </div>
-      </aside>
+        </SidebarFooter>
+      </Sidebar>
 
       {/* Main Content */}
       <main className="flex-1 ml-[280px] overflow-y-auto">

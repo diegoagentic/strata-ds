@@ -13,6 +13,4 @@
 /* Import Tailwind Theme Mapping (Build-time config) */
 @import './tokens/theme-v4.css';
 
-/* Legacy Shadcn Theme (Commented out during migration) */
-/* @import './theme.css'; */
-/* @import './tailwind.css'; */
+/* Legacy Shadcn Theme (Removed - Migrated to Tokens) */

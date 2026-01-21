@@ -1,5 +1,8 @@
 {
     "fontFamily": {
+        "brand": {
+            "value": "'PP Monument Extended', sans-serif"
+        },
         "sans": {
             "value": "Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
         },
