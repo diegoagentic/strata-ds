@@ -130,6 +130,9 @@
   --color-glass-popover-border: var(--glass-border-popover);
   --blur-glass-xl: var(--glass-blur-xl);
   --shadow-glass-lg: var(--glass-shadow-lg);
+  --shadow-glow-sm: var(--shadow-glow-sm);
+  --shadow-glow-md: var(--shadow-glow-md);
+  --shadow-glow-lg: var(--shadow-glow-lg);
 }
 
 @layer base {

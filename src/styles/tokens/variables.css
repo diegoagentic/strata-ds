@@ -135,6 +135,9 @@
   --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
   --shadow-none: none;
+  --shadow-glow-sm: none;
+  --shadow-glow-md: none;
+  --shadow-glow-lg: none;
   --spacing-0: 0;
   --spacing-1: 0.25rem;
   --spacing-2: 0.5rem;

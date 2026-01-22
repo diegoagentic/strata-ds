@@ -1,4 +1,4 @@
-import ActionCenter from './notifications/ActionCenter';
+import { ActionPanel } from '../../components/catalyst/action-center';
 import { CodeViewer } from './CodeViewer';
 
 export function ActionPanelsView() {
@@ -10,86 +10,93 @@ export function ActionPanelsView() {
           Action Center
         </h1>
         <p className="text-xl text-zinc-600 dark:text-zinc-400 max-w-4xl">
-          A centralized hub for notifications, tasks, and communications. Ported from Catalyst and refined with Strata Brand foundations.
+          The primary notification and action interface.
         </p>
       </div>
 
-      {/* Demo Section */}
-      <section className="space-y-6">
-        <div>
-          <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
-            Interactive Demo
-          </h2>
-          <p className="text-zinc-600 dark:text-zinc-400">
-            Click the bell icon to open the Action Center. Try filtering tabs, searching, or replying to the chat notification.
-          </p>
-        </div>
+      {/* Main Component Display */}
+      <section className="space-y-8">
 
-        <div className="p-24 bg-zinc-100 dark:bg-zinc-900/50 rounded-xl border border-zinc-200 dark:border-zinc-800 flex items-center justify-center relative min-h-[400px]">
-          {/* Background Pattern */}
-          <div className="absolute inset-0 opacity-10 dark:opacity-5"
-            style={{ backgroundImage: 'radial-gradient(#a1a1aa 1px, transparent 1px)', backgroundSize: '24px 24px' }}
-          />
-
-          <div className="relative z-10 flex flex-col items-center gap-4">
-            <p className="text-sm font-medium text-zinc-500">Click to open</p>
-            <div className="scale-150">
-              <ActionCenter />
-            </div>
+        {/* Visual Preview - Centered and constrained */}
+        <div className="p-12 bg-zinc-100 dark:bg-black/20 rounded-xl border border-zinc-200 dark:border-zinc-800 flex justify-center items-start">
+          <div className="w-full max-w-md shadow-2xl rounded-2xl">
+            <ActionPanel />
           </div>
         </div>
 
-        <CodeViewer
-          react={`import ActionCenter from '@/components/notifications/ActionCenter';
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Component Analysis / Breakdown */}
+          <div>
+            <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 mb-4">Component Structure</h3>
+            <ul className="space-y-6">
+              <li className="flex gap-4">
+                <div className="flex-none p-2 h-10 w-10 flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded-lg text-zinc-900 dark:text-zinc-100 font-bold text-xs ring-1 ring-zinc-900/5 dark:ring-white/10">01</div>
+                <div>
+                  <p className="font-semibold text-zinc-900 dark:text-zinc-100">Header & Tabs</p>
+                  <p className="text-sm text-zinc-500 mt-1">
+                    Contains the "Action Center" title, global actions (Search, Close), and a scrollable `TabGroup` for filtering (All, Alerts, Payments, etc).
+                  </p>
+                </div>
+              </li>
+              <li className="flex gap-4">
+                <div className="flex-none p-2 h-10 w-10 flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded-lg text-zinc-900 dark:text-zinc-100 font-bold text-xs ring-1 ring-zinc-900/5 dark:ring-white/10">02</div>
+                <div>
+                  <p className="font-semibold text-zinc-900 dark:text-zinc-100">Metrics Bar</p>
+                  <p className="text-sm text-zinc-500 mt-1">
+                    A secondary strip displaying high-level stats like "Pending: 142" or "Low Stock: 15", providing immediate context.
+                  </p>
+                </div>
+              </li>
+              <li className="flex gap-4">
+                <div className="flex-none p-2 h-10 w-10 flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 rounded-lg text-zinc-900 dark:text-zinc-100 font-bold text-xs ring-1 ring-zinc-900/5 dark:ring-white/10">03</div>
+                <div>
+                  <p className="font-semibold text-zinc-900 dark:text-zinc-100">Notification List</p>
+                  <p className="text-sm text-zinc-500 mt-1">
+                    Scrollable area containing `NotificationItem` components. Each item features a severity strip (red/amber/blue), icon, text content, and action buttons.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
 
-export default function Header() {
+          {/* Code Viewer */}
+          <CodeViewer
+            react={`import { ActionPanel } from '@/components/catalyst/action-center';
+
+export function ActionCenterWindow() {
   return (
-    <header className="flex justify-end p-4">
-      <ActionCenter />
-    </header>
+    <div className="fixed bottom-4 right-4 z-50">
+      <ActionPanel className="shadow-2xl" />
+    </div>
   );
 }`}
-          html={`<!-- Popover Structure -->
-<div class="relative">
-  <button class="p-2 rounded-full hover:bg-zinc-100">
-    <svg class="w-5 h-5">...</svg>
-    <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
-  </button>
+            html={`<div class="action-panel">
+  <!-- Header -->
+  <div class="flex justify-between p-4 bg-white dark:bg-zinc-900">
+    <h2>Action Center</h2>
+    <div class="tabs">...</div>
+  </div>
   
-  <!-- Content Panel -->
-  <div class="fixed top-[90px] right-8 w-[600px] bg-white dark:bg-zinc-950 rounded-3xl shadow-2xl">
-    ...
+  <!-- Metrics -->
+  <div class="metrics-bar bg-zinc-50 dark:bg-zinc-800">
+    <span>Pending: 142</span>
+  </div>
+
+  <!-- List -->
+  <div class="overflow-y-auto">
+    <div class="notification-item border-l-4 border-red-500">
+        <h4>Quantity Mismatch</h4>
+        <button class="btn-primary">Resolve</button>
+    </div>
   </div>
 </div>`}
-          css={`.action-center-panel {
-  backdrop-filter: blur(24px);
-  max-height: 80vh;
+            css={`.action-panel {
+  @apply w-full max-w-md flex flex-col overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-zinc-900/5 dark:bg-[#18181b] dark:ring-white/10;
 }`}
-          prompt="Generate a notification center with tabs, search, and action items."
-        />
+            prompt="Create a detailed notification panel with tabs, metric summaries, and severity-coded alert cards."
+          />
+        </div>
       </section>
-
-      {/* Features Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl">
-          <h3 className="font-bold text-zinc-900 dark:text-zinc-50 mb-2">Smart Filtering</h3>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">
-            Tabs filter notifications by type (Payments, Approvals, Shipping) with real-time counts.
-          </p>
-        </div>
-        <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl">
-          <h3 className="font-bold text-zinc-900 dark:text-zinc-50 mb-2">Embedded Chat</h3>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">
-            Integrated chat view allowing users to reply directly without leaving the context.
-          </p>
-        </div>
-        <div className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl">
-          <h3 className="font-bold text-zinc-900 dark:text-zinc-50 mb-2">Brand Integration</h3>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">
-            Uses Strata's Zinc scale for structure and Volt Lime for primary interactive elements.
-          </p>
-        </div>
-      </div>
     </div>
   );
 }

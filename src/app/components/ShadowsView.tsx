@@ -43,6 +43,34 @@ export function ShadowsView() {
       elevation: '16dp',
       zIndex: 'z-50',
     },
+    {
+      primitive: 'glow-sm',
+      token: 'shadow-glow-sm',
+      value: 'none',
+      darkValue: '0 0 10px rgba(255, 255, 255, 0.05)',
+      usage: 'Subtle highlight for small interactive elements',
+      elevation: 'Special',
+      zIndex: 'z-10',
+    },
+    {
+      primitive: 'glow-md',
+      token: 'shadow-glow-md',
+      value: 'none',
+      darkValue: '0 0 20px rgba(255, 255, 255, 0.15)',
+      usage: 'Standard atmospheric glow for cards/surfaces',
+      elevation: 'Special',
+      zIndex: 'z-10',
+      primary: true,
+    },
+    {
+      primitive: 'glow-lg',
+      token: 'shadow-glow-lg',
+      value: 'none',
+      darkValue: '0 0 30px rgba(255, 255, 255, 0.25)',
+      usage: 'Strong backlight for active or modal elements',
+      elevation: 'Special',
+      zIndex: 'z-20',
+    },
   ];
 
   return (
@@ -225,16 +253,46 @@ export function ShadowsView() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {[
-            { name: 'Data Card', shadow: 'shadow-sm', description: 'Subtle shadow for content cards' },
-            { name: 'Dropdown Menu', shadow: 'shadow-md', description: 'Medium shadow for floating menus' },
-            { name: 'Modal Dialog', shadow: 'shadow-lg', description: 'Large shadow for modal overlays' },
-            { name: 'Command Palette', shadow: 'shadow-xl', description: 'Extra large for critical UI' },
+            { name: 'Data Card', shadow: 'shadow-sm dark:shadow-glow-sm', description: 'Subtle shadow for content cards' },
+            { name: 'Dropdown Menu', shadow: 'shadow-md dark:shadow-glow-md', description: 'Medium shadow for floating menus' },
+            { name: 'Modal Dialog', shadow: 'shadow-lg dark:shadow-glow-lg', description: 'Large shadow for modal overlays' },
+            { name: 'Command Palette', shadow: 'shadow-xl dark:shadow-glow-lg', description: 'Extra large for critical UI' },
           ].map((example, index) => (
             <div key={index} className="bg-zinc-100 dark:bg-zinc-950 rounded-lg p-8">
               <div className="text-xs uppercase tracking-wider font-bold text-zinc-500 dark:text-zinc-400 mb-4">
                 {example.name}
               </div>
               <div className={`bg-white dark:bg-zinc-800 rounded-md p-6 ${example.shadow} mb-3`}>
+                <div className="h-20 flex items-center justify-center">
+                  <code className="text-xs font-mono text-zinc-600 dark:text-zinc-400">
+                    {example.shadow.split(' ')[0]}
+                  </code>
+                </div>
+              </div>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">
+                {example.description}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 mt-8 mb-4">
+          Dark Mode Glows
+        </h3>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
+          Atmospheric lighting effects used in dark mode to separate layers without heavy shadows.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { name: 'Interactive Element', shadow: 'shadow-glow-sm', description: 'Subtle highlight for buttons/inputs' },
+            { name: 'Card / Surface', shadow: 'shadow-glow-md', description: 'Standard ambient glow for surfaces' },
+            { name: 'Active / Modal', shadow: 'shadow-glow-lg', description: 'Strong backlight for focused UI' },
+          ].map((example, index) => (
+            <div key={index} className="bg-zinc-100 dark:bg-zinc-950 rounded-lg p-8">
+              <div className="text-xs uppercase tracking-wider font-bold text-zinc-500 dark:text-zinc-400 mb-4">
+                {example.name}
+              </div>
+              <div className={`bg-white dark:bg-zinc-800 rounded-md p-6 ${example.shadow} mb-3 border border-zinc-200 dark:border-zinc-700`}>
                 <div className="h-20 flex items-center justify-center">
                   <code className="text-xs font-mono text-zinc-600 dark:text-zinc-400">
                     {example.shadow}
@@ -257,32 +315,32 @@ export function ShadowsView() {
         <div className="bg-zinc-100 dark:bg-zinc-950 rounded-lg p-12">
           <div className="relative h-96">
             {/* Base Layer - sm */}
-            <div className="absolute left-0 top-0 w-64 h-48 bg-white dark:bg-zinc-800 rounded-md shadow-sm p-6 z-10">
+            <div className="absolute left-0 top-0 w-64 h-48 bg-white dark:bg-zinc-800 rounded-md shadow-sm dark:shadow-glow-sm p-6 z-10 transition-shadow duration-300">
               <div className="text-sm font-semibold text-zinc-900 dark:text-zinc-50 mb-2">
                 Base Layer
               </div>
               <code className="text-xs font-mono text-zinc-500 dark:text-zinc-400">
-                shadow-sm • z-10
+                shadow-sm
               </code>
             </div>
 
             {/* Mid Layer - md */}
-            <div className="absolute left-20 top-16 w-64 h-48 bg-white dark:bg-zinc-800 rounded-md shadow-md p-6 z-20">
+            <div className="absolute left-20 top-16 w-64 h-48 bg-white dark:bg-zinc-800 rounded-md shadow-md dark:shadow-glow-md p-6 z-20 transition-shadow duration-300">
               <div className="text-sm font-semibold text-zinc-900 dark:text-zinc-50 mb-2">
                 Card Layer
               </div>
               <code className="text-xs font-mono text-zinc-500 dark:text-zinc-400">
-                shadow-md • z-20
+                shadow-md
               </code>
             </div>
 
             {/* High Layer - lg */}
-            <div className="absolute left-40 top-32 w-64 h-48 bg-white dark:bg-zinc-800 rounded-md shadow-lg p-6 z-30">
+            <div className="absolute left-40 top-32 w-64 h-48 bg-white dark:bg-zinc-800 rounded-md shadow-lg dark:shadow-glow-lg p-6 z-30 transition-shadow duration-300">
               <div className="text-sm font-semibold text-zinc-900 dark:text-zinc-50 mb-2">
                 Modal Layer
               </div>
               <code className="text-xs font-mono text-zinc-500 dark:text-zinc-400">
-                shadow-lg • z-30
+                shadow-lg
               </code>
             </div>
           </div>

@@ -41,6 +41,20 @@ import { SlideOversView } from './components/SlideOversView';
 import { PageHeadingsView } from './components/PageHeadingsView';
 import { AdvancedFormsView } from './components/AdvancedFormsView';
 import { EcommerceView } from './components/EcommerceView';
+import { FieldsetView } from './components/FieldsetView';
+import { ListboxView } from './components/ListboxView';
+import { ComboboxView } from './components/ComboboxView';
+import { DisclosureView } from './components/DisclosureView';
+import { SlideOverView } from './components/SlideOverView';
+import { EmptyStateView } from './components/EmptyStateView';
+import { ProductOverviewView } from './components/ProductOverviewView';
+import { ProductListView } from './components/ProductListView';
+import { HeroSectionView } from './components/HeroSectionView';
+import { FeatureSectionView } from './components/FeatureSectionView';
+import { PricingView } from './components/PricingView';
+import { StackedListView } from './components/StackedListView';
+import { DescriptionListView } from './components/DescriptionListView';
+import { ShoppingCartView } from './components/ShoppingCartView';
 import {
   Sidebar,
   SidebarHeader,
@@ -97,7 +111,23 @@ type ViewType =
   | 'api'
   | 'mcp'
   | 'advanced-forms'
+  | 'mcp'
+  | 'advanced-forms'
   | 'ecommerce'
+  | 'fieldset'
+  | 'listbox'
+  | 'combobox'
+  | 'disclosure'
+  | 'slide-overs'
+  | 'empty-states'
+  | 'product-overview'
+  | 'product-list'
+  | 'hero-section'
+  | 'feature-section'
+  | 'pricing'
+  | 'stacked-list'
+  | 'description-list'
+  | 'shopping-cart'
   | 'roadmap';
 
 interface NavItem {
@@ -176,12 +206,18 @@ function App() {
       title: 'Forms',
       items: [
         { id: 'form-layouts', label: 'Layouts' },
+        { id: 'form-layouts', label: 'Layouts' },
+        { id: 'fieldset', label: 'Fieldset', isNew: true },
         { id: 'fields', label: 'Fields' },
         { id: 'input-groups', label: 'Input Groups' },
         { id: 'checkboxes', label: 'Checkboxes' },
         { id: 'radio-groups', label: 'Radio Groups' },
+        { id: 'stacked-list', label: 'Stacked List', isNew: true },
+        { id: 'description-list', label: 'Description List', isNew: true },
         { id: 'switches', label: 'Switches' },
         { id: 'selects', label: 'Selects' },
+        { id: 'listbox', label: 'Listbox', isNew: true },
+        { id: 'combobox', label: 'Combobox', isNew: true },
         { id: 'textarea', label: 'Textarea' },
         { id: 'file-upload', label: 'File Upload (OCR)' },
       ],
@@ -199,6 +235,22 @@ function App() {
       items: [
         { id: 'breadcrumbs', label: 'Breadcrumbs' },
         { id: 'dropdowns', label: 'Dropdowns' },
+      ],
+    },
+    {
+      title: 'Ecommerce',
+      items: [
+        { id: 'product-overview', label: 'Product Overview', isNew: true },
+        { id: 'product-list', label: 'Product List', isNew: true },
+        { id: 'shopping-cart', label: 'Shopping Cart', isNew: true },
+      ],
+    },
+    {
+      title: 'Marketing',
+      items: [
+        { id: 'hero-section', label: 'Hero Section', isNew: true },
+        { id: 'feature-section', label: 'Feature Section', isNew: true },
+        { id: 'pricing', label: 'Pricing', isNew: true },
       ],
     },
     {
@@ -300,6 +352,36 @@ function App() {
         return <FileUploadView />;
       case 'form-layouts':
         return <FormLayoutsView />;
+      case 'form-layouts':
+        return <FormLayoutsView />;
+      case 'fieldset':
+        return <FieldsetView />;
+      case 'listbox':
+        return <ListboxView />;
+      case 'combobox':
+        return <ComboboxView />;
+      case 'disclosure':
+        return <DisclosureView />;
+      case 'slide-overs':
+        return <SlideOverView />;
+      case 'empty-states':
+        return <EmptyStateView />;
+      case 'product-overview':
+        return <ProductOverviewView />;
+      case 'product-list':
+        return <ProductListView />;
+      case 'hero-section':
+        return <HeroSectionView />;
+      case 'feature-section':
+        return <FeatureSectionView />;
+      case 'pricing':
+        return <PricingView />;
+      case 'stacked-list':
+        return <StackedListView />;
+      case 'description-list':
+        return <DescriptionListView />;
+      case 'shopping-cart':
+        return <ShoppingCartView />;
       case 'app-shells':
         return <AppShellsView />;
       case 'page-headings':

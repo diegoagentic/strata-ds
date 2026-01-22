@@ -135,6 +135,9 @@
   --shadow-2xl: var(--shadow-2xl);
   --shadow-inner: var(--shadow-inner);
   --shadow-none: var(--shadow-none);
+  --shadow-glow-sm: var(--shadow-glow-sm);
+  --shadow-glow-md: var(--shadow-glow-md);
+  --shadow-glow-lg: var(--shadow-glow-lg);
   --spacing-0: var(--spacing-0);
   --spacing-1: var(--spacing-1);
   --spacing-2: var(--spacing-2);
