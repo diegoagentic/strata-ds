@@ -40,30 +40,19 @@ export function ColorsView() {
 
   const brandScale = [
     { primitive: '50', token: 'brand-50', hex: '#fdfee7', usage: 'Subtle backgrounds', light: true },
-    { primitive: '100', token: 'brand-100', hex: '#faffc2', usage: 'Light backgrounds', light: true },
-    { primitive: '200', token: 'brand-200', hex: '#f5ff92', usage: 'Interactive hover (light)', light: true },
-    { primitive: '300', token: 'brand-300', hex: '#edff58', usage: 'Highlights', light: true },
-    { primitive: '400', token: 'brand-400', hex: '#d6ff3c', usage: 'Primary Brand Color (Volt)', light: true, primary: true },
-    { primitive: '500', token: 'brand-500', hex: '#b4eb00', usage: 'Interactive states', dark: true },
-    { primitive: '600', token: 'brand-600', hex: '#8bc200', usage: 'Borders, accents', dark: true },
-    { primitive: '700', token: 'brand-700', hex: '#679600', usage: 'Dark accents', dark: true },
-    { primitive: '800', token: 'brand-800', hex: '#507206', usage: 'Text on light brand bg', dark: true },
-    { primitive: '950', token: 'brand-950', hex: '#233502', usage: 'Darkest brand background', dark: true },
+    { primitive: '100', token: 'brand-100', hex: '#F4F8E1', usage: 'Light backgrounds', light: true },
+    { primitive: '200', token: 'brand-200', hex: '#F4FFC9', usage: 'Interactive hover (light)', light: true },
+    { primitive: '300', token: 'brand-300', hex: '#E6F993', usage: 'Primary Brand Color (Light Mode)', light: true, primary: true },
+    { primitive: '400', token: 'brand-400', hex: '#DAF75F', usage: 'Highlights', light: true },
+    { primitive: '500', token: 'brand-500', hex: '#C3E433', usage: 'Primary Brand Color (Dark Mode)', dark: true, primary: true },
+    { primitive: '600', token: 'brand-600', hex: '#A0C114', usage: 'Borders, accents', dark: true },
+    { primitive: '700', token: 'brand-700', hex: '#3C4B00', usage: 'Dark accents', dark: true },
+    { primitive: '800', token: 'brand-800', hex: '#3C4B00', usage: 'Text on light brand bg', dark: true },
+    { primitive: '900', token: 'brand-900', hex: '#2A3400', usage: 'Darkest brand background', dark: true },
+    { primitive: '950', token: 'brand-950', hex: '#233502', usage: 'Deepest background', dark: true },
   ];
 
-  const slateScale = [
-    { primitive: '50', token: 'slate-50', hex: '#f8fafc', usage: 'Subtle backgrounds (Admin/Secondary)', light: true },
-    { primitive: '100', token: 'slate-100', hex: '#f1f5f9', usage: 'Muted backgrounds', light: true },
-    { primitive: '200', token: 'slate-200', hex: '#e2e8f0', usage: 'Muted borders', light: true, primary: true },
-    { primitive: '300', token: 'slate-300', hex: '#cbd5e1', usage: 'Disabled states', light: true },
-    { primitive: '400', token: 'slate-400', hex: '#94a3b8', usage: 'Placeholders', light: true },
-    { primitive: '500', token: 'slate-500', hex: '#64748b', usage: 'Muted text', dark: true, primary: true },
-    { primitive: '600', token: 'slate-600', hex: '#475569', usage: 'Secondary body text', dark: true },
-    { primitive: '700', token: 'slate-700', hex: '#334155', usage: 'Dark muted borders', dark: true },
-    { primitive: '800', token: 'slate-800', hex: '#1e293b', usage: 'Dark secondary backgrounds', dark: true, primary: true },
-    { primitive: '900', token: 'slate-900', hex: '#0f172a', usage: 'Darkest muted background', dark: true },
-    { primitive: '950', token: 'slate-950', hex: '#020617', usage: 'Deepest background', dark: true },
-  ];
+
 
   const zincScale = [
     {
@@ -76,14 +65,14 @@ export function ColorsView() {
     {
       primitive: '100',
       token: 'zinc-100',
-      hex: '#f4f4f5',
+      hex: '#EBECEE',
       usage: 'Hover states, secondary backgrounds',
       light: true
     },
     {
       primitive: '200',
       token: 'zinc-200',
-      hex: '#e4e4e7',
+      hex: '#E0E2E5',
       usage: 'Borders (light mode default)',
       light: true,
       primary: true
@@ -91,21 +80,21 @@ export function ColorsView() {
     {
       primitive: '300',
       token: 'zinc-300',
-      hex: '#d4d4d8',
+      hex: '#D0D4D8',
       usage: 'Border hover states, dividers',
       light: true
     },
     {
       primitive: '400',
       token: 'zinc-400',
-      hex: '#a1a1aa',
+      hex: '#B4BBC2',
       usage: 'Placeholder text, disabled states',
       light: true
     },
     {
       primitive: '500',
       token: 'zinc-500',
-      hex: '#71717a',
+      hex: '#959DA7',
       usage: 'Secondary text, captions',
       dark: true,
       primary: true
@@ -113,21 +102,21 @@ export function ColorsView() {
     {
       primitive: '600',
       token: 'zinc-600',
-      hex: '#52525b',
+      hex: '#546070',
       usage: 'Body text, primary icons',
       dark: true
     },
     {
       primitive: '700',
       token: 'zinc-700',
-      hex: '#3f3f46',
+      hex: '#333F4E',
       usage: 'Border hover (dark mode)',
       dark: true
     },
     {
       primitive: '800',
       token: 'zinc-800',
-      hex: '#27272a',
+      hex: '#141E2C',
       usage: 'Borders (dark mode default)',
       dark: true,
       primary: true
@@ -135,7 +124,7 @@ export function ColorsView() {
     {
       primitive: '900',
       token: 'zinc-900',
-      hex: '#18181b',
+      hex: '#02060C',
       usage: 'Headings, primary text (light mode)',
       dark: true,
       primary: true
@@ -178,9 +167,9 @@ export function ColorsView() {
     },
     {
       name: 'Error',
-      token: 'red-600',
-      primitive: 'red-600',
-      hex: '#ef4444',
+      token: 'red-500',
+      primitive: 'red-500',
+      hex: '#E52D49',
       usage: 'Error messages, destructive actions, critical alerts',
       icon: AlertCircle,
       bg: 'bg-red-50 dark:bg-red-950',
@@ -232,14 +221,14 @@ export function ColorsView() {
     },
     {
       name: 'Tertiary',
-      description: 'Rose-pink spectrum for tertiary data and accent visualizations',
-      usage: 'Tertiary data series, emotional data, attention markers',
+      description: 'Red spectrum for tertiary data and critical visualizations',
+      usage: 'Tertiary data series, critical indicators, attention markers',
       scales: [
-        { step: '100', hex: '#ffe4e6', token: 'color-chart-tertiary-100', primitive: 'rose-100', usage: 'Backgrounds, subtle highlights', contrast: 'AAA' },
-        { step: '200', hex: '#fecdd3', token: 'color-chart-tertiary-200', primitive: 'rose-200', usage: 'Hover states, light fills', contrast: 'AA' },
-        { step: '300', hex: '#fda4af', token: 'color-chart-tertiary-300', primitive: 'rose-300', usage: 'Secondary data points', contrast: 'AA' },
-        { step: '400', hex: '#fb7185', token: 'color-chart-tertiary-400', primitive: 'rose-400', usage: 'Interactive elements', contrast: 'AA', primary: true },
-        { step: '500', hex: '#f43f5e', token: 'color-chart-tertiary-500', primitive: 'rose-500', usage: 'Tertiary data series', contrast: 'AA', primary: true },
+        { step: '100', hex: '#FFECEE', token: 'color-chart-tertiary-100', primitive: 'red-100', usage: 'Backgrounds, subtle highlights', contrast: 'AAA' },
+        { step: '200', hex: '#FFD6DC', token: 'color-chart-tertiary-200', primitive: 'red-200', usage: 'Hover states, light fills', contrast: 'AA' },
+        { step: '300', hex: '#F99DAA', token: 'color-chart-tertiary-300', primitive: 'red-300', usage: 'Secondary data points', contrast: 'AA' },
+        { step: '400', hex: '#ED5F74', token: 'color-chart-tertiary-400', primitive: 'red-400', usage: 'Interactive elements', contrast: 'AA', primary: true },
+        { step: '500', hex: '#E52D49', token: 'color-chart-tertiary-500', primitive: 'red-500', usage: 'Tertiary data series', contrast: 'AA', primary: true },
       ],
     },
     {
@@ -303,6 +292,15 @@ export function ColorsView() {
             Zinc neutral palette with semantic feedback colors and data visualization tokens.
           </p>
         </div>
+      </div>
+
+      <div className="mb-8 p-4 bg-brand-50/50 dark:bg-zinc-900/50 border border-brand-200 dark:border-zinc-800 rounded-lg">
+        <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50 mb-2">Accessibility & Usage Update</h3>
+        <p className="text-sm text-zinc-600 dark:text-zinc-400">
+          The color system has been updated to improve readability and contrast.
+          <strong> Light Mode</strong> now uses <code className="font-mono text-xs bg-zinc-100 px-1 py-0.5 rounded">brand-300</code> (#E6F993) for primary actions to ensure high contrast with black text.
+          <strong> Dark Mode</strong> uses <code className="font-mono text-xs bg-zinc-800 px-1 py-0.5 rounded">brand-500</code> (#C3E433) for visibility against dark backgrounds.
+        </p>
       </div>
 
       {/* Brand Palette */}
@@ -443,97 +441,17 @@ export function ColorsView() {
                 <div className="w-8 h-8 rounded bg-zinc-500 flex items-center justify-center text-white text-xs">Zn</div>
                 <span className="text-sm font-mono text-zinc-500">Zinc (Neutral)</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded bg-slate-500 flex items-center justify-center text-white text-xs">Sl</div>
-                <span className="text-sm font-mono text-slate-500">Slate (Muted)</span>
-              </div>
             </div>
             <div className="bg-white dark:bg-zinc-950 p-4 border-t border-zinc-200 dark:border-zinc-800">
               <p className="text-xs text-zinc-500 dark:text-zinc-400">
-                Use Zinc for sharp UI elements. Use Slate for secondary/administrative data to reduce visual noise.
+                Use Zinc for sharp UI elements and primary structure.
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Secondary Palette (Muted/Slate) */}
-      <div className="mb-12">
-        <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
-          Secondary Palette (Slate)
-        </h2>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
-          Cooler, muted greyscale for administrative interfaces, disabled states, and secondary information. Distinct from the sharp Zinc neutral palette.
-        </p>
-        <div>
-          <div className="rounded-xl p-6 transition-colors duration-300 bg-background border border-border">
-            <div className="space-y-3 mb-8">
-              {slateScale.map((color) => (
-                <div
-                  key={color.primitive}
-                  className={`bg-card border rounded-md p-5 flex items-center gap-6 transition-all duration-300 ${color.primary
-                    ? 'border-slate-400/50 ring-1 ring-slate-400/20'
-                    : 'border-border'
-                    }`}
-                >
-                  {/* Visual Swatch */}
-                  <div
-                    className="w-20 h-14 rounded border border-zinc-200 dark:border-zinc-700 flex-shrink-0"
-                    style={{ backgroundColor: color.hex }}
-                  />
 
-                  {/* Primitive Value */}
-                  <div className="w-16">
-                    <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                      Step
-                    </div>
-                    <code className="text-sm font-mono font-semibold text-zinc-900 dark:text-zinc-100">
-                      {color.primitive}
-                    </code>
-                  </div>
-
-                  {/* Token */}
-                  <div className="w-48">
-                    <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                      Token
-                    </div>
-                    <code className="text-xs font-mono bg-zinc-100 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 rounded border border-transparent dark:border-zinc-700">
-                      {color.token}
-                    </code>
-                  </div>
-
-                  {/* Hex Value */}
-                  <div className="w-24">
-                    <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                      Hex
-                    </div>
-                    <span className="text-sm font-mono text-zinc-600 dark:text-zinc-300">{color.hex}</span>
-                  </div>
-
-                  {/* Usage */}
-                  <div className="flex-1">
-                    <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                      Usage
-                    </div>
-                    <span className="text-sm text-zinc-600 dark:text-zinc-300">{color.usage}</span>
-                  </div>
-
-                  {/* Copy Button */}
-                  <div className="flex-shrink-0">
-                    <CopyButton
-                      formats={[
-                        { label: 'HEX', value: color.hex, description: 'Hexadecimal color code' },
-                        { label: 'Token', value: color.token, description: 'Design system token' },
-                      ]}
-                      size="sm"
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Neutral Palette */}
       <div className="mb-12">
