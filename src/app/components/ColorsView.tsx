@@ -46,8 +46,8 @@ export function ColorsView() {
     { primitive: '400', token: 'brand-400', hex: '#DAF75F', usage: 'Highlights', light: true },
     { primitive: '500', token: 'brand-500', hex: '#C3E433', usage: 'Primary Brand Color (Dark Mode)', dark: true, primary: true },
     { primitive: '600', token: 'brand-600', hex: '#A0C114', usage: 'Borders, accents', dark: true },
-    { primitive: '700', token: 'brand-700', hex: '#3C4B00', usage: 'Dark accents', dark: true },
-    { primitive: '800', token: 'brand-800', hex: '#3C4B00', usage: 'Text on light brand bg', dark: true },
+    { primitive: '700', token: 'brand-700', hex: '#718B03', usage: 'Dark accents', dark: true },
+    { primitive: '800', token: 'brand-800', hex: '#507206', usage: 'Text on light brand bg', dark: true },
     { primitive: '900', token: 'brand-900', hex: '#2A3400', usage: 'Darkest brand background', dark: true },
     { primitive: '950', token: 'brand-950', hex: '#233502', usage: 'Deepest background', dark: true },
   ];
@@ -351,7 +351,11 @@ export function ColorsView() {
                     <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
                       Token
                     </div>
-                    <code className="text-xs font-mono bg-zinc-100 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 rounded border border-transparent dark:border-zinc-700">
+                    <code
+                      onClick={() => navigator.clipboard.writeText(color.token)}
+                      className="text-xs font-mono bg-zinc-100 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 rounded border border-transparent dark:border-zinc-700 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors"
+                      title="Click to copy token"
+                    >
                       {color.token}
                     </code>
                   </div>
@@ -361,7 +365,13 @@ export function ColorsView() {
                     <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
                       Hex
                     </div>
-                    <span className="text-sm font-mono text-zinc-600 dark:text-zinc-300">{color.hex}</span>
+                    <span
+                      onClick={() => navigator.clipboard.writeText(color.hex)}
+                      className="text-sm font-mono text-zinc-600 dark:text-zinc-300 cursor-pointer hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+                      title="Click to copy hex"
+                    >
+                      {color.hex}
+                    </span>
                   </div>
 
                   {/* Usage */}
@@ -495,7 +505,11 @@ export function ColorsView() {
                     <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
                       Token
                     </div>
-                    <code className="text-xs font-mono bg-zinc-100 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 rounded border border-transparent dark:border-zinc-700">
+                    <code
+                      onClick={() => navigator.clipboard.writeText(color.token)}
+                      className="text-xs font-mono bg-zinc-100 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 rounded border border-transparent dark:border-zinc-700 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors"
+                      title="Click to copy token"
+                    >
                       {color.token}
                     </code>
                   </div>
@@ -505,7 +519,13 @@ export function ColorsView() {
                     <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
                       Hex
                     </div>
-                    <span className="text-sm font-mono text-zinc-600 dark:text-zinc-300">{color.hex}</span>
+                    <span
+                      onClick={() => navigator.clipboard.writeText(color.hex)}
+                      className="text-sm font-mono text-zinc-600 dark:text-zinc-300 cursor-pointer hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+                      title="Click to copy hex"
+                    >
+                      {color.hex}
+                    </span>
                   </div>
 
                   {/* RGB Value */}
@@ -597,7 +617,11 @@ export function ColorsView() {
                         <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
                           Token
                         </div>
-                        <code className="text-xs font-mono bg-white/50 dark:bg-black/20 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 rounded">
+                        <code
+                          onClick={() => navigator.clipboard.writeText(color.token)}
+                          className="text-xs font-mono bg-white/50 dark:bg-black/20 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 rounded cursor-pointer hover:bg-white dark:hover:bg-black/40 transition-colors"
+                          title="Click to copy token"
+                        >
                           {color.token}
                         </code>
                       </div>
@@ -711,7 +735,11 @@ export function ColorsView() {
                           <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
                             Token
                           </div>
-                          <code className="text-xs font-mono bg-zinc-100 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 rounded inline-block border border-transparent dark:border-zinc-700">
+                          <code
+                            onClick={() => navigator.clipboard.writeText(color.token)}
+                            className="text-xs font-mono bg-zinc-100 dark:bg-zinc-900/80 text-zinc-800 dark:text-zinc-200 px-3 py-1.5 rounded inline-block border border-transparent dark:border-zinc-700 cursor-pointer hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors"
+                            title="Click to copy token"
+                          >
                             {color.token}
                           </code>
                         </div>
@@ -721,7 +749,13 @@ export function ColorsView() {
                           <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
                             Hex
                           </div>
-                          <span className="text-sm font-mono text-zinc-600 dark:text-zinc-300">{color.hex}</span>
+                          <span
+                            onClick={() => navigator.clipboard.writeText(color.hex)}
+                            className="text-sm font-mono text-zinc-600 dark:text-zinc-300 cursor-pointer hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+                            title="Click to copy hex"
+                          >
+                            {color.hex}
+                          </span>
                         </div>
 
                         {/* Copy Button */}
