@@ -28,6 +28,7 @@ import { TextareaView } from './components/TextareaView';
 import { ModalsView } from './components/ModalsView';
 import { DividersView } from './components/DividersView';
 import { ActionPanelsView } from './components/ActionPanelsView';
+import { DashboardsView } from './components/DashboardsView';
 import { DragDropView } from './components/DragDropView';
 import { DataVisualizationView } from './components/DataVisualizationView';
 import { DescriptionsView } from './components/DescriptionsView';
@@ -182,6 +183,7 @@ function App() {
         { id: 'page-headings', label: 'Page Headings' },
         { id: 'navbars', label: 'Navbars' },
         { id: 'action-panels', label: 'Action Panels' },
+        { id: 'dashboards', label: 'Dashboards', isNew: true },
         { id: 'slide-overs', label: 'Slide-overs' },
       ],
     },
@@ -348,6 +350,8 @@ function App() {
         return <StatsView />;
       case 'action-panels':
         return <ActionPanelsView />;
+      case 'dashboards':
+        return <DashboardsView />;
       case 'file-upload':
         return <FileUploadView />;
       case 'form-layouts':

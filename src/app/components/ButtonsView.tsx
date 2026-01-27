@@ -1,5 +1,6 @@
 import { Check, X, ChevronRight, Plus, Download, Mail, Trash2, Settings } from 'lucide-react';
 import { CodeViewer } from './CodeViewer';
+import { ProjectButtonsDemo } from './demos/ProjectButtonsDemo';
 
 export function ButtonsView() {
   // Code examples for Primary Button
@@ -9,18 +10,18 @@ export function PrimaryButton() {
   return (
     <div className="flex flex-wrap gap-3">
       {/* Basic Primary Button */}
-      <button className="px-4 py-2 bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-semibold rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors">
+      <button className="px-4 py-2 bg-primary text-primary-foreground font-semibold rounded-md hover:bg-primary/90 transition-colors">
         Button
       </button>
 
       {/* Primary Button with Leading Icon */}
-      <button className="px-4 py-2 bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-semibold rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors flex items-center gap-2">
+      <button className="px-4 py-2 bg-primary text-primary-foreground font-semibold rounded-md hover:bg-primary/90 transition-colors flex items-center gap-2">
         <Plus className="w-4 h-4" />
         With Icon
       </button>
 
       {/* Primary Button with Trailing Icon */}
-      <button className="px-4 py-2 bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-semibold rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors flex items-center gap-2">
+      <button className="px-4 py-2 bg-primary text-primary-foreground font-semibold rounded-md hover:bg-primary/90 transition-colors flex items-center gap-2">
         Continue
         <ChevronRight className="w-4 h-4" />
       </button>
@@ -28,7 +29,7 @@ export function PrimaryButton() {
       {/* Disabled State */}
       <button 
         disabled
-        className="px-4 py-2 bg-zinc-400 dark:bg-zinc-600 text-zinc-300 dark:text-zinc-500 font-semibold rounded-md cursor-not-allowed"
+        className="px-4 py-2 bg-muted text-muted-foreground font-semibold rounded-md cursor-not-allowed opacity-50"
       >
         Disabled
       </button>
@@ -217,18 +218,18 @@ export function SecondaryButton() {
   return (
     <div className="flex flex-wrap gap-3">
       {/* Basic Secondary Button */}
-      <button className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 font-semibold rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors border border-zinc-300 dark:border-zinc-700">
+      <button className="px-4 py-2 bg-secondary text-secondary-foreground font-semibold rounded-md hover:bg-secondary/80 transition-colors border border-input">
         Button
       </button>
 
       {/* Secondary Button with Leading Icon */}
-      <button className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 font-semibold rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors border border-zinc-300 dark:border-zinc-700 flex items-center gap-2">
+      <button className="px-4 py-2 bg-secondary text-secondary-foreground font-semibold rounded-md hover:bg-secondary/80 transition-colors border border-input flex items-center gap-2">
         <Download className="w-4 h-4" />
         Download
       </button>
 
       {/* Secondary Button with Trailing Icon */}
-      <button className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 font-semibold rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors border border-zinc-300 dark:border-zinc-700 flex items-center gap-2">
+      <button className="px-4 py-2 bg-secondary text-secondary-foreground font-semibold rounded-md hover:bg-secondary/80 transition-colors border border-input flex items-center gap-2">
         Settings
         <Settings className="w-4 h-4" />
       </button>
@@ -315,12 +316,12 @@ export function OutlineButton() {
   return (
     <div className="flex flex-wrap gap-3">
       {/* Basic Outline Button */}
-      <button className="px-4 py-2 bg-transparent text-zinc-900 dark:text-zinc-50 font-semibold rounded-md hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors border-2 border-zinc-300 dark:border-zinc-700">
+      <button className="px-4 py-2 bg-transparent text-foreground font-semibold rounded-md hover:bg-accent hover:text-accent-foreground transition-colors border-2 border-input">
         Button
       </button>
 
       {/* Outline Button with Icon */}
-      <button className="px-4 py-2 bg-transparent text-zinc-900 dark:text-zinc-50 font-semibold rounded-md hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors border-2 border-zinc-300 dark:border-zinc-700 flex items-center gap-2">
+      <button className="px-4 py-2 bg-transparent text-foreground font-semibold rounded-md hover:bg-accent hover:text-accent-foreground transition-colors border-2 border-input flex items-center gap-2">
         <Mail className="w-4 h-4" />
         Email
       </button>
@@ -391,12 +392,12 @@ export function GhostButton() {
   return (
     <div className="flex flex-wrap gap-3">
       {/* Basic Ghost Button */}
-      <button className="px-4 py-2 bg-transparent text-zinc-900 dark:text-zinc-50 font-semibold rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors">
+      <button className="px-4 py-2 bg-transparent text-foreground font-semibold rounded-md hover:bg-accent hover:text-accent-foreground transition-colors">
         Button
       </button>
 
       {/* Ghost Button with Icon */}
-      <button className="px-4 py-2 bg-transparent text-zinc-900 dark:text-zinc-50 font-semibold rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors flex items-center gap-2">
+      <button className="px-4 py-2 bg-transparent text-foreground font-semibold rounded-md hover:bg-accent hover:text-accent-foreground transition-colors flex items-center gap-2">
         Learn more
         <ChevronRight className="w-4 h-4" />
       </button>
@@ -465,18 +466,18 @@ export function DestructiveButton() {
   return (
     <div className="flex flex-wrap gap-3">
       {/* Solid Destructive Button */}
-      <button className="px-4 py-2 bg-red-600 dark:bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 dark:hover:bg-red-700 transition-colors">
+      <button className="px-4 py-2 bg-destructive text-destructive-foreground font-semibold rounded-md hover:bg-destructive/90 transition-colors">
         Delete
       </button>
 
       {/* Destructive Button with Icon */}
-      <button className="px-4 py-2 bg-red-600 dark:bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 dark:hover:bg-red-700 transition-colors flex items-center gap-2">
+      <button className="px-4 py-2 bg-destructive text-destructive-foreground font-semibold rounded-md hover:bg-destructive/90 transition-colors flex items-center gap-2">
         <Trash2 className="w-4 h-4" />
         Remove
       </button>
 
       {/* Destructive Outline */}
-      <button className="px-4 py-2 bg-transparent text-red-600 dark:text-red-500 font-semibold rounded-md hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors border-2 border-red-300 dark:border-red-800">
+      <button className="px-4 py-2 bg-transparent text-destructive font-semibold rounded-md hover:bg-destructive/10 transition-colors border-2 border-destructive">
         Delete Outline
       </button>
     </div>
@@ -545,12 +546,12 @@ export function LinkButton() {
   return (
     <div className="flex flex-wrap gap-3">
       {/* Basic Link Button */}
-      <button className="px-0 py-0 text-zinc-900 dark:text-zinc-50 font-semibold underline underline-offset-4 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors">
+      <button className="px-0 py-0 text-foreground font-semibold underline underline-offset-4 hover:text-muted-foreground transition-colors">
         Link Button
       </button>
 
       {/* Link Button with Icon */}
-      <button className="px-0 py-0 text-zinc-900 dark:text-zinc-50 font-semibold underline underline-offset-4 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors flex items-center gap-1">
+      <button className="px-0 py-0 text-foreground font-semibold underline underline-offset-4 hover:text-muted-foreground transition-colors flex items-center gap-1">
         View details
         <ChevronRight className="w-4 h-4" />
       </button>
@@ -705,18 +706,18 @@ Generate following Strata DS specifications.`;
               </span>
             </div>
             <div className="flex flex-wrap gap-3 mb-6">
-              <button className="px-4 py-2 bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-semibold rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors">
+              <button className="px-4 py-2 bg-primary text-primary-foreground font-semibold rounded-md hover:bg-primary/90 transition-colors">
                 Button
               </button>
-              <button className="px-4 py-2 bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-semibold rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors flex items-center gap-2">
+              <button className="px-4 py-2 bg-primary text-primary-foreground font-semibold rounded-md hover:bg-primary/90 transition-colors flex items-center gap-2">
                 <Plus className="w-4 h-4" />
                 With Icon
               </button>
-              <button className="px-4 py-2 bg-zinc-900 dark:bg-zinc-50 text-zinc-50 dark:text-zinc-900 font-semibold rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors flex items-center gap-2">
+              <button className="px-4 py-2 bg-primary text-primary-foreground font-semibold rounded-md hover:bg-primary/90 transition-colors flex items-center gap-2">
                 Continue
                 <ChevronRight className="w-4 h-4" />
               </button>
-              <button className="px-4 py-2 bg-zinc-400 dark:bg-zinc-600 text-zinc-300 dark:text-zinc-500 font-semibold rounded-md cursor-not-allowed" disabled>
+              <button className="px-4 py-2 bg-muted text-muted-foreground font-semibold rounded-md cursor-not-allowed opacity-50" disabled>
                 Disabled
               </button>
             </div>
@@ -782,14 +783,14 @@ Generate following Strata DS specifications.`;
               </span>
             </div>
             <div className="flex flex-wrap gap-3 mb-6">
-              <button className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 font-semibold rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors border border-zinc-300 dark:border-zinc-700">
+              <button className="px-4 py-2 bg-secondary text-secondary-foreground font-semibold rounded-md hover:bg-secondary/80 transition-colors border border-input">
                 Button
               </button>
-              <button className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 font-semibold rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors border border-zinc-300 dark:border-zinc-700 flex items-center gap-2">
+              <button className="px-4 py-2 bg-secondary text-secondary-foreground font-semibold rounded-md hover:bg-secondary/80 transition-colors border border-input flex items-center gap-2">
                 <Download className="w-4 h-4" />
                 Download
               </button>
-              <button className="px-4 py-2 bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 font-semibold rounded-md hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors border border-zinc-300 dark:border-zinc-700 flex items-center gap-2">
+              <button className="px-4 py-2 bg-secondary text-secondary-foreground font-semibold rounded-md hover:bg-secondary/80 transition-colors border border-input flex items-center gap-2">
                 Settings
                 <Settings className="w-4 h-4" />
               </button>
@@ -1407,6 +1408,17 @@ Generate following Strata DS specifications.`;
           </div>
         </div>
       </div>
+
+      {/* Project Examples */}
+      <section className="space-y-4 pt-12 border-t border-zinc-200 dark:border-zinc-800">
+        <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
+          Project Examples (Custom)
+        </h2>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
+          Real-world usage patterns extracted from the Catalyst application. These are specific implementations using utility classes rather than the generic component.
+        </p>
+        <ProjectButtonsDemo />
+      </section>
     </div>
   );
 }

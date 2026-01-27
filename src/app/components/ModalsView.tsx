@@ -1,4 +1,5 @@
 import { CodeViewer } from './CodeViewer';
+import { ProjectModalsDemo } from './demos/ProjectModalsDemo';
 import { Button } from './ui/button';
 import {
   Dialog,
@@ -200,6 +201,20 @@ Modal dialog for actions.
           />
         </div>
       </div>
-    </div>
+
+
+      {/* Project Examples */}
+      <section className="space-y-4 pt-12 border-t border-zinc-200 dark:border-zinc-800 mt-12 pb-20">
+        <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
+          Project Examples (Custom)
+        </h2>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
+          Real-world usage patterns extracted from the Catalyst application (e.g., Document Preview Dialog).
+        </p>
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6">
+          <ProjectModalsDemo />
+        </div>
+      </section>
+    </div >
   )
 }

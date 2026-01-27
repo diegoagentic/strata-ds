@@ -1,4 +1,5 @@
 import { Badge } from './ui/badge';
+import { ProjectBadgesDemo } from './demos/ProjectBadgesDemo';
 import { CodeViewer } from './CodeViewer';
 import { Check, X } from 'lucide-react';
 
@@ -85,6 +86,19 @@ export function BadgeDemo() {
             <li>• Use "soft" variants for secondary information to avoid visual noise.</li>
             <li>• Pair with icons for quick status identification.</li>
           </ul>
+        </div>
+      </section>
+
+      {/* Project Examples */}
+      <section className="space-y-4 pt-12 border-t border-zinc-200 dark:border-zinc-800 mt-12">
+        <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
+          Project Examples (Custom)
+        </h2>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
+          Real-world usage patterns extracted from the Catalyst application (e.g., Table Status Pills).
+        </p>
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6">
+          <ProjectBadgesDemo />
         </div>
       </section>
     </div >

@@ -1,6 +1,8 @@
 import { Navbar, NavbarItem, NavbarSection, NavbarSpacer } from "./ui/navbar"
 import { CodeViewer } from './CodeViewer';
 
+import { CatalystNavbarDemo } from "./demos/CatalystNavbar";
+
 export function NavbarsView() {
   const basicNavbarReact = `import { Navbar, NavbarItem, NavbarSection, NavbarSpacer } from "@/components/ui/navbar"
 
@@ -77,6 +79,29 @@ export function Example() {
         />
       </section>
 
+
+
+      {/* Application Navbar (Custom) */}
+      <section className="mb-16">
+        <h2 className="text-xl font-semibold text-zinc-950 dark:white mb-6">
+          Application Navbar (Custom)
+        </h2>
+        <p className="text-sm text-zinc-500 mb-6">
+          A complex, floating navbar used in the Catalyst Application, featuring tenant switching, action center integration, and responsive menus.
+        </p>
+        <div className="bg-white dark:zinc-900 border border-zinc-200 dark:zinc-800 rounded-xl overflow-hidden mb-6 p-6">
+          <CatalystNavbarDemo />
+        </div>
+
+        <CodeViewer
+          title="Catalyst Navbar"
+          react={`import { Navbar } from '@/components/Navbar';`}
+          html={`<!-- See CatalystNavbar.tsx for full implementation -->`}
+          css={`.navbar-container { position: fixed; top: 1.5rem; ... }`}
+          prompt="Generate a complex application navbar with floating glassmorphism effect, tenant selector, and notification center."
+        />
+      </section>
+
       {/* Usage Guidelines */}
       <section className="mt-20">
         <h2 className="text-2xl font-bold text-zinc-950 dark:white mb-6">
@@ -101,6 +126,6 @@ export function Example() {
           </div>
         </div>
       </section>
-    </div>
+    </div >
   );
 }

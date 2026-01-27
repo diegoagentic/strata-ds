@@ -19,7 +19,7 @@ export function ActionPanelsView() {
 
         {/* Visual Preview - Centered and constrained */}
         <div className="p-12 bg-zinc-100 dark:bg-black/20 rounded-xl border border-zinc-200 dark:border-zinc-800 flex justify-center items-start">
-          <div className="w-full max-w-md shadow-2xl rounded-2xl">
+          <div className="w-full max-w-md shadow-2xl rounded-2xl ring-1 ring-zinc-900/5 dark:ring-white/10">
             <ActionPanel />
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { Plus, Check, X } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { ProjectAvatarsDemo } from './demos/ProjectAvatarsDemo';
 import { CodeViewer } from './CodeViewer';
 
 export function AvatarsView() {
@@ -117,6 +118,19 @@ export function AvatarStack() {
             <li>• Always include a fallback for accessibility.</li>
             <li>• Add a ring border to stacked avatars for better separation.</li>
           </ul>
+        </div>
+      </section>
+
+      {/* Project Examples */}
+      <section className="space-y-4 pt-12 border-t border-zinc-200 dark:border-zinc-800 mt-12">
+        <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
+          Project Examples (Custom)
+        </h2>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
+          Real-world usage patterns extracted from the Catalyst application (e.g., User Lists details).
+        </p>
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6">
+          <ProjectAvatarsDemo />
         </div>
       </section>
     </div>
