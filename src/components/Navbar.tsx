@@ -6,7 +6,7 @@ import {
     UserIcon, DocumentTextIcon, ChartBarIcon, ExclamationCircleIcon,
     CalendarIcon, EllipsisHorizontalIcon, ArrowRightOnRectangleIcon, BriefcaseIcon
 } from '@heroicons/react/24/outline'
-import { useTheme } from '../useTheme'
+import { useTheme } from './ThemeProvider'
 
 function NavItem({ icon, label, active = false }: { icon: React.ReactNode, label: string, active?: boolean }) {
     return (

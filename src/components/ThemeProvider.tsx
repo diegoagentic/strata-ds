@@ -1,62 +1,119 @@
-import * as React from 'react';
+import * as React from "react"
 
-/**
- * ThemeProvider Component
- * 
- * Provides easy theme customization by injecting CSS custom properties.
- * Allows consumers to override design tokens at any level of the component tree.
- */
+export type Theme = "dark" | "light" | "system"
 
 export interface ThemeConfig {
     [key: string]: string | number;
 }
 
 export interface ThemeProviderProps {
-    theme?: ThemeConfig;
-    children: React.ReactNode;
-    className?: string;
+    children: React.ReactNode
+    defaultTheme?: Theme
+    storageKey?: string
+    /** Optional theme object for CSS variables override */
+    theme?: ThemeConfig
+    className?: string
 }
 
-export function ThemeProvider({ theme, children, className }: ThemeProviderProps) {
-    const style = React.useMemo(() => {
-        if (!theme) return undefined;
+export interface ThemeProviderState {
+    theme: Theme
+    setTheme: (theme: Theme) => void
+    toggleTheme: () => void
+    // Token utilities
+    getTokenValue: (tokenName: string) => string
+    setTokenValue: (tokenName: string, value: string) => void
+}
 
-        // Convert theme object to CSS custom properties
-        const cssVars: Record<string, string> = {};
-        Object.entries(theme).forEach(([key, value]) => {
-            // Add -- prefix if not present
+const initialState: ThemeProviderState = {
+    theme: "system",
+    setTheme: () => null,
+    toggleTheme: () => null,
+    getTokenValue: () => "",
+    setTokenValue: () => null,
+}
+
+const ThemeProviderContext = React.createContext<ThemeProviderState>(initialState)
+
+export function ThemeProvider({
+    children,
+    defaultTheme = "system",
+    storageKey = "vite-ui-theme",
+    theme: themeConfig,
+    className,
+    ...props
+}: ThemeProviderProps) {
+    const [theme, setTheme] = React.useState<Theme>(
+        () => (typeof window !== "undefined" ? (localStorage.getItem(storageKey) as Theme) || defaultTheme : defaultTheme)
+    )
+
+    React.useEffect(() => {
+        const root = window.document.documentElement
+
+        root.classList.remove("light", "dark")
+
+        if (theme === "system") {
+            const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+                .matches
+                ? "dark"
+                : "light"
+
+            root.classList.add(systemTheme)
+            return
+        }
+
+        root.classList.add(theme)
+    }, [theme])
+
+    // Effect for updating CSS variables from themeConfig
+    React.useEffect(() => {
+        if (!themeConfig) return;
+        const root = window.document.documentElement;
+        Object.entries(themeConfig).forEach(([key, value]) => {
             const cssKey = key.startsWith('--') ? key : `--${key}`;
-            cssVars[cssKey] = String(value);
+            root.style.setProperty(cssKey, String(value));
         });
+    }, [themeConfig]);
 
-        return cssVars as React.CSSProperties;
-    }, [theme]);
+    const value = React.useMemo<ThemeProviderState>(
+        () => ({
+            theme,
+            setTheme: (theme: Theme) => {
+                localStorage.setItem(storageKey, theme)
+                setTheme(theme)
+            },
+            toggleTheme: () => {
+                setTheme((prev) => {
+                    const next = prev === 'dark' ? 'light' : 'dark';
+                    localStorage.setItem(storageKey, next);
+                    return next;
+                });
+            },
+            getTokenValue: (tokenName: string) => {
+                if (typeof window === 'undefined') return '';
+                const cssVarName = tokenName.startsWith('--') ? tokenName : `--${tokenName}`;
+                return getComputedStyle(document.documentElement).getPropertyValue(cssVarName).trim();
+            },
+            setTokenValue: (tokenName: string, value: string) => {
+                if (typeof window === 'undefined') return;
+                const cssVarName = tokenName.startsWith('--') ? tokenName : `--${tokenName}`;
+                document.documentElement.style.setProperty(cssVarName, value);
+            }
+        }),
+        [theme, storageKey, themeConfig]
+    )
 
     return (
-        <div style={style} className={className}>
-            {children}
-        </div>
-    );
+        <ThemeProviderContext.Provider {...props} value={value}>
+            <div className={className}>{children}</div>
+        </ThemeProviderContext.Provider>
+    )
 }
 
-/**
- * useTheme Hook
- * 
- * Access current theme values programmatically
- */
-export function useTheme() {
-    const getTokenValue = React.useCallback((tokenName: string) => {
-        const cssVarName = tokenName.startsWith('--') ? tokenName : `--${tokenName}`;
-        return getComputedStyle(document.documentElement).getPropertyValue(cssVarName).trim();
-    }, []);
+export const useTheme = () => {
+    const context = React.useContext(ThemeProviderContext)
 
-    const setTokenValue = React.useCallback((tokenName: string, value: string) => {
-        const cssVarName = tokenName.startsWith('--') ? tokenName : `--${tokenName}`;
-        document.documentElement.style.setProperty(cssVarName, value);
-    }, []);
+    if (context === undefined)
+        throw new Error("useTheme must be used within a ThemeProvider")
 
-    return {
-        getTokenValue,
-        setTokenValue,
-    };
+    return context
 }

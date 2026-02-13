@@ -1,43 +1,43 @@
 {
     "color": {
         "background": {
-            "value": "{color.mono.offWhite}"
+            "value": "{color.zinc.100}"
         },
         "foreground": {
-            "value": "{color.mono.offBlack}"
+            "value": "{color.zinc.900}"
         },
         "card": {
-            "value": "{color.mono.offWhite}"
+            "value": "{color.zinc.50}"
         },
         "card-foreground": {
-            "value": "{color.mono.offBlack}"
+            "value": "{color.zinc.900}"
         },
         "popover": {
-            "value": "{color.mono.offWhite}"
+            "value": "{color.zinc.50}"
         },
         "popover-foreground": {
-            "value": "{color.mono.offBlack}"
+            "value": "{color.zinc.900}"
         },
         "primary": {
-            "value": "{color.brand.lime}"
+            "value": "{color.brand.300}"
         },
         "primary-foreground": {
-            "value": "{color.mono.offBlack}"
+            "value": "{color.zinc.900}"
         },
         "secondary": {
-            "value": "{color.zinc.100}"
+            "value": "{color.zinc.50}"
         },
         "secondary-foreground": {
             "value": "{color.zinc.900}"
         },
         "muted": {
-            "value": "{color.zinc.100}"
+            "value": "{color.zinc.50}"
         },
         "muted-foreground": {
             "value": "{color.zinc.500}"
         },
         "accent": {
-            "value": "{color.zinc.100}"
+            "value": "{color.zinc.50}"
         },
         "accent-foreground": {
             "value": "{color.zinc.900}"
@@ -49,13 +49,13 @@
             "value": "{color.white}"
         },
         "border": {
-            "value": "{color.zinc.200}"
+            "value": "{color.zinc.300}"
         },
         "input": {
-            "value": "{color.zinc.200}"
+            "value": "{color.zinc.300}"
         },
         "input-background": {
-            "value": "{color.zinc.100}"
+            "value": "{color.zinc.50}"
         },
         "ring": {
             "value": "{color.zinc.500}"
@@ -76,25 +76,25 @@
             "value": "{color.indigo.400}"
         },
         "sidebar": {
-            "value": "{color.mono.offWhite}"
+            "value": "{color.zinc.50}"
         },
         "sidebar-foreground": {
-            "value": "{color.mono.offBlack}"
+            "value": "{color.zinc.900}"
         },
         "sidebar-primary": {
-            "value": "{color.brand.lime}"
+            "value": "{color.brand.300}"
         },
         "sidebar-primary-foreground": {
-            "value": "{color.mono.offBlack}"
+            "value": "{color.zinc.900}"
         },
         "sidebar-accent": {
-            "value": "{color.zinc.100}"
+            "value": "{color.zinc.50}"
         },
         "sidebar-accent-foreground": {
             "value": "{color.zinc.900}"
         },
         "sidebar-border": {
-            "value": "{color.zinc.200}"
+            "value": "{color.zinc.300}"
         },
         "sidebar-ring": {
             "value": "{color.zinc.500}"

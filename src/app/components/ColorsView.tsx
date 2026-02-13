@@ -58,6 +58,7 @@ export function ColorsView() {
     {
       primitive: '50',
       token: 'zinc-50',
+      tailwind: 'gray-50',
       hex: '#fafafa',
       usage: 'Backgrounds, subtle overlays',
       light: true
@@ -65,6 +66,7 @@ export function ColorsView() {
     {
       primitive: '100',
       token: 'zinc-100',
+      tailwind: 'gray-100',
       hex: '#EBECEE',
       usage: 'Hover states, secondary backgrounds',
       light: true
@@ -72,6 +74,7 @@ export function ColorsView() {
     {
       primitive: '200',
       token: 'zinc-200',
+      tailwind: 'gray-200',
       hex: '#E0E2E5',
       usage: 'Borders (light mode default)',
       light: true,
@@ -80,6 +83,7 @@ export function ColorsView() {
     {
       primitive: '300',
       token: 'zinc-300',
+      tailwind: 'gray-300',
       hex: '#D0D4D8',
       usage: 'Border hover states, dividers',
       light: true
@@ -87,6 +91,7 @@ export function ColorsView() {
     {
       primitive: '400',
       token: 'zinc-400',
+      tailwind: 'gray-400',
       hex: '#B4BBC2',
       usage: 'Placeholder text, disabled states',
       light: true
@@ -94,6 +99,7 @@ export function ColorsView() {
     {
       primitive: '500',
       token: 'zinc-500',
+      tailwind: 'gray-500',
       hex: '#959DA7',
       usage: 'Secondary text, captions',
       dark: true,
@@ -102,6 +108,7 @@ export function ColorsView() {
     {
       primitive: '600',
       token: 'zinc-600',
+      tailwind: 'gray-600',
       hex: '#546070',
       usage: 'Body text, primary icons',
       dark: true
@@ -109,6 +116,7 @@ export function ColorsView() {
     {
       primitive: '700',
       token: 'zinc-700',
+      tailwind: 'gray-700',
       hex: '#333F4E',
       usage: 'Border hover (dark mode)',
       dark: true
@@ -116,6 +124,7 @@ export function ColorsView() {
     {
       primitive: '800',
       token: 'zinc-800',
+      tailwind: 'gray-800',
       hex: '#141E2C',
       usage: 'Borders (dark mode default)',
       dark: true,
@@ -124,6 +133,7 @@ export function ColorsView() {
     {
       primitive: '900',
       token: 'zinc-900',
+      tailwind: 'gray-900',
       hex: '#02060C',
       usage: 'Headings, primary text (light mode)',
       dark: true,
@@ -132,6 +142,7 @@ export function ColorsView() {
     {
       primitive: '950',
       token: 'zinc-950',
+      tailwind: 'gray-950',
       hex: '#09090b',
       usage: 'Backgrounds (dark mode)',
       dark: true
@@ -411,9 +422,9 @@ export function ColorsView() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Light Mode: Brand Background */}
           <div className="rounded-xl border border-zinc-200 overflow-hidden">
-            <div className="bg-brand-200 p-8 flex flex-col items-center justify-center text-center h-40">
+            <div className="bg-brand-300 p-8 flex flex-col items-center justify-center text-center h-40">
               <h3 className="text-zinc-900 font-bold text-lg mb-1">Brand Soft</h3>
-              <p className="text-zinc-800 text-sm">Background: brand-200</p>
+              <p className="text-zinc-800 text-sm">Background: brand-300</p>
               <p className="text-zinc-900 text-sm font-semibold">Text: zinc-900</p>
             </div>
             <div className="bg-white p-4 border-t border-zinc-200">
@@ -428,12 +439,12 @@ export function ColorsView() {
           {/* Dark Mode: Brand Signal */}
           <div className="rounded-xl border border-zinc-800 overflow-hidden">
             <div className="bg-zinc-900 p-8 flex flex-col items-center justify-center text-center h-40 relative">
-              <div className="absolute top-4 right-4 text-brand-400">
+              <div className="absolute top-4 right-4 text-brand-500">
                 <CheckCircle2 className="w-6 h-6" />
               </div>
-              <h3 className="text-brand-400 font-bold text-lg mb-1">Brand Signal</h3>
+              <h3 className="text-brand-500 font-bold text-lg mb-1">Brand Signal</h3>
               <p className="text-zinc-400 text-sm">Background: zinc-900</p>
-              <p className="text-brand-400 text-sm font-semibold">Accent: brand-400</p>
+              <p className="text-brand-500 text-sm font-semibold">Accent: brand-500</p>
             </div>
             <div className="bg-zinc-950 p-4 border-t border-zinc-800">
               <div className="flex items-center gap-2 mb-2">
@@ -500,10 +511,10 @@ export function ColorsView() {
                     </code>
                   </div>
 
-                  {/* Token */}
-                  <div className="w-48">
+                  {/* Catalyst Token */}
+                  <div className="w-40">
                     <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
-                      Token
+                      Catalyst
                     </div>
                     <code
                       onClick={() => navigator.clipboard.writeText(color.token)}
@@ -511,6 +522,19 @@ export function ColorsView() {
                       title="Click to copy token"
                     >
                       {color.token}
+                    </code>
+                  </div>
+
+                  {/* Tailwind Token */}
+                  <div className="w-40">
+                    <div className="text-xs uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-1">
+                      Tailwind
+                    </div>
+                    <code
+                      className="text-xs font-mono text-zinc-500 dark:text-zinc-400 px-3 py-1.5"
+                      title="Tailwind Equivalent"
+                    >
+                      {color.tailwind}
                     </code>
                   </div>
 

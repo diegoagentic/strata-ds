@@ -30,7 +30,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:tokens": "node build-tokens.mjs",
+    "validate:tokens": "node scripts/validate-tokens.mjs",
+    "build:tokens": "node scripts/validate-tokens.mjs && node build-tokens.mjs",
     "build:lib": "npm run build:tokens && vite build --config vite.config.lib.ts",
     "prepublishOnly": "npm run build:lib",
     "preview": "vite preview",

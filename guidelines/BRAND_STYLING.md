@@ -8,8 +8,8 @@ The system adapts its expression between Light and Dark modes to ensure accessib
 
 | Mode | Theme Strategy | Background | Primary Action |
 | :--- | :--- | :--- | :--- |
-| **Light** | **Clean / Brand Soft** | `bg-white` | `bg-brand-300` |
-| **Dark** | **Brand Signal** | `bg-zinc-900` | `bg-brand-400` |
+| **Light** | **Clean / Brand Soft** | `bg-white` | `bg-brand-300` (#E6F993) |
+| **Dark** | **Brand Signal** | `bg-zinc-900` | `bg-brand-500` (#C3E433) |
 
 ---
 
@@ -38,16 +38,16 @@ In light mode, branded cards should maintain a clean, collaborative feel. Avoid 
 In dark mode, the strategy shifts to "Brand Signal". We use deep backgrounds to make the brand color "pop" as a signal light.
 
 *   **Background:** `bg-zinc-900` (Deep Dark)
-*   **Primary Action:** `bg-brand-400` (Lime High Contrast)
-    *   *Rule:* Use `brand-400` for maximum contrast against dark surfaces.
+*   **Primary Action:** `bg-brand-500` (#C3E433) (Lime High Contrast)
+    *   *Rule:* Use `brand-500` for maximum contrast and visibility against dark surfaces.
 *   **Text:** `text-white` (Primary), `text-zinc-400` (Secondary)
-*   **Accents:** `brand-400` is used for borders and icons to clearly define boundaries in low light.
+*   **Accents:** `brand-400` (#DAF75F) can be used for subtle highlights, borders and decorative elements. Use `brand-500` for primary interactive elements.
 
 **Example Code:**
 ```tsx
-<Card className="bg-zinc-900 border-brand-400/30">
+<Card className="bg-zinc-900 border-zinc-800">
   <div className="h-1 bg-brand-400" /> {/* Accent */}
-  <Button className="bg-brand-400 text-zinc-900 hover:bg-brand-500">
+  <Button className="bg-brand-500 text-zinc-900 hover:bg-brand-600">
     Action
   </Button>
 </Card>
