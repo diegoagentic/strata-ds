@@ -1,4 +1,4 @@
-import { CheckCircle2, AlertTriangle, AlertCircle, Info, Check, X } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, AlertCircle, Info, Check, X, Sun, Moon, Plus, MapPin } from 'lucide-react';
 import { CopyButton } from './CopyButton';
 
 export function ColorsView() {
@@ -419,20 +419,36 @@ export function ColorsView() {
           Optimized pairings for Brand, Neutral (Zinc), and Muted (Slate) colors across modes.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Light Mode: Brand Background */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {/* Light Mode: Primary Action */}
           <div className="rounded-xl border border-zinc-200 overflow-hidden">
             <div className="bg-brand-300 p-8 flex flex-col items-center justify-center text-center h-40">
-              <h3 className="text-zinc-900 font-bold text-lg mb-1">Brand Soft</h3>
+              <h3 className="text-zinc-900 font-bold text-lg mb-1">Primary Action</h3>
               <p className="text-zinc-800 text-sm">Background: brand-300</p>
               <p className="text-zinc-900 text-sm font-semibold">Text: zinc-900</p>
             </div>
-            <div className="bg-white p-4 border-t border-zinc-200">
+            <div className="bg-white p-4 border-t border-zinc-200 h-full">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
-                <span className="text-xs font-semibold text-zinc-600">WCAG AA Pass</span>
+                <span className="text-xs font-semibold text-zinc-600">High Visibility</span>
               </div>
-              <p className="text-xs text-zinc-500">Optimal for light mode cards/sections.</p>
+              <p className="text-xs text-zinc-500">Crucial actions, active tabs, and primary buttons.</p>
+            </div>
+          </div>
+
+          {/* Light Mode: Brand Surface (New) */}
+          <div className="rounded-xl border border-zinc-200 overflow-hidden">
+            <div className="bg-brand-50 p-8 flex flex-col items-center justify-center text-center h-40">
+              <h3 className="text-brand-900 font-bold text-lg mb-1">Brand Surface</h3>
+              <p className="text-brand-800 text-sm">Background: brand-50</p>
+              <p className="text-brand-900 text-sm font-semibold">Text: brand-900</p>
+            </div>
+            <div className="bg-white p-4 border-t border-zinc-200 h-full">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                <span className="text-xs font-semibold text-zinc-600">Subtle Context</span>
+              </div>
+              <p className="text-xs text-zinc-500">Status badges, large content areas, and subtle highlights.</p>
             </div>
           </div>
 
@@ -446,7 +462,7 @@ export function ColorsView() {
               <p className="text-zinc-400 text-sm">Background: zinc-900</p>
               <p className="text-brand-500 text-sm font-semibold">Accent: brand-500</p>
             </div>
-            <div className="bg-zinc-950 p-4 border-t border-zinc-800">
+            <div className="bg-zinc-950 p-4 border-t border-zinc-800 h-full">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
                 <span className="text-xs font-semibold text-zinc-400">High Contrast</span>
@@ -455,17 +471,291 @@ export function ColorsView() {
             </div>
           </div>
 
-          {/* Scale Harmony */}
+          {/* Neutral Structure */}
           <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden">
-            <div className="bg-zinc-50 dark:bg-zinc-900 p-8 flex flex-col justify-center h-40 gap-2">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded bg-zinc-500 flex items-center justify-center text-white text-xs">Zn</div>
-                <span className="text-sm font-mono text-zinc-500">Zinc (Neutral)</span>
-              </div>
+            <div className="bg-zinc-100 dark:bg-zinc-800 p-8 flex flex-col items-center justify-center text-center h-40">
+              <h3 className="text-zinc-600 dark:text-zinc-400 font-bold text-lg mb-1">Neutral</h3>
+              <p className="text-zinc-500 text-sm">Bg: zinc-100</p>
             </div>
-            <div className="bg-white dark:bg-zinc-950 p-4 border-t border-zinc-200 dark:border-zinc-800">
+            <div className="bg-white dark:bg-zinc-950 p-4 border-t border-zinc-200 dark:border-zinc-800 h-full">
               <p className="text-xs text-zinc-500 dark:text-zinc-400">
                 Use Zinc for sharp UI elements and primary structure.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Component References */}
+      <div className="mb-12">
+        <div className="flex items-center gap-3 mb-6">
+          <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
+            Component References
+          </h2>
+          <span className="px-2 py-0.5 rounded-full bg-brand-100 text-brand-700 text-xs font-semibold border border-brand-200">
+            Live Preview
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Light Mode Reference */}
+          <div className="p-6 rounded-xl border border-zinc-200 bg-white shadow-sm">
+            <div className="flex items-center gap-2 mb-6 pb-4 border-b border-zinc-100">
+              <Sun className="w-5 h-5 text-zinc-500" />
+              <h3 className="text-sm font-semibold text-zinc-900">Light Mode Patterns</h3>
+            </div>
+
+            <div className="space-y-8">
+              {/* Buttons */}
+              <div className="space-y-3">
+                <p className="text-xs font-mono text-zinc-400 uppercase tracking-wider">Buttons</p>
+                <div className="flex flex-wrap gap-4">
+                  <button className="px-4 py-2 bg-brand-300 hover:bg-brand-400 text-zinc-900 text-sm font-semibold rounded-lg transition-colors shadow-sm">
+                    Primary Action
+                  </button>
+                  <button className="px-4 py-2 bg-white border border-zinc-200 hover:bg-zinc-50 text-zinc-700 text-sm font-semibold rounded-lg transition-colors shadow-sm">
+                    Secondary
+                  </button>
+                </div>
+              </div>
+
+              {/* Badges */}
+              <div className="space-y-3">
+                <p className="text-xs font-mono text-zinc-400 uppercase tracking-wider">Badges</p>
+                <div className="flex flex-wrap gap-3">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-brand-50 text-brand-700 border border-brand-200">
+                    Brand Status
+                  </span>
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-zinc-100 text-zinc-700 border border-zinc-200">
+                    Neutral
+                  </span>
+                </div>
+              </div>
+
+              {/* Active Elements */}
+              <div className="space-y-3">
+                <p className="text-xs font-mono text-zinc-400 uppercase tracking-wider">Active State</p>
+                <div className="flex items-center gap-6 text-sm font-medium border-b border-zinc-100">
+                  <div className="pb-2 border-b-2 border-brand-300 text-zinc-900 cursor-pointer">
+                    Active Tab
+                  </div>
+                  <div className="pb-2 text-zinc-500 hover:text-zinc-700 cursor-pointer border-b-2 border-transparent">
+                    Inactive
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Dark Mode Reference */}
+          <div className="p-6 rounded-xl border border-zinc-800 bg-zinc-950 shadow-sm relative overflow-hidden group">
+            {/* Glow Effect */}
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-brand-500/5 rounded-full blur-3xl pointer-events-none group-hover:bg-brand-500/10 transition-colors duration-700"></div>
+
+            <div className="flex items-center gap-2 mb-6 pb-4 border-b border-zinc-800 relative z-10">
+              <Moon className="w-5 h-5 text-zinc-400" />
+              <h3 className="text-sm font-semibold text-zinc-100">Dark Mode Patterns</h3>
+            </div>
+
+            <div className="space-y-8 relative z-10">
+              {/* Buttons */}
+              <div className="space-y-3">
+                <p className="text-xs font-mono text-zinc-500 uppercase tracking-wider">Buttons</p>
+                <div className="flex flex-wrap gap-4">
+                  {/* Note: In dark mode, primary button is often brand-500 or brand-400 for contrast */}
+                  <button className="px-4 py-2 bg-brand-500 hover:bg-brand-400 text-zinc-900 text-sm font-semibold rounded-lg transition-colors shadow-sm shadow-brand-500/20">
+                    Primary Action
+                  </button>
+                  <button className="px-4 py-2 bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-300 text-sm font-semibold rounded-lg transition-colors">
+                    Secondary
+                  </button>
+                </div>
+              </div>
+
+              {/* Badges */}
+              <div className="space-y-3">
+                <p className="text-xs font-mono text-zinc-500 uppercase tracking-wider">Badges</p>
+                <div className="flex flex-wrap gap-3">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-brand-500/10 text-brand-400 border border-brand-500/20">
+                    Brand Status
+                  </span>
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-zinc-800 text-zinc-400 border border-zinc-700">
+                    Neutral
+                  </span>
+                </div>
+              </div>
+              {/* Active Elements */}
+              <div className="space-y-3">
+                <p className="text-xs font-mono text-zinc-500 uppercase tracking-wider">Active State</p>
+                <div className="flex items-center gap-6 text-sm font-medium border-b border-zinc-800">
+                  <div className="pb-2 border-b-2 border-brand-500 text-white cursor-pointer">
+                    Active Tab
+                  </div>
+                  <div className="pb-2 text-zinc-500 hover:text-zinc-300 cursor-pointer border-b-2 border-transparent">
+                    Inactive
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Advanced Patterns Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+          {/* Quick Actions & Links */}
+          <div className="p-6 rounded-xl border border-zinc-200 bg-zinc-50/50 shadow-sm">
+            <h3 className="text-sm font-semibold text-zinc-900 mb-6 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-500"></span>
+              Advanced Interactions
+            </h3>
+
+            <div className="space-y-6">
+              {/* Quick Action Card Example */}
+              <div>
+                <p className="text-xs font-mono text-zinc-400 uppercase tracking-wider mb-3">Quick Action Card</p>
+                <button className="w-full flex items-center gap-3 p-3 rounded-xl border border-dashed border-brand-200 bg-white hover:bg-brand-50 hover:border-brand-300 transition-all group text-left">
+                  <div className="p-2 rounded-full bg-brand-50 text-brand-600 group-hover:bg-brand-200 transition-colors">
+                    <Plus className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <span className="text-sm font-semibold text-zinc-900 block">New Quote</span>
+                    <span className="text-xs text-zinc-500">Create a new estimate</span>
+                  </div>
+                </button>
+              </div>
+              {/* Button with Active Icon */}
+              <div>
+                <p className="text-xs font-mono text-zinc-400 uppercase tracking-wider mb-3">Active Icon Button</p>
+                <div className="flex gap-4">
+                  <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-zinc-200 bg-white hover:border-brand-300 hover:bg-brand-50 group transition-all">
+                    <div className="w-2 h-2 rounded-full bg-zinc-300 group-hover:bg-brand-500 transition-colors"></div>
+                    <span className="text-xs font-medium text-zinc-600 group-hover:text-brand-700 transition-colors">Catalog</span>
+                  </button>
+                  <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-brand-200 bg-brand-50 text-brand-700">
+                    <div className="w-2 h-2 rounded-full bg-brand-500 shadow-[0_0_8px_rgba(234,179,8,0.5)]"></div>
+                    <span className="text-xs font-medium">Orders</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Action Link Example */}
+              <div>
+                <p className="text-xs font-mono text-zinc-400 uppercase tracking-wider mb-3">Action Link</p>
+                <button className="text-xs font-medium text-zinc-900 decoration-brand-500 underline underline-offset-2 hover:text-brand-600 transition-colors flex items-center gap-1">
+                  <MapPin className="w-3 h-3" />
+                  Track Shipment
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Dynamic Data Visualizations */}
+          <div className="p-6 rounded-xl border border-zinc-200 bg-white shadow-sm">
+            <h3 className="text-sm font-semibold text-zinc-900 mb-6 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-500"></span>
+              Data Visualization
+            </h3>
+
+            <div className="space-y-6">
+              {/* Progress Bar */}
+              <div>
+                <div className="flex justify-between text-xs mb-1">
+                  <span className="font-medium text-zinc-700">Quote Win Rate</span>
+                  <span className="font-bold text-zinc-900">68%</span>
+                </div>
+                <div className="h-1.5 w-full bg-zinc-100 rounded-full overflow-hidden">
+                  <div className="h-full bg-brand-400 rounded-full" style={{ width: '68%' }}></div>
+                </div>
+              </div>
+
+              {/* Tracking Stepper */}
+              <div>
+                <p className="text-xs font-mono text-zinc-400 uppercase tracking-wider mb-3">Tracking Stepper</p>
+                <div className="flex items-center w-full">
+                  {/* Step 1: Completed */}
+                  <div className="flex flex-col items-center relative z-10">
+                    <div className="w-6 h-6 rounded-full bg-brand-600 text-white flex items-center justify-center shadow-lg shadow-brand-500/20">
+                      <Check className="w-3.5 h-3.5" />
+                    </div>
+                    <span className="text-[10px] font-medium text-brand-700 mt-1">Placed</span>
+                  </div>
+                  {/* Connector: Active */}
+                  <div className="flex-1 h-0.5 bg-brand-200 -mx-2 mb-3"></div>
+
+                  {/* Step 2: Active */}
+                  <div className="flex flex-col items-center relative z-10">
+                    <div className="w-6 h-6 rounded-full bg-brand-600 flex items-center justify-center shadow-lg shadow-brand-500/20">
+                      <div className="w-2 h-2 rounded-full bg-white animate-pulse"></div>
+                    </div>
+                    <span className="text-[10px] font-bold text-zinc-900 mt-1">Processing</span>
+                  </div>
+                  {/* Connector: Inactive */}
+                  <div className="flex-1 h-0.5 bg-zinc-100 -mx-2 mb-3"></div>
+
+                  {/* Step 3: Pending */}
+                  <div className="flex flex-col items-center relative z-10">
+                    <div className="w-6 h-6 rounded-full bg-zinc-100 text-zinc-300 flex items-center justify-center">
+                      <div className="w-2 h-2 rounded-full bg-zinc-300"></div>
+                    </div>
+                    <span className="text-[10px] font-medium text-zinc-400 mt-1">Shipped</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Accessibility Guidelines */}
+        <div className="mt-12 mb-8">
+          <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-6">
+            Accessibility Guidelines
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Don't - Contrast Fail */}
+            <div className="rounded-xl border border-red-200 bg-red-50 p-6 relative overflow-hidden">
+              <div className="absolute top-4 right-4">
+                <X className="w-5 h-5 text-red-500" />
+              </div>
+              <h4 className="text-red-800 font-bold text-sm mb-4">DON'T: Low Contrast</h4>
+              <div className="bg-white p-4 rounded-lg border border-red-100 text-center mb-2">
+                <p className="text-brand-300 font-medium">Brand Text on White</p>
+              </div>
+              <p className="text-xs text-red-600 mt-2">
+                Avoid using `brand-300` or `brand-400` for text on white backgrounds.
+                <br /><strong>Contrast Ratio: 1.8:1 (Fail)</strong>
+              </p>
+            </div>
+
+            {/* Do - Correct Patterns */}
+            <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-6 relative overflow-hidden">
+              <div className="absolute top-4 right-4">
+                <Check className="w-5 h-5 text-emerald-600" />
+              </div>
+              <h4 className="text-emerald-800 font-bold text-sm mb-4">DO: Content Hierarchy</h4>
+
+              <div className="space-y-4">
+                {/* Light Mode Example */}
+                <div>
+                  <p className="text-xs font-semibold text-emerald-700 mb-1">Light Mode: Use Zinc/Gray</p>
+                  <div className="bg-white p-3 rounded-lg border border-emerald-100 flex items-center justify-between">
+                    <span className="text-zinc-900 font-semibold text-sm">Profile</span>
+                    <span className="text-sm font-medium text-zinc-500 hover:text-zinc-900 cursor-pointer transition-colors">View Details</span>
+                  </div>
+                </div>
+
+                {/* Dark Mode Example */}
+                <div>
+                  <p className="text-xs font-semibold text-emerald-700 mb-1">Dark Mode: Brand Allowed</p>
+                  <div className="bg-zinc-900 p-3 rounded-lg border border-emerald-100/20 flex items-center justify-between">
+                    <span className="text-white font-semibold text-sm">Profile</span>
+                    <span className="text-sm font-medium text-brand-400 hover:text-brand-300 cursor-pointer transition-colors">View Details</span>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-xs text-emerald-700 mt-4">
+                <strong>Light Mode:</strong> Use Zinc-500 for secondary actions.<br />
+                <strong>Dark Mode:</strong> Brand colors are safe for text if contrast &gt; 4.5:1.
               </p>
             </div>
           </div>

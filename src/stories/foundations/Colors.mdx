@@ -1,5 +1,6 @@
 import { Meta } from "@storybook/blocks";
 import { ColorGallery } from '../components/TokenGallery';
+import { BrandUsageExamples } from '../components/BrandUsageExamples';
 
 <Meta title="Design System/Foundations/Colors" />
 
@@ -8,3 +9,37 @@ import { ColorGallery } from '../components/TokenGallery';
 Our color system is generated from our design tokens. `Zinc` is used for neutrals, and we have semantic palettes for feedback.
 
 <ColorGallery />
+
+---
+
+## Brand Color Usage
+
+Brand colors are strategically used to guide user attention, indicate interactivity, and reinforce our identity without overwhelming the interface.
+
+### Key Patterns
+
+1.  **Interactive States**:
+    *   **Components**: Buttons, Tabs, Quick Actions
+    *   **Tokens**: `hover:bg-brand-300` + `hover:text-zinc-900` (Light), `dark:hover:bg-brand-600/50` + `dark:hover:text-white` (Dark)
+    *   **Usage**: Use subtle brand tints on background with **neutral text** to indicate interactiveness. Avoid using brand color for the text itself on light backgrounds.
+
+2.  **Status & Feedback**:
+    *   **Components**: Badges, Pills, Progress Rings
+    *   **Tokens**: `bg-brand-50` + `text-brand-700` (Light), `dark:bg-brand-900/30` + `dark:text-brand-400` (Dark)
+    *   **Usage**: Use brand colors for "Active", "In Progress", or "Neutral/Positive" states. Ensure high contrast by pairing light backgrounds with dark brand tokens.
+
+3.  **Surfaces & Accents**:
+    *   **Components**: Card Headers, Selected Items, Focus Rings
+    *   **Tokens**: `bg-brand-50/50` (Surface), `ring-brand-100` (Focus Ring)
+    *   **Usage**: Differentiate active or selected areas from the rest of the content.
+
+### Visual Examples
+
+<BrandUsageExamples />
+
+### Accessibility Note
+
+*   **Strict Rule**: **Do NOT use brand colors for body or interactive text on white/light backgrounds.**
+*   **Correct Pattern**: Use `text-zinc-900` (or `text-zinc-700`) on a `bg-brand-300` (or `bg-brand-50`) background.
+*   **Exceptions**: Status badges (`text-brand-700` on `bg-brand-50`) are permitted as they meet contrast ratios.
+*   **Dark Mode**: `text-brand-300` or `text-brand-400` is acceptable on dark backgrounds (`zinc-900`/`zinc-950`).
