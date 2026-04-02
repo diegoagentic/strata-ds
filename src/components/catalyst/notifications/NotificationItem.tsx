@@ -18,7 +18,7 @@ const PriorityBadge = ({ priority, type }: { priority: Notification['priority'],
     const colors = {
         high: 'text-red-500 bg-red-500/10 border-red-500/20',
         medium: 'text-orange-500 bg-orange-500/10 border-orange-500/20',
-        low: 'text-gray-500 bg-gray-500/10 border-gray-500/20',
+        low: 'text-zinc-500 bg-zinc-500/10 border-zinc-500/20',
     };
 
     const labels = {
@@ -64,7 +64,7 @@ export default function NotificationItem({ notification, onActionClick }: { noti
     };
 
     return (
-        <div className="group relative p-4 rounded-2xl bg-white dark:bg-black/20 border border-transparent hover:border-gray-200 dark:hover:border-white/10 hover:shadow-md transition-all duration-200">
+        <div className="group relative p-4 rounded-2xl bg-white dark:bg-black/20 border border-transparent hover:border-zinc-200 dark:hover:border-white/10 hover:shadow-md transition-all duration-200">
             <div className="flex justify-between items-start gap-4">
 
                 <div className="flex-1 min-w-0">
@@ -87,15 +87,15 @@ export default function NotificationItem({ notification, onActionClick }: { noti
                         )}
                     </div>
 
-                    <h4 className="text-sm font-semibold text-gray-900 dark:text-white truncate">
+                    <h4 className="text-sm font-semibold text-zinc-900 dark:text-white truncate">
                         {notification.title}
                     </h4>
 
-                    <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
+                    <p className="mt-0.5 text-xs text-zinc-500 dark:text-zinc-400">
                         {notification.message}
                     </p>
 
-                    <div className="mt-2 text-[10px] flex items-center gap-2 text-gray-400 dark:text-gray-500 font-mono">
+                    <div className="mt-2 text-[10px] flex items-center gap-2 text-zinc-400 dark:text-zinc-500 font-mono">
                         <span>{notification.meta}</span>
                         <span>•</span>
                         <span>{notification.timestamp}</span>
@@ -110,7 +110,7 @@ export default function NotificationItem({ notification, onActionClick }: { noti
                             "flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shadow-sm",
                             action.primary
                                 ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm"
-                                : "bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-white/20",
+                                : "bg-zinc-100 dark:bg-white/10 text-zinc-700 dark:text-zinc-200 hover:bg-zinc-200 dark:hover:bg-white/20",
                             actionState[i] === 'Sent!' && "!bg-green-500 !text-white"
                         )}
                         onClick={() => handleActionClick(action.label, i)}

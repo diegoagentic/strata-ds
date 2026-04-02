@@ -42,9 +42,9 @@ export function ButtonExample() {
                 </div>
             </section>
 
-            <section className="mt-12 p-6 bg-gray-50 dark:bg-gray-900 rounded-lg">
+            <section className="mt-12 p-6 bg-zinc-50 dark:bg-zinc-900 rounded-lg">
                 <h2 className="text-2xl font-bold mb-4">Custom Theming Example</h2>
-                <p className="mb-4 text-sm text-gray-600 dark:text-gray-400">
+                <p className="mb-4 text-sm text-zinc-600 dark:text-zinc-400">
                     Override CSS variables to customize the button appearance:
                 </p>
                 <div
@@ -62,7 +62,7 @@ export function ButtonExample() {
                         <Button variant="primary">Custom Primary</Button>
                         <Button variant="secondary">Custom Secondary</Button>
                     </div>
-                    <pre className="text-xs bg-white dark:bg-gray-800 p-3 rounded overflow-x-auto">
+                    <pre className="text-xs bg-white dark:bg-zinc-800 p-3 rounded overflow-x-auto">
                         {`style={{
   '--button-primary-background': '#8B5CF6',
   '--button-primary-background-hover': '#7C3AED',
