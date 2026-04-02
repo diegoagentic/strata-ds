@@ -1,4 +1,4 @@
-import { ArrowTrendingUpIcon, CurrencyDollarIcon, ChartBarIcon, ClipboardDocumentListIcon, ExclamationCircleIcon, PlusIcon, DocumentDuplicateIcon, DocumentTextIcon, EnvelopeIcon } from '@heroicons/react/24/outline'
+import { TrendingUp, DollarSign, BarChart3, ClipboardList, AlertCircle } from 'lucide-react'
 
 export function ProjectCardsDemo() {
     return (
@@ -15,11 +15,11 @@ export function ProjectCardsDemo() {
                                     <p className="mt-1 text-3xl font-semibold text-zinc-900 dark:text-white group-hover:scale-105 transition-transform origin-left">$1.2M</p>
                                 </div>
                                 <div className="p-3 bg-info-light dark:bg-info-light0/10 rounded-xl text-info">
-                                    <CurrencyDollarIcon className="w-6 h-6" />
+                                    <DollarSign className="w-6 h-6" />
                                 </div>
                             </div>
                             <div className="mt-4 flex items-center text-sm text-success">
-                                <ArrowTrendingUpIcon className="w-4 h-4 mr-1" />
+                                <TrendingUp className="w-4 h-4 mr-1" />
                                 <span className="font-medium">+0.2%</span> <span className="text-zinc-500 dark:text-zinc-400 ml-1">vs last month</span>
                             </div>
                         </div>
@@ -32,11 +32,11 @@ export function ProjectCardsDemo() {
                                     <p className="mt-1 text-3xl font-semibold text-zinc-900 dark:text-white group-hover:scale-105 transition-transform origin-left">88%</p>
                                 </div>
                                 <div className="p-3 bg-purple-50 dark:bg-purple-500/10 rounded-xl text-purple-600 dark:text-purple-400">
-                                    <ChartBarIcon className="w-6 h-6" />
+                                    <BarChart3 className="w-6 h-6" />
                                 </div>
                             </div>
                             <div className="mt-4 flex items-center text-sm text-success">
-                                <ArrowTrendingUpIcon className="w-4 h-4 mr-1" />
+                                <TrendingUp className="w-4 h-4 mr-1" />
                                 <span className="font-medium">+3.5%</span> <span className="text-zinc-500 dark:text-zinc-400 ml-1">vs last month</span>
                             </div>
                         </div>
@@ -49,7 +49,7 @@ export function ProjectCardsDemo() {
                                     <p className="mt-1 text-3xl font-semibold text-zinc-900 dark:text-white group-hover:scale-105 transition-transform origin-left">142</p>
                                 </div>
                                 <div className="p-3 bg-orange-50 dark:bg-orange-500/10 rounded-xl text-orange-600 dark:text-orange-400">
-                                    <ClipboardDocumentListIcon className="w-6 h-6" />
+                                    <ClipboardList className="w-6 h-6" />
                                 </div>
                             </div>
                             <div className="mt-4 flex items-center text-sm text-zinc-500 dark:text-zinc-400">
@@ -65,7 +65,7 @@ export function ProjectCardsDemo() {
                                     <p className="mt-1 text-3xl font-semibold text-zinc-900 dark:text-white group-hover:scale-105 transition-transform origin-left">15</p>
                                 </div>
                                 <div className="p-3 bg-error-light dark:bg-error/10 rounded-xl text-error">
-                                    <ExclamationCircleIcon className="w-6 h-6" />
+                                    <AlertCircle className="w-6 h-6" />
                                 </div>
                             </div>
                             <div className="mt-4 flex items-center text-sm text-error">

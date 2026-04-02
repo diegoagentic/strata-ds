@@ -1,4 +1,4 @@
-import { PlusIcon, DocumentDuplicateIcon, DocumentTextIcon, EnvelopeIcon, DocumentMagnifyingGlassIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
+import { Plus, Copy, FileText, Mail, FileSearch, SquarePen, Trash2 } from 'lucide-react'
 
 export function ProjectButtonsDemo() {
     return (
@@ -8,10 +8,10 @@ export function ProjectButtonsDemo() {
                 <h4 className="text-sm font-semibold text-zinc-900 dark:text-white mb-4">Quick Action Buttons (Dashboard)</h4>
                 <div className="flex flex-wrap items-center gap-4 p-6 bg-zinc-50 dark:bg-black/20 rounded-xl border border-zinc-200 dark:border-white/10">
                     {[
-                        { icon: <PlusIcon className="w-5 h-5" />, label: "New Order" },
-                        { icon: <DocumentDuplicateIcon className="w-5 h-5" />, label: "Duplicate" },
-                        { icon: <DocumentTextIcon className="w-5 h-5" />, label: "Export PDF" },
-                        { icon: <EnvelopeIcon className="w-5 h-5" />, label: "Send Email" },
+                        { icon: <Plus className="w-5 h-5" />, label: "New Order" },
+                        { icon: <Copy className="w-5 h-5" />, label: "Duplicate" },
+                        { icon: <FileText className="w-5 h-5" />, label: "Export PDF" },
+                        { icon: <Mail className="w-5 h-5" />, label: "Send Email" },
                     ].map((action, i) => (
                         <button key={i} className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white dark:bg-white/5 border border-zinc-200 dark:border-white/10 hover:border-primary dark:hover:border-primary hover:bg-primary dark:hover:bg-primary hover:text-zinc-900 dark:hover:text-zinc-900 text-zinc-500 dark:text-zinc-400 transition-all text-xs font-medium shadow-sm">
                             {action.icon}
@@ -30,13 +30,13 @@ export function ProjectButtonsDemo() {
                 <div className="flex items-center gap-6 p-6 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-white/10">
                     <div className="flex items-center gap-1">
                         <button className="p-1 rounded-full hover:bg-primary hover:text-zinc-900 dark:hover:bg-primary text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-900 transition-colors" title="View Details">
-                            <DocumentMagnifyingGlassIcon className="h-5 w-5" />
+                            <FileSearch className="h-5 w-5" />
                         </button>
                         <button className="p-1 rounded-full hover:bg-primary hover:text-zinc-900 dark:hover:bg-primary text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-900 transition-colors" title="Edit">
-                            <PencilSquareIcon className="h-5 w-5" />
+                            <SquarePen className="h-5 w-5" />
                         </button>
                         <button className="p-1 rounded-full hover:bg-error-light hover:text-error dark:hover:bg-error/10 dark:hover:text-error text-zinc-400 transition-colors" title="Delete">
-                            <TrashIcon className="h-5 w-5" />
+                            <Trash2 className="h-5 w-5" />
                         </button>
                     </div>
                 </div>

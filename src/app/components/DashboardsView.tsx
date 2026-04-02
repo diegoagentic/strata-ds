@@ -20,7 +20,7 @@ export function DashboardsView() {
                 </div>
                 <CodeViewer
                     title="KPI Cards Grid"
-                    react={`import { CurrencyDollarIcon, ArrowTrendingUpIcon } from '@heroicons/react/24/outline';\n\nfunction KPICard() {\n  return (\n    <div className="bg-white rounded-2xl p-6 border shadow-sm">\n      {/* ... see DashboardWidgetsDemo.tsx for full code */}\n    </div>\n  )\n}`}
+                    react={`import { DollarSign, TrendingUp } from 'lucide-react';\n\nfunction KPICard() {\n  return (\n    <div className="bg-white rounded-2xl p-6 border shadow-sm">\n      {/* ... see DashboardWidgetsDemo.tsx for full code */}\n    </div>\n  )\n}`}
                     html="<!-- Standard Tailwind Grid -->"
                     css=".card { @apply bg-white rounded-2xl p-6 border; }"
                     prompt="Create a grid of 4 KPI cards with icons, values, and trend indicators."

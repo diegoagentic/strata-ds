@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Listbox as HeadlessListbox, ListboxButton as HeadlessListboxButton, ListboxOption as HeadlessListboxOption, ListboxOptions as HeadlessListboxOptions, ListboxSelectedIcon as HeadlessListboxSelectedIcon } from "@headlessui/react"
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid"
+import { Check, ChevronsUpDown } from "lucide-react"
 import { cn } from "./utils"
 
 export function Listbox({ className, ...props }: React.ComponentPropsWithoutRef<typeof HeadlessListbox>) {
@@ -50,7 +50,7 @@ export function ListboxOption({ className, children, ...props }: React.Component
                     </div>
                     {bag.selected && (
                         <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-zinc-600 dark:text-zinc-400">
-                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                            <Check className="h-5 w-5" aria-hidden="true" />
                         </span>
                     )}
                 </>

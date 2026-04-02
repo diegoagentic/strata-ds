@@ -1,9 +1,9 @@
 import {
-    ArrowTrendingUpIcon, CurrencyDollarIcon, ChartBarIcon, ClipboardDocumentListIcon, ExclamationCircleIcon,
-    PlusIcon, DocumentDuplicateIcon, DocumentTextIcon, EnvelopeIcon, ChevronUpIcon, ChevronDownIcon,
-    ChevronRightIcon, EllipsisHorizontalIcon, PencilSquareIcon, TrashIcon, UserIcon, CheckIcon, ExclamationTriangleIcon,
-    MapPinIcon, ShoppingBagIcon
-} from '@heroicons/react/24/outline'
+    TrendingUp, DollarSign, BarChart3, ClipboardList, AlertCircle,
+    Plus, Copy, FileText, Mail, ChevronUp, ChevronDown,
+    ChevronRight, MoreHorizontal, SquarePen, Trash2, User, Check, AlertTriangle,
+    MapPin, ShoppingBag
+} from 'lucide-react'
 import { useState, useMemo, Fragment } from 'react'
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { clsx } from 'clsx'
@@ -30,11 +30,11 @@ export function KPICardsDemo() {
                         <p className="mt-1 text-3xl font-semibold text-zinc-900 dark:text-white group-hover:scale-105 transition-transform origin-left">$1.2M</p>
                     </div>
                     <div className="p-3 bg-info-light dark:bg-info-light0/10 rounded-xl text-info">
-                        <CurrencyDollarIcon className="w-6 h-6" />
+                        <DollarSign className="w-6 h-6" />
                     </div>
                 </div>
                 <div className="mt-4 flex items-center text-sm text-success">
-                    <ArrowTrendingUpIcon className="w-4 h-4 mr-1" />
+                    <TrendingUp className="w-4 h-4 mr-1" />
                     <span className="font-medium">+0.2%</span> <span className="text-zinc-500 ml-1">vs last month</span>
                 </div>
             </div>
@@ -46,11 +46,11 @@ export function KPICardsDemo() {
                         <p className="mt-1 text-3xl font-semibold text-zinc-900 dark:text-white group-hover:scale-105 transition-transform origin-left">88%</p>
                     </div>
                     <div className="p-3 bg-purple-50 dark:bg-purple-500/10 rounded-xl text-purple-600 dark:text-purple-400">
-                        <ChartBarIcon className="w-6 h-6" />
+                        <BarChart3 className="w-6 h-6" />
                     </div>
                 </div>
                 <div className="mt-4 flex items-center text-sm text-success">
-                    <ArrowTrendingUpIcon className="w-4 h-4 mr-1" />
+                    <TrendingUp className="w-4 h-4 mr-1" />
                     <span className="font-medium">+3.5%</span> <span className="text-zinc-500 ml-1">vs last month</span>
                 </div>
             </div>
@@ -62,7 +62,7 @@ export function KPICardsDemo() {
                         <p className="mt-1 text-3xl font-semibold text-zinc-900 dark:text-white group-hover:scale-105 transition-transform origin-left">142</p>
                     </div>
                     <div className="p-3 bg-orange-50 dark:bg-orange-500/10 rounded-xl text-orange-600 dark:text-orange-400">
-                        <ClipboardDocumentListIcon className="w-6 h-6" />
+                        <ClipboardList className="w-6 h-6" />
                     </div>
                 </div>
                 <div className="mt-4 flex items-center text-sm text-zinc-500">
@@ -77,7 +77,7 @@ export function KPICardsDemo() {
                         <p className="mt-1 text-3xl font-semibold text-zinc-900 dark:text-white group-hover:scale-105 transition-transform origin-left">15</p>
                     </div>
                     <div className="p-3 bg-error-light dark:bg-error/10 rounded-xl text-error">
-                        <ExclamationCircleIcon className="w-6 h-6" />
+                        <AlertCircle className="w-6 h-6" />
                     </div>
                 </div>
                 <div className="mt-4 flex items-center text-sm text-error">
@@ -128,7 +128,7 @@ export function RecentOrdersTableDemo() {
                                     onClick={() => toggleExpand(order.id)}
                                 >
                                     <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-zinc-900 dark:text-white flex items-center gap-2">
-                                        {expandedIds.has(order.id) ? <ChevronDownIcon className="h-4 w-4 text-zinc-500" /> : <ChevronRightIcon className="h-4 w-4 text-zinc-500" />}
+                                        {expandedIds.has(order.id) ? <ChevronDown className="h-4 w-4 text-zinc-500" /> : <ChevronRight className="h-4 w-4 text-zinc-500" />}
                                         {order.id}
                                     </td>
                                     <td className="whitespace-nowrap px-6 py-4 text-sm text-zinc-700 dark:text-zinc-300">
@@ -147,7 +147,7 @@ export function RecentOrdersTableDemo() {
                                     <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                                         <Menu as="div" className="relative inline-block text-left">
                                             <MenuButton onClick={(e) => e.stopPropagation()} className="bg-transparent p-1 rounded-full text-zinc-400 hover:text-zinc-600 dark:hover:text-white">
-                                                <EllipsisHorizontalIcon className="h-5 w-5" />
+                                                <MoreHorizontal className="h-5 w-5" />
                                             </MenuButton>
                                             <Transition
                                                 as={Fragment}
@@ -163,21 +163,21 @@ export function RecentOrdersTableDemo() {
                                                         <MenuItem>
                                                             {({ active }) => (
                                                                 <button onClick={(e) => e.stopPropagation()} className={`${active ? 'bg-zinc-100 dark:bg-white/5' : ''} group flex w-full items-center px-4 py-2 text-sm text-zinc-700 dark:text-zinc-200`}>
-                                                                    <DocumentTextIcon className="w-4 h-4 mr-2" /> View Details
+                                                                    <FileText className="w-4 h-4 mr-2" /> View Details
                                                                 </button>
                                                             )}
                                                         </MenuItem>
                                                         <MenuItem>
                                                             {({ active }) => (
                                                                 <button onClick={(e) => e.stopPropagation()} className={`${active ? 'bg-zinc-100 dark:bg-white/5' : ''} group flex w-full items-center px-4 py-2 text-sm text-zinc-700 dark:text-zinc-200`}>
-                                                                    <PencilSquareIcon className="w-4 h-4 mr-2" /> Edit
+                                                                    <SquarePen className="w-4 h-4 mr-2" /> Edit
                                                                 </button>
                                                             )}
                                                         </MenuItem>
                                                         <MenuItem>
                                                             {({ active }) => (
                                                                 <button onClick={(e) => e.stopPropagation()} className={`${active ? 'bg-zinc-100 dark:bg-white/5' : ''} group flex w-full items-center px-4 py-2 text-sm text-error`}>
-                                                                    <TrashIcon className="w-4 h-4 mr-2" /> Delete
+                                                                    <Trash2 className="w-4 h-4 mr-2" /> Delete
                                                                 </button>
                                                             )}
                                                         </MenuItem>
@@ -196,7 +196,7 @@ export function RecentOrdersTableDemo() {
                                                     <div className="flex-1 space-y-4">
                                                         <div className="flex items-center gap-3">
                                                             <div className="h-10 w-10 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center">
-                                                                <UserIcon className="w-6 h-6 text-zinc-500" />
+                                                                <User className="w-6 h-6 text-zinc-500" />
                                                             </div>
                                                             <div>
                                                                 <p className="text-sm font-medium text-zinc-900 dark:text-white">Sarah Johnson</p>
@@ -210,7 +210,7 @@ export function RecentOrdersTableDemo() {
                                                                 {['Placed', 'Mfg', 'Qual', 'Ship'].map((step, i) => (
                                                                     <div key={i} className="flex flex-col items-center gap-2">
                                                                         <div className={`h-6 w-6 rounded-full flex items-center justify-center ${i <= 1 ? 'bg-info text-white' : 'bg-zinc-200 dark:bg-zinc-700 text-zinc-400'}`}>
-                                                                            {i < 1 ? <CheckIcon className="h-4 w-4" /> : <div className={`h-2 w-2 rounded-full ${i <= 1 ? 'bg-white' : 'bg-zinc-400/50'}`} />}
+                                                                            {i < 1 ? <Check className="h-4 w-4" /> : <div className={`h-2 w-2 rounded-full ${i <= 1 ? 'bg-white' : 'bg-zinc-400/50'}`} />}
                                                                         </div>
                                                                         <span className="text-xs font-medium text-zinc-500">{step}</span>
                                                                     </div>

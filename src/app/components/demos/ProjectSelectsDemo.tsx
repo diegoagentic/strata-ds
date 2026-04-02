@@ -1,5 +1,5 @@
 import { Fragment, useState } from 'react'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
+import { Check, ChevronsUpDown } from 'lucide-react'
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Transition } from '@headlessui/react'
 
 const people = [
@@ -30,7 +30,7 @@ export function ProjectSelectsDemo() {
                                         <span className="ml-3 block truncate">{selected.name}</span>
                                     </span>
                                     <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                                        <ChevronUpDownIcon className="h-5 w-5 text-zinc-400" aria-hidden="true" />
+                                        <ChevronsUpDown className="h-5 w-5 text-zinc-400" aria-hidden="true" />
                                     </span>
                                 </ListboxButton>
 
@@ -65,7 +65,7 @@ export function ProjectSelectsDemo() {
                                                                 'absolute inset-y-0 right-0 flex items-center pr-4'
                                                             )}
                                                         >
-                                                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                                                            <Check className="h-5 w-5" aria-hidden="true" />
                                                         </span>
                                                     )}
                                                 </>

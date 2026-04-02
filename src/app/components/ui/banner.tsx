@@ -1,6 +1,6 @@
 import * as React from "react"
 import { cn } from "./utils"
-import { XMarkIcon } from "@heroicons/react/20/solid"
+import { X } from "lucide-react"
 
 export interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
     variant?: 'info' | 'success' | 'warning' | 'error'
@@ -54,7 +54,7 @@ export function Banner({
                         className="-m-3 p-3 focus-visible:outline-offset-[-4px]"
                     >
                         <span className="sr-only">Dismiss</span>
-                        <XMarkIcon className="h-5 w-5 opacity-70 hover:opacity-100 transition-opacity" aria-hidden="true" />
+                        <X className="h-5 w-5 opacity-70 hover:opacity-100 transition-opacity" aria-hidden="true" />
                     </button>
                 )}
             </div>

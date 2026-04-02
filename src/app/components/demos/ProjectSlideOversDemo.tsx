@@ -8,7 +8,7 @@ import {
     SheetTrigger,
 } from "../ui/sheet"
 import { Button } from "../ui/button"
-import { ClockIcon, DocumentTextIcon, CheckIcon, PencilIcon } from '@heroicons/react/24/outline'
+import { Clock, FileText, Check } from 'lucide-react'
 
 export function ProjectSlideOversDemo() {
     return (
@@ -38,7 +38,7 @@ export function ProjectSlideOversDemo() {
                                     </div>
                                     <div className="flex items-center gap-3">
                                         <div className="h-10 w-10 rounded-full bg-orange-100 dark:bg-orange-500/20 flex items-center justify-center border border-orange-200 dark:border-orange-500/30">
-                                            <ClockIcon className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+                                            <Clock className="h-5 w-5 text-orange-600 dark:text-orange-400" />
                                         </div>
                                         <div>
                                             <p className="text-sm font-bold text-foreground">Pending Review</p>
@@ -52,7 +52,7 @@ export function ProjectSlideOversDemo() {
                                     <div className="space-y-3">
                                         <button className="w-full group relative flex items-center gap-3 p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-indigo-500/50 hover:shadow-md transition-all text-left">
                                             <div className="h-8 w-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 flex items-center justify-center group-hover:bg-indigo-500 group-hover:text-white transition-colors text-indigo-600 dark:text-indigo-400">
-                                                <DocumentTextIcon className="h-5 w-5" />
+                                                <FileText className="h-5 w-5" />
                                             </div>
                                             <div>
                                                 <p className="text-sm font-medium text-foreground group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">Process Quote</p>
@@ -62,7 +62,7 @@ export function ProjectSlideOversDemo() {
 
                                         <button className="w-full group relative flex items-center gap-3 p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-success/50 hover:shadow-md transition-all text-left">
                                             <div className="h-8 w-8 rounded-lg bg-success-light dark:bg-success/10 flex items-center justify-center group-hover:bg-success-light0 group-hover:text-white transition-colors text-success">
-                                                <CheckIcon className="h-5 w-5" />
+                                                <Check className="h-5 w-5" />
                                             </div>
                                             <div>
                                                 <p className="text-sm font-medium text-foreground group-hover:text-success dark:group-hover:text-success transition-colors">Approve Order</p>

@@ -1,11 +1,11 @@
 import { Menu, MenuButton, MenuItem, MenuItems, Transition, Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import {
-    HomeIcon, CubeIcon, ClipboardDocumentListIcon, ArrowTrendingUpIcon,
-    Squares2X2Icon, SunIcon, MoonIcon, ChevronDownIcon,
-    UserIcon, DocumentTextIcon, ChartBarIcon, ExclamationCircleIcon,
-    CalendarIcon, EllipsisHorizontalIcon, ArrowRightOnRectangleIcon, BriefcaseIcon, CheckIcon
-} from '@heroicons/react/24/outline'
+    Home, Box, ClipboardList, TrendingUp,
+    LayoutGrid, Sun, Moon, ChevronDown,
+    User, FileText, BarChart3, AlertCircle,
+    Calendar, MoreHorizontal, LogOut, Briefcase, Check
+} from 'lucide-react'
 import { ActionCenter } from '../../../components/catalyst/action-center';
 
 // Mocks for documentation
@@ -72,7 +72,7 @@ export function CatalystNavbarDemo() {
                                         <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider leading-none">Tenant</span>
                                         <div className="flex items-center gap-1">
                                             <span className="text-sm font-bold text-foreground leading-tight">{currentTenant}</span>
-                                            <ChevronDownIcon className="w-3 h-3 text-muted-foreground" />
+                                            <ChevronDown className="w-3 h-3 text-muted-foreground" />
                                         </div>
                                     </div>
                                 </MenuButton>
@@ -94,7 +94,7 @@ export function CatalystNavbarDemo() {
                                                         className={`${focus ? 'bg-zinc-200 dark:bg-zinc-800' : ''} group flex w-full items-center px-4 py-2 text-sm text-foreground rounded-lg transition-colors hover:bg-zinc-200 dark:hover:bg-zinc-800`}
                                                     >
                                                         {tenant}
-                                                        {currentTenant === tenant && <CheckIcon className="ml-auto w-4 h-4 text-foreground" />}
+                                                        {currentTenant === tenant && <Check className="ml-auto w-4 h-4 text-foreground" />}
                                                     </button>
                                                 )}
                                             </MenuItem>
@@ -106,10 +106,10 @@ export function CatalystNavbarDemo() {
 
                         {/* Center Group (Nav Items) - Absolutely Centered on Desktop */}
                         <div className="hidden lg:flex items-center gap-1 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                            <NavItem icon={<HomeIcon className="w-4 h-4" />} label="Overview" active={activeTab === 'Overview'} />
-                            <div onClick={() => setActiveTab('Inventory')}><NavItem icon={<CubeIcon className="w-4 h-4" />} label="Inventory" active={activeTab === 'Inventory'} /></div>
-                            <div onClick={() => setActiveTab('Production')}><NavItem icon={<ArrowTrendingUpIcon className="w-4 h-4" />} label="Production" active={activeTab === 'Production'} /></div>
-                            <div onClick={() => setActiveTab('Orders')}><NavItem icon={<ClipboardDocumentListIcon className="w-4 h-4" />} label="Orders" active={activeTab === 'Orders'} /></div>
+                            <NavItem icon={<Home className="w-4 h-4" />} label="Overview" active={activeTab === 'Overview'} />
+                            <div onClick={() => setActiveTab('Inventory')}><NavItem icon={<Box className="w-4 h-4" />} label="Inventory" active={activeTab === 'Inventory'} /></div>
+                            <div onClick={() => setActiveTab('Production')}><NavItem icon={<TrendingUp className="w-4 h-4" />} label="Production" active={activeTab === 'Production'} /></div>
+                            <div onClick={() => setActiveTab('Orders')}><NavItem icon={<ClipboardList className="w-4 h-4" />} label="Orders" active={activeTab === 'Orders'} /></div>
                         </div>
 
                         {/* Right Group (Actions) */}
@@ -123,7 +123,7 @@ export function CatalystNavbarDemo() {
 
                             <Popover className="relative">
                                 <PopoverButton className="p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors outline-none">
-                                    <Squares2X2Icon className="w-5 h-5" />
+                                    <LayoutGrid className="w-5 h-5" />
                                 </PopoverButton>
                                 <Transition
                                     as={Fragment}
@@ -148,7 +148,7 @@ export function CatalystNavbarDemo() {
                             </Popover>
 
                             <button onClick={toggleTheme} className="hidden lg:flex p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
-                                {theme === 'dark' ? <SunIcon className="w-4 h-4" /> : <MoonIcon className="w-4 h-4" />}
+                                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
                             </button>
 
                             <div className="relative group">
@@ -156,7 +156,7 @@ export function CatalystNavbarDemo() {
                                     <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold shadow-sm shrink-0">
                                         JD
                                     </div>
-                                    <ChevronDownIcon className="w-3 h-3 text-muted-foreground" />
+                                    <ChevronDown className="w-3 h-3 text-muted-foreground" />
                                 </button>
                                 {/* User Dropdown */}
                                 <div className="absolute top-full right-0 mt-2 w-56 py-2 rounded-xl bg-white/90 dark:bg-zinc-900/90 backdrop-blur-xl border border-border shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top-right z-50">
@@ -165,7 +165,7 @@ export function CatalystNavbarDemo() {
                                         <p className="text-xs text-muted-foreground">Admin</p>
                                     </div>
                                     <button onClick={onLogout} className="w-full text-left px-4 py-2 text-sm text-error hover:bg-muted flex items-center gap-2">
-                                        <ArrowRightOnRectangleIcon className="w-4 h-4" />
+                                        <LogOut className="w-4 h-4" />
                                         Sign Out
                                     </button>
                                 </div>

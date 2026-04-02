@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../ui/card';
 import { Button } from '../ui/button';
-import { StarIcon } from '@heroicons/react/24/solid';
+import { Star } from 'lucide-react';
 
 export function BrandedCardDemo() {
     return (
@@ -9,7 +9,7 @@ export function BrandedCardDemo() {
             <CardHeader>
                 <div className="flex items-center gap-2 mb-2">
                     <div className="p-2 bg-brand-50 dark:bg-brand-400/10 rounded-lg text-brand-700 dark:text-brand-400">
-                        <StarIcon className="w-5 h-5" />
+                        <Star className="w-5 h-5" fill="currentColor" strokeWidth={0} />
                     </div>
                     <span className="text-xs font-bold uppercase tracking-wider text-brand-700 dark:text-brand-400">
                         Premium Plan

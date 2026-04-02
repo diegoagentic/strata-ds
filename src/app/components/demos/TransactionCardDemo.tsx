@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '../ui/card';
 import { Button } from '../ui/button';
-import { ArrowUpRightIcon, ArrowDownLeftIcon } from '@heroicons/react/20/solid';
+import { ArrowUpRight, ArrowDownLeft } from 'lucide-react';
 
 const transactions = [
     {
@@ -10,7 +10,7 @@ const transactions = [
         amount: '$20,000',
         status: 'Sent',
         type: 'outgoing',
-        icon: ArrowUpRightIcon,
+        icon: ArrowUpRight,
     },
     {
         id: 2,
@@ -19,7 +19,7 @@ const transactions = [
         amount: '$140',
         status: 'Received',
         type: 'incoming',
-        icon: ArrowDownLeftIcon,
+        icon: ArrowDownLeft,
     },
     {
         id: 3,
@@ -28,7 +28,7 @@ const transactions = [
         amount: '$5,000',
         status: 'Sent',
         type: 'outgoing',
-        icon: ArrowUpRightIcon,
+        icon: ArrowUpRight,
     },
 ];
 

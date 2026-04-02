@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react'
 import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react'
-import { XMarkIcon, DocumentTextIcon } from '@heroicons/react/24/outline'
+import { X, FileText } from 'lucide-react'
 
 export function ProjectModalsDemo() {
     const [isOpen, setIsOpen] = useState(false)
@@ -58,14 +58,14 @@ export function ProjectModalsDemo() {
                                                 </p>
                                             </div>
                                             <button onClick={() => setIsOpen(false)} className="text-zinc-400 hover:text-zinc-500 dark:hover:text-zinc-300">
-                                                <XMarkIcon className="h-6 w-6" />
+                                                <X className="h-6 w-6" />
                                             </button>
                                         </div>
 
                                         <div className="bg-zinc-50 dark:bg-zinc-950 rounded-lg border border-zinc-200 dark:border-zinc-800 p-8 text-sm">
                                             <div className="flex items-start gap-4 mb-4">
                                                 <div className="h-10 w-10 bg-error-light dark:bg-error/10 text-error rounded-lg flex items-center justify-center shrink-0">
-                                                    <DocumentTextIcon className="h-6 w-6" />
+                                                    <FileText className="h-6 w-6" />
                                                 </div>
                                                 <div>
                                                     <h4 className="font-bold text-zinc-900 dark:text-zinc-100">Purchase_Order_Final.pdf</h4>

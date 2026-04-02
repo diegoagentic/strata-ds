@@ -1,4 +1,4 @@
-import { UserIcon } from '@heroicons/react/24/outline';
+import { User } from 'lucide-react';
 
 export function ProjectAvatarsDemo() {
     return (
@@ -9,7 +9,7 @@ export function ProjectAvatarsDemo() {
                 <div className="flex items-center gap-8 p-6 bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-white/10">
                     <div className="flex items-center gap-3">
                         <div className="h-10 w-10 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center">
-                            <UserIcon className="w-6 h-6 text-zinc-500" />
+                            <User className="w-6 h-6 text-zinc-500" />
                         </div>
                         <div>
                             <p className="text-sm font-medium text-zinc-900 dark:text-white">Sarah Johnson</p>

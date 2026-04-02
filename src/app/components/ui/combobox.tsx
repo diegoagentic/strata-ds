@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Combobox as HeadlessCombobox, ComboboxButton as HeadlessComboboxButton, ComboboxInput as HeadlessComboboxInput, ComboboxOption as HeadlessComboboxOption, ComboboxOptions as HeadlessComboboxOptions } from "@headlessui/react"
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid"
+import { Check, ChevronsUpDown } from "lucide-react"
 import { cn } from "./utils"
 
 export function Combobox({ className, ...props }: React.ComponentPropsWithoutRef<typeof HeadlessCombobox>) {
@@ -25,7 +25,7 @@ export function ComboboxButton({ className, ...props }: React.ComponentPropsWith
             {...props}
             className={cn("absolute inset-y-0 right-0 flex items-center pr-2", className)}
         >
-            <ChevronUpDownIcon className="h-5 w-5 text-zinc-400" aria-hidden="true" />
+            <ChevronsUpDown className="h-5 w-5 text-zinc-400" aria-hidden="true" />
         </HeadlessComboboxButton>
     )
 }
@@ -60,7 +60,7 @@ export function ComboboxOption({ className, children, ...props }: React.Componen
                     </div>
                     {bag.selected && (
                         <span className="absolute inset-y-0 right-0 flex items-center pr-4 text-zinc-600 dark:text-zinc-400">
-                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                            <Check className="h-5 w-5" aria-hidden="true" />
                         </span>
                     )}
                 </>
