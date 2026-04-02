@@ -108,7 +108,7 @@ ${htmlCode}
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'easy':
-        return 'bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400';
+        return 'bg-success-light dark:bg-success/10 text-success dark:text-success';
       case 'medium':
         return 'bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-400';
       case 'advanced':
@@ -273,13 +273,13 @@ ${htmlCode}
       case 'html-to-design':
         return (
           <div className="space-y-4">
-            <div className="flex items-start gap-3 bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800 rounded-lg p-4">
+            <div className="flex items-start gap-3 bg-success-light dark:bg-success/10 border border-success/20 dark:border-success/30 rounded-lg p-4">
               <div className="text-2xl">☁️</div>
               <div>
-                <h5 className="font-bold text-emerald-900 dark:text-emerald-100 mb-1">
+                <h5 className="font-bold text-success dark:text-success-light mb-1">
                   Cloud Service
                 </h5>
-                <p className="text-sm text-emerald-700 dark:text-emerald-300">
+                <p className="text-sm text-success dark:text-success-light">
                   Use HTML.to.design cloud service for high-quality conversion without plugins.
                 </p>
               </div>
@@ -344,15 +344,15 @@ ${htmlCode}
               <h5 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-3">What you'll get:</h5>
               <ul className="space-y-2 text-sm text-zinc-600 dark:text-zinc-400">
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
                   <span>Complete HTML file with embedded CSS</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
                   <span>Ready to open in any browser</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
                   <span>Compatible with HTML-to-Figma conversion tools</span>
                 </li>
               </ul>
@@ -465,7 +465,7 @@ ${htmlCode}
                                 {method.title}
                               </span>
                               {method.recommended && (
-                                <span className="px-1.5 py-0.5 bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 text-xs font-bold rounded">
+                                <span className="px-1.5 py-0.5 bg-success-light dark:bg-success/10 text-success dark:text-success text-xs font-bold rounded">
                                   ★
                                 </span>
                               )}

@@ -137,22 +137,22 @@ Implement a responsive description list for key-value pairs.
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Do's */}
-          <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-md p-6">
+          <div className="bg-success-light dark:bg-success/10 border border-success/20 dark:border-success/30 rounded-md p-6">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-6 h-6 rounded-full bg-emerald-600 dark:bg-emerald-500 flex items-center justify-center">
+              <div className="w-6 h-6 rounded-full bg-success dark:bg-success-light0 flex items-center justify-center">
                 <Check className="w-4 h-4 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-emerald-900 dark:text-emerald-100">
+              <h3 className="text-lg font-semibold text-success dark:text-success-light">
                 Do's
               </h3>
             </div>
-            <ul className="space-y-3 text-sm text-emerald-800 dark:text-emerald-200">
+            <ul className="space-y-3 text-sm text-success dark:text-success-light">
               <li className="flex items-start gap-2">
-                <span className="text-emerald-600 dark:text-emerald-400 mt-0.5">•</span>
+                <span className="text-success mt-0.5">•</span>
                 <span>Use DescriptionList for structured key-value maps</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-emerald-600 dark:text-emerald-400 mt-0.5">•</span>
+                <span className="text-success mt-0.5">•</span>
                 <span>Keep labels concise and informative</span>
               </li>
             </ul>

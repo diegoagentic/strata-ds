@@ -50,9 +50,9 @@ export function ChartDemo({ data }) {
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 shadow-sm">
             <div className="flex items-center justify-between mb-2">
               <Text className="text-sm font-medium text-zinc-500">Total Revenue</Text>
-              <div className="flex items-center gap-1 px-2 py-0.5 bg-emerald-100 dark:bg-emerald-950/40 rounded-full">
-                <ArrowUp className="w-3 h-3 text-emerald-600" />
-                <span className="text-[10px] font-bold text-emerald-700">+12.5%</span>
+              <div className="flex items-center gap-1 px-2 py-0.5 bg-success-light dark:bg-success/15 rounded-full">
+                <ArrowUp className="w-3 h-3 text-success" />
+                <span className="text-[10px] font-bold text-success">+12.5%</span>
               </div>
             </div>
             <Heading level={3} className="text-3xl font-bold">$45,231</Heading>
@@ -137,12 +137,12 @@ export function ChartDemo({ data }) {
 
       {/* Usage Guidelines */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-20">
-        <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-lg p-6">
+        <div className="bg-success-light dark:bg-success/10 border border-success/20 dark:border-success/30 rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Check className="w-5 h-5 text-emerald-600" />
-            <h3 className="text-lg font-semibold text-emerald-900 dark:text-emerald-100">Do's</h3>
+            <Check className="w-5 h-5 text-success" />
+            <h3 className="text-lg font-semibold text-success dark:text-success-light">Do's</h3>
           </div>
-          <ul className="space-y-2 text-sm text-emerald-800 dark:text-emerald-200">
+          <ul className="space-y-2 text-sm text-success dark:text-success-light">
             <li>• Use consistent colors for the same data types across multiple charts.</li>
             <li>• Provide clear labels and tooltips for exact data point values.</li>
             <li>• Ensure sufficient contrast for line and area fills.</li>

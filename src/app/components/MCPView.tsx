@@ -83,8 +83,8 @@ export function MCPView() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-6">
-            <div className="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center mb-4">
-              <Sparkles className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+            <div className="w-12 h-12 bg-success-light dark:bg-success/15 rounded-lg flex items-center justify-center mb-4">
+              <Sparkles className="w-6 h-6 text-success" />
             </div>
             <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 mb-2">
               Real-Time Data
@@ -152,7 +152,7 @@ export function MCPView() {
                   </button>
                 </div>
                 <div className="bg-zinc-900 dark:bg-zinc-950 rounded-lg p-4">
-                  <pre className="text-sm text-emerald-400 font-mono">
+                  <pre className="text-sm text-success font-mono">
                     <code>npm install @strata-ds/mcp-client</code>
                   </pre>
                 </div>
@@ -173,7 +173,7 @@ export function MCPView() {
                   </button>
                 </div>
                 <div className="bg-zinc-900 dark:bg-zinc-950 rounded-lg p-4">
-                  <pre className="text-sm text-emerald-400 font-mono">
+                  <pre className="text-sm text-success font-mono">
                     <code>docker pull strata-ds/mcp-server:latest</code>
                   </pre>
                 </div>
@@ -258,7 +258,7 @@ export function MCPView() {
               </div>
               <div className="border border-zinc-200 dark:border-zinc-800 rounded-lg p-4">
                 <h4 className="font-bold text-zinc-900 dark:text-zinc-50 mb-2 flex items-center gap-2">
-                  <Code2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                  <Code2 className="w-4 h-4 text-success" />
                   ChatGPT
                 </h4>
                 <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-2">
@@ -406,9 +406,9 @@ export function MCPView() {
                   </div>
                 </div>
               </div>
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800 rounded-lg p-4">
+              <div className="bg-success-light dark:bg-success/10 border border-success/20 dark:border-success/30 rounded-lg p-4">
                 <div className="flex items-start gap-3">
-                  <Sparkles className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                  <Sparkles className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-sm text-zinc-900 dark:text-zinc-50 font-semibold mb-2">AI Assistant:</p>
                     <p className="text-sm text-zinc-700 dark:text-zinc-300 mb-3">
@@ -453,9 +453,9 @@ export function Button({ children, variant = 'primary' }) {
                   </div>
                 </div>
               </div>
-              <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800 rounded-lg p-4">
+              <div className="bg-success-light dark:bg-success/10 border border-success/20 dark:border-success/30 rounded-lg p-4">
                 <div className="flex items-start gap-3">
-                  <Sparkles className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                  <Sparkles className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-sm text-zinc-900 dark:text-zinc-50 font-semibold mb-2">AI Assistant:</p>
                     <p className="text-sm text-zinc-700 dark:text-zinc-300 mb-2">
@@ -512,29 +512,29 @@ export function Button({ children, variant = 'primary' }) {
 
           {/* MCP */}
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg overflow-hidden">
-            <div className="bg-emerald-50 dark:bg-emerald-950/20 px-6 py-3 border-b border-emerald-200 dark:border-emerald-800">
-              <h3 className="font-bold text-emerald-900 dark:text-emerald-100">With MCP</h3>
+            <div className="bg-success-light dark:bg-success/10 px-6 py-3 border-b border-success/20 dark:border-success/30">
+              <h3 className="font-bold text-success dark:text-success-light">With MCP</h3>
             </div>
             <div className="p-6">
               <ul className="space-y-3 text-sm">
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-success mt-0.5 flex-shrink-0" />
                   <span className="text-zinc-600 dark:text-zinc-400">AI queries components automatically</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-success mt-0.5 flex-shrink-0" />
                   <span className="text-zinc-600 dark:text-zinc-400">Always uses latest specifications</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-success mt-0.5 flex-shrink-0" />
                   <span className="text-zinc-600 dark:text-zinc-400">100% accurate, no hallucinations</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-success mt-0.5 flex-shrink-0" />
                   <span className="text-zinc-600 dark:text-zinc-400">Real-time token and color access</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-success mt-0.5 flex-shrink-0" />
                   <span className="text-zinc-600 dark:text-zinc-400">Zero maintenance required</span>
                 </li>
               </ul>
@@ -559,7 +559,7 @@ export function Button({ children, variant = 'primary' }) {
               <h4 className="font-bold text-zinc-900 dark:text-zinc-50 mb-2">{platform.name}</h4>
               <span className={`inline-block px-2 py-1 rounded text-xs font-semibold ${
                 platform.color === 'emerald' 
-                  ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300'
+                  ? 'bg-success-light dark:bg-success/15 text-success dark:text-success-light'
                   : platform.color === 'amber'
                   ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300'
                   : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300'

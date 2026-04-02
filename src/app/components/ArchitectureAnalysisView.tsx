@@ -218,9 +218,9 @@ export function ArchitectureAnalysisView() {
   const getColorClasses = (color: string) => {
     const colors: Record<string, { bg: string; text: string; border: string }> = {
       emerald: {
-        bg: 'bg-emerald-100 dark:bg-emerald-900/30',
-        text: 'text-emerald-700 dark:text-emerald-300',
-        border: 'border-emerald-200 dark:border-emerald-800'
+        bg: 'bg-success-light dark:bg-success/15',
+        text: 'text-success dark:text-success-light',
+        border: 'border-success/20 dark:border-success/30'
       },
       indigo: {
         bg: 'bg-indigo-100 dark:bg-indigo-900/30',
@@ -304,13 +304,13 @@ export function ArchitectureAnalysisView() {
                     {/* Pros */}
                     <div>
                       <h4 className="font-bold text-zinc-900 dark:text-zinc-50 mb-3 flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                        <CheckCircle2 className="w-4 h-4 text-success" />
                         Pros
                       </h4>
                       <ul className="space-y-2">
                         {stack.pros.map((pro, idx) => (
                           <li key={idx} className="flex items-start gap-2 text-sm text-zinc-600 dark:text-zinc-400">
-                            <span className="text-emerald-600 dark:text-emerald-400 mt-0.5">✓</span>
+                            <span className="text-success mt-0.5">✓</span>
                             <span>{pro}</span>
                           </li>
                         ))}
@@ -372,13 +372,13 @@ export function ArchitectureAnalysisView() {
               key={pattern.name}
               className={`bg-white dark:bg-zinc-900 border-2 ${
                 pattern.recommended 
-                  ? 'border-emerald-200 dark:border-emerald-800' 
+                  ? 'border-success/20 dark:border-success/30' 
                   : 'border-zinc-200 dark:border-zinc-800'
               } rounded-lg p-6`}
             >
               {pattern.recommended && (
                 <div className="mb-3">
-                  <span className="px-2 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 rounded text-xs font-bold uppercase">
+                  <span className="px-2 py-1 bg-success-light dark:bg-success/15 text-success dark:text-success-light rounded text-xs font-bold uppercase">
                     Recommended
                   </span>
                 </div>
@@ -395,7 +395,7 @@ export function ArchitectureAnalysisView() {
                 <ul className="space-y-1">
                   {pattern.pros.map((pro, idx) => (
                     <li key={idx} className="text-xs text-zinc-600 dark:text-zinc-400 flex items-start gap-1">
-                      <span className="text-emerald-600 dark:text-emerald-400">+</span>
+                      <span className="text-success">+</span>
                       <span>{pro}</span>
                     </li>
                   ))}
@@ -464,7 +464,7 @@ export function ArchitectureAnalysisView() {
                       <ul className="space-y-2">
                         {scenario.reasoning.map((reason, idx) => (
                           <li key={idx} className="flex items-start gap-2 text-sm text-zinc-600 dark:text-zinc-400">
-                            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                            <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
                             <span>{reason}</span>
                           </li>
                         ))}
@@ -495,9 +495,9 @@ export function ArchitectureAnalysisView() {
       </div>
 
       {/* Final Recommendation */}
-      <div className="bg-gradient-to-br from-emerald-50 to-indigo-50 dark:from-emerald-950/20 dark:to-indigo-950/20 border-2 border-emerald-200 dark:border-emerald-800 rounded-lg p-8">
+      <div className="bg-gradient-to-br from-success-light to-indigo-50 dark:from-success/10 dark:to-indigo-950/20 border-2 border-success/20 dark:border-success/30 rounded-lg p-8">
         <div className="flex items-start gap-4 mb-6">
-          <div className="w-12 h-12 bg-emerald-600 dark:bg-emerald-700 rounded-lg flex items-center justify-center flex-shrink-0">
+          <div className="w-12 h-12 bg-success dark:bg-success rounded-lg flex items-center justify-center flex-shrink-0">
             <TrendingUp className="w-6 h-6 text-white" />
           </div>
           <div>
@@ -517,35 +517,35 @@ export function ArchitectureAnalysisView() {
             </h3>
             <div className="space-y-3 text-sm">
               <div className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="text-zinc-900 dark:text-zinc-50">Backend:</strong>
                   <span className="text-zinc-600 dark:text-zinc-400"> Node.js + Express + TypeScript</span>
                 </div>
               </div>
               <div className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="text-zinc-900 dark:text-zinc-50">Architecture:</strong>
                   <span className="text-zinc-600 dark:text-zinc-400"> Modular Monolith</span>
                 </div>
               </div>
               <div className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="text-zinc-900 dark:text-zinc-50">Database:</strong>
                   <span className="text-zinc-600 dark:text-zinc-400"> PostgreSQL (structured data) or JSON files (simple)</span>
                 </div>
               </div>
               <div className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="text-zinc-900 dark:text-zinc-50">Caching:</strong>
                   <span className="text-zinc-600 dark:text-zinc-400"> In-memory (node-cache)</span>
                 </div>
               </div>
               <div className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="text-zinc-900 dark:text-zinc-50">Deployment:</strong>
                   <span className="text-zinc-600 dark:text-zinc-400"> Railway/Render</span>

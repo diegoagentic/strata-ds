@@ -108,12 +108,12 @@ export function AvatarStack() {
 
       {/* Guidelines */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-20">
-        <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-lg p-6">
+        <div className="bg-success-light dark:bg-success/10 border border-success/20 dark:border-success/30 rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Check className="w-5 h-5 text-emerald-600" />
-            <h3 className="text-lg font-semibold text-emerald-900 dark:text-emerald-100">Do's</h3>
+            <Check className="w-5 h-5 text-success" />
+            <h3 className="text-lg font-semibold text-success dark:text-success-light">Do's</h3>
           </div>
-          <ul className="space-y-2 text-sm text-emerald-800 dark:text-emerald-200">
+          <ul className="space-y-2 text-sm text-success dark:text-success-light">
             <li>• Use "lg" (40px) as the default size for user profiles.</li>
             <li>• Always include a fallback for accessibility.</li>
             <li>• Add a ring border to stacked avatars for better separation.</li>

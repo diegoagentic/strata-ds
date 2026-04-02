@@ -97,7 +97,7 @@ export function FigmaExportGuide() {
                   <h3 className="font-bold text-zinc-900 dark:text-zinc-50">
                     HTML to Figma Plugin
                   </h3>
-                  <span className="px-2 py-0.5 bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 text-xs font-bold rounded">
+                  <span className="px-2 py-0.5 bg-success-light dark:bg-success/10 text-success dark:text-success text-xs font-bold rounded">
                     Recommended
                   </span>
                 </div>
@@ -108,15 +108,15 @@ export function FigmaExportGuide() {
             </div>
             <ul className="space-y-2 text-sm text-zinc-700 dark:text-zinc-300">
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
                 <span>Automatic HTML + CSS conversion</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
                 <span>Preserves structure and styles</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
                 <span>Free and easy to use</span>
               </li>
             </ul>
@@ -308,28 +308,28 @@ export function FigmaExportGuide() {
 
       {/* Tips & Best Practices */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-lg p-6">
+        <div className="bg-success-light dark:bg-success/10 border border-success/20 dark:border-success/30 rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Sparkles className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-            <h3 className="font-bold text-emerald-900 dark:text-emerald-100">
+            <Sparkles className="w-5 h-5 text-success" />
+            <h3 className="font-bold text-success dark:text-success-light">
               Helpful Tips
             </h3>
           </div>
-          <ul className="space-y-3 text-sm text-emerald-800 dark:text-emerald-200">
+          <ul className="space-y-3 text-sm text-success dark:text-success-light">
             <li className="flex items-start gap-2">
-              <span className="text-emerald-600 dark:text-emerald-400 mt-0.5">•</span>
+              <span className="text-success mt-0.5">•</span>
               <span>Use the HTML to Figma Plugin method to get started quickly</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-emerald-600 dark:text-emerald-400 mt-0.5">•</span>
+              <span className="text-success mt-0.5">•</span>
               <span>Tokens Studio is ideal if you work with variables and themes in Figma</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-emerald-600 dark:text-emerald-400 mt-0.5">•</span>
+              <span className="text-success mt-0.5">•</span>
               <span>Manual recreation gives you maximum control over the final result</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-emerald-600 dark:text-emerald-400 mt-0.5">•</span>
+              <span className="text-success mt-0.5">•</span>
               <span>All methods include step-by-step visual instructions</span>
             </li>
           </ul>

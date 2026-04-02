@@ -84,8 +84,8 @@ export function CopyButton({ formats, defaultFormat = 0, size = 'md' }: CopyButt
       >
         {copied ? (
           <>
-            <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-            <span className="text-emerald-600 dark:text-emerald-400">Copied</span>
+            <Check className="w-3.5 h-3.5 text-success" />
+            <span className="text-success">Copied</span>
           </>
         ) : (
           <>
@@ -108,8 +108,8 @@ export function CopyButton({ formats, defaultFormat = 0, size = 'md' }: CopyButt
         >
           {copied ? (
             <>
-              <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-              <span className="text-emerald-600 dark:text-emerald-400">Copied</span>
+              <Check className="w-3.5 h-3.5 text-success" />
+              <span className="text-success">Copied</span>
             </>
           ) : (
             <>
@@ -150,7 +150,7 @@ export function CopyButton({ formats, defaultFormat = 0, size = 'md' }: CopyButt
                     {format.label}
                   </span>
                   {selectedFormat === index && (
-                    <span className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">
+                    <span className="text-xs text-success font-semibold">
                       Selected
                     </span>
                   )}

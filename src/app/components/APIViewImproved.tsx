@@ -58,7 +58,7 @@ export function APIViewImproved() {
           <h1 className="text-5xl font-bold text-zinc-900 dark:text-zinc-50">
             REST API
           </h1>
-          <span className="inline-flex items-center px-3 py-1 rounded-md bg-emerald-600 text-white text-xs font-bold uppercase">
+          <span className="inline-flex items-center px-3 py-1 rounded-md bg-success text-white text-xs font-bold uppercase">
             Live & Working
           </span>
         </div>
@@ -68,13 +68,13 @@ export function APIViewImproved() {
         </p>
 
         {/* Status Banner */}
-        <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800 rounded-lg p-4 flex items-start gap-3">
-          <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+        <div className="bg-success-light dark:bg-success/10 border border-success/20 dark:border-success/30 rounded-lg p-4 flex items-start gap-3">
+          <CheckCircle2 className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
           <div>
-            <h3 className="font-bold text-emerald-900 dark:text-emerald-100 mb-1">
+            <h3 className="font-bold text-success dark:text-success-light mb-1">
               ✅ Mock API Server Active
             </h3>
-            <p className="text-sm text-emerald-700 dark:text-emerald-300">
+            <p className="text-sm text-success dark:text-success-light">
               You can test all endpoints right now using our mock server. No backend setup required! 
               All responses are realistic and based on actual design system data.
             </p>
@@ -183,7 +183,7 @@ export function APIViewImproved() {
                         </button>
                       </div>
                       <div className="bg-zinc-900 dark:bg-zinc-950 rounded-lg p-4 overflow-x-auto">
-                        <pre className="text-xs text-emerald-400 font-mono">
+                        <pre className="text-xs text-success font-mono">
                           {MockApiServer.generateCurl('/components')}
                         </pre>
                       </div>
@@ -250,7 +250,7 @@ export function APIViewImproved() {
                   <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-4">
                     All responses are in JSON format with a consistent structure.
                   </p>
-                  <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800 rounded-lg p-4">
+                  <div className="bg-success-light dark:bg-success/10 border border-success/20 dark:border-success/30 rounded-lg p-4">
                     <pre className="text-xs text-zinc-900 dark:text-zinc-50 font-mono overflow-x-auto">
 {`{
   "success": true,
@@ -378,7 +378,7 @@ export function APIViewImproved() {
               ].map((item) => (
                 <div key={item.endpoint} className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-4">
                   <div className="flex items-center gap-3 mb-2">
-                    <span className="px-2 py-1 bg-emerald-600 text-white rounded text-xs font-bold">GET</span>
+                    <span className="px-2 py-1 bg-success text-white rounded text-xs font-bold">GET</span>
                     <code className="text-sm font-mono text-zinc-900 dark:text-zinc-50">{item.endpoint}</code>
                   </div>
                   <p className="text-sm text-zinc-600 dark:text-zinc-400">{item.desc}</p>
@@ -406,7 +406,7 @@ export function APIViewImproved() {
               ].map((item) => (
                 <div key={item.endpoint} className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-4">
                   <div className="flex items-center gap-3 mb-2">
-                    <span className="px-2 py-1 bg-emerald-600 text-white rounded text-xs font-bold">GET</span>
+                    <span className="px-2 py-1 bg-success text-white rounded text-xs font-bold">GET</span>
                     <code className="text-sm font-mono text-zinc-900 dark:text-zinc-50">{item.endpoint}</code>
                   </div>
                   <p className="text-sm text-zinc-600 dark:text-zinc-400">{item.desc}</p>
@@ -422,7 +422,7 @@ export function APIViewImproved() {
             </h3>
             <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-4">
               <div className="flex items-center gap-3 mb-2">
-                <span className="px-2 py-1 bg-emerald-600 text-white rounded text-xs font-bold">GET</span>
+                <span className="px-2 py-1 bg-success text-white rounded text-xs font-bold">GET</span>
                 <code className="text-sm font-mono text-zinc-900 dark:text-zinc-50">/search?q=:query</code>
               </div>
               <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-3">

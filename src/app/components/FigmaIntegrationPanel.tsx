@@ -170,7 +170,7 @@ export function FigmaIntegrationPanel() {
             Access Token Configuration
           </h3>
           {isTokenValid && (
-            <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 text-sm">
+            <div className="flex items-center gap-2 text-success text-sm">
               <CheckCircle2 className="w-4 h-4" />
               <span>Token Valid</span>
             </div>
@@ -256,11 +256,11 @@ export function FigmaIntegrationPanel() {
           )}
 
           {isTokenValid && figmaUser && (
-            <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800 rounded-lg p-3">
-              <p className="text-sm text-emerald-900 dark:text-emerald-100">
+            <div className="bg-success-light dark:bg-success/10 border border-success/20 dark:border-success/30 rounded-lg p-3">
+              <p className="text-sm text-success dark:text-success-light">
                 <strong>Connected as:</strong> {figmaUser.email || 'Figma User'}
               </p>
-              <p className="text-xs text-emerald-700 dark:text-emerald-300 mt-1">
+              <p className="text-xs text-success dark:text-success-light mt-1">
                 Token is valid and ready to use
               </p>
             </div>
@@ -314,14 +314,14 @@ export function FigmaIntegrationPanel() {
                 importStatus.startsWith('Error')
                   ? 'bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800'
                   : importStatus.includes('successful')
-                  ? 'bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800'
+                  ? 'bg-success-light dark:bg-success/10 border border-success/20 dark:border-success/30'
                   : 'bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800'
               }`}>
                 <p className={`text-sm ${
                   importStatus.startsWith('Error')
                     ? 'text-red-900 dark:text-red-100'
                     : importStatus.includes('successful')
-                    ? 'text-emerald-900 dark:text-emerald-100'
+                    ? 'text-success dark:text-success-light'
                     : 'text-blue-900 dark:text-blue-100'
                 }`}>
                   {importStatus}
@@ -409,19 +409,19 @@ export function FigmaIntegrationPanel() {
         </h3>
         <ul className="space-y-2 text-sm text-zinc-600 dark:text-zinc-400">
           <li className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+            <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
             <span><strong>Color Tokens:</strong> Extract all color styles from your Figma file</span>
           </li>
           <li className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+            <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
             <span><strong>Text Styles:</strong> Import typography settings (font families, sizes, weights)</span>
           </li>
           <li className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+            <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
             <span><strong>Components:</strong> Get a list of all components with metadata</span>
           </li>
           <li className="flex items-start gap-2">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+            <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
             <span><strong>File Info:</strong> Name, last modified date, and version information</span>
           </li>
         </ul>

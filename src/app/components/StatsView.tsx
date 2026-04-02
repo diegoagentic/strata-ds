@@ -11,7 +11,7 @@ export function StatCard() {
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-        <TrendingUp className="h-4 w-4 text-emerald-500" />
+        <TrendingUp className="h-4 w-4 text-success" />
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">$45,231.89</div>
@@ -49,7 +49,7 @@ export function StatCard() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-zinc-950 dark:text-white">$45,231.89</div>
-                <div className="flex items-center gap-1 text-xs text-emerald-600 font-medium">
+                <div className="flex items-center gap-1 text-xs text-success font-medium">
                   <TrendingUp className="h-3 w-3" /> +20.1%
                 </div>
               </CardContent>
@@ -62,7 +62,7 @@ export function StatCard() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-zinc-950 dark:text-white">+2,350</div>
-                <div className="flex items-center gap-1 text-xs text-emerald-600 font-medium">
+                <div className="flex items-center gap-1 text-xs text-success font-medium">
                   <TrendingUp className="h-3 w-3" /> +180.1%
                 </div>
               </CardContent>
@@ -75,7 +75,7 @@ export function StatCard() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-zinc-950 dark:text-white">+12,234</div>
-                <div className="flex items-center gap-1 text-xs text-emerald-600 font-medium">
+                <div className="flex items-center gap-1 text-xs text-success font-medium">
                   <TrendingUp className="h-3 w-3" /> +19%
                 </div>
               </CardContent>
@@ -88,7 +88,7 @@ export function StatCard() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold text-zinc-950 dark:text-white">+573</div>
-                <div className="flex items-center gap-1 text-xs text-emerald-600 font-medium">
+                <div className="flex items-center gap-1 text-xs text-success font-medium">
                   <TrendingUp className="h-3 w-3" /> +201 since last hour
                 </div>
               </CardContent>
@@ -107,12 +107,12 @@ export function StatCard() {
 
       {/* Guidelines */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-20">
-        <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-lg p-6">
+        <div className="bg-success-light dark:bg-success/10 border border-success/20 dark:border-success/30 rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Check className="w-5 h-5 text-emerald-600" />
-            <h3 className="text-lg font-semibold text-emerald-900 dark:text-emerald-100">Do's</h3>
+            <Check className="w-5 h-5 text-success" />
+            <h3 className="text-lg font-semibold text-success dark:text-success-light">Do's</h3>
           </div>
-          <ul className="space-y-2 text-sm text-emerald-800 dark:text-emerald-200">
+          <ul className="space-y-2 text-sm text-success dark:text-success-light">
             <li>• Use clear headings and secondary context.</li>
             <li>• Highlight growth or changes with colors and icons.</li>
             <li>• Ensure numbers are properly formatted (commas, currency).</li>

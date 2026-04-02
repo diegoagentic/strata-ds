@@ -281,7 +281,7 @@ export function AdminPanel() {
         );
       case 'ai-prompt':
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-1 bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-semibold rounded">
+          <span className="inline-flex items-center gap-1 px-2 py-1 bg-success-light dark:bg-success/10 text-success dark:text-success-light text-xs font-semibold rounded">
             <Zap className="w-3 h-3" />
             AI
           </span>
@@ -307,7 +307,7 @@ export function AdminPanel() {
         );
       case 'patch':
         return (
-          <span className="px-2 py-1 bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 text-xs font-bold rounded">
+          <span className="px-2 py-1 bg-success-light dark:bg-success/10 text-success dark:text-success-light text-xs font-bold rounded">
             PATCH
           </span>
         );
@@ -348,7 +348,7 @@ export function AdminPanel() {
         <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-6">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-semibold text-zinc-600 dark:text-zinc-400">Total Components</span>
-            <Package className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+            <Package className="w-5 h-5 text-success" />
           </div>
           <p className="text-3xl font-bold text-zinc-900 dark:text-zinc-50">42</p>
         </div>
@@ -462,7 +462,7 @@ export function AdminPanel() {
                     <td className="px-6 py-4">{getSourceBadge(update.source)}</td>
                     <td className="px-6 py-4">{getChangeTypeBadge(update.changeType)}</td>
                     <td className="px-6 py-4">
-                      <span className="inline-flex items-center gap-1 text-emerald-600 dark:text-emerald-400 text-sm">
+                      <span className="inline-flex items-center gap-1 text-success text-sm">
                         <CheckCircle2 className="w-4 h-4" />
                         {update.status}
                       </span>

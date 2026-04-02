@@ -139,7 +139,7 @@ export function RoadmapView() {
           {systemMetrics.map((metric, index) => {
             const Icon = metric.icon;
             const colorClasses = {
-              emerald: 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400',
+              emerald: 'bg-success-light dark:bg-success/15 text-success',
               indigo: 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400',
               violet: 'bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400',
               sky: 'bg-sky-100 dark:bg-sky-900/30 text-sky-600 dark:text-sky-400',
@@ -162,7 +162,7 @@ export function RoadmapView() {
                 <div className="text-xs text-zinc-500 dark:text-zinc-400 mb-2">
                   {metric.description}
                 </div>
-                <div className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                <div className="text-xs font-semibold text-success">
                   {metric.trend}
                 </div>
               </div>
@@ -309,7 +309,7 @@ export function RoadmapView() {
                     <div
                       className={`h-2 rounded-full ${
                         foundation.status === 'complete'
-                          ? 'bg-emerald-600 dark:bg-emerald-500'
+                          ? 'bg-success dark:bg-success-light0'
                           : 'bg-indigo-600 dark:bg-indigo-500'
                       }`}
                       style={{ width: foundation.usage }}
@@ -320,7 +320,7 @@ export function RoadmapView() {
                 {/* Status */}
                 <div className="w-32">
                   {foundation.status === 'complete' ? (
-                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-xs font-semibold text-emerald-700 dark:text-emerald-400">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-success-light dark:bg-success/15 text-xs font-semibold text-success dark:text-success">
                       ✓ Complete
                     </span>
                   ) : (
@@ -376,21 +376,21 @@ export function RoadmapView() {
           Stakeholder Benefits
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-lg p-6">
-            <h3 className="text-lg font-bold text-emerald-900 dark:text-emerald-100 mb-3">
+          <div className="bg-success-light dark:bg-success/10 border border-success/20 dark:border-success/30 rounded-lg p-6">
+            <h3 className="text-lg font-bold text-success dark:text-success-light mb-3">
               For Product Teams
             </h3>
-            <ul className="space-y-2 text-sm text-emerald-800 dark:text-emerald-200">
+            <ul className="space-y-2 text-sm text-success dark:text-success-light">
               <li className="flex items-start gap-2">
-                <span className="text-emerald-600 dark:text-emerald-400 mt-0.5">•</span>
+                <span className="text-success mt-0.5">•</span>
                 <span>Rapid prototyping and iteration cycles</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-emerald-600 dark:text-emerald-400 mt-0.5">•</span>
+                <span className="text-success mt-0.5">•</span>
                 <span>Consistent UX across all products</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-emerald-600 dark:text-emerald-400 mt-0.5">•</span>
+                <span className="text-success mt-0.5">•</span>
                 <span>Reduced technical debt and maintenance</span>
               </li>
             </ul>

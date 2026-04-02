@@ -35,9 +35,9 @@ export function OverviewView() {
           Enterprise-grade white label design system with high-density patterns, designed as an AI creation library that generates custom interfaces for clients.
         </p>
         <div className="flex items-center gap-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-md">
-            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-            <span className="text-sm font-semibold text-emerald-900 dark:text-emerald-100">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-success-light dark:bg-success/10 border border-success/20 dark:border-success/30 rounded-md">
+            <CheckCircle2 className="w-4 h-4 text-success" />
+            <span className="text-sm font-semibold text-success dark:text-success-light">
               12 AI-Ready Components
             </span>
           </div>
@@ -103,8 +103,8 @@ export function OverviewView() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-6">
-            <div className="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center mb-4">
-              <Users className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+            <div className="w-12 h-12 bg-success-light dark:bg-success/15 rounded-lg flex items-center justify-center mb-4">
+              <Users className="w-6 h-6 text-success" />
             </div>
             <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 mb-3">
               AI Teams
@@ -190,7 +190,7 @@ export function OverviewView() {
                   </div>
                   <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-md p-3">
                     <div className="flex items-center gap-2 mb-1">
-                      <Code2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                      <Code2 className="w-4 h-4 text-success" />
                       <span className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">HTML</span>
                     </div>
                     <p className="text-xs text-zinc-500 dark:text-zinc-400">Pure HTML with Tailwind</p>
@@ -323,8 +323,8 @@ export function OverviewView() {
           </div>
 
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-6">
-            <div className="w-10 h-10 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center mb-4">
-              <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+            <div className="w-10 h-10 bg-success-light dark:bg-success/15 rounded-lg flex items-center justify-center mb-4">
+              <CheckCircle2 className="w-5 h-5 text-success" />
             </div>
             <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 mb-2">
               Light/Dark Mode
@@ -429,20 +429,20 @@ export function OverviewView() {
           Component Status
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800 rounded-lg p-6">
+          <div className="bg-success-light dark:bg-success/10 border border-success/20 dark:border-success/30 rounded-lg p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-emerald-900 dark:text-emerald-100">
+              <h3 className="text-lg font-bold text-success dark:text-success-light">
                 AI Ready
               </h3>
-              <CheckCircle2 className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+              <CheckCircle2 className="w-6 h-6 text-success" />
             </div>
-            <div className="text-4xl font-bold text-emerald-900 dark:text-emerald-100 mb-2">
+            <div className="text-4xl font-bold text-success dark:text-success-light mb-2">
               12
             </div>
-            <p className="text-sm text-emerald-800 dark:text-emerald-200 mb-4">
+            <p className="text-sm text-success dark:text-success-light mb-4">
               Complete components with code, prompts, and Figma export
             </p>
-            <div className="text-xs text-emerald-700 dark:text-emerald-300 space-y-1">
+            <div className="text-xs text-success dark:text-success-light space-y-1">
               <div>✓ Buttons</div>
               <div>✓ Badges</div>
               <div>✓ Avatars</div>
@@ -512,8 +512,8 @@ export function OverviewView() {
         <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg overflow-hidden">
           <div className="divide-y divide-zinc-200 dark:divide-zinc-800">
             <div className="p-6 flex items-start gap-4">
-              <div className="w-8 h-8 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+              <div className="w-8 h-8 bg-success-light dark:bg-success/15 rounded-lg flex items-center justify-center flex-shrink-0">
+                <CheckCircle2 className="w-5 h-5 text-success" />
               </div>
               <div>
                 <h4 className="font-bold text-zinc-900 dark:text-zinc-50 mb-2">Use AI Prompts as foundation</h4>
@@ -523,8 +523,8 @@ export function OverviewView() {
               </div>
             </div>
             <div className="p-6 flex items-start gap-4">
-              <div className="w-8 h-8 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+              <div className="w-8 h-8 bg-success-light dark:bg-success/15 rounded-lg flex items-center justify-center flex-shrink-0">
+                <CheckCircle2 className="w-5 h-5 text-success" />
               </div>
               <div>
                 <h4 className="font-bold text-zinc-900 dark:text-zinc-50 mb-2">Respect the Zinc scale</h4>
@@ -534,8 +534,8 @@ export function OverviewView() {
               </div>
             </div>
             <div className="p-6 flex items-start gap-4">
-              <div className="w-8 h-8 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+              <div className="w-8 h-8 bg-success-light dark:bg-success/15 rounded-lg flex items-center justify-center flex-shrink-0">
+                <CheckCircle2 className="w-5 h-5 text-success" />
               </div>
               <div>
                 <h4 className="font-bold text-zinc-900 dark:text-zinc-50 mb-2">Maintain the 8px grid</h4>
@@ -545,8 +545,8 @@ export function OverviewView() {
               </div>
             </div>
             <div className="p-6 flex items-start gap-4">
-              <div className="w-8 h-8 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+              <div className="w-8 h-8 bg-success-light dark:bg-success/15 rounded-lg flex items-center justify-center flex-shrink-0">
+                <CheckCircle2 className="w-5 h-5 text-success" />
               </div>
               <div>
                 <h4 className="font-bold text-zinc-900 dark:text-zinc-50 mb-2">Implement light/dark mode from the start</h4>

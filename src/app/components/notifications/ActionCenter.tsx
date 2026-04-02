@@ -88,11 +88,11 @@ export default function ActionCenter() {
             count: 3, // Mock count for demo
             icon: Truck,
             colorTheme: {
-                activeBg: 'bg-emerald-500/10',
-                activeText: 'text-emerald-600 dark:text-emerald-400',
-                activeBorder: 'border-emerald-500/20',
-                badgeBg: 'bg-emerald-100 dark:bg-emerald-900/40',
-                badgeText: 'text-emerald-700 dark:text-emerald-300'
+                activeBg: 'bg-success-light0/10',
+                activeText: 'text-success',
+                activeBorder: 'border-success/20',
+                badgeBg: 'bg-success-light dark:bg-success/15',
+                badgeText: 'text-success dark:text-success-light'
             },
             filter: (n) => n.type === 'system' // Placeholder filter
         },

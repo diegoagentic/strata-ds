@@ -83,9 +83,9 @@ export function ComboboxView() {
                         Usage Guidelines
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-md p-6">
-                            <h3 className="text-lg font-semibold text-emerald-900 dark:text-emerald-100 mb-2">Do's</h3>
-                            <ul className="list-disc list-inside text-sm text-emerald-800 dark:text-emerald-200 space-y-1">
+                        <div className="bg-success-light dark:bg-success/10 border border-success/20 dark:border-success/30 rounded-md p-6">
+                            <h3 className="text-lg font-semibold text-success dark:text-success-light mb-2">Do's</h3>
+                            <ul className="list-disc list-inside text-sm text-success dark:text-success-light space-y-1">
                                 <li>Use <code>Combobox</code> when the list of options is large (&gt;10 items).</li>
                                 <li>Allow filtering to help users find options quickly.</li>
                             </ul>

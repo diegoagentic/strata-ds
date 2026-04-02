@@ -59,7 +59,7 @@ export function ApiPlayground({ endpoint, method = 'GET', title, description }: 
       <div className="bg-zinc-50 dark:bg-zinc-950 px-6 py-4 border-b border-zinc-200 dark:border-zinc-800">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-3">
-            <span className="px-2 py-1 bg-emerald-600 text-white rounded text-xs font-bold">
+            <span className="px-2 py-1 bg-success text-white rounded text-xs font-bold">
               {method}
             </span>
             <code className="text-sm font-mono text-zinc-900 dark:text-zinc-50">{endpoint}</code>
@@ -128,7 +128,7 @@ export function ApiPlayground({ endpoint, method = 'GET', title, description }: 
             </button>
           </div>
           <div className="bg-zinc-900 dark:bg-zinc-950 rounded-lg p-4 overflow-x-auto">
-            <pre className="text-xs text-emerald-400 font-mono">{curlCommand}</pre>
+            <pre className="text-xs text-success font-mono">{curlCommand}</pre>
           </div>
         </div>
 
@@ -139,7 +139,7 @@ export function ApiPlayground({ endpoint, method = 'GET', title, description }: 
               <h4 className="text-sm font-semibold text-zinc-700 dark:text-zinc-300 flex items-center gap-2">
                 Response
                 {response?.success ? (
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                  <CheckCircle2 className="w-4 h-4 text-success" />
                 ) : (
                   <AlertCircle className="w-4 h-4 text-red-600" />
                 )}
@@ -165,7 +165,7 @@ export function ApiPlayground({ endpoint, method = 'GET', title, description }: 
             </div>
             <div className={`rounded-lg p-4 overflow-x-auto ${
               response?.success 
-                ? 'bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800' 
+                ? 'bg-success-light dark:bg-success/10 border border-success/20 dark:border-success/30' 
                 : 'bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800'
             }`}>
               <pre className="text-xs text-zinc-900 dark:text-zinc-50 font-mono">
@@ -177,7 +177,7 @@ export function ApiPlayground({ endpoint, method = 'GET', title, description }: 
             {response && (
               <div className="mt-3 flex items-center gap-4 text-xs text-zinc-600 dark:text-zinc-400">
                 <span className="flex items-center gap-1">
-                  Status: <strong className={response.success ? 'text-emerald-600' : 'text-red-600'}>
+                  Status: <strong className={response.success ? 'text-success' : 'text-red-600'}>
                     {response.success ? '200 OK' : '400 Error'}
                   </strong>
                 </span>

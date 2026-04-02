@@ -113,7 +113,7 @@ export default function NotificationItem({ notification, onActionClick }: { noti
                                 action.primary
                                     ? "bg-brand-200 text-zinc-900 hover:bg-brand-300 dark:bg-brand-400 dark:hover:bg-brand-300" // Strata Brand Primary
                                     : "bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700",
-                                actionState[i] === 'Sent!' && "!bg-emerald-500 !text-white"
+                                actionState[i] === 'Sent!' && "!bg-success-light0 !text-white"
                             )}
                             onClick={() => handleActionClick(action.label, i)}
                         >

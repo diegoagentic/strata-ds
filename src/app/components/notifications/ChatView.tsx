@@ -66,8 +66,8 @@ export default function ChatView({ onBack }: { onBack: () => void }) {
                 </button>
                 <div>
                     <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-50">Support Chat</h3>
-                    <p className="text-xs text-emerald-500 flex items-center gap-1">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    <p className="text-xs text-success flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-success-light0 animate-pulse" />
                         Sarah is online
                     </p>
                 </div>

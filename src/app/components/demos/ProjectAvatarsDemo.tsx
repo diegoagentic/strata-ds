@@ -29,7 +29,7 @@ export function ProjectAvatarsDemo() {
                     <div className="h-10 w-10 rounded-full bg-gradient-to-br from-indigo-400 to-indigo-600 text-white flex items-center justify-center text-sm font-bold shadow-md">
                         SJ
                     </div>
-                    <div className="h-10 w-10 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 text-white flex items-center justify-center text-sm font-bold shadow-md">
+                    <div className="h-10 w-10 rounded-full bg-gradient-to-br from-success to-success text-white flex items-center justify-center text-sm font-bold shadow-md">
                         JD
                     </div>
                 </div>

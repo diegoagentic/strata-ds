@@ -109,7 +109,6 @@ type ViewType =
   | 'data-visualization'
   | 'figma-export-guide'
   | 'admin'
-  | 'api'
   | 'mcp'
   | 'advanced-forms'
   | 'mcp'
@@ -270,7 +269,6 @@ function App() {
     {
       title: 'Developer Tools',
       items: [
-        { id: 'api', label: 'REST API' },
         { id: 'mcp', label: 'Model Context Protocol' },
         { id: 'figma-export-guide', label: 'Figma Export Guide' },
       ],
@@ -489,7 +487,7 @@ function App() {
       {/* Toast Notification */}
       {toastVisible && (
         <div className="fixed bottom-6 right-6 bg-zinc-900 dark:bg-zinc-800 text-zinc-50 rounded-md shadow-lg p-4 flex items-center gap-3 border border-zinc-700 z-50">
-          <div className="w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">
+          <div className="w-6 h-6 bg-success rounded-full flex items-center justify-center">
             <svg
               className="w-4 h-4 text-white"
               fill="none"

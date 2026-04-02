@@ -69,7 +69,7 @@ export function CodeViewer({
           >
             {copied ? (
               <>
-                <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-500" />
+                <Check className="w-4 h-4 text-success dark:text-success" />
                 Copied!
               </>
             ) : (
@@ -163,7 +163,7 @@ export function CodeBlock({ code, language = 'react', showLineNumbers = false }:
     if (line.trim().startsWith('//') || line.trim().startsWith('/*') || line.trim().startsWith('*') || line.trim().startsWith('<!--')) return 'text-zinc-500 dark:text-zinc-400';
     if (line.includes('import ') || line.includes('export ') || line.includes('from ')) return 'text-purple-600 dark:text-purple-300';
     if (line.includes('const ') || line.includes('let ') || line.includes('var ') || line.includes('function ') || line.includes('return ')) return 'text-blue-600 dark:text-blue-300';
-    if (line.includes('className=') || line.includes('class=')) return 'text-emerald-600 dark:text-emerald-300';
+    if (line.includes('className=') || line.includes('class=')) return 'text-success dark:text-success';
     if (line.includes('<') || line.includes('/>') || line.includes('</') || line.includes('>')) return 'text-indigo-600 dark:text-indigo-300';
     if (line.includes(':') && !line.includes('//')) return 'text-sky-600 dark:text-sky-300'; // Props/CSS properties
     return 'text-zinc-900 dark:text-zinc-100';
