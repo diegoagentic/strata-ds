@@ -15,8 +15,8 @@ function cn(...inputs: (string | undefined | null | false)[]) {
 
 const recentOrders = [
     { id: "#ORD-2055", customer: "AutoManfacture Co.", client: "AutoManfacture Co.", project: "Office Renovation", amount: "$385,000", status: "Pending Review", date: "Dec 20, 2025", initials: "AC", statusColor: "bg-zinc-100 text-zinc-700" },
-    { id: "#ORD-2054", customer: "TechDealer Solutions", client: "TechDealer Solutions", project: "HQ Upgrade", amount: "$62,500", status: "In Production", date: "Nov 15, 2025", initials: "TS", statusColor: "bg-blue-50 text-blue-700 ring-blue-600/20" },
-    { id: "#ORD-2053", customer: "Urban Living Inc.", client: "Urban Living Inc.", project: "Lobby Refresh", amount: "$112,000", status: "Shipped", date: "Oct 30, 2025", initials: "UL", statusColor: "bg-green-50 text-green-700 ring-green-600/20" },
+    { id: "#ORD-2054", customer: "TechDealer Solutions", client: "TechDealer Solutions", project: "HQ Upgrade", amount: "$62,500", status: "In Production", date: "Nov 15, 2025", initials: "TS", statusColor: "bg-info-light text-info ring-info/20" },
+    { id: "#ORD-2053", customer: "Urban Living Inc.", client: "Urban Living Inc.", project: "Lobby Refresh", amount: "$112,000", status: "Shipped", date: "Oct 30, 2025", initials: "UL", statusColor: "bg-success-light text-success ring-success/20" },
     { id: "#ORD-2052", customer: "Global Logistics", client: "Global Logistics", project: "Warehouse Expansion", amount: "$45,000", status: "Delivered", date: "Oct 15, 2025", initials: "GL", statusColor: "bg-zinc-100 text-zinc-700" },
 ]
 
@@ -29,11 +29,11 @@ export function KPICardsDemo() {
                         <p className="text-sm font-medium text-zinc-500 uppercase tracking-wider">Total Inventory</p>
                         <p className="mt-1 text-3xl font-semibold text-zinc-900 dark:text-white group-hover:scale-105 transition-transform origin-left">$1.2M</p>
                     </div>
-                    <div className="p-3 bg-blue-50 dark:bg-blue-500/10 rounded-xl text-blue-600 dark:text-blue-400">
+                    <div className="p-3 bg-info-light dark:bg-info-light0/10 rounded-xl text-info">
                         <CurrencyDollarIcon className="w-6 h-6" />
                     </div>
                 </div>
-                <div className="mt-4 flex items-center text-sm text-green-600">
+                <div className="mt-4 flex items-center text-sm text-success">
                     <ArrowTrendingUpIcon className="w-4 h-4 mr-1" />
                     <span className="font-medium">+0.2%</span> <span className="text-zinc-500 ml-1">vs last month</span>
                 </div>
@@ -49,7 +49,7 @@ export function KPICardsDemo() {
                         <ChartBarIcon className="w-6 h-6" />
                     </div>
                 </div>
-                <div className="mt-4 flex items-center text-sm text-green-600">
+                <div className="mt-4 flex items-center text-sm text-success">
                     <ArrowTrendingUpIcon className="w-4 h-4 mr-1" />
                     <span className="font-medium">+3.5%</span> <span className="text-zinc-500 ml-1">vs last month</span>
                 </div>
@@ -76,11 +76,11 @@ export function KPICardsDemo() {
                         <p className="text-sm font-medium text-zinc-500 uppercase tracking-wider">Low Stock</p>
                         <p className="mt-1 text-3xl font-semibold text-zinc-900 dark:text-white group-hover:scale-105 transition-transform origin-left">15</p>
                     </div>
-                    <div className="p-3 bg-red-50 dark:bg-red-500/10 rounded-xl text-red-600 dark:text-red-400">
+                    <div className="p-3 bg-error-light dark:bg-error/10 rounded-xl text-error">
                         <ExclamationCircleIcon className="w-6 h-6" />
                     </div>
                 </div>
-                <div className="mt-4 flex items-center text-sm text-red-500">
+                <div className="mt-4 flex items-center text-sm text-error">
                     <span className="font-medium">Requires attention</span>
                 </div>
             </div>
@@ -105,7 +105,7 @@ export function RecentOrdersTableDemo() {
         <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200 dark:border-white/10 shadow-sm overflow-hidden">
             <div className="p-6 border-b border-zinc-200 dark:border-white/10 flex justify-between items-center">
                 <h3 className="text-lg font-semibold text-zinc-900 dark:text-white">Recent Orders</h3>
-                <button className="text-sm text-blue-600 dark:text-blue-400 hover:underline">View All</button>
+                <button className="text-sm text-info hover:underline">View All</button>
             </div>
 
             <div className="overflow-x-auto">
@@ -176,7 +176,7 @@ export function RecentOrdersTableDemo() {
                                                         </MenuItem>
                                                         <MenuItem>
                                                             {({ active }) => (
-                                                                <button onClick={(e) => e.stopPropagation()} className={`${active ? 'bg-zinc-100 dark:bg-white/5' : ''} group flex w-full items-center px-4 py-2 text-sm text-red-600 dark:text-red-400`}>
+                                                                <button onClick={(e) => e.stopPropagation()} className={`${active ? 'bg-zinc-100 dark:bg-white/5' : ''} group flex w-full items-center px-4 py-2 text-sm text-error`}>
                                                                     <TrashIcon className="w-4 h-4 mr-2" /> Delete
                                                                 </button>
                                                             )}
@@ -209,7 +209,7 @@ export function RecentOrdersTableDemo() {
                                                             <div className="relative z-10 flex justify-between">
                                                                 {['Placed', 'Mfg', 'Qual', 'Ship'].map((step, i) => (
                                                                     <div key={i} className="flex flex-col items-center gap-2">
-                                                                        <div className={`h-6 w-6 rounded-full flex items-center justify-center ${i <= 1 ? 'bg-blue-600 text-white' : 'bg-zinc-200 dark:bg-zinc-700 text-zinc-400'}`}>
+                                                                        <div className={`h-6 w-6 rounded-full flex items-center justify-center ${i <= 1 ? 'bg-info text-white' : 'bg-zinc-200 dark:bg-zinc-700 text-zinc-400'}`}>
                                                                             {i < 1 ? <CheckIcon className="h-4 w-4" /> : <div className={`h-2 w-2 rounded-full ${i <= 1 ? 'bg-white' : 'bg-zinc-400/50'}`} />}
                                                                         </div>
                                                                         <span className="text-xs font-medium text-zinc-500">{step}</span>

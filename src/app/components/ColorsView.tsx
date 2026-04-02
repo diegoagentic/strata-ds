@@ -157,11 +157,11 @@ export function ColorsView() {
       hex: '#10b981',
       usage: 'Success messages, completed states, positive actions',
       icon: CheckCircle2,
-      bg: 'bg-emerald-50 dark:bg-emerald-950',
-      border: 'border-emerald-200 dark:border-emerald-800',
-      text: 'text-emerald-900 dark:text-emerald-100',
-      subtext: 'text-emerald-700 dark:text-emerald-300',
-      iconColor: 'text-emerald-600 dark:text-emerald-400',
+      bg: 'bg-success-light dark:bg-success/10',
+      border: 'border-success/20 dark:border-success/30',
+      text: 'text-success dark:text-success-light',
+      subtext: 'text-success dark:text-success-light',
+      iconColor: 'text-success',
     },
     {
       name: 'Warning',
@@ -429,7 +429,7 @@ export function ColorsView() {
             </div>
             <div className="bg-white p-4 border-t border-zinc-200 h-full">
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                <div className="w-2 h-2 rounded-full bg-success-light0"></div>
                 <span className="text-xs font-semibold text-zinc-600">High Visibility</span>
               </div>
               <p className="text-xs text-zinc-500">Crucial actions, active tabs, and primary buttons.</p>
@@ -445,7 +445,7 @@ export function ColorsView() {
             </div>
             <div className="bg-white p-4 border-t border-zinc-200 h-full">
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                <div className="w-2 h-2 rounded-full bg-success-light0"></div>
                 <span className="text-xs font-semibold text-zinc-600">Subtle Context</span>
               </div>
               <p className="text-xs text-zinc-500">Status badges, large content areas, and subtle highlights.</p>
@@ -464,7 +464,7 @@ export function ColorsView() {
             </div>
             <div className="bg-zinc-950 p-4 border-t border-zinc-800 h-full">
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                <div className="w-2 h-2 rounded-full bg-success-light0"></div>
                 <span className="text-xs font-semibold text-zinc-400">High Contrast</span>
               </div>
               <p className="text-xs text-zinc-500">Best for icons, borders, and text accents in dark mode.</p>
@@ -727,17 +727,17 @@ export function ColorsView() {
             </div>
 
             {/* Do - Correct Patterns */}
-            <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-6 relative overflow-hidden">
+            <div className="rounded-xl border border-success/20 bg-success-light p-6 relative overflow-hidden">
               <div className="absolute top-4 right-4">
-                <Check className="w-5 h-5 text-emerald-600" />
+                <Check className="w-5 h-5 text-success" />
               </div>
-              <h4 className="text-emerald-800 font-bold text-sm mb-4">DO: Content Hierarchy</h4>
+              <h4 className="text-success font-bold text-sm mb-4">DO: Content Hierarchy</h4>
 
               <div className="space-y-4">
                 {/* Light Mode Example */}
                 <div>
-                  <p className="text-xs font-semibold text-emerald-700 mb-1">Light Mode: Use Zinc/Gray</p>
-                  <div className="bg-white p-3 rounded-lg border border-emerald-100 flex items-center justify-between">
+                  <p className="text-xs font-semibold text-success mb-1">Light Mode: Use Zinc/Gray</p>
+                  <div className="bg-white p-3 rounded-lg border border-success/10 flex items-center justify-between">
                     <span className="text-zinc-900 font-semibold text-sm">Profile</span>
                     <span className="text-sm font-medium text-zinc-500 hover:text-zinc-900 cursor-pointer transition-colors">View Details</span>
                   </div>
@@ -745,15 +745,15 @@ export function ColorsView() {
 
                 {/* Dark Mode Example */}
                 <div>
-                  <p className="text-xs font-semibold text-emerald-700 mb-1">Dark Mode: Brand Allowed</p>
-                  <div className="bg-zinc-900 p-3 rounded-lg border border-emerald-100/20 flex items-center justify-between">
+                  <p className="text-xs font-semibold text-success mb-1">Dark Mode: Brand Allowed</p>
+                  <div className="bg-zinc-900 p-3 rounded-lg border border-success/10 flex items-center justify-between">
                     <span className="text-white font-semibold text-sm">Profile</span>
                     <span className="text-sm font-medium text-brand-400 hover:text-brand-300 cursor-pointer transition-colors">View Details</span>
                   </div>
                 </div>
               </div>
 
-              <p className="text-xs text-emerald-700 mt-4">
+              <p className="text-xs text-success mt-4">
                 <strong>Light Mode:</strong> Use Zinc-500 for secondary actions.<br />
                 <strong>Dark Mode:</strong> Brand colors are safe for text if contrast &gt; 4.5:1.
               </p>
@@ -1095,7 +1095,7 @@ export function ColorsView() {
                           )}
                           {color.contrast && (
                             <span className={`text-xs font-semibold px-2 py-1 rounded ${color.contrast === 'AAA'
-                              ? 'text-emerald-800 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-900/30 border border-emerald-300 dark:border-emerald-800'
+                              ? 'text-success dark:text-success bg-success-light dark:bg-success/15 border border-success/30 dark:border-success/30'
                               : 'text-blue-800 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/30 border border-blue-300 dark:border-blue-800'
                               }`}>
                               {color.contrast}
@@ -1139,6 +1139,109 @@ export function ColorsView() {
         </div>
       </div>
 
+      {/* Figma ↔ Code Token Mapping */}
+      <div className="mb-12">
+        <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-2">
+          Figma ↔ Code Token Mapping
+        </h2>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-6">
+          Figma uses <strong>semantic names</strong> (e.g. <code className="text-xs bg-zinc-100 dark:bg-zinc-800 px-1 py-0.5 rounded">primary</code>) while code uses <strong>primitive tokens</strong> (e.g. <code className="text-xs bg-zinc-100 dark:bg-zinc-800 px-1 py-0.5 rounded">brand-300</code>). This table shows how they map to each other.
+        </p>
+
+        {/* Semantic → Primitive Mapping */}
+        <div className="bg-background border border-border rounded-xl overflow-hidden mb-6">
+          <div className="bg-zinc-100 dark:bg-zinc-800 px-6 py-3 border-b border-border">
+            <h3 className="text-sm font-semibold text-zinc-700 dark:text-zinc-200">Core Semantic Tokens</h3>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border bg-zinc-50 dark:bg-zinc-900">
+                  <th className="text-left px-6 py-3 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Figma Variable</th>
+                  <th className="text-left px-6 py-3 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">CSS Variable</th>
+                  <th className="text-left px-6 py-3 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Tailwind Class</th>
+                  <th className="text-left px-6 py-3 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Light Primitive</th>
+                  <th className="text-left px-6 py-3 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Dark Primitive</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {[
+                  { figma: 'Main/primary', css: '--primary', tw: 'bg-primary', lightPrim: 'brand-300', darkPrim: 'brand-500', lightHex: '#E6F993', darkHex: '#C3E433' },
+                  { figma: 'Main/primary-foreground', css: '--primary-foreground', tw: 'text-primary-foreground', lightPrim: 'zinc-900', darkPrim: 'zinc-900', lightHex: '#02060C', darkHex: '#02060C' },
+                  { figma: 'Main/background', css: '--background', tw: 'bg-background', lightPrim: 'zinc-100', darkPrim: 'zinc-900', lightHex: '#EBECEE', darkHex: '#02060C' },
+                  { figma: 'Main/foreground', css: '--foreground', tw: 'text-foreground', lightPrim: 'zinc-900', darkPrim: 'zinc-100', lightHex: '#02060C', darkHex: '#EBECEE' },
+                  { figma: 'Main/card', css: '--card', tw: 'bg-card', lightPrim: 'zinc-50', darkPrim: 'zinc-900', lightHex: '#fafafa', darkHex: '#02060C' },
+                  { figma: 'Main/secondary', css: '--secondary', tw: 'bg-secondary', lightPrim: 'zinc-50', darkPrim: 'zinc-800', lightHex: '#fafafa', darkHex: '#141E2C' },
+                  { figma: 'Main/muted-foreground', css: '--muted-foreground', tw: 'text-muted-foreground', lightPrim: 'zinc-500', darkPrim: 'zinc-400', lightHex: '#959DA7', darkHex: '#B4BBC2' },
+                  { figma: 'Main/border', css: '--border', tw: 'border-border', lightPrim: 'zinc-300', darkPrim: 'zinc-800', lightHex: '#D0D4D8', darkHex: '#141E2C' },
+                  { figma: 'Main/destructive', css: '--destructive', tw: 'bg-destructive', lightPrim: 'red-500', darkPrim: 'red-950', lightHex: '#E52D49', darkHex: '#340209' },
+                  { figma: 'Main/ring', css: '--ring', tw: 'ring-ring', lightPrim: 'zinc-500', darkPrim: 'zinc-400', lightHex: '#959DA7', darkHex: '#B4BBC2' },
+                ].map((row) => (
+                  <tr key={row.figma} className="hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors">
+                    <td className="px-6 py-3">
+                      <code className="text-xs font-mono bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 px-2 py-1 rounded">{row.figma}</code>
+                    </td>
+                    <td className="px-6 py-3">
+                      <code className="text-xs font-mono text-zinc-600 dark:text-zinc-400">{row.css}</code>
+                    </td>
+                    <td className="px-6 py-3">
+                      <code className="text-xs font-mono text-zinc-600 dark:text-zinc-400">{row.tw}</code>
+                    </td>
+                    <td className="px-6 py-3">
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 rounded border border-zinc-300 dark:border-zinc-600 flex-shrink-0" style={{ backgroundColor: row.lightHex }} />
+                        <code className="text-xs font-mono text-zinc-700 dark:text-zinc-300">{row.lightPrim}</code>
+                      </div>
+                    </td>
+                    <td className="px-6 py-3">
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 rounded border border-zinc-300 dark:border-zinc-600 flex-shrink-0" style={{ backgroundColor: row.darkHex }} />
+                        <code className="text-xs font-mono text-zinc-700 dark:text-zinc-300">{row.darkPrim}</code>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Token Resolution Chain */}
+        <div className="bg-zinc-50 dark:bg-zinc-900 border border-border rounded-xl p-6">
+          <h3 className="text-sm font-semibold text-zinc-700 dark:text-zinc-200 mb-4">Token Resolution Chain</h3>
+          <div className="flex items-center gap-3 flex-wrap text-sm">
+            <div className="bg-white dark:bg-zinc-800 border border-border rounded-lg px-4 py-2">
+              <div className="text-xs text-zinc-400 mb-0.5">Figma</div>
+              <code className="text-xs font-mono font-semibold text-zinc-800 dark:text-zinc-200">Main/primary</code>
+            </div>
+            <span className="text-zinc-400 dark:text-zinc-500 text-lg">=</span>
+            <div className="bg-white dark:bg-zinc-800 border border-border rounded-lg px-4 py-2">
+              <div className="text-xs text-zinc-400 mb-0.5">CSS Variable</div>
+              <code className="text-xs font-mono font-semibold text-zinc-800 dark:text-zinc-200">--primary</code>
+            </div>
+            <span className="text-zinc-400 dark:text-zinc-500 text-lg">=</span>
+            <div className="bg-white dark:bg-zinc-800 border border-border rounded-lg px-4 py-2">
+              <div className="text-xs text-zinc-400 mb-0.5">Resolves to</div>
+              <code className="text-xs font-mono font-semibold text-zinc-800 dark:text-zinc-200">--color-brand-300</code>
+            </div>
+            <span className="text-zinc-400 dark:text-zinc-500 text-lg">=</span>
+            <div className="bg-white dark:bg-zinc-800 border border-border rounded-lg px-4 py-2">
+              <div className="text-xs text-zinc-400 mb-0.5">Tailwind</div>
+              <code className="text-xs font-mono font-semibold text-zinc-800 dark:text-zinc-200">bg-primary</code>
+            </div>
+            <span className="text-zinc-400 dark:text-zinc-500 text-lg">=</span>
+            <div className="flex items-center gap-2 bg-white dark:bg-zinc-800 border border-border rounded-lg px-4 py-2">
+              <div className="w-5 h-5 rounded" style={{ backgroundColor: '#E6F993' }} />
+              <code className="text-xs font-mono font-semibold text-zinc-800 dark:text-zinc-200">#E6F993</code>
+            </div>
+          </div>
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-4">
+            In <strong>dark mode</strong>, the same chain resolves to <code className="bg-zinc-100 dark:bg-zinc-800 px-1 py-0.5 rounded">brand-500</code> (<code className="bg-zinc-100 dark:bg-zinc-800 px-1 py-0.5 rounded">#C3E433</code>) automatically.
+            Developers should use Tailwind semantic classes (<code className="bg-zinc-100 dark:bg-zinc-800 px-1 py-0.5 rounded">bg-primary</code>) — the theme handles mode switching.
+          </p>
+        </div>
+      </div>
+
       {/* Usage Guidelines */}
       <div>
         <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
@@ -1146,34 +1249,34 @@ export function ColorsView() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Do's */}
-          <div className="bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800 rounded-md p-6">
+          <div className="bg-success-light dark:bg-success/10 border border-success/20 dark:border-success/30 rounded-md p-6">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-6 h-6 rounded-full bg-emerald-600 dark:bg-emerald-500 flex items-center justify-center">
+              <div className="w-6 h-6 rounded-full bg-success dark:bg-success-light0 flex items-center justify-center">
                 <Check className="w-4 h-4 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-emerald-900 dark:text-emerald-100">
+              <h3 className="text-lg font-semibold text-success dark:text-success-light">
                 Do's
               </h3>
             </div>
-            <ul className="space-y-3 text-sm text-emerald-800 dark:text-emerald-200">
+            <ul className="space-y-3 text-sm text-success dark:text-success-light">
               <li className="flex items-start gap-2">
-                <span className="text-emerald-600 dark:text-emerald-400 mt-0.5">•</span>
+                <span className="text-success mt-0.5">•</span>
                 <span>Use neutral-200 and neutral-800 for default borders in light and dark modes</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-emerald-600 dark:text-emerald-400 mt-0.5">•</span>
+                <span className="text-success mt-0.5">•</span>
                 <span>Apply semantic colors consistently across similar UI patterns</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-emerald-600 dark:text-emerald-400 mt-0.5">•</span>
+                <span className="text-success mt-0.5">•</span>
                 <span>Maintain WCAG AA contrast ratios for text on colored backgrounds</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-emerald-600 dark:text-emerald-400 mt-0.5">•</span>
+                <span className="text-success mt-0.5">•</span>
                 <span>Use data viz colors in the specified sequence for multi-series charts</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-emerald-600 dark:text-emerald-400 mt-0.5">•</span>
+                <span className="text-success mt-0.5">•</span>
                 <span>Test color combinations in both light and dark modes</span>
               </li>
             </ul>

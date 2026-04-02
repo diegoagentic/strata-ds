@@ -35,7 +35,7 @@ export function ProjectButtonsDemo() {
                         <button className="p-1 rounded-full hover:bg-primary hover:text-zinc-900 dark:hover:bg-primary text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-900 transition-colors" title="Edit">
                             <PencilSquareIcon className="h-5 w-5" />
                         </button>
-                        <button className="p-1 rounded-full hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/30 dark:hover:text-red-400 text-zinc-400 transition-colors" title="Delete">
+                        <button className="p-1 rounded-full hover:bg-error-light hover:text-error dark:hover:bg-error/10 dark:hover:text-error text-zinc-400 transition-colors" title="Delete">
                             <TrashIcon className="h-5 w-5" />
                         </button>
                     </div>

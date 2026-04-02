@@ -63,8 +63,8 @@ export function SortableList() {
                     </div>
                   </div>
                   <div className={`px-2 py-1 rounded-full text-xs font-semibold ${item.priority === 'High'
-                      ? 'bg-red-100 dark:bg-red-950/40 text-red-800 dark:text-red-400'
-                      : 'bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-400'
+                      ? 'bg-error-light dark:bg-error/10/40 text-error dark:text-error'
+                      : 'bg-warning-light dark:bg-warning/10/40 text-warning dark:text-warning'
                     }`}>
                     {item.priority}
                   </div>
@@ -123,12 +123,12 @@ export function SortableList() {
             <li>• Offer an alternative for keyboard-only and screen reader users.</li>
           </ul>
         </div>
-        <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-6">
+        <div className="bg-error-light dark:bg-error/10 border border-error/20 dark:border-error/30 rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <X className="w-5 h-5 text-red-600" />
-            <h3 className="text-lg font-semibold text-red-900 dark:text-red-100">Don'ts</h3>
+            <X className="w-5 h-5 text-error" />
+            <h3 className="text-lg font-semibold text-error dark:text-error-light">Don'ts</h3>
           </div>
-          <ul className="space-y-2 text-sm text-red-800 dark:text-red-200">
+          <ul className="space-y-2 text-sm text-error dark:text-error-light">
             <li>• Don't hide the drop targets; keep them visible during the drag operation.</li>
             <li>• Avoid non-standard cursors that might confuse users.</li>
           </ul>

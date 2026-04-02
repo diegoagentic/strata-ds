@@ -110,9 +110,9 @@ ${htmlCode}
       case 'easy':
         return 'bg-success-light dark:bg-success/10 text-success dark:text-success';
       case 'medium':
-        return 'bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-400';
+        return 'bg-warning-light dark:bg-warning/10 text-warning dark:text-warning';
       case 'advanced':
-        return 'bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-400';
+        return 'bg-error-light dark:bg-error/10 text-error dark:text-error';
       default:
         return 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-400';
     }
@@ -129,13 +129,13 @@ ${htmlCode}
       case 'copy-paste':
         return (
           <div className="space-y-4">
-            <div className="flex items-start gap-3 bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+            <div className="flex items-start gap-3 bg-info-light dark:bg-info/10 border border-info/20 dark:border-info/30 rounded-lg p-4">
               <div className="text-2xl">✨</div>
               <div>
-                <h5 className="font-bold text-blue-900 dark:text-blue-100 mb-1">
+                <h5 className="font-bold text-info dark:text-info-light mb-1">
                   Easiest Method
                 </h5>
-                <p className="text-sm text-blue-700 dark:text-blue-300">
+                <p className="text-sm text-info dark:text-info-light">
                   Copy the HTML code and paste directly into Figma. Works for simple components.
                 </p>
               </div>
@@ -328,13 +328,13 @@ ${htmlCode}
       case 'download':
         return (
           <div className="space-y-4">
-            <div className="flex items-start gap-3 bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
+            <div className="flex items-start gap-3 bg-warning-light dark:bg-warning/10 border border-warning/20 dark:border-warning/30 rounded-lg p-4">
               <div className="text-2xl">💾</div>
               <div>
-                <h5 className="font-bold text-amber-900 dark:text-amber-100 mb-1">
+                <h5 className="font-bold text-warning dark:text-warning-light mb-1">
                   Download HTML File
                 </h5>
-                <p className="text-sm text-amber-700 dark:text-amber-300">
+                <p className="text-sm text-warning dark:text-warning-light">
                   Download a complete HTML file to use with external conversion tools.
                 </p>
               </div>

@@ -64,7 +64,7 @@ export function ProjectModalsDemo() {
 
                                         <div className="bg-zinc-50 dark:bg-zinc-950 rounded-lg border border-zinc-200 dark:border-zinc-800 p-8 text-sm">
                                             <div className="flex items-start gap-4 mb-4">
-                                                <div className="h-10 w-10 bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg flex items-center justify-center shrink-0">
+                                                <div className="h-10 w-10 bg-error-light dark:bg-error/10 text-error rounded-lg flex items-center justify-center shrink-0">
                                                     <DocumentTextIcon className="h-6 w-6" />
                                                 </div>
                                                 <div>

@@ -3,8 +3,8 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Transition } from '@headlessui/react'
 
 const people = [
-    { id: 1, name: 'Google Inc.', avatar: 'bg-red-500' },
-    { id: 2, name: 'Microsoft Corp', avatar: 'bg-blue-500' },
+    { id: 1, name: 'Google Inc.', avatar: 'bg-error' },
+    { id: 2, name: 'Microsoft Corp', avatar: 'bg-info-light0' },
     { id: 3, name: 'Apple Inc.', avatar: 'bg-zinc-800' },
 ]
 

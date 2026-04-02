@@ -43,7 +43,7 @@ export interface FieldErrorProps extends React.HTMLAttributes<HTMLParagraphEleme
 export function FieldError({ className, ...props }: FieldErrorProps) {
     return (
         <p
-            className={cn("text-[0.8rem] font-medium text-red-500 dark:text-red-400", className)}
+            className={cn("text-[0.8rem] font-medium text-error dark:text-error", className)}
             {...props}
         />
     )

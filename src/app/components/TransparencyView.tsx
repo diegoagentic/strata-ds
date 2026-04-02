@@ -46,7 +46,7 @@ export function TransparencyView() {
                     {/* Background Pattern to show transparency */}
                     <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] dark:bg-[radial-gradient(#6366f1_1px,transparent_1px)] [background-size:16px_16px]"></div>
 
-                    <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-500 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+                    <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-info-light0 rounded-full blur-3xl opacity-20 animate-pulse"></div>
                     <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-purple-500 rounded-full blur-3xl opacity-20 animate-pulse delay-700"></div>
 
                     <div className="grid grid-cols-1 gap-8 relative z-10">
@@ -69,7 +69,7 @@ export function TransparencyView() {
                                                 <div className="w-4/5 h-4 bg-zinc-200 dark:bg-zinc-800 rounded"></div>
                                             </div>
                                             {/* Floating colored shapes to show blur */}
-                                            <div className="absolute top-10 right-10 w-16 h-16 bg-blue-500 rounded-full blur-xl opacity-50"></div>
+                                            <div className="absolute top-10 right-10 w-16 h-16 bg-info-light0 rounded-full blur-xl opacity-50"></div>
                                             <div className="absolute bottom-10 left-10 w-20 h-20 bg-purple-500 rounded-full blur-xl opacity-50"></div>
                                         </div>
 

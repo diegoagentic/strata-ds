@@ -481,29 +481,29 @@ export function Button({ children, variant = 'primary' }) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Manual */}
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg overflow-hidden">
-            <div className="bg-amber-50 dark:bg-amber-950/20 px-6 py-3 border-b border-amber-200 dark:border-amber-800">
-              <h3 className="font-bold text-amber-900 dark:text-amber-100">Manual Prompts</h3>
+            <div className="bg-warning-light dark:bg-warning/10 px-6 py-3 border-b border-warning/20 dark:border-warning/30">
+              <h3 className="font-bold text-warning dark:text-warning-light">Manual Prompts</h3>
             </div>
             <div className="p-6">
               <ul className="space-y-3 text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-amber-600 dark:text-amber-400 mt-0.5">⚠</span>
+                  <span className="text-warning mt-0.5">⚠</span>
                   <span className="text-zinc-600 dark:text-zinc-400">Must copy/paste prompts manually</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-amber-600 dark:text-amber-400 mt-0.5">⚠</span>
+                  <span className="text-warning mt-0.5">⚠</span>
                   <span className="text-zinc-600 dark:text-zinc-400">Prompts can become outdated</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-amber-600 dark:text-amber-400 mt-0.5">⚠</span>
+                  <span className="text-warning mt-0.5">⚠</span>
                   <span className="text-zinc-600 dark:text-zinc-400">AI might hallucinate details</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-amber-600 dark:text-amber-400 mt-0.5">⚠</span>
+                  <span className="text-warning mt-0.5">⚠</span>
                   <span className="text-zinc-600 dark:text-zinc-400">No real-time token access</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-amber-600 dark:text-amber-400 mt-0.5">⚠</span>
+                  <span className="text-warning mt-0.5">⚠</span>
                   <span className="text-zinc-600 dark:text-zinc-400">Manual updates required</span>
                 </li>
               </ul>
@@ -561,7 +561,7 @@ export function Button({ children, variant = 'primary' }) {
                 platform.color === 'emerald' 
                   ? 'bg-success-light dark:bg-success/15 text-success dark:text-success-light'
                   : platform.color === 'amber'
-                  ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300'
+                  ? 'bg-warning-light dark:bg-warning/10 text-warning dark:text-warning-light'
                   : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300'
               }`}>
                 {platform.status}

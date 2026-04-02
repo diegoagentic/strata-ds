@@ -86,7 +86,7 @@ Wrapper for form controls including Label, Description, and Error message.
 - Gap: 2 (0.5rem)
 - Label: Text-sm font-medium
 - Description: Text-xs text-zinc-500
-- Error: Text-xs text-red-500`
+- Error: Text-xs text-error`
 
     return (
         <div>

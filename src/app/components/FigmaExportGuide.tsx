@@ -51,7 +51,7 @@ export function FigmaExportGuide() {
       </div>
 
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/30 dark:to-blue-950/30 border border-purple-200 dark:border-purple-900 rounded-xl p-8 mb-8">
+      <div className="bg-gradient-to-br from-purple-50 to-blue-50 dark:from-purple-950/30 dark:to-info/10 border border-purple-200 dark:border-purple-900 rounded-xl p-8 mb-8">
         <div className="flex items-start gap-6">
           <div className="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center flex-shrink-0">
             <Figma className="w-8 h-8 text-white" />
@@ -130,15 +130,15 @@ export function FigmaExportGuide() {
           {/* Method 2 */}
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-6 hover:border-purple-300 dark:hover:border-purple-700 transition-colors">
             <div className="flex items-start gap-4 mb-4">
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-950 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Download className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+              <div className="w-12 h-12 bg-info-light dark:bg-info/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Download className="w-6 h-6 text-info" />
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <h3 className="font-bold text-zinc-900 dark:text-zinc-50">
                     html.to.design
                   </h3>
-                  <span className="px-2 py-0.5 bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-400 text-xs font-bold rounded">
+                  <span className="px-2 py-0.5 bg-info-light dark:bg-info/10 text-info dark:text-info text-xs font-bold rounded">
                     Premium
                   </span>
                 </div>
@@ -149,20 +149,20 @@ export function FigmaExportGuide() {
             </div>
             <ul className="space-y-2 text-sm text-zinc-700 dark:text-zinc-300">
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-info flex-shrink-0 mt-0.5" />
                 <span>High-fidelity conversion</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-info flex-shrink-0 mt-0.5" />
                 <span>Generates reusable components</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-info flex-shrink-0 mt-0.5" />
                 <span>Supports responsive design</span>
               </li>
             </ul>
             <div className="mt-4 pt-4 border-t border-zinc-200 dark:border-zinc-800">
-              <span className="text-xs font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
+              <span className="text-xs font-semibold text-info uppercase tracking-wider">
                 Difficulty: Easy
               </span>
             </div>
@@ -171,8 +171,8 @@ export function FigmaExportGuide() {
           {/* Method 3 */}
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-6 hover:border-purple-300 dark:hover:border-purple-700 transition-colors">
             <div className="flex items-start gap-4 mb-4">
-              <div className="w-12 h-12 bg-amber-100 dark:bg-amber-950 rounded-lg flex items-center justify-center flex-shrink-0">
-                <Palette className="w-6 h-6 text-amber-600 dark:text-amber-400" />
+              <div className="w-12 h-12 bg-warning-light dark:bg-warning/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <Palette className="w-6 h-6 text-warning" />
               </div>
               <div>
                 <h3 className="font-bold text-zinc-900 dark:text-zinc-50 mb-1">
@@ -185,20 +185,20 @@ export function FigmaExportGuide() {
             </div>
             <ul className="space-y-2 text-sm text-zinc-700 dark:text-zinc-300">
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-warning flex-shrink-0 mt-0.5" />
                 <span>Syncs colors and styles</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-warning flex-shrink-0 mt-0.5" />
                 <span>Ideal for design systems</span>
               </li>
               <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-warning flex-shrink-0 mt-0.5" />
                 <span>Exports as Figma variables</span>
               </li>
             </ul>
             <div className="mt-4 pt-4 border-t border-zinc-200 dark:border-zinc-800">
-              <span className="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
+              <span className="text-xs font-semibold text-warning uppercase tracking-wider">
                 Difficulty: Intermediate
               </span>
             </div>
@@ -335,28 +335,28 @@ export function FigmaExportGuide() {
           </ul>
         </div>
 
-        <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-6">
+        <div className="bg-info-light dark:bg-info/10/30 border border-info/20 dark:border-info/30 rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <CheckCircle2 className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-            <h3 className="font-bold text-blue-900 dark:text-blue-100">
+            <CheckCircle2 className="w-5 h-5 text-info" />
+            <h3 className="font-bold text-info dark:text-info-light">
               Recommendations
             </h3>
           </div>
-          <ul className="space-y-3 text-sm text-blue-800 dark:text-blue-200">
+          <ul className="space-y-3 text-sm text-info dark:text-info-light">
             <li className="flex items-start gap-2">
-              <span className="text-blue-600 dark:text-blue-400 mt-0.5">•</span>
+              <span className="text-info mt-0.5">•</span>
               <span>For complete components: use HTML to Figma or html.to.design</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-blue-600 dark:text-blue-400 mt-0.5">•</span>
+              <span className="text-info mt-0.5">•</span>
               <span>For colors and tokens: use Tokens Studio</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-blue-600 dark:text-blue-400 mt-0.5">•</span>
+              <span className="text-info mt-0.5">•</span>
               <span>For fine-tuning: use the manual specifications</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="text-blue-600 dark:text-blue-400 mt-0.5">•</span>
+              <span className="text-info mt-0.5">•</span>
               <span>Combine methods depending on what you need to export</span>
             </li>
           </ul>

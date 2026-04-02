@@ -65,8 +65,8 @@ export function EmptyStateView() {
                     </h2>
                     <div className="rounded-lg p-6 bg-white dark:bg-zinc-900">
                         <EmptyState className="border-zinc-200 dark:border-zinc-800">
-                            <EmptyStateIcon className="bg-blue-50 dark:bg-blue-900/20">
-                                <ShoppingCart className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                            <EmptyStateIcon className="bg-info-light dark:bg-info/10">
+                                <ShoppingCart className="h-6 w-6 text-info" />
                             </EmptyStateIcon>
                             <EmptyStateTitle>Your cart is empty</EmptyStateTitle>
                             <EmptyStateDescription>
@@ -92,9 +92,9 @@ export function EmptyStateView() {
                                 <li>Provide a clear path forward (e.g., "Create Project").</li>
                             </ul>
                         </div>
-                        <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-md p-6">
-                            <h3 className="text-lg font-semibold text-red-900 dark:text-red-100 mb-2">Don'ts</h3>
-                            <ul className="list-disc list-inside text-sm text-red-800 dark:text-red-200 space-y-1">
+                        <div className="bg-error-light dark:bg-error/10 border border-error/20 dark:border-error/30 rounded-md p-6">
+                            <h3 className="text-lg font-semibold text-error dark:text-error-light mb-2">Don'ts</h3>
+                            <ul className="list-disc list-inside text-sm text-error dark:text-error-light space-y-1">
                                 <li>Don't leave the user at a dead end.</li>
                             </ul>
                         </div>

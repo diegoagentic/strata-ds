@@ -123,12 +123,12 @@ export function UserList() {
             <li>• Add dividers to clearly separate content blocks.</li>
           </ul>
         </div>
-        <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-6">
+        <div className="bg-error-light dark:bg-error/10 border border-error/20 dark:border-error/30 rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <X className="w-5 h-5 text-red-600" />
-            <h3 className="text-lg font-semibold text-red-900 dark:text-red-100">Don'ts</h3>
+            <X className="w-5 h-5 text-error" />
+            <h3 className="text-lg font-semibold text-error dark:text-error-light">Don'ts</h3>
           </div>
-          <ul className="space-y-2 text-sm text-red-800 dark:text-red-200">
+          <ul className="space-y-2 text-sm text-error dark:text-error-light">
             <li>• Don't omit key metadata like status or timestamps.</li>
             <li>• Avoid deep nesting within list items.</li>
           </ul>

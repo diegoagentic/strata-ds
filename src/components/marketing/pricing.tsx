@@ -74,7 +74,7 @@ export function PricingFeatures({ className, ...props }: ComponentPropsWithoutRe
 export function PricingFeature({ children, featured }: { children: React.ReactNode, featured?: boolean }) {
     return (
         <li className={clsx("flex gap-x-3", featured ? 'text-zinc-300' : 'text-zinc-600 dark:text-zinc-300')}>
-            <Check className={clsx("h-6 w-5 flex-none", featured ? 'text-white' : 'text-blue-600')} aria-hidden="true" />
+            <Check className={clsx("h-6 w-5 flex-none", featured ? 'text-white' : 'text-info')} aria-hidden="true" />
             {children}
         </li>
     )

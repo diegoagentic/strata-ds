@@ -14,7 +14,7 @@ export function ActivityFeed() {
           <Avatar size="lg">
             <AvatarFallback>SC</AvatarFallback>
           </Avatar>
-          <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center border-2 border-white dark:border-zinc-900">
+          <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-info rounded-full flex items-center justify-center border-2 border-white dark:border-zinc-900">
             <Upload className="w-3 h-3 text-white" />
           </div>
         </div>
@@ -48,7 +48,7 @@ export function ActivityFeed() {
                 <Avatar size="lg">
                   <AvatarFallback>SC</AvatarFallback>
                 </Avatar>
-                <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center border-2 border-white dark:border-zinc-900">
+                <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-info rounded-full flex items-center justify-center border-2 border-white dark:border-zinc-900">
                   <Upload className="w-3 h-3 text-white" />
                 </div>
               </div>
@@ -99,12 +99,12 @@ export function ActivityFeed() {
             <li>• Provide relative timestamps (e.g., "5m ago").</li>
           </ul>
         </div>
-        <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-6">
+        <div className="bg-error-light dark:bg-error/10 border border-error/20 dark:border-error/30 rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <X className="w-5 h-5 text-red-600" />
-            <h3 className="text-lg font-semibold text-red-900 dark:text-red-100">Don'ts</h3>
+            <X className="w-5 h-5 text-error" />
+            <h3 className="text-lg font-semibold text-error dark:text-error-light">Don'ts</h3>
           </div>
-          <ul className="space-y-2 text-sm text-red-800 dark:text-red-200">
+          <ul className="space-y-2 text-sm text-error dark:text-error-light">
             <li>• Don't clutter the feed with too much technical detail.</li>
           </ul>
         </div>

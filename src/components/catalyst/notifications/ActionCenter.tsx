@@ -34,11 +34,11 @@ export function ActionPanelContent({ className }: { className?: string }) {
             count: mockNotifications.filter(n => n.type === 'discrepancy' && n.unread).length,
             icon: ExclamationTriangleIcon,
             colorTheme: {
-                activeBg: 'bg-red-500/15',
-                activeText: 'text-red-500',
-                activeBorder: 'border-red-500/20',
-                badgeBg: 'bg-red-500/20',
-                badgeText: 'text-red-500'
+                activeBg: 'bg-error/15',
+                activeText: 'text-error',
+                activeBorder: 'border-error/50/20',
+                badgeBg: 'bg-error/20',
+                badgeText: 'text-error'
             },
             filter: (n) => n.type === 'discrepancy'
         },
@@ -76,11 +76,11 @@ export function ActionPanelContent({ className }: { className?: string }) {
             count: 3, // Mock count for demo
             icon: TruckIcon,
             colorTheme: {
-                activeBg: 'bg-green-500/15',
-                activeText: 'text-green-500',
-                activeBorder: 'border-green-500/20',
-                badgeBg: 'bg-green-500/20',
-                badgeText: 'text-green-500'
+                activeBg: 'bg-success-light0/15',
+                activeText: 'text-success',
+                activeBorder: 'border-success/20',
+                badgeBg: 'bg-success-light0/20',
+                badgeText: 'text-success'
             },
             filter: (n) => n.type === 'system' // Placeholder filter
         },
@@ -185,8 +185,8 @@ export function ActionPanelContent({ className }: { className?: string }) {
                         <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
                             {filteredNotifications.length} actions
                         </p>
-                        <p className="text-xs font-bold text-red-500 flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                        <p className="text-xs font-bold text-error flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-error animate-pulse" />
                             {urgentCount} urgent
                         </p>
                     </div>
@@ -210,7 +210,7 @@ export default function ActionCenter() {
                     )}>
                         <BellIcon className="w-5 h-5" />
                         {totalCount > 0 && (
-                            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-red-400 dark:bg-red-500 ring-2 ring-white dark:ring-zinc-900" />
+                            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error dark:bg-error ring-2 ring-white dark:ring-zinc-900" />
                         )}
                     </PopoverButton>
 

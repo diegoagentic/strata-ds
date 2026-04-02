@@ -58,7 +58,7 @@ export function ProductCard({
                 <p className="text-lg font-medium text-zinc-900 dark:text-white">{product.price}</p>
                 {product.rating && (
                     <div className="flex items-center">
-                        <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
+                        <Star className="h-4 w-4 fill-warning text-warning" />
                         <span className="ml-1 text-sm text-zinc-500">{product.rating}</span>
                     </div>
                 )}

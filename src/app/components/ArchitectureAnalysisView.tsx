@@ -233,9 +233,9 @@ export function ArchitectureAnalysisView() {
         border: 'border-violet-200 dark:border-violet-800'
       },
       amber: {
-        bg: 'bg-amber-100 dark:bg-amber-900/30',
-        text: 'text-amber-700 dark:text-amber-300',
-        border: 'border-amber-200 dark:border-amber-800'
+        bg: 'bg-warning-light dark:bg-warning/10',
+        text: 'text-warning dark:text-warning-light',
+        border: 'border-warning/20 dark:border-warning/30'
       }
     };
     return colors[color] || colors.emerald;
@@ -320,13 +320,13 @@ export function ArchitectureAnalysisView() {
                     {/* Cons */}
                     <div>
                       <h4 className="font-bold text-zinc-900 dark:text-zinc-50 mb-3 flex items-center gap-2">
-                        <XCircle className="w-4 h-4 text-red-600 dark:text-red-400" />
+                        <XCircle className="w-4 h-4 text-error" />
                         Cons
                       </h4>
                       <ul className="space-y-2">
                         {stack.cons.map((con, idx) => (
                           <li key={idx} className="flex items-start gap-2 text-sm text-zinc-600 dark:text-zinc-400">
-                            <span className="text-red-600 dark:text-red-400 mt-0.5">✗</span>
+                            <span className="text-error mt-0.5">✗</span>
                             <span>{con}</span>
                           </li>
                         ))}
@@ -407,7 +407,7 @@ export function ArchitectureAnalysisView() {
                 <ul className="space-y-1">
                   {pattern.cons.map((con, idx) => (
                     <li key={idx} className="text-xs text-zinc-600 dark:text-zinc-400 flex items-start gap-1">
-                      <span className="text-red-600 dark:text-red-400">-</span>
+                      <span className="text-error">-</span>
                       <span>{con}</span>
                     </li>
                   ))}

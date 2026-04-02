@@ -58,7 +58,7 @@ export default function FilterTabs({ tabs, activeTab, onTabChange }: FilterTabsP
 
                         {/* Collapsed Badge (Notification Dot) */}
                         {!isActive && tab.count > 0 && (
-                            <span className="absolute -top-1 -right-1 flex items-center justify-center min-w-[16px] h-4 px-1 rounded-full bg-red-500 text-white text-[9px] font-bold border-2 border-white dark:border-zinc-900">
+                            <span className="absolute -top-1 -right-1 flex items-center justify-center min-w-[16px] h-4 px-1 rounded-full bg-error text-white text-[9px] font-bold border-2 border-white dark:border-zinc-900">
                                 {tab.count}
                             </span>
                         )}

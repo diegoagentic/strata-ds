@@ -414,34 +414,34 @@ export function SpacingView() {
           </div>
 
           {/* Don'ts */}
-          <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-md p-6">
+          <div className="bg-error-light dark:bg-error/10 border border-error/20 dark:border-error/30 rounded-md p-6">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-6 h-6 rounded-full bg-red-600 dark:bg-red-500 flex items-center justify-center">
+              <div className="w-6 h-6 rounded-full bg-error dark:bg-error flex items-center justify-center">
                 <X className="w-4 h-4 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-red-900 dark:text-red-100">
+              <h3 className="text-lg font-semibold text-error dark:text-error-light">
                 Don'ts
               </h3>
             </div>
-            <ul className="space-y-3 text-sm text-red-800 dark:text-red-200">
+            <ul className="space-y-3 text-sm text-error dark:text-error-light">
               <li className="flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400 mt-0.5">•</span>
+                <span className="text-error mt-0.5">•</span>
                 <span>Don't create custom spacing values outside the defined scale</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400 mt-0.5">•</span>
+                <span className="text-error mt-0.5">•</span>
                 <span>Avoid using odd number spacing (5, 7, 9, 11) unless necessary</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400 mt-0.5">•</span>
+                <span className="text-error mt-0.5">•</span>
                 <span>Don't mix different gap values within the same component grid</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400 mt-0.5">•</span>
+                <span className="text-error mt-0.5">•</span>
                 <span>Avoid using spacing-12 or larger for component internal padding</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400 mt-0.5">•</span>
+                <span className="text-error mt-0.5">•</span>
                 <span>Don't use container widths for small components or cards</span>
               </li>
             </ul>

@@ -46,11 +46,11 @@ export default function ActionCenter() {
             count: mockNotifications.filter(n => n.type === 'discrepancy' && n.unread).length,
             icon: AlertTriangle,
             colorTheme: {
-                activeBg: 'bg-red-500/10',
-                activeText: 'text-red-600 dark:text-red-400',
-                activeBorder: 'border-red-500/20',
-                badgeBg: 'bg-red-100 dark:bg-red-900/40',
-                badgeText: 'text-red-700 dark:text-red-300'
+                activeBg: 'bg-error/10',
+                activeText: 'text-error',
+                activeBorder: 'border-error/50/20',
+                badgeBg: 'bg-error-light dark:bg-error/15',
+                badgeText: 'text-error dark:text-error-light'
             },
             filter: (n) => n.type === 'discrepancy'
         },
@@ -150,7 +150,7 @@ export default function ActionCenter() {
                     )}>
                         <Bell className="w-5 h-5" />
                         {totalCount > 0 && (
-                            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-red-500 ring-2 ring-white dark:ring-zinc-950" />
+                            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-white dark:ring-zinc-950" />
                         )}
                     </PopoverButton>
 
@@ -221,8 +221,8 @@ export default function ActionCenter() {
                                             <p className="text-xs font-medium text-zinc-500 dark:text-zinc-400">
                                                 {filteredNotifications.length} actions pending
                                             </p>
-                                            <p className="text-xs font-bold text-red-600 dark:text-red-400 flex items-center gap-1.5">
-                                                <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                                            <p className="text-xs font-bold text-error flex items-center gap-1.5">
+                                                <span className="w-1.5 h-1.5 rounded-full bg-error animate-pulse" />
                                                 {urgentCount} urgent attention needed
                                             </p>
                                         </div>

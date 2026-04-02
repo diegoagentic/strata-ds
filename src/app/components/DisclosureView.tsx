@@ -66,9 +66,9 @@ export function DisclosureView() {
                                 <li>Group related disclosures together.</li>
                             </ul>
                         </div>
-                        <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-md p-6">
-                            <h3 className="text-lg font-semibold text-red-900 dark:text-red-100 mb-2">Don'ts</h3>
-                            <ul className="list-disc list-inside text-sm text-red-800 dark:text-red-200 space-y-1">
+                        <div className="bg-error-light dark:bg-error/10 border border-error/20 dark:border-error/30 rounded-md p-6">
+                            <h3 className="text-lg font-semibold text-error dark:text-error-light mb-2">Don'ts</h3>
+                            <ul className="list-disc list-inside text-sm text-error dark:text-error-light space-y-1">
                                 <li>Don't use for critical content that should always be visible (privacy policies, etc.).</li>
                             </ul>
                         </div>

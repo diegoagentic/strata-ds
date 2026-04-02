@@ -164,7 +164,7 @@ export function CatalystNavbarDemo() {
                                         <p className="text-sm font-medium">John Doe</p>
                                         <p className="text-xs text-muted-foreground">Admin</p>
                                     </div>
-                                    <button onClick={onLogout} className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-muted flex items-center gap-2">
+                                    <button onClick={onLogout} className="w-full text-left px-4 py-2 text-sm text-error hover:bg-muted flex items-center gap-2">
                                         <ArrowRightOnRectangleIcon className="w-4 h-4" />
                                         Sign Out
                                     </button>

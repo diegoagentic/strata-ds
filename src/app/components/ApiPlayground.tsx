@@ -141,7 +141,7 @@ export function ApiPlayground({ endpoint, method = 'GET', title, description }: 
                 {response?.success ? (
                   <CheckCircle2 className="w-4 h-4 text-success" />
                 ) : (
-                  <AlertCircle className="w-4 h-4 text-red-600" />
+                  <AlertCircle className="w-4 h-4 text-error" />
                 )}
               </h4>
               {response && (
@@ -166,7 +166,7 @@ export function ApiPlayground({ endpoint, method = 'GET', title, description }: 
             <div className={`rounded-lg p-4 overflow-x-auto ${
               response?.success 
                 ? 'bg-success-light dark:bg-success/10 border border-success/20 dark:border-success/30' 
-                : 'bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800'
+                : 'bg-error-light dark:bg-error/10 border border-error/20 dark:border-error/30'
             }`}>
               <pre className="text-xs text-zinc-900 dark:text-zinc-50 font-mono">
                 {JSON.stringify(response || { error }, null, 2)}
@@ -177,7 +177,7 @@ export function ApiPlayground({ endpoint, method = 'GET', title, description }: 
             {response && (
               <div className="mt-3 flex items-center gap-4 text-xs text-zinc-600 dark:text-zinc-400">
                 <span className="flex items-center gap-1">
-                  Status: <strong className={response.success ? 'text-success' : 'text-red-600'}>
+                  Status: <strong className={response.success ? 'text-success' : 'text-error'}>
                     {response.success ? '200 OK' : '400 Error'}
                   </strong>
                 </span>

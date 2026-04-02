@@ -14,11 +14,11 @@ export function ProjectCardsDemo() {
                                     <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Total Inventory</p>
                                     <p className="mt-1 text-3xl font-semibold text-zinc-900 dark:text-white group-hover:scale-105 transition-transform origin-left">$1.2M</p>
                                 </div>
-                                <div className="p-3 bg-blue-50 dark:bg-blue-500/10 rounded-xl text-blue-600 dark:text-blue-400">
+                                <div className="p-3 bg-info-light dark:bg-info-light0/10 rounded-xl text-info">
                                     <CurrencyDollarIcon className="w-6 h-6" />
                                 </div>
                             </div>
-                            <div className="mt-4 flex items-center text-sm text-green-600">
+                            <div className="mt-4 flex items-center text-sm text-success">
                                 <ArrowTrendingUpIcon className="w-4 h-4 mr-1" />
                                 <span className="font-medium">+0.2%</span> <span className="text-zinc-500 dark:text-zinc-400 ml-1">vs last month</span>
                             </div>
@@ -35,7 +35,7 @@ export function ProjectCardsDemo() {
                                     <ChartBarIcon className="w-6 h-6" />
                                 </div>
                             </div>
-                            <div className="mt-4 flex items-center text-sm text-green-600">
+                            <div className="mt-4 flex items-center text-sm text-success">
                                 <ArrowTrendingUpIcon className="w-4 h-4 mr-1" />
                                 <span className="font-medium">+3.5%</span> <span className="text-zinc-500 dark:text-zinc-400 ml-1">vs last month</span>
                             </div>
@@ -64,11 +64,11 @@ export function ProjectCardsDemo() {
                                     <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Low Stock</p>
                                     <p className="mt-1 text-3xl font-semibold text-zinc-900 dark:text-white group-hover:scale-105 transition-transform origin-left">15</p>
                                 </div>
-                                <div className="p-3 bg-red-50 dark:bg-red-500/10 rounded-xl text-red-600 dark:text-red-400">
+                                <div className="p-3 bg-error-light dark:bg-error/10 rounded-xl text-error">
                                     <ExclamationCircleIcon className="w-6 h-6" />
                                 </div>
                             </div>
-                            <div className="mt-4 flex items-center text-sm text-red-500">
+                            <div className="mt-4 flex items-center text-sm text-error">
                                 <span className="font-medium">Requires attention</span>
                             </div>
                         </div>

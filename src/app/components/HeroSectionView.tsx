@@ -28,7 +28,7 @@ export function HeroSectionView() {
                         <Hero className="text-center">
                             <div className="mx-auto max-w-2xl px-6 lg:px-8">
                                 <HeroTitle>
-                                    Data to enrich your <span className="text-blue-600 dark:text-blue-400">online business</span>
+                                    Data to enrich your <span className="text-info">online business</span>
                                 </HeroTitle>
                                 <HeroSubtitle>
                                     Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.
@@ -46,7 +46,7 @@ export function HeroSectionView() {
                                 label: 'React', value: `<Hero className="text-center">
   <div className="mx-auto max-w-2xl">
     <HeroTitle>
-      Data to enrich your <span className="text-blue-600">online business</span>
+      Data to enrich your <span className="text-info">online business</span>
     </HeroTitle>
     <HeroSubtitle>
       Anim aute id magna aliqua ad ad non deserunt sunt.

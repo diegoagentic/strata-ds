@@ -44,8 +44,8 @@ export function TransactionCardDemo() {
                 <ul role="list" className="divide-y divide-zinc-100 dark:divide-white/10">
                     {transactions.map((transaction) => (
                         <li key={transaction.id} className="flex gap-x-4 py-4 first:pt-0 last:pb-0">
-                            <div className={`flex h-10 w-10 flex-none items-center justify-center rounded-lg ${transaction.type === 'outgoing' ? 'bg-zinc-100 dark:bg-white/10' : 'bg-green-50 dark:bg-green-900/20'}`}>
-                                <transaction.icon className={`h-5 w-5 ${transaction.type === 'outgoing' ? 'text-zinc-600 dark:text-zinc-400' : 'text-green-600 dark:text-green-400'}`} aria-hidden="true" />
+                            <div className={`flex h-10 w-10 flex-none items-center justify-center rounded-lg ${transaction.type === 'outgoing' ? 'bg-zinc-100 dark:bg-white/10' : 'bg-success-light dark:bg-success/10'}`}>
+                                <transaction.icon className={`h-5 w-5 ${transaction.type === 'outgoing' ? 'text-zinc-600 dark:text-zinc-400' : 'text-success'}`} aria-hidden="true" />
                             </div>
                             <div className="min-w-0 flex-auto">
                                 <p className="text-sm font-semibold leading-6 text-zinc-900 dark:text-white">
@@ -56,7 +56,7 @@ export function TransactionCardDemo() {
                                 </p>
                             </div>
                             <div className="hidden sm:flex sm:flex-col sm:items-end">
-                                <p className={`text-sm leading-6 ${transaction.type === 'outgoing' ? 'text-zinc-900 dark:text-zinc-100' : 'text-green-600 dark:text-green-400'}`}>
+                                <p className={`text-sm leading-6 ${transaction.type === 'outgoing' ? 'text-zinc-900 dark:text-zinc-100' : 'text-success'}`}>
                                     {transaction.type === 'outgoing' ? '-' : '+'}{transaction.amount}
                                 </p>
                                 <p className="mt-1 text-xs leading-5 text-zinc-500 dark:text-zinc-400">

@@ -359,8 +359,8 @@ export function OverviewView() {
           </div>
 
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-6">
-            <div className="w-10 h-10 bg-amber-100 dark:bg-amber-900/30 rounded-lg flex items-center justify-center mb-4">
-              <Palette className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+            <div className="w-10 h-10 bg-warning-light dark:bg-warning/10 rounded-lg flex items-center justify-center mb-4">
+              <Palette className="w-5 h-5 text-warning" />
             </div>
             <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 mb-2">
               Zinc Greyscale
@@ -371,8 +371,8 @@ export function OverviewView() {
           </div>
 
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-6">
-            <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-4">
-              <Gauge className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+            <div className="w-10 h-10 bg-info-light dark:bg-info/10 rounded-lg flex items-center justify-center mb-4">
+              <Gauge className="w-5 h-5 text-info" />
             </div>
             <h3 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 mb-2">
               8px Grid System
@@ -458,27 +458,27 @@ export function OverviewView() {
             </div>
           </div>
 
-          <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg p-6">
+          <div className="bg-warning-light dark:bg-warning/10 border border-warning/20 dark:border-warning/30 rounded-lg p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-amber-900 dark:text-amber-100">
+              <h3 className="text-lg font-bold text-warning dark:text-warning-light">
                 In Progress
               </h3>
-              <Workflow className="w-6 h-6 text-amber-600 dark:text-amber-400" />
+              <Workflow className="w-6 h-6 text-warning" />
             </div>
-            <div className="text-4xl font-bold text-amber-900 dark:text-amber-100 mb-2">
+            <div className="text-4xl font-bold text-warning dark:text-warning-light mb-2">
               17
             </div>
-            <p className="text-sm text-amber-800 dark:text-amber-200 mb-4">
+            <p className="text-sm text-warning dark:text-warning-light mb-4">
               Visual components completed, pending AI documentation
             </p>
-            <div className="text-xs text-amber-700 dark:text-amber-300 space-y-1">
+            <div className="text-xs text-warning dark:text-warning-light space-y-1">
               <div>→ Data Tables</div>
               <div>→ Page Headings</div>
               <div>→ Form Layouts</div>
               <div>→ File Upload</div>
               <div>→ Stacked Lists</div>
               <div>→ Data Visualization</div>
-              <div className="pt-2 text-amber-600 dark:text-amber-400">+ 11 more</div>
+              <div className="pt-2 text-warning">+ 11 more</div>
             </div>
           </div>
 

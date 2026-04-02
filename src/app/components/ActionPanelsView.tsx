@@ -84,7 +84,7 @@ export function ActionCenterWindow() {
 
   <!-- List -->
   <div class="overflow-y-auto">
-    <div class="notification-item border-l-4 border-red-500">
+    <div class="notification-item border-l-4 border-error/50">
         <h4>Quantity Mismatch</h4>
         <button class="btn-primary">Resolve</button>
     </div>

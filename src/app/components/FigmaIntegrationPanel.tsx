@@ -178,12 +178,12 @@ export function FigmaIntegrationPanel() {
         </div>
 
         {/* Instructions */}
-        <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-4">
-          <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2 flex items-center gap-2">
+        <div className="bg-info-light dark:bg-info/10 border border-info/20 dark:border-info/30 rounded-lg p-4 mb-4">
+          <h4 className="font-semibold text-info dark:text-info-light mb-2 flex items-center gap-2">
             <Key className="w-4 h-4" />
             How to get your Figma Access Token:
           </h4>
-          <ol className="list-decimal list-inside space-y-1 text-sm text-blue-700 dark:text-blue-300">
+          <ol className="list-decimal list-inside space-y-1 text-sm text-info dark:text-info-light">
             <li>Go to <a href="https://www.figma.com/settings" target="_blank" rel="noopener noreferrer" className="underline">Figma Settings</a></li>
             <li>Scroll to "Personal access tokens"</li>
             <li>Click "Create new token"</li>
@@ -194,7 +194,7 @@ export function FigmaIntegrationPanel() {
             href="https://help.figma.com/hc/en-us/articles/8085703771159-Manage-personal-access-tokens"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400 hover:underline mt-2"
+            className="inline-flex items-center gap-1 text-sm text-info hover:underline mt-2"
           >
             <ExternalLink className="w-3 h-3" />
             View Figma Documentation
@@ -234,7 +234,7 @@ export function FigmaIntegrationPanel() {
               {isTokenValid && (
                 <button
                   onClick={handleRemoveToken}
-                  className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md font-semibold transition-colors"
+                  className="px-4 py-2 bg-error hover:bg-error text-white rounded-md font-semibold transition-colors"
                 >
                   Remove
                 </button>
@@ -244,11 +244,11 @@ export function FigmaIntegrationPanel() {
 
           {/* Token Status */}
           {isTokenValid === false && (
-            <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg p-3 flex items-start gap-2">
-              <AlertCircle className="w-4 h-4 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
+            <div className="bg-error-light dark:bg-error/10 border border-error/20 dark:border-error/30 rounded-lg p-3 flex items-start gap-2">
+              <AlertCircle className="w-4 h-4 text-error flex-shrink-0 mt-0.5" />
               <div>
-                <p className="text-sm font-semibold text-red-900 dark:text-red-100">Invalid Token</p>
-                <p className="text-sm text-red-700 dark:text-red-300">
+                <p className="text-sm font-semibold text-error dark:text-error-light">Invalid Token</p>
+                <p className="text-sm text-error dark:text-error-light">
                   Please check your Figma access token and try again.
                 </p>
               </div>
@@ -312,17 +312,17 @@ export function FigmaIntegrationPanel() {
             {importStatus && (
               <div className={`rounded-lg p-3 ${
                 importStatus.startsWith('Error')
-                  ? 'bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800'
+                  ? 'bg-error-light dark:bg-error/10 border border-error/20 dark:border-error/30'
                   : importStatus.includes('successful')
                   ? 'bg-success-light dark:bg-success/10 border border-success/20 dark:border-success/30'
-                  : 'bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800'
+                  : 'bg-info-light dark:bg-info/10 border border-info/20 dark:border-info/30'
               }`}>
                 <p className={`text-sm ${
                   importStatus.startsWith('Error')
-                    ? 'text-red-900 dark:text-red-100'
+                    ? 'text-error dark:text-error-light'
                     : importStatus.includes('successful')
                     ? 'text-success dark:text-success-light'
-                    : 'text-blue-900 dark:text-blue-100'
+                    : 'text-info dark:text-info-light'
                 }`}>
                   {importStatus}
                 </p>
@@ -390,8 +390,8 @@ export function FigmaIntegrationPanel() {
                   )}
                 </div>
 
-                <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
-                  <p className="text-sm text-amber-800 dark:text-amber-200">
+                <div className="bg-warning-light dark:bg-warning/10 border border-warning/20 dark:border-warning/30 rounded-lg p-4">
+                  <p className="text-sm text-warning dark:text-warning-light">
                     <strong>Next Steps:</strong> Review the extracted data and integrate it into your design system. 
                     You can download the JSON file to save this extraction.
                   </p>

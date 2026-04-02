@@ -141,7 +141,7 @@ export function CardsView() {
         <CardDescription>Placed on Jan 24, 2026</CardDescription>
       </div>
       <div className="text-right">
-        <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20">
+        <span className="inline-flex items-center rounded-md bg-success-light px-2 py-1 text-xs font-medium text-success ring-1 ring-inset ring-success/20 dark:bg-success-light0/10 dark:text-success dark:ring-success/20">
           Shipped
         </span>
       </div>

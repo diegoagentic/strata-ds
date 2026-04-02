@@ -53,7 +53,7 @@ export function ShoppingCart({ open, onClose, items, ...props }: { open: boolean
                                     <div className="flex">
                                         <button
                                             type="button"
-                                            className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400"
+                                            className="font-medium text-info hover:text-info dark:text-info"
                                         >
                                             Remove
                                         </button>
@@ -80,7 +80,7 @@ export function ShoppingCart({ open, onClose, items, ...props }: { open: boolean
                             or{' '}
                             <button
                                 type="button"
-                                className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400"
+                                className="font-medium text-info hover:text-info dark:text-info"
                                 onClick={() => onClose(false)}
                             >
                                 Continue Shopping

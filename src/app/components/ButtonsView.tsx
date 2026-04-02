@@ -485,12 +485,12 @@ export function DestructiveButton() {
 }`;
 
   const destructiveButtonHTML = `<!-- Solid Destructive Button -->
-<button class="px-4 py-2 bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 transition-colors">
+<button class="px-4 py-2 bg-error text-white font-semibold rounded-md hover:bg-error transition-colors">
   Delete
 </button>
 
 <!-- Destructive Button with Icon -->
-<button class="px-4 py-2 bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 transition-colors flex items-center gap-2">
+<button class="px-4 py-2 bg-error text-white font-semibold rounded-md hover:bg-error transition-colors flex items-center gap-2">
   <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
     <path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z" stroke-width="2"/>
   </svg>
@@ -988,14 +988,14 @@ Generate following Strata DS specifications.`;
               </div>
             </div>
             <div className="flex flex-wrap gap-3 mb-6">
-              <button className="px-4 py-2 bg-red-600 dark:bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 dark:hover:bg-red-700 transition-colors">
+              <button className="px-4 py-2 bg-error dark:bg-error text-white font-semibold rounded-md hover:bg-error dark:hover:bg-error transition-colors">
                 Delete
               </button>
-              <button className="px-4 py-2 bg-red-600 dark:bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 dark:hover:bg-red-700 transition-colors flex items-center gap-2">
+              <button className="px-4 py-2 bg-error dark:bg-error text-white font-semibold rounded-md hover:bg-error dark:hover:bg-error transition-colors flex items-center gap-2">
                 <Trash2 className="w-4 h-4" />
                 Remove
               </button>
-              <button className="px-4 py-2 bg-transparent text-red-600 dark:text-red-500 font-semibold rounded-md hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors border-2 border-red-300 dark:border-red-800">
+              <button className="px-4 py-2 bg-transparent text-error dark:text-error font-semibold rounded-md hover:bg-error-light dark:hover:bg-error/10 transition-colors border-2 border-error/20 dark:border-error/30">
                 Delete Outline
               </button>
             </div>
@@ -1210,10 +1210,10 @@ Generate following Strata DS specifications.`;
               Destructive
             </div>
             <div className="flex gap-2">
-              <button className="w-10 h-10 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors flex items-center justify-center">
+              <button className="w-10 h-10 bg-error text-white rounded-md hover:bg-error transition-colors flex items-center justify-center">
                 <Trash2 className="w-5 h-5" />
               </button>
-              <button className="w-10 h-10 text-red-600 dark:text-red-500 rounded-md hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors flex items-center justify-center">
+              <button className="w-10 h-10 text-error dark:text-error rounded-md hover:bg-error-light dark:hover:bg-error/10 transition-colors flex items-center justify-center">
                 <Trash2 className="w-5 h-5" />
               </button>
             </div>
@@ -1374,34 +1374,34 @@ Generate following Strata DS specifications.`;
           </div>
 
           {/* Don'ts */}
-          <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-md p-6">
+          <div className="bg-error-light dark:bg-error/10 border border-error/20 dark:border-error/30 rounded-md p-6">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-6 h-6 rounded-full bg-red-600 dark:bg-red-500 flex items-center justify-center">
+              <div className="w-6 h-6 rounded-full bg-error dark:bg-error flex items-center justify-center">
                 <X className="w-4 h-4 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-red-900 dark:text-red-100">
+              <h3 className="text-lg font-semibold text-error dark:text-error-light">
                 Don'ts
               </h3>
             </div>
-            <ul className="space-y-3 text-sm text-red-800 dark:text-red-200">
+            <ul className="space-y-3 text-sm text-error dark:text-error-light">
               <li className="flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400 mt-0.5">•</span>
+                <span className="text-error mt-0.5">•</span>
                 <span>Don't use multiple Primary buttons in one view</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400 mt-0.5">•</span>
+                <span className="text-error mt-0.5">•</span>
                 <span>Avoid long text labels that wrap to multiple lines</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400 mt-0.5">•</span>
+                <span className="text-error mt-0.5">•</span>
                 <span>Don't use Destructive variant for non-destructive actions</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400 mt-0.5">•</span>
+                <span className="text-error mt-0.5">•</span>
                 <span>Avoid icon-only buttons without tooltips</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-red-600 dark:text-red-400 mt-0.5">•</span>
+                <span className="text-error mt-0.5">•</span>
                 <span>Don't mix different button sizes in the same group</span>
               </li>
             </ul>

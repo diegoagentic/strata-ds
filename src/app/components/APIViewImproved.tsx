@@ -510,11 +510,11 @@ const completion = await openai.createCompletion({
 });`}
                 </pre>
               </div>
-              <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
-                <p className="text-sm text-amber-800 dark:text-amber-200 flex items-start gap-2">
+              <div className="bg-warning-light dark:bg-warning/10 border border-warning/20 dark:border-warning/30 rounded-lg p-4">
+                <p className="text-sm text-warning dark:text-warning-light flex items-start gap-2">
                   <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                   <span>
-                    <strong>Pro Tip:</strong> Use the <code className="px-1 bg-amber-100 dark:bg-amber-900 rounded">/code/ai-prompt</code> endpoint 
+                    <strong>Pro Tip:</strong> Use the <code className="px-1 bg-warning-light dark:bg-warning/10 rounded">/code/ai-prompt</code> endpoint 
                     to get detailed, pre-engineered prompts that include all design tokens and specifications.
                   </span>
                 </p>
@@ -570,7 +570,7 @@ const completion = await openai.createCompletion({
               <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-4">
                 All errors follow a consistent format:
               </p>
-              <div className="bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+              <div className="bg-error-light dark:bg-error/10 border border-error/20 dark:border-error/30 rounded-lg p-4">
                 <pre className="text-xs text-zinc-900 dark:text-zinc-50 font-mono">
 {`{
   "success": false,

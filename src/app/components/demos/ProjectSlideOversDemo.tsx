@@ -60,12 +60,12 @@ export function ProjectSlideOversDemo() {
                                             </div>
                                         </button>
 
-                                        <button className="w-full group relative flex items-center gap-3 p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-green-500/50 hover:shadow-md transition-all text-left">
-                                            <div className="h-8 w-8 rounded-lg bg-green-50 dark:bg-green-500/10 flex items-center justify-center group-hover:bg-green-500 group-hover:text-white transition-colors text-green-600 dark:text-green-400">
+                                        <button className="w-full group relative flex items-center gap-3 p-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-success/50 hover:shadow-md transition-all text-left">
+                                            <div className="h-8 w-8 rounded-lg bg-success-light dark:bg-success/10 flex items-center justify-center group-hover:bg-success-light0 group-hover:text-white transition-colors text-success">
                                                 <CheckIcon className="h-5 w-5" />
                                             </div>
                                             <div>
-                                                <p className="text-sm font-medium text-foreground group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">Approve Order</p>
+                                                <p className="text-sm font-medium text-foreground group-hover:text-success dark:group-hover:text-success transition-colors">Approve Order</p>
                                                 <p className="text-[10px] text-muted-foreground">Move to Production</p>
                                             </div>
                                         </button>

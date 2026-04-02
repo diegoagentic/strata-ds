@@ -28,8 +28,8 @@ export function Banner({
     const variants = {
         info: "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900",
         success: "bg-zinc-100 text-zinc-900 border border-zinc-200 dark:bg-zinc-900 dark:text-zinc-100 dark:border-zinc-800",
-        warning: "bg-amber-50 text-amber-900 border border-amber-200 dark:bg-amber-950/30 dark:text-amber-200 dark:border-amber-900/50",
-        error: "bg-red-50 text-red-900 border border-red-200 dark:bg-red-950/30 dark:text-red-200 dark:border-red-900/50"
+        warning: "bg-warning-light text-warning border border-warning/20 dark:bg-warning/10/30 dark:text-warning-light dark:border-warning/20",
+        error: "bg-error-light text-error border border-error/20 dark:bg-error/10 dark:text-error-light dark:border-error/30/50"
     }
 
     return (

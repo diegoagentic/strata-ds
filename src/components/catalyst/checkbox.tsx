@@ -37,7 +37,7 @@ export function Checkbox({ className, ...props }: ComponentPropsWithoutRef<typeo
                 className,
                 'group flex h-5 w-5 items-center justify-center rounded border border-zinc-200 bg-white ring-offset-zinc-950 dark:border-zinc-800 dark:bg-zinc-900',
                 'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-blue-500',
-                'data-[checked]:bg-blue-500 data-[checked]:border-blue-500',
+                'data-[checked]:bg-info-light0 data-[checked]:border-info/50',
                 'data-[disabled]:opacity-50 data-[disabled]:cursor-not-allowed',
             )}
         >

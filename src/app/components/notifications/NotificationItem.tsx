@@ -28,7 +28,7 @@ const PriorityBadge = ({ priority, type }: { priority: Notification['priority'],
     // Strata Design: High Priority uses Brand Colors (red/orange) but aligned with zinc-900 text where possible
     // or keep semantic meaning (Red = Error/High)
     const colors = {
-        high: 'text-red-600 bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800',
+        high: 'text-error bg-error-light dark:bg-error/10 border-error/20 dark:border-error/30',
         medium: 'text-orange-600 bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800',
         low: 'text-zinc-500 bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700',
     };
@@ -79,7 +79,7 @@ export default function NotificationItem({ notification, onActionClick }: { noti
                     <div className="flex items-center gap-2 mb-2">
                         <PriorityBadge priority={notification.priority} type={notification.type} />
                         {notification.priority === 'high' && (
-                            <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400">
+                            <span className="px-1.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-error-light text-error dark:bg-error/15 dark:text-error">
                                 High
                             </span>
                         )}
@@ -128,7 +128,7 @@ export default function NotificationItem({ notification, onActionClick }: { noti
             {/* Absolute priority indicator on left */}
             <div className={clsx(
                 "absolute left-0 top-4 bottom-4 w-1 rounded-r-full",
-                notification.priority === 'high' ? 'bg-red-500' :
+                notification.priority === 'high' ? 'bg-error' :
                     notification.priority === 'medium' ? 'bg-orange-500' : 'bg-transparent'
             )} />
 

@@ -61,9 +61,9 @@ export function ChartDemo({ data }) {
           <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 shadow-sm">
             <div className="flex items-center justify-between mb-2">
               <Text className="text-sm font-medium text-zinc-500">Active Users</Text>
-              <div className="flex items-center gap-1 px-2 py-0.5 bg-red-100 dark:bg-red-950/40 rounded-full">
-                <ArrowDown className="w-3 h-3 text-red-600" />
-                <span className="text-[10px] font-bold text-red-700">-5.2%</span>
+              <div className="flex items-center gap-1 px-2 py-0.5 bg-error-light dark:bg-error/10/40 rounded-full">
+                <ArrowDown className="w-3 h-3 text-error" />
+                <span className="text-[10px] font-bold text-error">-5.2%</span>
               </div>
             </div>
             <Heading level={3} className="text-3xl font-bold">8,242</Heading>
@@ -148,12 +148,12 @@ export function ChartDemo({ data }) {
             <li>• Ensure sufficient contrast for line and area fills.</li>
           </ul>
         </div>
-        <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-6">
+        <div className="bg-error-light dark:bg-error/10 border border-error/20 dark:border-error/30 rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
-            <X className="w-5 h-5 text-red-600" />
-            <h3 className="text-lg font-semibold text-red-900 dark:text-red-100">Don'ts</h3>
+            <X className="w-5 h-5 text-error" />
+            <h3 className="text-lg font-semibold text-error dark:text-error-light">Don'ts</h3>
           </div>
-          <ul className="space-y-2 text-sm text-red-800 dark:text-red-200">
+          <ul className="space-y-2 text-sm text-error dark:text-error-light">
             <li>• Don't use too many categories in a single pie chart or stacked area.</li>
             <li>• Avoid 3D effects or excessive grid lines that clutter the view.</li>
             <li>• Don't omit the zero baseline for bar charts.</li>
