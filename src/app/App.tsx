@@ -8,6 +8,7 @@ import { TypographyView } from './components/TypographyView';
 import { SpacingView } from './components/SpacingView';
 import { BordersView } from './components/BordersView';
 import { ShadowsView } from './components/ShadowsView';
+import { IconsView } from './components/IconsView';
 import { ButtonsView } from './components/ButtonsView';
 import { BadgesView } from './components/BadgesView';
 import { CardsView } from './components/CardsView';
@@ -75,6 +76,7 @@ type ViewType =
   | 'typography'
   | 'borders'
   | 'shadows'
+  | 'icons'
   | 'buttons'
   | 'action-center'
   | 'cards'
@@ -167,6 +169,7 @@ function App() {
         { id: 'typography', label: 'Typography' },
         { id: 'borders', label: 'Borders & Radius' },
         { id: 'shadows', label: 'Elevation & Shadows' },
+        { id: 'icons', label: 'Icons' },
       ],
     },
     {
@@ -293,6 +296,8 @@ function App() {
         return <BordersView />;
       case 'shadows':
         return <ShadowsView />;
+      case 'icons':
+        return <IconsView />;
       case 'buttons':
         return <ButtonsView />;
       case 'action-center':
