@@ -44,6 +44,8 @@
   --orange-light: var(--color-orange-light);
   --purple: var(--color-purple);
   --purple-light: var(--color-purple-light);
+  --ai: var(--color-ai);
+  --ai-light: var(--color-ai-light);
   --sidebar: #ffffff;
   --sidebar-foreground: #18181b;
   --sidebar-primary: #27272a;
@@ -94,6 +96,8 @@
   --orange-light: var(--color-orange-light);
   --purple: var(--color-purple);
   --purple-light: var(--color-purple-light);
+  --ai: var(--color-ai);
+  --ai-light: var(--color-ai-light);
   --sidebar: #18181b;
   --sidebar-foreground: #fafafa;
   --sidebar-primary: #6366f1;
@@ -148,6 +152,8 @@
   --color-orange-light: var(--orange-light);
   --color-purple: var(--purple);
   --color-purple-light: var(--purple-light);
+  --color-ai: var(--ai);
+  --color-ai-light: var(--ai-light);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
