@@ -5,7 +5,7 @@ import {
   ChevronLeft, ChevronRight, ChevronsUpDown, MoveRight, Menu, LogOut, Home,
   // Actions
   Plus, Pencil, SquarePen, Trash2, Copy, Download, Upload, Send, Share2,
-  RefreshCw, Search, Filter, Eye, EyeOff, Maximize2, X, Check, Printer,
+  RefreshCw, Search, Filter, Eye, EyeOff, Maximize2, X, Check, Printer, MoreHorizontal,
   // Status & Feedback
   CheckCircle2, AlertCircle, AlertTriangle, Info, Bell, ShieldCheck, BadgeCheck,
   Clock, Star, Zap, XCircle,
@@ -167,11 +167,20 @@ const sizeGuide = [
 export function IconsView() {
   const [searchQuery, setSearchQuery] = useState('');
   const [copiedIcon, setCopiedIcon] = useState<string | null>(null);
+  const [copyType, setCopyType] = useState<'jsx' | 'import' | 'name'>('jsx');
 
   const copyToClipboard = (text: string, iconName: string) => {
     navigator.clipboard.writeText(text);
     setCopiedIcon(iconName);
     setTimeout(() => setCopiedIcon(null), 2000);
+  };
+
+  const getCopyText = (name: string) => {
+    switch (copyType) {
+      case 'import': return `import { ${name} } from 'lucide-react';`;
+      case 'name': return name;
+      case 'jsx': default: return `<${name} className="h-5 w-5" />`;
+    }
   };
 
   const filteredCategories = iconCategories.map(cat => ({
@@ -324,6 +333,85 @@ export function IconsView() {
               </p>
             </div>
           </div>
+
+          {/* Icon-only buttons */}
+          <div className="bg-card border border-border rounded-xl p-5 space-y-4">
+            <h3 className="font-semibold text-foreground text-sm">Icon-Only Buttons</h3>
+            <p className="text-xs text-muted-foreground">Common pattern for toolbars, table actions, and compact UI. Always include <code className="bg-muted px-1 rounded">aria-label</code> for accessibility.</p>
+            <div className="space-y-4">
+              {/* Row: sizes */}
+              <div>
+                <div className="text-[10px] uppercase font-semibold text-muted-foreground mb-2">Sizes</div>
+                <div className="flex items-center gap-2">
+                  <button aria-label="Edit" className="p-1 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
+                    <Pencil className="h-4 w-4" />
+                  </button>
+                  <button aria-label="Edit" className="p-1.5 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
+                    <Pencil className="h-5 w-5" />
+                  </button>
+                  <button aria-label="Edit" className="p-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors">
+                    <Pencil className="h-6 w-6" />
+                  </button>
+                  <span className="text-[10px] text-muted-foreground ml-2">p-1 h-4 · p-1.5 h-5 · p-2 h-6</span>
+                </div>
+              </div>
+              {/* Row: ghost style (most common) */}
+              <div>
+                <div className="text-[10px] uppercase font-semibold text-muted-foreground mb-2">Ghost (table rows, toolbars)</div>
+                <div className="flex items-center gap-1">
+                  <button aria-label="Edit" className="p-1.5 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"><SquarePen className="h-4 w-4" /></button>
+                  <button aria-label="Copy" className="p-1.5 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"><Copy className="h-4 w-4" /></button>
+                  <button aria-label="Download" className="p-1.5 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"><Download className="h-4 w-4" /></button>
+                  <button aria-label="More" className="p-1.5 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"><MoreHorizontal className="h-4 w-4" /></button>
+                  <button aria-label="Delete" className="p-1.5 rounded-lg hover:bg-error-light hover:text-error text-muted-foreground transition-colors"><Trash2 className="h-4 w-4" /></button>
+                </div>
+              </div>
+              {/* Row: outlined style */}
+              <div>
+                <div className="text-[10px] uppercase font-semibold text-muted-foreground mb-2">Outlined (standalone actions)</div>
+                <div className="flex items-center gap-2">
+                  <button aria-label="Filter" className="p-2 rounded-lg border border-border hover:bg-muted text-foreground transition-colors"><Filter className="h-4 w-4" /></button>
+                  <button aria-label="Refresh" className="p-2 rounded-lg border border-border hover:bg-muted text-foreground transition-colors"><RefreshCw className="h-4 w-4" /></button>
+                  <button aria-label="Settings" className="p-2 rounded-lg border border-border hover:bg-muted text-foreground transition-colors"><Wrench className="h-4 w-4" /></button>
+                  <button aria-label="Search" className="p-2 rounded-lg border border-border hover:bg-muted text-foreground transition-colors"><Search className="h-4 w-4" /></button>
+                </div>
+              </div>
+              {/* Row: brand & semantic */}
+              <div>
+                <div className="text-[10px] uppercase font-semibold text-muted-foreground mb-2">Brand & Semantic</div>
+                <div className="flex items-center gap-2">
+                  <button aria-label="Add" className="p-2 rounded-lg bg-brand-300 dark:bg-brand-500 text-zinc-900 hover:bg-brand-400 dark:hover:bg-brand-600/50 transition-colors"><Plus className="h-5 w-5" /></button>
+                  <button aria-label="AI" className="p-2 rounded-lg bg-ai text-white hover:bg-ai/90 transition-colors"><Sparkles className="h-5 w-5" /></button>
+                  <button aria-label="Approve" className="p-2 rounded-lg bg-success text-white hover:bg-success/90 transition-colors"><Check className="h-5 w-5" /></button>
+                  <button aria-label="Delete" className="p-2 rounded-lg bg-error text-white hover:bg-error/90 transition-colors"><Trash2 className="h-5 w-5" /></button>
+                  <button aria-label="Notifications" className="relative p-2 rounded-lg border border-border hover:bg-muted text-foreground transition-colors">
+                    <Bell className="h-5 w-5" />
+                    <span className="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+                  </button>
+                </div>
+              </div>
+              {/* Row: circular */}
+              <div>
+                <div className="text-[10px] uppercase font-semibold text-muted-foreground mb-2">Circular (FAB, avatar actions)</div>
+                <div className="flex items-center gap-2">
+                  <button aria-label="Add" className="p-2.5 rounded-full bg-brand-300 dark:bg-brand-500 text-zinc-900 hover:bg-brand-400 dark:hover:bg-brand-600/50 shadow-sm transition-colors"><Plus className="h-5 w-5" /></button>
+                  <button aria-label="AI" className="p-2.5 rounded-full bg-ai text-white hover:bg-ai/90 shadow-sm transition-colors"><Sparkles className="h-5 w-5" /></button>
+                  <button aria-label="Close" className="p-1.5 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"><X className="h-4 w-4" /></button>
+                  <button aria-label="Expand" className="p-1.5 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"><Maximize2 className="h-4 w-4" /></button>
+                </div>
+              </div>
+            </div>
+            <div className="bg-zinc-900 dark:bg-zinc-950 rounded-lg p-3 font-mono text-xs text-zinc-100 space-y-1 mt-3">
+              <div className="text-zinc-500">{'// Icon-only button pattern'}</div>
+              <div>{'<'}<span className="text-warning">button</span></div>
+              <div>{'  '}<span className="text-info">aria-label</span>=<span className="text-success">"Edit"</span></div>
+              <div>{'  '}<span className="text-info">className</span>=<span className="text-success">"p-1.5 rounded-lg hover:bg-muted</span></div>
+              <div><span className="text-success">{'    '}text-muted-foreground hover:text-foreground transition-colors"</span></div>
+              <div>{'>'}</div>
+              <div>{'  <'}<span className="text-warning">Pencil</span> <span className="text-info">className</span>=<span className="text-success">"h-4 w-4"</span> /{'>'}</div>
+              <div>{'</'}<span className="text-warning">button</span>{'>'}</div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -354,22 +442,37 @@ export function IconsView() {
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
             {category.icons.map(({ component: Icon, name, usage, color }) => (
-              <button
-                key={name}
-                onClick={() => copyToClipboard(`<${name} className="h-5 w-5" />`, name)}
-                className="group relative bg-card border border-border rounded-xl p-4 hover:border-ai/50 hover:shadow-sm transition-all text-center space-y-2"
-              >
+              <div key={name} className="group relative bg-card border border-border rounded-xl p-4 hover:border-ai/50 hover:shadow-sm transition-all text-center space-y-2">
                 <div className="flex justify-center">
                   <Icon className={`h-6 w-6 ${color || 'text-foreground'} group-hover:text-ai transition-colors`} />
                 </div>
                 <div className="text-xs font-mono font-medium text-foreground truncate">{name}</div>
                 <div className="text-[10px] text-muted-foreground truncate">{usage}</div>
-                {copiedIcon === name && (
+                {/* Copy options */}
+                <div className="flex gap-1 justify-center pt-1">
+                  <button
+                    onClick={() => copyToClipboard(getCopyText(name), name + '-jsx')}
+                    title="Copy JSX"
+                    className="px-1.5 py-0.5 text-[9px] font-mono bg-muted hover:bg-ai/10 hover:text-ai rounded transition-colors text-muted-foreground"
+                  >{'</>'}
+                  </button>
+                  <button
+                    onClick={() => copyToClipboard(`import { ${name} } from 'lucide-react';`, name + '-import')}
+                    title="Copy import"
+                    className="px-1.5 py-0.5 text-[9px] font-mono bg-muted hover:bg-ai/10 hover:text-ai rounded transition-colors text-muted-foreground"
+                  >import</button>
+                  <button
+                    onClick={() => copyToClipboard(name, name + '-name')}
+                    title="Copy name"
+                    className="px-1.5 py-0.5 text-[9px] font-mono bg-muted hover:bg-ai/10 hover:text-ai rounded transition-colors text-muted-foreground"
+                  >name</button>
+                </div>
+                {(copiedIcon === name + '-jsx' || copiedIcon === name + '-import' || copiedIcon === name + '-name') && (
                   <div className="absolute inset-0 bg-success/10 border-2 border-success rounded-xl flex items-center justify-center">
                     <span className="text-xs font-bold text-success">Copied!</span>
                   </div>
                 )}
-              </button>
+              </div>
             ))}
           </div>
         </div>
