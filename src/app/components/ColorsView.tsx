@@ -58,7 +58,7 @@ export function ColorsView() {
     {
       primitive: '50',
       token: 'zinc-50',
-      tailwind: 'gray-50',
+      tailwind: 'zinc-50',
       hex: '#fafafa',
       usage: 'Backgrounds, subtle overlays',
       light: true
@@ -66,7 +66,7 @@ export function ColorsView() {
     {
       primitive: '100',
       token: 'zinc-100',
-      tailwind: 'gray-100',
+      tailwind: 'zinc-100',
       hex: '#EBECEE',
       usage: 'Hover states, secondary backgrounds',
       light: true
@@ -74,7 +74,7 @@ export function ColorsView() {
     {
       primitive: '200',
       token: 'zinc-200',
-      tailwind: 'gray-200',
+      tailwind: 'zinc-200',
       hex: '#E0E2E5',
       usage: 'Borders (light mode default)',
       light: true,
@@ -83,7 +83,7 @@ export function ColorsView() {
     {
       primitive: '300',
       token: 'zinc-300',
-      tailwind: 'gray-300',
+      tailwind: 'zinc-300',
       hex: '#D0D4D8',
       usage: 'Border hover states, dividers',
       light: true
@@ -91,7 +91,7 @@ export function ColorsView() {
     {
       primitive: '400',
       token: 'zinc-400',
-      tailwind: 'gray-400',
+      tailwind: 'zinc-400',
       hex: '#B4BBC2',
       usage: 'Placeholder text, disabled states',
       light: true
@@ -99,7 +99,7 @@ export function ColorsView() {
     {
       primitive: '500',
       token: 'zinc-500',
-      tailwind: 'gray-500',
+      tailwind: 'zinc-500',
       hex: '#959DA7',
       usage: 'Secondary text, captions',
       dark: true,
@@ -108,7 +108,7 @@ export function ColorsView() {
     {
       primitive: '600',
       token: 'zinc-600',
-      tailwind: 'gray-600',
+      tailwind: 'zinc-600',
       hex: '#546070',
       usage: 'Body text, primary icons',
       dark: true
@@ -116,7 +116,7 @@ export function ColorsView() {
     {
       primitive: '700',
       token: 'zinc-700',
-      tailwind: 'gray-700',
+      tailwind: 'zinc-700',
       hex: '#333F4E',
       usage: 'Border hover (dark mode)',
       dark: true
@@ -124,7 +124,7 @@ export function ColorsView() {
     {
       primitive: '800',
       token: 'zinc-800',
-      tailwind: 'gray-800',
+      tailwind: 'zinc-800',
       hex: '#141E2C',
       usage: 'Borders (dark mode default)',
       dark: true,
@@ -133,7 +133,7 @@ export function ColorsView() {
     {
       primitive: '900',
       token: 'zinc-900',
-      tailwind: 'gray-900',
+      tailwind: 'zinc-900',
       hex: '#02060C',
       usage: 'Headings, primary text (light mode)',
       dark: true,
@@ -142,7 +142,7 @@ export function ColorsView() {
     {
       primitive: '950',
       token: 'zinc-950',
-      tailwind: 'gray-950',
+      tailwind: 'zinc-950',
       hex: '#09090b',
       usage: 'Backgrounds (dark mode)',
       dark: true
@@ -152,9 +152,9 @@ export function ColorsView() {
   const semanticColors = [
     {
       name: 'Success',
-      token: 'emerald-600',
-      primitive: 'emerald-600',
-      hex: '#10b981',
+      token: 'success',
+      primitive: 'Figma: Success-Green',
+      hex: '#098400',
       usage: 'Success messages, completed states, positive actions',
       icon: CheckCircle2,
       bg: 'bg-success-light dark:bg-success/10',
@@ -165,42 +165,42 @@ export function ColorsView() {
     },
     {
       name: 'Warning',
-      token: 'amber-600',
-      primitive: 'amber-600',
-      hex: '#f59e0b',
+      token: 'warning',
+      primitive: 'Figma: Warning-Yellow',
+      hex: '#b27d00',
       usage: 'Warning states, caution alerts, pending actions',
       icon: AlertTriangle,
-      bg: 'bg-amber-50 dark:bg-amber-950',
-      border: 'border-amber-200 dark:border-amber-800',
-      text: 'text-amber-900 dark:text-amber-100',
-      subtext: 'text-amber-700 dark:text-amber-300',
-      iconColor: 'text-amber-600 dark:text-amber-400',
+      bg: 'bg-warning-light dark:bg-warning/10',
+      border: 'border-warning/20 dark:border-warning/30',
+      text: 'text-warning dark:text-warning-light',
+      subtext: 'text-warning dark:text-warning-light',
+      iconColor: 'text-warning',
     },
     {
       name: 'Error',
-      token: 'red-500',
-      primitive: 'red-500',
-      hex: '#E52D49',
+      token: 'error',
+      primitive: 'Figma: Error-Red',
+      hex: '#d20322',
       usage: 'Error messages, destructive actions, critical alerts',
       icon: AlertCircle,
-      bg: 'bg-red-50 dark:bg-red-950',
-      border: 'border-red-200 dark:border-red-800',
-      text: 'text-red-900 dark:text-red-100',
-      subtext: 'text-red-700 dark:text-red-300',
-      iconColor: 'text-red-600 dark:text-red-400',
+      bg: 'bg-error-light dark:bg-error/10',
+      border: 'border-error/20 dark:border-error/30',
+      text: 'text-error dark:text-error-light',
+      subtext: 'text-error dark:text-error-light',
+      iconColor: 'text-error',
     },
     {
       name: 'Info',
-      token: 'blue-600',
-      primitive: 'blue-600',
-      hex: '#3b82f6',
+      token: 'info',
+      primitive: 'Figma: Info-Blue',
+      hex: '#2164d1',
       usage: 'Informational messages, help text, neutral notifications',
       icon: Info,
-      bg: 'bg-blue-50 dark:bg-blue-950',
-      border: 'border-blue-200 dark:border-blue-800',
-      text: 'text-blue-900 dark:text-blue-100',
-      subtext: 'text-blue-700 dark:text-blue-300',
-      iconColor: 'text-blue-600 dark:text-blue-400',
+      bg: 'bg-info-light dark:bg-info/10',
+      border: 'border-info/20 dark:border-info/30',
+      text: 'text-info dark:text-info-light',
+      subtext: 'text-info dark:text-info-light',
+      iconColor: 'text-info',
     },
   ];
 
