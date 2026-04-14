@@ -26,32 +26,34 @@ export function Listbox({
                 aria-label={ariaLabel}
                 className={clsx(
                     className,
-                    'group relative block w-full rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 py-1.5 pr-8 pl-3 text-left text-sm/6 text-zinc-950 dark:text-white',
+                    'group flex w-full items-center justify-between gap-2 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 py-2 pr-3 pl-3 text-left text-sm/6 text-zinc-950 dark:text-white',
                     'focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-blue-500/25',
                     'data-[disabled]:opacity-50',
                     'hover:border-zinc-300 dark:hover:border-zinc-700'
                 )}
             >
-                <HeadlessListboxSelectedOption
-                    as={Fragment}
-                    placeholder={
-                        placeholder && (
-                            <span className="block truncate text-zinc-500 dark:text-zinc-400">{placeholder}</span>
-                        )
-                    }
-                >
-                    {({ selectedOption }) => {
-                        if (selectedOption) {
-                            return <span className="block truncate">{selectedOption.props.children}</span>
+                <span className="block truncate flex-1">
+                    <HeadlessListboxSelectedOption
+                        as={Fragment}
+                        placeholder={
+                            placeholder && (
+                                <span className="text-zinc-500 dark:text-zinc-400">{placeholder}</span>
+                            )
                         }
-                        return placeholder && (
-                            <span className="block truncate text-zinc-500 dark:text-zinc-400">{placeholder}</span>
-                        )
-                    }}
-                </HeadlessListboxSelectedOption>
-                <span className="pointer-events-none absolute top-2.5 right-2.5 size-4">
-                    <ChevronDown className="size-4 text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-700 dark:group-hover:text-zinc-300" />
+                    >
+                        {({ selectedOption }) => {
+                            if (selectedOption) {
+                                const children = selectedOption.props.children
+                                const label = Array.isArray(children) ? children[0] : children
+                                return <span>{label}</span>
+                            }
+                            return placeholder && (
+                                <span className="text-zinc-500 dark:text-zinc-400">{placeholder}</span>
+                            )
+                        }}
+                    </HeadlessListboxSelectedOption>
                 </span>
+                <ChevronDown className="size-4 shrink-0 text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-700 dark:group-hover:text-zinc-300" />
             </HeadlessListboxButton>
             <HeadlessListboxOptions
                 transition

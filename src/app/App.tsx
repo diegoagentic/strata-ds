@@ -423,18 +423,27 @@ function App() {
       {/* Sidebar */}
       <Sidebar className="w-[280px] fixed h-full z-50">
         <SidebarHeader className="px-6 py-5">
-          <div className="flex items-center gap-3 mb-1">
-            <div className="w-10 h-10 bg-zinc-800 dark:bg-zinc-700 rounded-md flex items-center justify-center">
-              <span className="text-zinc-50 font-bold text-lg">ST</span>
-            </div>
-            <div>
-              <div className="font-bold text-zinc-900 dark:text-zinc-50">
-                Strata v1.0
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-zinc-800 dark:bg-zinc-700 rounded-md flex items-center justify-center">
+                <span className="text-zinc-50 font-bold text-lg">ST</span>
               </div>
-              <div className="text-xs text-zinc-500 dark:text-zinc-400">
-                White Label DS
+              <div>
+                <div className="font-bold text-zinc-900 dark:text-zinc-50">
+                  Strata v1.0
+                </div>
+                <div className="text-xs text-zinc-500 dark:text-zinc-400">
+                  White Label DS
+                </div>
               </div>
             </div>
+            <button
+              onClick={() => { setDarkMode(!darkMode); showToast(); }}
+              className="p-2 rounded-md border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors"
+              title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            >
+              {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </button>
           </div>
         </SidebarHeader>
 
@@ -459,27 +468,7 @@ function App() {
           ))}
         </SidebarBody>
 
-        <SidebarFooter className="px-3 py-4">
-          <button
-            onClick={() => {
-              setDarkMode(!darkMode);
-              showToast();
-            }}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-white dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 rounded-md text-sm font-semibold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-700 transition-colors"
-          >
-            {darkMode ? (
-              <>
-                <Sun className="w-4 h-4" />
-                Light Mode
-              </>
-            ) : (
-              <>
-                <Moon className="w-4 h-4" />
-                Dark Mode
-              </>
-            )}
-          </button>
-        </SidebarFooter>
+
       </Sidebar>
 
       {/* Main Content */}

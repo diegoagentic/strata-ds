@@ -310,7 +310,7 @@ export function ColorsView() {
         <p className="text-sm text-zinc-600 dark:text-zinc-400">
           The color system has been updated to improve readability and contrast.
           <strong> Light Mode</strong> now uses <code className="font-mono text-xs bg-zinc-100 px-1 py-0.5 rounded">brand-300</code> (#E6F993) for primary actions to ensure high contrast with black text.
-          <strong> Dark Mode</strong> uses <code className="font-mono text-xs bg-zinc-800 px-1 py-0.5 rounded">brand-500</code> (#C3E433) for visibility against dark backgrounds.
+          <strong> Dark Mode</strong> uses <code className="font-mono text-xs bg-zinc-800 text-white px-1 py-0.5 rounded">brand-500</code> (#C3E433) for visibility against dark backgrounds.
         </p>
       </div>
 

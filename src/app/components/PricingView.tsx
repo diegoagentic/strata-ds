@@ -71,6 +71,7 @@ export function PricingView() {
                                         <Button
                                             className="mt-8 w-full cursor-pointer"
                                             variant={tier.featured ? 'primary' : 'outline'}
+                                            style={tier.featured ? { backgroundColor: 'white', color: '#18181b', borderColor: 'white' } : undefined}
                                         >
                                             Buy plan
                                         </Button>
