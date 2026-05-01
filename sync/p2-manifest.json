@@ -1,0 +1,879 @@
+{
+  "generated": "2026-05-01T17:25:38.463Z",
+  "p2_version": "0.1.116",
+  "total": 109,
+  "components": [
+    {
+      "name": "ActionCenter",
+      "path": "application-ui/action-center/ActionCenter.tsx",
+      "category": "application-ui/action-center",
+      "hash": "5f8fe3c8df9b1dc132a31d7a4a97fd86",
+      "hasCVA": false,
+      "size": 10855
+    },
+    {
+      "name": "ChatView",
+      "path": "application-ui/action-center/ChatView.tsx",
+      "category": "application-ui/action-center",
+      "hash": "db36518040e081914d95af8032fd2f17",
+      "hasCVA": false,
+      "size": 6581
+    },
+    {
+      "name": "FilterTabs",
+      "path": "application-ui/action-center/FilterTabs.tsx",
+      "category": "application-ui/action-center",
+      "hash": "a49fa943905e6b3ea4684b75d352d128",
+      "hasCVA": false,
+      "size": 3876
+    },
+    {
+      "name": "index",
+      "path": "application-ui/action-center/index.tsx",
+      "category": "application-ui/action-center",
+      "hash": "cd4f904e1aed885e4e1e1daefdfd409f",
+      "hasCVA": false,
+      "size": 270
+    },
+    {
+      "name": "NotificationItem",
+      "path": "application-ui/action-center/NotificationItem.tsx",
+      "category": "application-ui/action-center",
+      "hash": "f51347f5148cf61929d63884eecfdade",
+      "hasCVA": false,
+      "size": 6158
+    },
+    {
+      "name": "activity-timeline",
+      "path": "application-ui/activity-timeline.tsx",
+      "category": "application-ui",
+      "hash": "3fd7c13433dbd89c982a152aeba5d658",
+      "hasCVA": false,
+      "size": 2818
+    },
+    {
+      "name": "aspect-ratio",
+      "path": "application-ui/aspect-ratio.tsx",
+      "category": "application-ui",
+      "hash": "2c1c30af12401d88f8df52c3c235ed67",
+      "hasCVA": false,
+      "size": 284
+    },
+    {
+      "name": "avatar",
+      "path": "application-ui/avatar.tsx",
+      "category": "application-ui",
+      "hash": "ef9ff93a0955fdec2f4918973128f09c",
+      "hasCVA": true,
+      "size": 2077
+    },
+    {
+      "name": "badge",
+      "path": "application-ui/badge.tsx",
+      "category": "application-ui",
+      "hash": "1374e901ab68ff687300f2c026ac2769",
+      "hasCVA": true,
+      "size": 9377
+    },
+    {
+      "name": "banner",
+      "path": "application-ui/banner.tsx",
+      "category": "application-ui",
+      "hash": "94fdb890507a48f98727f6c3d5c6ee9e",
+      "hasCVA": false,
+      "size": 2149
+    },
+    {
+      "name": "breadcrumb",
+      "path": "application-ui/breadcrumb.tsx",
+      "category": "application-ui",
+      "hash": "ffca4c23c8d766a8810da38eabbfeaf1",
+      "hasCVA": false,
+      "size": 2366
+    },
+    {
+      "name": "button",
+      "path": "application-ui/button.tsx",
+      "category": "application-ui",
+      "hash": "b4978d00321741b98bc507ec12366263",
+      "hasCVA": true,
+      "size": 2551
+    },
+    {
+      "name": "calendar",
+      "path": "application-ui/calendar.tsx",
+      "category": "application-ui",
+      "hash": "aeb809b0c6895824522204747ebfcf38",
+      "hasCVA": false,
+      "size": 3437
+    },
+    {
+      "name": "card",
+      "path": "application-ui/card.tsx",
+      "category": "application-ui",
+      "hash": "008d3274c6ee899f342a10502a08bb2f",
+      "hasCVA": false,
+      "size": 2824
+    },
+    {
+      "name": "carousel",
+      "path": "application-ui/carousel.tsx",
+      "category": "application-ui",
+      "hash": "42541fd83443cf5d5426cbd8f2762cfc",
+      "hasCVA": false,
+      "size": 5605
+    },
+    {
+      "name": "chart",
+      "path": "application-ui/chart.tsx",
+      "category": "application-ui",
+      "hash": "5d6913a1b5606bbf87e6ec9451035f64",
+      "hasCVA": false,
+      "size": 10863
+    },
+    {
+      "name": "collapsible",
+      "path": "application-ui/collapsible.tsx",
+      "category": "application-ui",
+      "hash": "ee672fd3ecbe08df56663b1df58b7f39",
+      "hasCVA": false,
+      "size": 1012
+    },
+    {
+      "name": "command",
+      "path": "application-ui/command.tsx",
+      "category": "application-ui",
+      "hash": "0ed836ec8018a09fc35844fc740536de",
+      "hasCVA": false,
+      "size": 4671
+    },
+    {
+      "name": "company-greeting",
+      "path": "application-ui/company-greeting.tsx",
+      "category": "application-ui",
+      "hash": "f9e0b0637acd41520ddf70d8ab4479fe",
+      "hasCVA": false,
+      "size": 602
+    },
+    {
+      "name": "create-order-dialog",
+      "path": "application-ui/create-order/create-order-dialog.tsx",
+      "category": "application-ui/create-order",
+      "hash": "de5e2699b8be161a140fe0d070594dcf",
+      "hasCVA": false,
+      "size": 9432
+    },
+    {
+      "name": "create-order-draft-view",
+      "path": "application-ui/create-order/create-order-draft-view.tsx",
+      "category": "application-ui/create-order",
+      "hash": "9632bb7b5d51539a785be1733622da31",
+      "hasCVA": false,
+      "size": 6514
+    },
+    {
+      "name": "create-order-import-analysis-view",
+      "path": "application-ui/create-order/create-order-import-analysis-view.tsx",
+      "category": "application-ui/create-order",
+      "hash": "b33bec0e5d42bae22a007c5872a9f2aa",
+      "hasCVA": false,
+      "size": 6070
+    },
+    {
+      "name": "create-order-import-file-view",
+      "path": "application-ui/create-order/create-order-import-file-view.tsx",
+      "category": "application-ui/create-order",
+      "hash": "5c2c0c37e9c574d6ac6d91daa98a110e",
+      "hasCVA": false,
+      "size": 1673
+    },
+    {
+      "name": "create-order-initial-view",
+      "path": "application-ui/create-order/create-order-initial-view.tsx",
+      "category": "application-ui/create-order",
+      "hash": "96f5ea754799ab11e8547b4c0ac9dd7f",
+      "hasCVA": false,
+      "size": 5655
+    },
+    {
+      "name": "create-order-manual-creation-view",
+      "path": "application-ui/create-order/create-order-manual-creation-view.tsx",
+      "category": "application-ui/create-order",
+      "hash": "ef3baec4752be4b9d77590fda7d91c70",
+      "hasCVA": false,
+      "size": 9111
+    },
+    {
+      "name": "create-order-processing-view",
+      "path": "application-ui/create-order/create-order-processing-view.tsx",
+      "category": "application-ui/create-order",
+      "hash": "68cb91f3ef4861e7a80029b2320cdf65",
+      "hasCVA": false,
+      "size": 1707
+    },
+    {
+      "name": "create-order-select-quote-view",
+      "path": "application-ui/create-order/create-order-select-quote-view.tsx",
+      "category": "application-ui/create-order",
+      "hash": "ee786535ef9e2525156f8b31619da3bd",
+      "hasCVA": false,
+      "size": 4633
+    },
+    {
+      "name": "create-order-select-template-view",
+      "path": "application-ui/create-order/create-order-select-template-view.tsx",
+      "category": "application-ui/create-order",
+      "hash": "e0d2682e54f83d07376eea76fd50f282",
+      "hasCVA": false,
+      "size": 3478
+    },
+    {
+      "name": "line-items-card",
+      "path": "application-ui/create-order/line-items-card.tsx",
+      "category": "application-ui/create-order",
+      "hash": "b19cad8cbab029877a63c1a03193ea8a",
+      "hasCVA": false,
+      "size": 5865
+    },
+    {
+      "name": "order-file-dropzone",
+      "path": "application-ui/create-order/order-file-dropzone.tsx",
+      "category": "application-ui/create-order",
+      "hash": "34175f0eb027c9a0fadef449bd882734",
+      "hasCVA": false,
+      "size": 5513
+    },
+    {
+      "name": "divider",
+      "path": "application-ui/divider.tsx",
+      "category": "application-ui",
+      "hash": "bc71f0fac3c554c39796b32d02fce95c",
+      "hasCVA": false,
+      "size": 463
+    },
+    {
+      "name": "experiences-navbar",
+      "path": "application-ui/experiences-navbar.tsx",
+      "category": "application-ui",
+      "hash": "b47529a874bb676e7af162b408729821",
+      "hasCVA": false,
+      "size": 28844
+    },
+    {
+      "name": "feature-section",
+      "path": "application-ui/feature-section.tsx",
+      "category": "application-ui",
+      "hash": "4e42907514447eb59bc633632dc5071a",
+      "hasCVA": false,
+      "size": 1676
+    },
+    {
+      "name": "filter-panel",
+      "path": "application-ui/filter-panel.tsx",
+      "category": "application-ui",
+      "hash": "7ec0f36b3301f36d7e2e1fa013f8cba8",
+      "hasCVA": true,
+      "size": 2496
+    },
+    {
+      "name": "heading",
+      "path": "application-ui/heading.tsx",
+      "category": "application-ui",
+      "hash": "762621794d50104eb1bcc9484b89da91",
+      "hasCVA": false,
+      "size": 1071
+    },
+    {
+      "name": "hero-section",
+      "path": "application-ui/hero-section.tsx",
+      "category": "application-ui",
+      "hash": "fbdc5a34b7ab999f64aef62ef658b3e1",
+      "hasCVA": false,
+      "size": 1625
+    },
+    {
+      "name": "hover-card",
+      "path": "application-ui/hover-card.tsx",
+      "category": "application-ui",
+      "hash": "8f42119a9435bdef4fbb414b54b3cab9",
+      "hasCVA": false,
+      "size": 1535
+    },
+    {
+      "name": "info-banner",
+      "path": "application-ui/info-banner.tsx",
+      "category": "application-ui",
+      "hash": "9726e1ffa9b3e7ddfbcce111e5f1443c",
+      "hasCVA": false,
+      "size": 2229
+    },
+    {
+      "name": "kpi-card",
+      "path": "application-ui/kpi-card.tsx",
+      "category": "application-ui",
+      "hash": "09f10e223ff2ed816975e9ceed2d1700",
+      "hasCVA": false,
+      "size": 26008
+    },
+    {
+      "name": "label",
+      "path": "application-ui/label.tsx",
+      "category": "application-ui",
+      "hash": "970790bfc36026929eddc3da37d6c7c0",
+      "hasCVA": false,
+      "size": 461
+    },
+    {
+      "name": "layout",
+      "path": "application-ui/layout.tsx",
+      "category": "application-ui",
+      "hash": "fca30c917ce833220d0ebc1d15b22077",
+      "hasCVA": false,
+      "size": 2719
+    },
+    {
+      "name": "link",
+      "path": "application-ui/link.tsx",
+      "category": "application-ui",
+      "hash": "a97a8e33438f7b934d57d540a4a1da6b",
+      "hasCVA": false,
+      "size": 308
+    },
+    {
+      "name": "list-toolbar",
+      "path": "application-ui/list-toolbar.tsx",
+      "category": "application-ui",
+      "hash": "8d8fe5a5c79be60f21bf2803646fe856",
+      "hasCVA": false,
+      "size": 4637
+    },
+    {
+      "name": "menubar",
+      "path": "application-ui/menubar.tsx",
+      "category": "application-ui",
+      "hash": "36b4f0a0de2cc5d8d678eb0d756d270d",
+      "hasCVA": false,
+      "size": 8424
+    },
+    {
+      "name": "navbar",
+      "path": "application-ui/navbar.tsx",
+      "category": "application-ui",
+      "hash": "16bcb4810914f93647b4bcf9fde12b9c",
+      "hasCVA": false,
+      "size": 1450
+    },
+    {
+      "name": "navigation-menu",
+      "path": "application-ui/navigation-menu.tsx",
+      "category": "application-ui",
+      "hash": "c0059b662a0d6d5917c3ffb00dd5a399",
+      "hasCVA": true,
+      "size": 6682
+    },
+    {
+      "name": "page-header",
+      "path": "application-ui/page-header.tsx",
+      "category": "application-ui",
+      "hash": "dc48801f1792b49506eeed0a3a62f8bd",
+      "hasCVA": false,
+      "size": 729
+    },
+    {
+      "name": "page-layout",
+      "path": "application-ui/page-layout.tsx",
+      "category": "application-ui",
+      "hash": "839387eadb5401978088ff48e212750a",
+      "hasCVA": false,
+      "size": 2746
+    },
+    {
+      "name": "pagination",
+      "path": "application-ui/pagination.tsx",
+      "category": "application-ui",
+      "hash": "042c0dd6e29de63271a75b9fb75e4521",
+      "hasCVA": false,
+      "size": 2708
+    },
+    {
+      "name": "pricing",
+      "path": "application-ui/pricing.tsx",
+      "category": "application-ui",
+      "hash": "de2cb39624c6bfcb6743992fda39a323",
+      "hasCVA": false,
+      "size": 2762
+    },
+    {
+      "name": "priority-badge",
+      "path": "application-ui/priority-badge.tsx",
+      "category": "application-ui",
+      "hash": "b9fdef0c370ca122a224e2bdae02c30b",
+      "hasCVA": false,
+      "size": 1766
+    },
+    {
+      "name": "product-list",
+      "path": "application-ui/product-list.tsx",
+      "category": "application-ui",
+      "hash": "eeffbdbe87373626c9ce5d50ca4027c1",
+      "hasCVA": false,
+      "size": 2418
+    },
+    {
+      "name": "product-overview",
+      "path": "application-ui/product-overview.tsx",
+      "category": "application-ui",
+      "hash": "d488e218a2ba0d13994ccd54badaeb0d",
+      "hasCVA": false,
+      "size": 3550
+    },
+    {
+      "name": "progress",
+      "path": "application-ui/progress.tsx",
+      "category": "application-ui",
+      "hash": "0abd8491750af8cee9e2761228ab99e1",
+      "hasCVA": false,
+      "size": 741
+    },
+    {
+      "name": "section-card",
+      "path": "application-ui/section-card.tsx",
+      "category": "application-ui",
+      "hash": "d3726e1e4e00ec5262db5ec1091960ee",
+      "hasCVA": true,
+      "size": 2730
+    },
+    {
+      "name": "section-toolbar",
+      "path": "application-ui/section-toolbar.tsx",
+      "category": "application-ui",
+      "hash": "295919c21a15be5072033d205980b7f7",
+      "hasCVA": false,
+      "size": 6461
+    },
+    {
+      "name": "separator",
+      "path": "application-ui/separator.tsx",
+      "category": "application-ui",
+      "hash": "c46cfdb6b2506dd05817a855811bd2d9",
+      "hasCVA": false,
+      "size": 705
+    },
+    {
+      "name": "shared-catalog-card",
+      "path": "application-ui/shared-catalog-card.tsx",
+      "category": "application-ui",
+      "hash": "f5ca8f1da9e4cfbc9afa4276b179ac85",
+      "hasCVA": false,
+      "size": 7840
+    },
+    {
+      "name": "shared-inventory-card",
+      "path": "application-ui/shared-inventory-card.tsx",
+      "category": "application-ui",
+      "hash": "d6e82eb93f62bef70849e48897241155",
+      "hasCVA": false,
+      "size": 6819
+    },
+    {
+      "name": "shared-order-card",
+      "path": "application-ui/shared-order-card.tsx",
+      "category": "application-ui",
+      "hash": "13db3b59fd8bec8df267ac387e161af0",
+      "hasCVA": false,
+      "size": 17483
+    },
+    {
+      "name": "shopping-cart",
+      "path": "application-ui/shopping-cart.tsx",
+      "category": "application-ui",
+      "hash": "d421d3f86c821ffccea0e10f695d7cd8",
+      "hasCVA": false,
+      "size": 4700
+    },
+    {
+      "name": "skeleton",
+      "path": "application-ui/skeleton.tsx",
+      "category": "application-ui",
+      "hash": "89997e4ab824c4a06cc6f9bf61a58c25",
+      "hasCVA": false,
+      "size": 274
+    },
+    {
+      "name": "stage-progress",
+      "path": "application-ui/stage-progress.tsx",
+      "category": "application-ui",
+      "hash": "41ed70011b14df9b8c4e4b286db63c52",
+      "hasCVA": false,
+      "size": 9497
+    },
+    {
+      "name": "status-badge",
+      "path": "application-ui/status-badge.tsx",
+      "category": "application-ui",
+      "hash": "0f06bff3678de36374b902353bc83217",
+      "hasCVA": false,
+      "size": 2451
+    },
+    {
+      "name": "table-empty-state",
+      "path": "application-ui/table-empty-state.tsx",
+      "category": "application-ui",
+      "hash": "7df6a2f3415d6fcb5d5e84467492e6a9",
+      "hasCVA": false,
+      "size": 691
+    },
+    {
+      "name": "table",
+      "path": "application-ui/table.tsx",
+      "category": "application-ui",
+      "hash": "4187c9f4a29fdfb7a9fafca010cbb094",
+      "hasCVA": false,
+      "size": 1683
+    },
+    {
+      "name": "tabs",
+      "path": "application-ui/tabs.tsx",
+      "category": "application-ui",
+      "hash": "40a4763b8c6c021017cebdec968266dc",
+      "hasCVA": false,
+      "size": 5215
+    },
+    {
+      "name": "text",
+      "path": "application-ui/text.tsx",
+      "category": "application-ui",
+      "hash": "fb8c36b12aa3a3989b06d1922442c207",
+      "hasCVA": false,
+      "size": 629
+    },
+    {
+      "name": "toggle-group",
+      "path": "application-ui/toggle-group.tsx",
+      "category": "application-ui",
+      "hash": "5f75cf800620c932cf65d197d4433833",
+      "hasCVA": true,
+      "size": 2119
+    },
+    {
+      "name": "toggle",
+      "path": "application-ui/toggle.tsx",
+      "category": "application-ui",
+      "hash": "4ffc2a5a71b64d1c9c65d183b6a256ad",
+      "hasCVA": true,
+      "size": 1857
+    },
+    {
+      "name": "tracking",
+      "path": "application-ui/tracking.tsx",
+      "category": "application-ui",
+      "hash": "524015dfe8ba93a37bb76825f63fc768",
+      "hasCVA": false,
+      "size": 8741
+    },
+    {
+      "name": "accordion",
+      "path": "data-visualization/accordion.tsx",
+      "category": "data-visualization",
+      "hash": "0e73db4aee2b36c539f8b2eaa742008b",
+      "hasCVA": false,
+      "size": 2058
+    },
+    {
+      "name": "description-list",
+      "path": "data-visualization/description-list.tsx",
+      "category": "data-visualization",
+      "hash": "f359560732c810fd99e8407bd4ec3e35",
+      "hasCVA": false,
+      "size": 871
+    },
+    {
+      "name": "disclosure",
+      "path": "data-visualization/disclosure.tsx",
+      "category": "data-visualization",
+      "hash": "e927c4eafe982f24d9fe391f84761a04",
+      "hasCVA": false,
+      "size": 1986
+    },
+    {
+      "name": "empty-state",
+      "path": "data-visualization/empty-state.tsx",
+      "category": "data-visualization",
+      "hash": "ef0e5844793a3cb8646ffca1e8ede347",
+      "hasCVA": false,
+      "size": 1453
+    },
+    {
+      "name": "stacked-list",
+      "path": "data-visualization/stacked-list.tsx",
+      "category": "data-visualization",
+      "hash": "16ef06a2b27e1febaec7261ded9176de",
+      "hasCVA": false,
+      "size": 582
+    },
+    {
+      "name": "checkbox",
+      "path": "forms/checkbox.tsx",
+      "category": "forms",
+      "hash": "a00dd5669b0c713586dbddfdd8a749f4",
+      "hasCVA": false,
+      "size": 1477
+    },
+    {
+      "name": "combobox",
+      "path": "forms/combobox.tsx",
+      "category": "forms",
+      "hash": "b74ca5e70dec22b83f6983659bc66d48",
+      "hasCVA": false,
+      "size": 4626
+    },
+    {
+      "name": "date-picker",
+      "path": "forms/date-picker.tsx",
+      "category": "forms",
+      "hash": "1901fcbc52fe4e7fa7dabd24731a0c12",
+      "hasCVA": false,
+      "size": 3483
+    },
+    {
+      "name": "field",
+      "path": "forms/field.tsx",
+      "category": "forms",
+      "hash": "e8d8f6a70a7b1a81ce9c85de66fb3707",
+      "hasCVA": false,
+      "size": 1488
+    },
+    {
+      "name": "fieldset",
+      "path": "forms/fieldset.tsx",
+      "category": "forms",
+      "hash": "7b69c984d5240465429990be0d492000",
+      "hasCVA": false,
+      "size": 2949
+    },
+    {
+      "name": "form",
+      "path": "forms/form.tsx",
+      "category": "forms",
+      "hash": "e550f5cc0a81070f695170317ff1a094",
+      "hasCVA": false,
+      "size": 3800
+    },
+    {
+      "name": "input-otp",
+      "path": "forms/input-otp.tsx",
+      "category": "forms",
+      "hash": "2b3e021fc7de56596194d18b69f25a63",
+      "hasCVA": false,
+      "size": 2280
+    },
+    {
+      "name": "input",
+      "path": "forms/input.tsx",
+      "category": "forms",
+      "hash": "bfc65f688e82729a7afe4cea56cab342",
+      "hasCVA": false,
+      "size": 3889
+    },
+    {
+      "name": "listbox",
+      "path": "forms/listbox.tsx",
+      "category": "forms",
+      "hash": "cc41db94372adff25110ffac5354a3ae",
+      "hasCVA": false,
+      "size": 5221
+    },
+    {
+      "name": "radio-group",
+      "path": "forms/radio-group.tsx",
+      "category": "forms",
+      "hash": "39235c10a1151e14cd657a11910754ea",
+      "hasCVA": false,
+      "size": 1790
+    },
+    {
+      "name": "searchable-multi-select",
+      "path": "forms/searchable-multi-select.tsx",
+      "category": "forms",
+      "hash": "5e12312f83ed72516aa3672b705e3685",
+      "hasCVA": false,
+      "size": 7905
+    },
+    {
+      "name": "select",
+      "path": "forms/select.tsx",
+      "category": "forms",
+      "hash": "901921b238ba1c4b7c51cf86a6071293",
+      "hasCVA": false,
+      "size": 6571
+    },
+    {
+      "name": "slider",
+      "path": "forms/slider.tsx",
+      "category": "forms",
+      "hash": "30fe9f587588ba93e8aed0c50171a5f2",
+      "hasCVA": false,
+      "size": 2032
+    },
+    {
+      "name": "switch",
+      "path": "forms/switch.tsx",
+      "category": "forms",
+      "hash": "ec9648ebd1acae784e1e944221c6f11a",
+      "hasCVA": false,
+      "size": 1212
+    },
+    {
+      "name": "textarea",
+      "path": "forms/textarea.tsx",
+      "category": "forms",
+      "hash": "e9ea3cb2dbad0bdde88af68ade3c2366",
+      "hasCVA": false,
+      "size": 813
+    },
+    {
+      "name": "Navbar",
+      "path": "Navbar.tsx",
+      "category": "root",
+      "hash": "528ad80579954cb9dd985dd6e59fab31",
+      "hasCVA": false,
+      "size": 9963
+    },
+    {
+      "name": "alert-dialog",
+      "path": "overlays/alert-dialog.tsx",
+      "category": "overlays",
+      "hash": "d1e01db5eed588de50a202b61e4f9b2b",
+      "hasCVA": false,
+      "size": 3919
+    },
+    {
+      "name": "alert",
+      "path": "overlays/alert.tsx",
+      "category": "overlays",
+      "hash": "78191e75255bc74806d941a9eb2218bc",
+      "hasCVA": true,
+      "size": 2437
+    },
+    {
+      "name": "confirm-dialog",
+      "path": "overlays/confirm-dialog.tsx",
+      "category": "overlays",
+      "hash": "a6892916bb011e5778fb8c7faf48ab5c",
+      "hasCVA": false,
+      "size": 1852
+    },
+    {
+      "name": "context-menu",
+      "path": "overlays/context-menu.tsx",
+      "category": "overlays",
+      "hash": "bcbebcaced1cf9f185c9fd54d54967a3",
+      "hasCVA": false,
+      "size": 8249
+    },
+    {
+      "name": "dialog",
+      "path": "overlays/dialog.tsx",
+      "category": "overlays",
+      "hash": "4c81918e5f79863eb7afa7e5fb42cd1f",
+      "hasCVA": false,
+      "size": 3989
+    },
+    {
+      "name": "drawer",
+      "path": "overlays/drawer.tsx",
+      "category": "overlays",
+      "hash": "4d379a9d2ee764cf238e1463b4114f73",
+      "hasCVA": false,
+      "size": 4083
+    },
+    {
+      "name": "dropdown-menu",
+      "path": "overlays/dropdown-menu.tsx",
+      "category": "overlays",
+      "hash": "a668b3742505928c87ef77f0f5c2b14e",
+      "hasCVA": false,
+      "size": 8782
+    },
+    {
+      "name": "feedback-toast",
+      "path": "overlays/feedback-toast.tsx",
+      "category": "overlays",
+      "hash": "69be08179ccecfd1257bafd48e2c65dd",
+      "hasCVA": true,
+      "size": 4982
+    },
+    {
+      "name": "popover",
+      "path": "overlays/popover.tsx",
+      "category": "overlays",
+      "hash": "0d4e365a4a8f41efd74ab398c1868901",
+      "hasCVA": false,
+      "size": 1639
+    },
+    {
+      "name": "resizable",
+      "path": "overlays/resizable.tsx",
+      "category": "overlays",
+      "hash": "45fe3b950e705be7b4320de437395be2",
+      "hasCVA": false,
+      "size": 2034
+    },
+    {
+      "name": "scroll-area",
+      "path": "overlays/scroll-area.tsx",
+      "category": "overlays",
+      "hash": "6dc45694d853b01aea9104d326c0b33e",
+      "hasCVA": false,
+      "size": 1647
+    },
+    {
+      "name": "sheet",
+      "path": "overlays/sheet.tsx",
+      "category": "overlays",
+      "hash": "4b1a4424651f1e2c4dd9ffae093e1b64",
+      "hasCVA": false,
+      "size": 4119
+    },
+    {
+      "name": "sidebar",
+      "path": "overlays/sidebar.tsx",
+      "category": "overlays",
+      "hash": "040d3ab0287e8fb17a5f91c26bb76ac6",
+      "hasCVA": false,
+      "size": 2220
+    },
+    {
+      "name": "slide-over",
+      "path": "overlays/slide-over.tsx",
+      "category": "overlays",
+      "hash": "5630ee5d08c83929b766f03d51589d7c",
+      "hasCVA": false,
+      "size": 4704
+    },
+    {
+      "name": "sonner",
+      "path": "overlays/sonner.tsx",
+      "category": "overlays",
+      "hash": "a00a1bb4a0e4304b9a72e99b5aeb39ee",
+      "hasCVA": false,
+      "size": 494
+    },
+    {
+      "name": "tooltip",
+      "path": "overlays/tooltip.tsx",
+      "category": "overlays",
+      "hash": "cb8755ff0f4a0b8827d62631978de1e4",
+      "hasCVA": false,
+      "size": 1868
+    },
+    {
+      "name": "theme-tokens-provider",
+      "path": "theme-tokens-provider.tsx",
+      "category": "root",
+      "hash": "b0fbfb953868a00d3a76833f6d0ee6f8",
+      "hasCVA": false,
+      "size": 1615
+    }
+  ]
+}
