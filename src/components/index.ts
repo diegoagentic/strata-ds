@@ -10,6 +10,10 @@ export { ThemeProvider, useTheme, type ThemeConfig, type ThemeProviderProps } fr
 // Navbar
 export { default as Navbar } from './Navbar';
 
+// Layout
+export { NavbarFloating } from './application-ui/navbar-floating';
+export { PageLayout } from './application-ui/page-layout';
+
 // Tokens & Utils
 export { tokens, type TokenKey } from '../tokens/tokens';
 export { cn } from '../utils/cn';
