@@ -39,7 +39,7 @@ const MCP_CONFIG = JSON.stringify({
   mcpServers: {
     "strata-ds": {
       command: "node",
-      args: ["../design system/strata-ds/src/mcp-server/index.js"]
+      args: ["../design system/strata-ds/src/mcp-server/index.mjs"]
     }
   }
 }, null, 2);
