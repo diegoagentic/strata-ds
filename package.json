@@ -43,7 +43,9 @@
     "sync:check:json": "node sync/sync-check.mjs --json",
     "audit:tokens": "node scripts/audit-tokens.mjs",
     "audit:tokens:fix": "node scripts/audit-tokens.mjs --fix",
-    "install-hooks": "node scripts/install-hooks.mjs"
+    "install-hooks": "node scripts/install-hooks.mjs",
+    "analyze:refinements": "node scripts/analyze-refinements.mjs",
+    "analyze:refinements:update": "node scripts/analyze-refinements.mjs --update"
   },
   "keywords": [
     "design-system",
