@@ -37,7 +37,13 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "sync:manifest": "node sync/generate-manifest.mjs",
+    "sync:check": "node sync/sync-check.mjs",
+    "sync:check:json": "node sync/sync-check.mjs --json",
+    "audit:tokens": "node scripts/audit-tokens.mjs",
+    "audit:tokens:fix": "node scripts/audit-tokens.mjs --fix",
+    "install-hooks": "node scripts/install-hooks.mjs"
   },
   "keywords": [
     "design-system",
