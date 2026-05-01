@@ -1,0 +1,82 @@
+import type { ReactNode } from 'react';
+import { PageHeader } from './page-header';
+import { ExperiencesNavbar, ExperiencesNavItemProps } from './experiences-navbar';
+import { ActionCenterActionConfigMap, ActionCenterActionHandler, ActionCenterDataState } from './action-center/types';
+import { cn } from '@/utils';
+
+
+export interface LayoutProps {
+  heading: ReactNode;
+  subheading?: ReactNode;
+  headerActions?: ReactNode;
+  navItems: ExperiencesNavItemProps[];
+  children: ReactNode;
+  onLogout: () => void;
+  onNavigateToWorkspace: () => void;
+  onNavigate: (page: string) => void;
+  actionCenterActionConfigMap?: ActionCenterActionConfigMap;
+  onActionCenterActionExecute?: ActionCenterActionHandler;
+  actionCenterDataState?: ActionCenterDataState;
+  activeTab?: string;
+  /** Logo for light theme (e.g. logo-black.png). */
+  logoLight?: string;
+  /** Logo for dark theme (e.g. logo-white.png). */
+  logoDark?: string;
+  headingClassName?: string;
+  /** Passed through to ExperiencesNavbar. */
+  hideActionCenter?: boolean;
+  /** Passed through to ExperiencesNavbar. */
+  hideQuickActions?: boolean;
+}
+
+export function Layout({
+  heading,
+  subheading,
+  headerActions,
+  navItems,
+  children,
+  onLogout,
+  onNavigateToWorkspace,
+  onNavigate,
+  actionCenterActionConfigMap,
+  onActionCenterActionExecute,
+  actionCenterDataState,
+  activeTab,
+  logoLight,
+  logoDark,
+  headingClassName,
+  hideActionCenter = false,
+  hideQuickActions = false,
+}: LayoutProps) {
+  return (
+    <div className="min-h-screen bg-background pb-6">
+      <div className="container mx-auto">
+        <ExperiencesNavbar
+          navItems={navItems}
+          onLogout={onLogout}
+          onNavigateToWorkspace={onNavigateToWorkspace}
+          onNavigate={onNavigate}
+          actionCenterActionConfigMap={actionCenterActionConfigMap}
+          onActionCenterActionExecute={onActionCenterActionExecute}
+          actionCenterDataState={actionCenterDataState}
+          activeTab={activeTab}
+          logoLight={logoLight}
+          logoDark={logoDark}
+          hideActionCenter={hideActionCenter}
+          hideQuickActions={hideQuickActions}
+        />
+        <div className="pt-20 lg:pt-24 bg-background px-4 sm:px-6 lg:px-8 min-h-screen">
+          <div className={cn('mb-6 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between container mx-auto', headingClassName)}>
+            <div>
+              <PageHeader heading={heading} subheading={subheading ?? ''} />
+            </div>
+            {headerActions != null && (
+              <div className="shrink-0 flex flex-col items-end gap-4">{headerActions}</div>
+            )}
+          </div>
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -1,36 +1,101 @@
-import { cn } from "@/utils/cn";
-import { type ReactNode } from "react";
+import { useNavigate } from 'react-router-dom';
+import { Layout } from './layout';
+import type { ReactNode } from 'react';
+import { ActionCenterActionConfigMap, ActionCenterActionHandler, ActionCenterDataState } from './action-center/types';
 
-interface PageLayoutProps {
-  children: ReactNode;
-  className?: string;
-  maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "7xl" | "full";
+
+export interface NavItem {
+  label: string;
+  icon: ReactNode;
+  path: string;
 }
 
-const maxWidthMap = {
-  sm: "max-w-sm",
-  md: "max-w-md",
-  lg: "max-w-lg",
-  xl: "max-w-xl",
-  "2xl": "max-w-2xl",
-  "7xl": "max-w-7xl",
-  full: "max-w-full",
-};
+export interface PageLayoutProps {
+  heading: ReactNode;
+  subheading?: ReactNode;
+  headerActions?: ReactNode;
+  navItems?: NavItem[];
+  /** Current active nav item label for sidebar highlighting. When not provided, derived from route. */
+  activeTab?: string;
+  logoLight?: string;
+  logoDark?: string;
+  headingClassName?: string;
+  children: ReactNode;
+  onLogout?: () => void;
+  onNavigateToWorkspace?: () => void;
+  actionCenterActionConfigMap?: ActionCenterActionConfigMap;
+  onActionCenterActionExecute?: ActionCenterActionHandler;
+  actionCenterDataState?: ActionCenterDataState;
+  /** Passed through to Layout / ExperiencesNavbar. */
+  hideActionCenter?: boolean;
+  /** Passed through to Layout / ExperiencesNavbar. */
+  hideQuickActions?: boolean;
+}
 
 export function PageLayout({
+  heading,
+  subheading,
+  headerActions,
+  navItems = [],
+  activeTab,
+  logoLight,
+  logoDark,
+  headingClassName,
   children,
-  className,
-  maxWidth = "7xl",
+  onLogout = () => {
+    /* default no-op */
+  },
+  onNavigateToWorkspace = () => {
+    /* default no-op */
+  },
+  actionCenterActionConfigMap,
+  onActionCenterActionExecute,
+  actionCenterDataState,
+  hideActionCenter = false,
+  hideQuickActions = false,
 }: PageLayoutProps) {
+  const navigate = useNavigate();
+
+  const handleNavigation = (page: string) => {
+    // If the input is a path, navigate directly
+    if (page.startsWith('/')) {
+      navigate(page);
+      return;
+    }
+
+    // Find the item by label
+    const item = navItems.find((nav) => nav.label === page);
+    if (item) {
+      navigate(item.path);
+    } else {
+      console.warn(`Navigation item not found for label: ${page}`);
+    }
+  };
+
   return (
-    <main
-      className={cn(
-        "pt-24 px-4 mx-auto space-y-6",
-        maxWidthMap[maxWidth],
-        className
-      )}
+    <Layout
+      heading={heading}
+      headingClassName={headingClassName}
+      subheading={subheading}
+      headerActions={headerActions}
+      navItems={navItems.map((item) => ({
+        label: item.label,
+        icon: item.icon,
+        path: item.path,
+      }))}
+      activeTab={activeTab}
+      onLogout={onLogout}
+      onNavigateToWorkspace={onNavigateToWorkspace}
+      onNavigate={handleNavigation}
+      actionCenterActionConfigMap={actionCenterActionConfigMap}
+      onActionCenterActionExecute={onActionCenterActionExecute}
+      actionCenterDataState={actionCenterDataState}
+      logoLight={logoLight}
+      logoDark={logoDark}
+      hideActionCenter={hideActionCenter}
+      hideQuickActions={hideQuickActions}
     >
       {children}
-    </main>
+    </Layout>
   );
 }
