@@ -12,6 +12,7 @@ export * from './application-ui/badge';
 export * from './application-ui/banner';
 export * from './application-ui/breadcrumb';
 export * from './application-ui/button';
+export * from './application-ui/copy-button';
 export * from './application-ui/calendar';
 export * from './application-ui/card';
 export * from './application-ui/carousel';
