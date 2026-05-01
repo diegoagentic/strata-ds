@@ -33,8 +33,45 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
-          'Small status or label chip built with CVA. **Variant** controls surface style (`solid` filled, `soft` tinted, `outline` bordered). **Color** picks the palette (Tailwind semantic colors plus `brand`). Use **asChild** to merge styles onto a single child element (e.g. a `button` or `a`) via Radix `Slot`.',
+        component: `
+Small status or label chip built with CVA. **Variant** controls surface style (\`solid\` filled, \`soft\` tinted, \`outline\` bordered). **Color** picks the palette (Tailwind semantic colors plus \`brand\`). Use **asChild** to merge styles onto a single child element (e.g. a \`button\` or \`a\`) via Radix \`Slot\`.
+
+### When to use
+- Label states on records: "Activo", "Pendiente", "Vencido"
+- Category tags on items in lists or tables
+- Count indicators (unread, errors)
+- Status chips next to headings or rows
+
+### When NOT to use
+- For longer text labels (> 3 words) → use a \`Tag\` or \`Card\` surface
+- For interactive selection → use \`ToggleGroup\`
+- For alert messages → use \`Alert\`
+
+### Governance: status colors
+Use \`bg-status-*\` tokens when coloring outside CVA's built-in colors.
+**Never use raw hex or \`bg-green-600\` for semantic states.**
+
+\`\`\`tsx
+// ✅ Correct — DS status tokens
+<Badge className="bg-status-success text-white">Activo</Badge>
+<Badge className="bg-status-warning text-white">Pendiente</Badge>
+<Badge className="bg-status-error text-white">Error</Badge>
+<Badge className="bg-status-ai text-white">IA</Badge>
+
+// ❌ Blocks commit in Tier 1 and 2
+<Badge className="bg-[#098400]">Activo</Badge>
+<Badge className="bg-green-600">Activo</Badge>
+\`\`\`
+
+### Token reference
+| Token | Tailwind class | Use |
+|-------|---------------|-----|
+| \`--color-status-success\` | \`bg-status-success\` | Active, completed, match |
+| \`--color-status-warning\` | \`bg-status-warning\` | Pending, review |
+| \`--color-status-error\` | \`bg-status-error\` | Error, rejected |
+| \`--color-status-info\` | \`bg-status-info\` | In progress, neutral |
+| \`--color-status-ai\` | \`bg-status-ai\` | AI-generated content |
+        `,
       },
     },
   },
@@ -164,4 +201,34 @@ export const OutlineError: Story = {
     color: 'red',
     children: 'Error',
   },
+};
+
+/** Status tokens applied directly via className — governance-compliant pattern. */
+export const WithStatusTokens: Story = {
+  name: 'With Status Tokens (Governance)',
+  parameters: { controls: { disable: true } },
+  render: () => (
+    <div className="space-y-4 p-4 max-w-sm">
+      <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
+        Correct — DS status tokens
+      </p>
+      <div className="flex flex-wrap gap-2">
+        <Badge className="bg-status-success text-white">Activo</Badge>
+        <Badge className="bg-status-warning text-white">Pendiente</Badge>
+        <Badge className="bg-status-error text-white">Error</Badge>
+        <Badge className="bg-status-info text-white">En proceso</Badge>
+        <Badge className="bg-status-ai text-white">IA</Badge>
+      </div>
+      <p className="text-xs text-muted-foreground font-medium uppercase tracking-wide">
+        Soft (10% opacity bg + colored text)
+      </p>
+      <div className="flex flex-wrap gap-2">
+        <Badge className="bg-status-success/10 text-status-success">Activo</Badge>
+        <Badge className="bg-status-warning/10 text-status-warning">Pendiente</Badge>
+        <Badge className="bg-status-error/10 text-status-error">Error</Badge>
+        <Badge className="bg-status-info/10 text-status-info">En proceso</Badge>
+        <Badge className="bg-status-ai/10 text-status-ai">IA</Badge>
+      </div>
+    </div>
+  ),
 };

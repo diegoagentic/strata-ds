@@ -20,7 +20,51 @@ const meta = {
     docs: {
       description: {
         component:
-          'Container for grouped content with **variant** surfaces: default (card + shadow), flat (muted, no shadow), glass (blur + translucent), brand (brand-tinted background). Compose **CardHeader** (optional **draggable** shows a grip via **CardAction**), **CardTitle**, **CardDescription**, **CardAction**, **CardContent**, and **CardFooter**. The root card always applies a short fade / slide-in animation.',
+          `Container for grouped content with composable sub-components and 4 surface variants.
+
+**Variants:** default (card + shadow), flat (muted bg, no shadow), glass (backdrop-blur + translucent), brand (brand-tinted background).
+
+### When to use
+- Grouping related fields, stats, or content blocks
+- Dashboard KPI panels (\`flat\` or \`default\`)
+- Floating sidebars over images (\`glass\`)
+- Onboarding / promotional blocks (\`brand\`)
+
+### Composition
+\`\`\`tsx
+<Card variant="default">
+  <CardHeader>
+    <CardTitle>Title</CardTitle>
+    <CardDescription>Supporting text</CardDescription>
+    <CardAction><Button size="icon" variant="ghost">…</Button></CardAction>
+  </CardHeader>
+  <CardContent>…</CardContent>
+  <CardFooter className="justify-end gap-2">
+    <Button variant="outline">Cancel</Button>
+    <Button>Save</Button>
+  </CardFooter>
+</Card>
+\`\`\`
+
+### Token reference
+| Token | Used for |
+|-------|---------|
+| \`bg-card\` | default variant background |
+| \`border-border\` | card border |
+| \`shadow-sm\` | default variant elevation |
+| \`bg-muted\` | flat variant background |
+| \`bg-card/80\` + \`backdrop-blur\` | glass variant |
+| \`bg-brand-50\` | brand variant background |
+| \`text-card-foreground\` | card text color |
+
+### Anti-patterns
+\`\`\`tsx
+// ❌ Raw div replacing Card — no dark mode, no animation, no tokens
+<div className="bg-white border rounded-lg p-4 shadow">…</div>
+
+// ✅ Correct
+<Card>…</Card>
+\`\`\``,
       },
     },
   },

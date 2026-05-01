@@ -8,8 +8,45 @@ const meta = {
   parameters: {
     docs: {
       description: {
-        component:
-          'Table provides a set of composable components for building data tables with consistent styling. Use it to display tabular data with headers, rows, and cells in a responsive, horizontally scrollable container. It supports striped rows and dense mode for compact layouts, with hover highlighting and dark theme support.',
+        component: `
+Composable table components for data display. Horizontally scrollable container with hover highlighting and dark theme support.
+
+### When to use
+- Displaying structured records with 3+ columns (invoices, orders, users, products)
+- Comparing values across rows
+- With **striped** when rows contain dense numeric data
+- With **dense** when vertical space is at a premium (sidebar panels, dashboards)
+
+### When NOT to use
+- For 1–2 column data → use \`DescriptionList\`
+- For key-value pairs → use \`DescriptionList\`
+- For card grids → use \`Card\` with grid layout
+
+### Composition
+\`\`\`tsx
+<Table striped dense>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Name</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>Value</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+\`\`\`
+
+### Token reference
+| Token | Used for |
+|-------|---------|
+| \`border-border\` | table and cell borders |
+| \`bg-muted/50\` | striped row alternate |
+| \`hover:bg-muted/50\` | row hover |
+| \`text-foreground\` | cell text |
+| \`text-muted-foreground\` | header text |
+        `,
       },
     },
   },
@@ -43,9 +80,9 @@ const sampleData = [
   { id: 'INV-005', status: 'Paid', method: 'PayPal', amount: '$550.00' },
 ];
 
-export const Default: Story = {
-  render: () => (
-    <Table>
+function SampleTable({ striped, dense }: { striped?: boolean; dense?: boolean }) {
+  return (
+    <Table striped={striped} dense={dense}>
       <TableHeader>
         <TableRow>
           <TableHead>Invoice</TableHead>
@@ -71,5 +108,25 @@ export const Default: Story = {
         </TableRow>
       </tfoot>
     </Table>
-  ),
+  );
+}
+
+export const Default: Story = {
+  render: () => <SampleTable />,
+};
+
+/** Alternating row backgrounds improve readability for dense numeric data. */
+export const Striped: Story = {
+  render: () => <SampleTable striped />,
+};
+
+/** Reduced row padding for dashboard panels or sidebars with limited vertical space. */
+export const Dense: Story = {
+  render: () => <SampleTable dense />,
+};
+
+/** Both modifiers combined for maximum information density. */
+export const StripedAndDense: Story = {
+  name: 'Striped + Dense',
+  render: () => <SampleTable striped dense />,
 };

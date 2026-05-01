@@ -14,7 +14,38 @@ const meta = {
     docs: {
       description: {
         component:
-          'A styled text input with optional label, prefix/suffix slots, and automatic password visibility toggle. Supports all standard input attributes and ref forwarding.',
+          `A styled text input with optional label, prefix/suffix icon slots, and automatic password visibility toggle.
+
+### When to use
+- Single-line text data: names, emails, URLs, numbers
+- Search boxes with prefix icon (\`MagnifyingGlassIcon\`)
+- Password fields (visibility toggle auto-added when \`type="password"\`)
+- Form fields — always wrap with \`<Field>\` for label + error message
+
+### When NOT to use
+- Multi-line text → use \`<Textarea>\`
+- Constrained option selection → use \`<Select>\` or \`<Combobox>\`
+- Date picking → use \`<DatePicker>\`
+
+### Slots
+- **prefix** — icon or node on the left (e.g. search icon, currency symbol)
+- **suffix** — icon or node on the right (e.g. chevron, clear button)
+- When \`type="password"\`, suffix is replaced by the show/hide toggle
+
+### Validation
+Set \`aria-invalid={true}\` to apply destructive border and ring.
+Always pair with \`<Field>\` which manages \`aria-describedby\` for screen readers.
+
+### Token reference
+| Token | Used for |
+|-------|---------|
+| \`border-input\` | default border |
+| \`bg-background\` | input background |
+| \`text-foreground\` | input text |
+| \`text-muted-foreground\` | placeholder text |
+| \`ring-ring/50\` | focus ring |
+| \`border-destructive\` | aria-invalid border |
+| \`ring-destructive/20\` | aria-invalid focus ring |`,
       },
     },
   },

@@ -19,7 +19,47 @@ const meta = {
     docs: {
       description: {
         component:
-          'Dialog presents content in a modal overlay that focuses user attention on a specific task or message. Use it for forms, confirmations, or detailed views that require user interaction before returning to the main content. Features a backdrop overlay, close button, and composable header, body, and footer sections.',
+          `Modal overlay built on Radix UI Dialog. Focuses user attention for a task before returning to main content.
+
+### When to use
+- Multi-field forms that don't warrant a full page (create order, invite user)
+- Detailed view of a record without full navigation
+- Simple confirmations with 2 actions
+
+### When NOT to use
+- Destructive confirmations → use \`AlertDialog\` (better a11y semantics)
+- Long scrolling forms (> 10 fields) → use a dedicated page or \`Sheet\`
+- Notifications / status updates → use \`Sonner\` (toast) or \`Alert\`
+
+### Composition
+\`\`\`tsx
+<Dialog>
+  <DialogTrigger asChild>
+    <Button>Open</Button>
+  </DialogTrigger>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Title</DialogTitle>
+      <DialogDescription>Supporting description</DialogDescription>
+    </DialogHeader>
+    {/* body content */}
+    <DialogFooter>
+      <Button variant="outline">Cancel</Button>
+      <Button>Confirm</Button>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>
+\`\`\`
+
+### Token reference
+| Token | Used for |
+|-------|---------|
+| \`bg-background\` | dialog panel bg |
+| \`border-border\` | dialog border |
+| \`bg-black/50\` | backdrop overlay |
+| \`shadow-lg\` | dialog elevation |
+| \`text-foreground\` | dialog text |
+| \`text-muted-foreground\` | description text |`,
       },
     },
   },

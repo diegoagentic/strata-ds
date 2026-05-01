@@ -15,7 +15,48 @@ const meta = {
     docs: {
       description: {
         component:
-          'Button built with class-variance-authority and Radix Slot. **Variants:** default, destructive, outline, secondary, ghost, link, brand, accent. **Sizes:** default, sm, lg, icon. **Shape:** default or pill (common for brand CTAs). Use **asChild** to merge props onto a child element (e.g. `<a>`).',
+          `Button built with CVA and Radix Slot.
+
+**Variants:** default (brand-300 fill), destructive (red), outline (border only), secondary (zinc tinted), ghost (hover only), link (underline), brand (same as default, explicit), accent (indigo).
+**Sizes:** default (h-9), sm (h-8), lg (h-10), icon (9×9 square).
+**Shape:** default (rounded-md) or pill (rounded-full) — pill is the standard for brand CTAs.
+
+### When to use
+- **default / brand** — primary CTA, one per screen section
+- **outline** — secondary action alongside a primary button
+- **ghost** — icon triggers in toolbars, table rows, inline controls
+- **destructive** — irreversible actions (delete, revoke)
+- **link** — inline navigational action inside text
+- **accent** — indigo highlight action for feature promotion
+
+### When NOT to use
+- Don't use \`default\` for 3+ sibling actions — use outline or ghost
+- Don't use raw \`<button>\` tags — always use this component
+- Don't add \`onClick\` to navigation → use \`asChild\` with \`<Link>\`
+
+### Token reference
+| Token | Used by |
+|-------|---------|
+| \`bg-brand-300\` | default / brand light |
+| \`bg-brand-500\` | default / brand dark |
+| \`border-border\` | outline variant |
+| \`text-foreground\` | outline, ghost |
+| \`bg-accent\` | ghost hover bg |
+| \`ring-ring/50\` | focus ring |
+| \`border-destructive\` | aria-invalid ring |
+
+### Anti-patterns
+\`\`\`tsx
+// ❌ Raw button element — no DS styles
+<button className="px-4 py-2 bg-[#E6F993]">Submit</button>
+
+// ❌ Wrong variant for destructive action
+<Button variant="default" onClick={deleteRecord}>Delete</Button>
+
+// ✅ Correct
+<Button variant="destructive" onClick={deleteRecord}>Delete</Button>
+<Button asChild variant="ghost"><Link to="/settings">Settings</Link></Button>
+\`\`\``,
       },
     },
   },
