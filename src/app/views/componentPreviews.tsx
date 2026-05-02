@@ -1,7 +1,9 @@
 import { useState } from "react";
 import {
-  Bell, Calendar as CalendarIcon, Check, ChevronDown, FileText, Filter, Inbox, Info,
-  MoreHorizontal, Plus, Search, Star, Trash, TriangleAlert,
+  Bell, Calendar as CalendarIcon, Check, ChevronDown, Edit,
+  FileText, Filter, Globe, Grid2x2, Home, Inbox, Info, List as ListIcon,
+  MoreHorizontal, Pencil, Plus, RotateCw, Search, Settings, Share, ShoppingBag,
+  Sparkles, Star, Trash, TriangleAlert, Upload, Users,
 } from "lucide-react";
 
 import { Button } from "@/components/application-ui/button";
@@ -38,6 +40,53 @@ import { InfoBanner } from "@/components/application-ui/info-banner";
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/application-ui/hover-card";
 import { Link } from "@/components/application-ui/link";
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/application-ui/collapsible";
+import { Navbar, NavbarSection, NavbarSpacer, NavbarItem } from "@/components/application-ui/navbar";
+import { NavbarFloating } from "@/components/application-ui/navbar-floating";
+import { PageHeader } from "@/components/application-ui/page-header";
+import { Calendar } from "@/components/application-ui/calendar";
+import {
+  Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext,
+} from "@/components/application-ui/carousel";
+import { AspectRatio } from "@/components/application-ui/aspect-ratio";
+import {
+  Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem,
+  CommandShortcut, CommandSeparator,
+} from "@/components/application-ui/command";
+import {
+  Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem,
+  MenubarSeparator, MenubarShortcut,
+} from "@/components/application-ui/menubar";
+import {
+  NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger,
+  NavigationMenuContent, NavigationMenuLink, navigationMenuTriggerStyle,
+} from "@/components/application-ui/navigation-menu";
+import {
+  FilterPanel, FilterPanelHeader, FilterPanelHeaderTitle, FilterPanelSection,
+  FilterPanelSectionTrigger, FilterPanelSectionContent, FilterPanelOption,
+} from "@/components/application-ui/filter-panel";
+import {
+  ListToolbar,
+} from "@/components/application-ui/list-toolbar";
+import {
+  SectionCard, SectionCardHeader, SectionCardBody, SectionCardFooter,
+} from "@/components/application-ui/section-card";
+import { SectionToolbar } from "@/components/application-ui/section-toolbar";
+import { OrderTracking, ProgressTracker } from "@/components/application-ui/tracking";
+import {
+  Hero, HeroTitle, HeroSubtitle, HeroButtons,
+} from "@/components/application-ui/hero-section";
+import {
+  FeatureSection, FeatureGrid, Feature, FeatureIcon, FeatureTitle, FeatureDescription,
+} from "@/components/application-ui/feature-section";
+import {
+  PricingSection, PricingCard, PricingTitle, PricingPrice, PricingCost,
+  PricingFeatures, PricingFeature,
+} from "@/components/application-ui/pricing";
+import { ProductGrid, ProductCard } from "@/components/application-ui/product-list";
+import { ShoppingCart } from "@/components/application-ui/shopping-cart";
+import { SharedCatalogCard } from "@/components/application-ui/shared-catalog-card";
+import { SharedInventoryCard } from "@/components/application-ui/shared-inventory-card";
+import { SharedOrderCard } from "@/components/application-ui/shared-order-card";
 
 import { Input } from "@/components/forms/input";
 import { Textarea } from "@/components/forms/textarea";
@@ -50,6 +99,13 @@ import { Field, FieldLabel, FieldDescription } from "@/components/forms/field";
 import {
   Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
 } from "@/components/forms/select";
+import { Combobox, ComboboxOption } from "@/components/forms/combobox";
+import { DatePicker } from "@/components/forms/date-picker";
+import {
+  InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator,
+} from "@/components/forms/input-otp";
+import { SearchableMultiSelect } from "@/components/forms/searchable-multi-select";
+import { Fieldset, Legend, FieldGroup, Field as HFField, Label as HLabel } from "@/components/forms/fieldset";
 
 import { Alert, AlertTitle, AlertDescription } from "@/components/overlays/alert";
 import {
@@ -72,6 +128,22 @@ import {
   DropdownMenu, DropdownMenuTrigger, DropdownMenuContent,
   DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel,
 } from "@/components/overlays/dropdown-menu";
+import {
+  Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle,
+  DrawerDescription, DrawerFooter, DrawerClose,
+} from "@/components/overlays/drawer";
+import {
+  SlideOver, SlideOverHeader, SlideOverTitle, SlideOverDescription, SlideOverBody,
+} from "@/components/overlays/slide-over";
+import { ConfirmDialog } from "@/components/overlays/confirm-dialog";
+import {
+  ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem,
+  ContextMenuSeparator, ContextMenuLabel,
+} from "@/components/overlays/context-menu";
+import { ScrollArea, ScrollBar } from "@/components/overlays/scroll-area";
+import {
+  ResizablePanelGroup, ResizablePanel, ResizableHandle,
+} from "@/components/overlays/resizable";
 
 import {
   Accordion, AccordionItem, AccordionTrigger, AccordionContent,
@@ -761,7 +833,691 @@ export const COMPONENT_PREVIEWS: Record<string, () => React.ReactNode> = {
     </div>
   ),
 
-  "kpi-card-row": () => null, // placeholder for future composite preview
+  // ── Application UI: Navigation ──────────────────────────────────────────────
+  navbar: () => (
+    <div className="w-full max-w-2xl">
+      <Navbar>
+        <NavbarSection>
+          <span className="font-bold text-foreground px-2">STRATA</span>
+        </NavbarSection>
+        <NavbarSpacer />
+        <NavbarSection>
+          <NavbarItem current>Dashboard</NavbarItem>
+          <NavbarItem>Orders</NavbarItem>
+          <NavbarItem>Settings</NavbarItem>
+        </NavbarSection>
+        <NavbarSpacer />
+        <NavbarSection>
+          <Button variant="ghost" size="icon" aria-label="Notifications"><Bell className="size-4" /></Button>
+          <Avatar size="sm"><AvatarFallback>DZ</AvatarFallback></Avatar>
+        </NavbarSection>
+      </Navbar>
+    </div>
+  ),
+
+  "navbar-floating": () => (
+    <div className="bg-muted/30 rounded-md p-6 w-full">
+      <NavbarFloating className="relative top-0 mx-auto">
+        <Button variant="ghost" size="icon" aria-label="Home"><Home className="size-4" /></Button>
+        <span className="font-semibold text-foreground px-2">Strata DS</span>
+        <div className="flex-1" />
+        <Button variant="default" shape="pill" size="sm">Get Started</Button>
+      </NavbarFloating>
+    </div>
+  ),
+
+  "page-header": () => (
+    <PageHeader heading="Orders" subheading="Manage and track all customer orders" />
+  ),
+
+  menubar: () => (
+    <Menubar>
+      <MenubarMenu>
+        <MenubarTrigger>File</MenubarTrigger>
+        <MenubarContent>
+          <MenubarItem>New Tab <MenubarShortcut>⌘T</MenubarShortcut></MenubarItem>
+          <MenubarItem>Open... <MenubarShortcut>⌘O</MenubarShortcut></MenubarItem>
+          <MenubarSeparator />
+          <MenubarItem variant="destructive">Delete</MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+      <MenubarMenu>
+        <MenubarTrigger>Edit</MenubarTrigger>
+        <MenubarContent>
+          <MenubarItem>Undo <MenubarShortcut>⌘Z</MenubarShortcut></MenubarItem>
+          <MenubarItem>Redo <MenubarShortcut>⇧⌘Z</MenubarShortcut></MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+      <MenubarMenu>
+        <MenubarTrigger>View</MenubarTrigger>
+        <MenubarContent>
+          <MenubarItem>Zoom In</MenubarItem>
+          <MenubarItem>Zoom Out</MenubarItem>
+        </MenubarContent>
+      </MenubarMenu>
+    </Menubar>
+  ),
+
+  "navigation-menu": () => (
+    <NavigationMenu>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid w-[400px] gap-2 p-3">
+              <li>
+                <NavigationMenuLink href="#" className="block rounded p-2 hover:bg-accent">
+                  <div className="font-semibold text-foreground">Tours</div>
+                  <p className="text-sm text-muted-foreground">Curated experiences</p>
+                </NavigationMenuLink>
+              </li>
+              <li>
+                <NavigationMenuLink href="#" className="block rounded p-2 hover:bg-accent">
+                  <div className="font-semibold text-foreground">Hotels</div>
+                  <p className="text-sm text-muted-foreground">Trusted partners</p>
+                </NavigationMenuLink>
+              </li>
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink href="#" className={navigationMenuTriggerStyle()}>
+            Pricing
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  ),
+
+  // ── Application UI: Data + Layout ───────────────────────────────────────────
+  calendar: () => {
+    const [date, setDate] = useState<Date | undefined>(new Date());
+    return <Calendar mode="single" selected={date} onSelect={setDate} />;
+  },
+
+  carousel: () => (
+    <Carousel opts={{ align: "start" }} className="w-full max-w-md">
+      <CarouselContent>
+        {[1, 2, 3, 4].map((n) => (
+          <CarouselItem key={n} className="md:basis-1/2 lg:basis-1/3">
+            <Card>
+              <CardContent className="flex aspect-square items-center justify-center p-6">
+                <span className="text-3xl font-bold text-foreground">{n}</span>
+              </CardContent>
+            </Card>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext />
+    </Carousel>
+  ),
+
+  "aspect-ratio": () => (
+    <div className="max-w-md w-full">
+      <AspectRatio ratio={16 / 9}>
+        <div className="size-full rounded-lg bg-gradient-to-br from-status-info via-status-ai to-status-success flex items-center justify-center">
+          <span className="text-background font-bold text-xl">16 / 9</span>
+        </div>
+      </AspectRatio>
+    </div>
+  ),
+
+  command: () => (
+    <Command className="rounded-lg border border-border shadow-md w-[420px]">
+      <CommandInput placeholder="Type a command or search..." />
+      <CommandList>
+        <CommandEmpty>No results found.</CommandEmpty>
+        <CommandGroup heading="Suggestions">
+          <CommandItem>
+            <CalendarIcon className="size-4 mr-2" /> Calendar
+            <CommandShortcut>⌘K</CommandShortcut>
+          </CommandItem>
+          <CommandItem>
+            <Search className="size-4 mr-2" /> Search
+          </CommandItem>
+          <CommandItem>
+            <Settings className="size-4 mr-2" /> Settings
+            <CommandShortcut>⌘,</CommandShortcut>
+          </CommandItem>
+        </CommandGroup>
+        <CommandSeparator />
+        <CommandGroup heading="Actions">
+          <CommandItem><Plus className="size-4 mr-2" /> New File</CommandItem>
+          <CommandItem><Upload className="size-4 mr-2" /> Upload</CommandItem>
+        </CommandGroup>
+      </CommandList>
+    </Command>
+  ),
+
+  // ── Application UI: Section primitives ──────────────────────────────────────
+  "section-card": () => (
+    <SectionCard surface="default" className="max-w-md">
+      <SectionCardHeader divider="bottom">
+        <h3 className="text-lg font-semibold text-foreground">Order Summary</h3>
+        <p className="text-sm text-muted-foreground">12 items ready for review</p>
+      </SectionCardHeader>
+      <SectionCardBody>
+        <p className="text-sm text-foreground">Ship-by date: April 24, 2024</p>
+      </SectionCardBody>
+      <SectionCardFooter divider="top">
+        <Button size="sm">Review</Button>
+      </SectionCardFooter>
+    </SectionCard>
+  ),
+
+  "section-toolbar": () => {
+    const [search, setSearch] = useState("");
+    const [filter, setFilter] = useState("all");
+    const [view, setView] = useState("grid");
+    return (
+      <SectionToolbar
+        search={{ value: search, onSearchChange: setSearch, placeholder: "Search...", ariaLabel: "Search" }}
+        filters={{
+          options: [{ value: "all", label: "All" }, { value: "active", label: "Active" }],
+          value: filter,
+          onValueChange: setFilter,
+          ariaLabel: "Filter",
+        }}
+        viewMode={{
+          value: view,
+          onValueChange: setView,
+          options: [
+            { value: "grid", icon: <Grid2x2 className="size-4" />, ariaLabel: "Grid" },
+            { value: "list", icon: <ListIcon className="size-4" />, ariaLabel: "List" },
+          ],
+        }}
+        primaryAction={{ label: "New", icon: <Plus className="size-4" />, onClick: () => {} }}
+      />
+    );
+  },
+
+  "list-toolbar": () => {
+    const [search, setSearch] = useState("");
+    const [filter, setFilter] = useState("all");
+    return (
+      <ListToolbar
+        search={{ value: search, onSearchChange: setSearch, placeholder: "Search orders..." }}
+        filter={{
+          options: [{ value: "all", label: "All" }, { value: "pending", label: "Pending" }],
+          value: filter,
+          onValueChange: setFilter,
+        }}
+        primaryAction={{ label: "New Order", onClick: () => {} }}
+      />
+    );
+  },
+
+  "filter-panel": () => (
+    <FilterPanel mode="sidebar">
+      <FilterPanelHeader>
+        <FilterPanelHeaderTitle>Filters</FilterPanelHeaderTitle>
+      </FilterPanelHeader>
+      <FilterPanelSection>
+        <FilterPanelSectionTrigger data-state="open">
+          Status <ChevronDown className="size-4 transition-transform" />
+        </FilterPanelSectionTrigger>
+        <FilterPanelSectionContent>
+          <FilterPanelOption>
+            <Checkbox id="fp-open" />
+            <Label htmlFor="fp-open" className="text-sm">Open</Label>
+          </FilterPanelOption>
+          <FilterPanelOption>
+            <Checkbox id="fp-closed" />
+            <Label htmlFor="fp-closed" className="text-sm">Closed</Label>
+          </FilterPanelOption>
+        </FilterPanelSectionContent>
+      </FilterPanelSection>
+    </FilterPanel>
+  ),
+
+  tracking: () => (
+    <div className="space-y-6 max-w-lg">
+      <OrderTracking
+        color="brand"
+        layout="inline"
+        steps={[
+          { id: "1", name: "Placed", status: "complete" },
+          { id: "2", name: "Processing", status: "complete" },
+          { id: "3", name: "Shipped", status: "current" },
+          { id: "4", name: "Delivered", status: "upcoming" },
+        ]}
+      />
+      <ProgressTracker currentStep={3} totalSteps={5} />
+    </div>
+  ),
+
+  // ── Application UI: Marketing ───────────────────────────────────────────────
+  "hero-section": () => (
+    <Hero className="bg-card border border-border rounded-lg !py-8">
+      <HeroTitle className="!text-2xl">Build faster with Strata</HeroTitle>
+      <HeroSubtitle className="!text-sm">The DS that scales with your team.</HeroSubtitle>
+      <HeroButtons>
+        <Button shape="pill">Get Started</Button>
+        <Button variant="outline">View Docs</Button>
+      </HeroButtons>
+    </Hero>
+  ),
+
+  "feature-section": () => (
+    <FeatureSection className="!py-6 bg-card border border-border rounded-lg">
+      <FeatureGrid className="grid-cols-3 max-w-3xl">
+        <Feature>
+          <FeatureIcon><Sparkles className="size-4 text-white" /></FeatureIcon>
+          <FeatureTitle className="!text-sm">Fast onboarding</FeatureTitle>
+          <FeatureDescription className="!text-xs">Guided setup in minutes.</FeatureDescription>
+        </Feature>
+        <Feature>
+          <FeatureIcon><Globe className="size-4 text-white" /></FeatureIcon>
+          <FeatureTitle className="!text-sm">Global edge</FeatureTitle>
+          <FeatureDescription className="!text-xs">200+ cities worldwide.</FeatureDescription>
+        </Feature>
+        <Feature>
+          <FeatureIcon><Users className="size-4 text-white" /></FeatureIcon>
+          <FeatureTitle className="!text-sm">Team-ready</FeatureTitle>
+          <FeatureDescription className="!text-xs">Roles, audits, SSO.</FeatureDescription>
+        </Feature>
+      </FeatureGrid>
+    </FeatureSection>
+  ),
+
+  pricing: () => (
+    <PricingSection className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl">
+      <PricingCard>
+        <PricingTitle>Starter</PricingTitle>
+        <PricingPrice><PricingCost>$29</PricingCost> / mo</PricingPrice>
+        <PricingFeatures>
+          <PricingFeature>5 users</PricingFeature>
+          <PricingFeature>10GB</PricingFeature>
+        </PricingFeatures>
+        <Button className="mt-4 w-full" variant="outline">Get started</Button>
+      </PricingCard>
+      <PricingCard featured>
+        <PricingTitle featured>Pro</PricingTitle>
+        <PricingPrice featured><PricingCost>$99</PricingCost> / mo</PricingPrice>
+        <PricingFeatures>
+          <PricingFeature featured>Unlimited users</PricingFeature>
+          <PricingFeature featured>100GB</PricingFeature>
+        </PricingFeatures>
+        <Button className="mt-4 w-full">Upgrade</Button>
+      </PricingCard>
+      <PricingCard>
+        <PricingTitle>Enterprise</PricingTitle>
+        <PricingPrice>Custom</PricingPrice>
+        <PricingFeatures>
+          <PricingFeature>SSO + SLAs</PricingFeature>
+          <PricingFeature>Dedicated CSM</PricingFeature>
+        </PricingFeatures>
+        <Button className="mt-4 w-full" variant="outline">Contact</Button>
+      </PricingCard>
+    </PricingSection>
+  ),
+
+  // ── Application UI: Ecommerce ───────────────────────────────────────────────
+  "product-list": () => (
+    <ProductGrid className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-2xl">
+      {[
+        { id: 1, name: "Strata Runner", category: "Shoes", price: "$129.00", inStock: true },
+        { id: 2, name: "Cotton Tee", category: "Apparel", price: "$29.00", inStock: true },
+        { id: 3, name: "Daypack", category: "Bags", price: "$89.00", inStock: false },
+      ].map((p) => (
+        <ProductCard
+          key={p.id}
+          product={{
+            id: p.id,
+            name: p.name,
+            href: "#",
+            price: p.price,
+            imageSrc: "",
+            imageAlt: p.name,
+            category: p.category,
+            inStock: p.inStock,
+          }}
+        />
+      ))}
+    </ProductGrid>
+  ),
+
+  "shopping-cart": () => {
+    const [open, setOpen] = useState(false);
+    return (
+      <div className="space-y-2">
+        <Button onClick={() => setOpen(true)}>
+          <ShoppingBag className="size-4 mr-2" /> Open Cart (2)
+        </Button>
+        <ShoppingCart
+          open={open}
+          onClose={setOpen}
+          items={[
+            { id: 1, name: "Strata Runner", href: "#", color: "Black", price: "$129.00", quantity: 1, imageSrc: "", imageAlt: "Runner" },
+            { id: 2, name: "Cotton Tee", href: "#", color: "White", price: "$29.00", quantity: 2, imageSrc: "", imageAlt: "Tee" },
+          ]}
+        />
+      </div>
+    );
+  },
+
+  "shared-catalog-card": () => (
+    <SharedCatalogCard
+      title="Partner Inventory Q2"
+      itemsCount={1284}
+      catalogType="API"
+      owner="Diego Zuluaga"
+      lastSyncedText="Synced 5 min ago"
+      statusBadge={{ label: "Live" }}
+      onSync={() => {}}
+      onPrimaryAction={() => {}}
+      primaryActionLabel="Create Quote"
+    />
+  ),
+
+  "shared-inventory-card": () => (
+    <SharedInventoryCard
+      title="Steel Beam — Type A"
+      subtitle="SKU 12345 · Acme Supplier"
+      location="Warehouse 2, Aisle 4"
+      valueLabel="Stock"
+      value="284 units"
+      statusBadge={{ label: "In stock", variant: "green" }}
+      priorityBadge={{ label: "High demand", variant: "yellow", emoji: "🔥" }}
+    />
+  ),
+
+  "shared-order-card": () => (
+    <SharedOrderCard
+      variant="default"
+      initials="AC"
+      client="Acme Corp"
+      orderId="ORD-2024-1284"
+      amount="$1,250.00"
+      date="May 1, 2024"
+      status="Paid"
+      statusBadge="completed"
+    />
+  ),
+
+  // ── Forms ───────────────────────────────────────────────────────────────────
+  combobox: () => {
+    const items = [
+      { value: "us", label: "🇺🇸 United States" },
+      { value: "ca", label: "🇨🇦 Canada" },
+      { value: "mx", label: "🇲🇽 Mexico" },
+      { value: "co", label: "🇨🇴 Colombia" },
+      { value: "br", label: "🇧🇷 Brazil" },
+    ];
+    type Country = typeof items[number];
+    const [value, setValue] = useState<Country | undefined>(undefined);
+    return (
+      <Combobox<Country>
+        value={value}
+        onChange={(v) => setValue((v as Country) ?? undefined)}
+        displayValue={(item: Country) => item?.label ?? ""}
+        placeholder="Select country..."
+        aria-label="Country"
+        className="max-w-[280px]"
+      >
+        {items.map((item) => (
+          <ComboboxOption key={item.value} value={item}>
+            {item.label}
+          </ComboboxOption>
+        ))}
+      </Combobox>
+    );
+  },
+
+  "date-picker": () => {
+    const [date, setDate] = useState("");
+    return (
+      <div className="max-w-sm space-y-2">
+        <DatePicker value={date} onChange={setDate} placeholder="Pick a date" />
+        <p className="text-xs text-muted-foreground font-mono">Value: {date || "(empty)"}</p>
+      </div>
+    );
+  },
+
+  "input-otp": () => {
+    const [value, setValue] = useState("");
+    return (
+      <div className="space-y-2">
+        <InputOTP maxLength={6} value={value} onChange={setValue}>
+          <InputOTPGroup>
+            <InputOTPSlot index={0} />
+            <InputOTPSlot index={1} />
+            <InputOTPSlot index={2} />
+          </InputOTPGroup>
+          <InputOTPSeparator />
+          <InputOTPGroup>
+            <InputOTPSlot index={3} />
+            <InputOTPSlot index={4} />
+            <InputOTPSlot index={5} />
+          </InputOTPGroup>
+        </InputOTP>
+        <p className="text-xs text-muted-foreground font-mono">Value: {value || "(empty)"}</p>
+      </div>
+    );
+  },
+
+  "searchable-multi-select": () => {
+    const skills = [
+      { id: "react", label: "React" },
+      { id: "ts", label: "TypeScript" },
+      { id: "css", label: "CSS" },
+      { id: "node", label: "Node.js" },
+      { id: "go", label: "Go" },
+    ];
+    const [selected, setSelected] = useState<typeof skills>([]);
+    return (
+      <SearchableMultiSelect
+        options={skills}
+        value={selected}
+        onChange={setSelected}
+        placeholder="Add skills..."
+        className="max-w-sm"
+      />
+    );
+  },
+
+  fieldset: () => (
+    <Fieldset>
+      <Legend>Shipping address</Legend>
+      <FieldGroup>
+        <HFField>
+          <HLabel>Street</HLabel>
+          <Input placeholder="123 Main St" />
+        </HFField>
+        <HFField>
+          <HLabel>City</HLabel>
+          <Input placeholder="New York" />
+        </HFField>
+      </FieldGroup>
+    </Fieldset>
+  ),
+
+  form: () => (
+    <div className="space-y-3 max-w-sm">
+      <Field>
+        <FieldLabel>Email</FieldLabel>
+        <Input type="email" placeholder="you@example.com" />
+        <FieldDescription>We'll send a magic link.</FieldDescription>
+      </Field>
+      <Field>
+        <FieldLabel>Password</FieldLabel>
+        <Input type="password" placeholder="••••••••" />
+      </Field>
+      <Button type="submit" className="w-full">Sign in</Button>
+      <p className="text-xs text-muted-foreground italic">
+        (Compose with react-hook-form's FormField/FormItem/FormControl in real apps.)
+      </p>
+    </div>
+  ),
+
+  // ── Overlays ────────────────────────────────────────────────────────────────
+  drawer: () => (
+    <Drawer>
+      <DrawerTrigger asChild>
+        <Button variant="outline">
+          <ShoppingBag className="size-4 mr-2" /> Open Drawer
+        </Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Shopping Cart</DrawerTitle>
+          <DrawerDescription>2 items · $158.00</DrawerDescription>
+        </DrawerHeader>
+        <div className="px-4 py-2 text-sm text-muted-foreground">
+          Cart items would render here.
+        </div>
+        <DrawerFooter>
+          <Button>Checkout</Button>
+          <DrawerClose asChild><Button variant="outline">Continue shopping</Button></DrawerClose>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  ),
+
+  "slide-over": () => {
+    const [open, setOpen] = useState(false);
+    return (
+      <>
+        <Button variant="outline" onClick={() => setOpen(true)}>
+          <Edit className="size-4 mr-2" /> Open SlideOver
+        </Button>
+        <SlideOver open={open} onClose={setOpen}>
+          <SlideOverHeader onClose={() => setOpen(false)}>
+            <SlideOverTitle>Order #ORD-1284</SlideOverTitle>
+            <SlideOverDescription>Acme Corp · $1,250.00 · May 1, 2024</SlideOverDescription>
+          </SlideOverHeader>
+          <SlideOverBody>
+            <DescriptionList>
+              <div className="px-4 py-2 grid grid-cols-3 gap-3">
+                <DescriptionTerm>Status</DescriptionTerm>
+                <DescriptionDetails className="col-span-2">
+                  <StatusBadge status="completed" />
+                </DescriptionDetails>
+              </div>
+              <div className="px-4 py-2 grid grid-cols-3 gap-3">
+                <DescriptionTerm>Customer</DescriptionTerm>
+                <DescriptionDetails className="col-span-2">Acme Corp</DescriptionDetails>
+              </div>
+            </DescriptionList>
+          </SlideOverBody>
+        </SlideOver>
+      </>
+    );
+  },
+
+  "confirm-dialog": () => {
+    const [open, setOpen] = useState(false);
+    return (
+      <>
+        <Button variant="destructive" onClick={() => setOpen(true)}>
+          <Trash className="size-4 mr-2" /> Delete order
+        </Button>
+        <ConfirmDialog
+          isOpen={open}
+          onClose={() => setOpen(false)}
+          onConfirm={() => setOpen(false)}
+          title="Delete order #1234?"
+          description="This will permanently remove the order. This action cannot be undone."
+          confirmLabel="Delete order"
+        />
+      </>
+    );
+  },
+
+  "context-menu": () => (
+    <ContextMenu>
+      <ContextMenuTrigger className="flex items-center justify-center w-full max-w-md h-32 border border-dashed border-border rounded-md text-sm text-muted-foreground">
+        Right-click here
+      </ContextMenuTrigger>
+      <ContextMenuContent>
+        <ContextMenuLabel>Actions</ContextMenuLabel>
+        <ContextMenuItem><Pencil className="size-4 mr-2" /> Edit</ContextMenuItem>
+        <ContextMenuItem><Share className="size-4 mr-2" /> Share</ContextMenuItem>
+        <ContextMenuSeparator />
+        <ContextMenuItem variant="destructive">
+          <Trash className="size-4 mr-2" /> Delete
+        </ContextMenuItem>
+      </ContextMenuContent>
+    </ContextMenu>
+  ),
+
+  "scroll-area": () => (
+    <ScrollArea className="h-48 w-72 rounded-md border border-border">
+      <div className="p-4">
+        <h4 className="mb-3 text-sm font-medium text-foreground">Tags</h4>
+        {Array.from({ length: 30 }).map((_, i) => (
+          <div key={i} className="text-sm text-muted-foreground py-1 border-b border-border last:border-0">
+            v1.{i}.0 — {["initial release", "bug fixes", "feature update", "patch"][i % 4]}
+          </div>
+        ))}
+      </div>
+      <ScrollBar />
+    </ScrollArea>
+  ),
+
+  resizable: () => (
+    <ResizablePanelGroup direction="horizontal" className="h-48 max-w-xl rounded-md border border-border">
+      <ResizablePanel defaultSize={30} minSize={20}>
+        <div className="flex h-full items-center justify-center p-4 text-sm text-muted-foreground">
+          Sidebar
+        </div>
+      </ResizablePanel>
+      <ResizableHandle withHandle />
+      <ResizablePanel defaultSize={70}>
+        <div className="flex h-full items-center justify-center p-4 text-sm text-foreground">
+          Main content (drag the handle ←→)
+        </div>
+      </ResizablePanel>
+    </ResizablePanelGroup>
+  ),
+
+  // ── Notifications via portal — show triggers + explanatory text ─────────────
+  "feedback-toast": () => (
+    <div className="space-y-3">
+      <p className="text-sm text-muted-foreground">
+        Toasts render in a portal. In a real app, wrap your tree with{" "}
+        <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">
+          {"<FeedbackToastProvider>"}
+        </code>{" "}
+        and call{" "}
+        <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">
+          show({"{ variant, message }"})
+        </code>{" "}
+        from the hook.
+      </p>
+      <div className="flex flex-wrap gap-2">
+        <Button variant="outline" size="sm">
+          <Check className="size-3.5 mr-1.5" /> Trigger success
+        </Button>
+        <Button variant="outline" size="sm">
+          <TriangleAlert className="size-3.5 mr-1.5" /> Trigger warning
+        </Button>
+        <Button variant="outline" size="sm">
+          <Trash className="size-3.5 mr-1.5" /> Trigger error
+        </Button>
+      </div>
+    </div>
+  ),
+
+  sonner: () => (
+    <div className="space-y-3">
+      <p className="text-sm text-muted-foreground">
+        Sonner toasts also render via portal. Add{" "}
+        <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">{"<Toaster />"}</code>{" "}
+        once at the app root, then call{" "}
+        <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">toast.success("…")</code>{" "}
+        anywhere.
+      </p>
+      <div className="flex flex-wrap gap-2">
+        <Button variant="outline" size="sm">toast.success</Button>
+        <Button variant="outline" size="sm">toast.error</Button>
+        <Button variant="outline" size="sm">
+          <RotateCw className="size-3.5 mr-1.5" /> toast.promise
+        </Button>
+      </div>
+    </div>
+  ),
 };
 
 export function getComponentPreview(id: string): React.ReactNode | null {
