@@ -1,0 +1,265 @@
+import { useEffect, useState } from "react";
+import { Moon, Sun, Sparkles } from "lucide-react";
+import {
+  Sidebar,
+  SidebarBody,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarItem,
+  SidebarLabel,
+  SidebarSection,
+} from "./components/ui/sidebar";
+import { ErrorBoundary } from "./components/ErrorBoundary";
+
+import { OverviewView } from "./views/OverviewView";
+import { MCPView } from "./views/MCPView";
+import { ComponentsMapView } from "./views/ComponentsMapView";
+import { ComponentDetailView } from "./views/ComponentDetailView";
+import { FoundationsView } from "./views/FoundationsView";
+import { BrandingView } from "./views/BrandingView";
+import { TransparencyView } from "./views/TransparencyView";
+
+type ViewId = string;
+
+interface NavItem {
+  id: ViewId;
+  label: string;
+  isNew?: boolean;
+}
+
+interface NavSection {
+  title: string;
+  items: NavItem[];
+}
+
+const NAV: NavSection[] = [
+  {
+    title: "Get Started",
+    items: [
+      { id: "overview", label: "Overview" },
+      { id: "mcp", label: "MCP Connection", isNew: true },
+      { id: "components-map", label: "All Components", isNew: true },
+    ],
+  },
+  {
+    title: "Foundations",
+    items: [
+      { id: "branding", label: "Branding & Assets" },
+      { id: "colors", label: "Colors" },
+      { id: "typography", label: "Typography" },
+      { id: "spacing", label: "Spacing & Grid" },
+      { id: "borders", label: "Borders & Radius" },
+      { id: "shadows", label: "Elevation & Shadows" },
+      { id: "transparency", label: "Transparency & Glass" },
+    ],
+  },
+  {
+    title: "Application UI",
+    items: [
+      { id: "button", label: "Button" },
+      { id: "badge", label: "Badge" },
+      { id: "card", label: "Card" },
+      { id: "avatar", label: "Avatar" },
+      { id: "table", label: "Table" },
+      { id: "navbar", label: "Navbar" },
+      { id: "navbar-floating", label: "NavbarFloating" },
+      { id: "page-header", label: "PageHeader" },
+      { id: "page-layout", label: "PageLayout" },
+      { id: "tabs", label: "Tabs" },
+      { id: "pagination", label: "Pagination" },
+      { id: "breadcrumb", label: "Breadcrumb" },
+      { id: "kpi-card", label: "KpiCard" },
+      { id: "status-badge", label: "StatusBadge" },
+      { id: "priority-badge", label: "PriorityBadge" },
+      { id: "stage-progress", label: "StageProgress" },
+      { id: "skeleton", label: "Skeleton" },
+      { id: "progress", label: "Progress" },
+      { id: "separator", label: "Separator" },
+      { id: "divider", label: "Divider" },
+    ],
+  },
+  {
+    title: "Forms",
+    items: [
+      { id: "input", label: "Input" },
+      { id: "textarea", label: "Textarea" },
+      { id: "select", label: "Select" },
+      { id: "combobox", label: "Combobox" },
+      { id: "checkbox", label: "Checkbox" },
+      { id: "radio-group", label: "RadioGroup" },
+      { id: "switch", label: "Switch" },
+      { id: "slider", label: "Slider" },
+      { id: "date-picker", label: "DatePicker" },
+      { id: "field", label: "Field" },
+      { id: "fieldset", label: "Fieldset" },
+      { id: "form", label: "Form" },
+      { id: "input-otp", label: "InputOTP" },
+      { id: "searchable-multi-select", label: "SearchableMultiSelect" },
+    ],
+  },
+  {
+    title: "Overlays",
+    items: [
+      { id: "alert", label: "Alert" },
+      { id: "alert-dialog", label: "AlertDialog" },
+      { id: "confirm-dialog", label: "ConfirmDialog" },
+      { id: "dialog", label: "Dialog" },
+      { id: "drawer", label: "Drawer" },
+      { id: "sheet", label: "Sheet" },
+      { id: "slide-over", label: "SlideOver" },
+      { id: "popover", label: "Popover" },
+      { id: "tooltip", label: "Tooltip" },
+      { id: "dropdown-menu", label: "DropdownMenu" },
+      { id: "context-menu", label: "ContextMenu" },
+      { id: "feedback-toast", label: "FeedbackToast" },
+      { id: "sonner", label: "Sonner" },
+      { id: "sidebar-component", label: "Sidebar" },
+      { id: "scroll-area", label: "ScrollArea" },
+      { id: "resizable", label: "Resizable" },
+    ],
+  },
+  {
+    title: "Data Visualization",
+    items: [
+      { id: "accordion", label: "Accordion" },
+      { id: "description-list", label: "DescriptionList" },
+      { id: "disclosure", label: "Disclosure" },
+      { id: "empty-state", label: "EmptyState" },
+      { id: "stacked-list", label: "StackedList" },
+      { id: "chart", label: "Chart" },
+    ],
+  },
+  {
+    title: "Marketing",
+    items: [
+      { id: "hero-section", label: "HeroSection" },
+      { id: "feature-section", label: "FeatureSection" },
+      { id: "pricing", label: "Pricing" },
+    ],
+  },
+  {
+    title: "Ecommerce",
+    items: [
+      { id: "product-list", label: "ProductList" },
+      { id: "product-overview", label: "ProductOverview" },
+      { id: "shopping-cart", label: "ShoppingCart" },
+      { id: "shared-catalog-card", label: "SharedCatalogCard" },
+      { id: "shared-inventory-card", label: "SharedInventoryCard" },
+      { id: "shared-order-card", label: "SharedOrderCard" },
+    ],
+  },
+];
+
+export default function App() {
+  const [darkMode, setDarkMode] = useState(false);
+  const [currentView, setCurrentView] = useState<ViewId>("overview");
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", darkMode);
+  }, [darkMode]);
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<string>).detail;
+      if (typeof detail === "string") setCurrentView(detail);
+    };
+    window.addEventListener("strata:navigate", handler);
+    return () => window.removeEventListener("strata:navigate", handler);
+  }, []);
+
+  const FOUNDATIONS_IDS = new Set(["colors", "typography", "spacing", "borders", "shadows"]);
+
+  const renderView = () => {
+    switch (currentView) {
+      case "overview":
+        return <OverviewView />;
+      case "mcp":
+        return <MCPView />;
+      case "components-map":
+        return <ComponentsMapView />;
+      case "branding":
+        return <BrandingView />;
+      case "transparency":
+        return <TransparencyView />;
+      default:
+        if (FOUNDATIONS_IDS.has(currentView)) {
+          return <FoundationsView section={currentView} />;
+        }
+        // sidebar-component is the navbar nav id but the MCP component is just "sidebar"
+        const componentId = currentView === "sidebar-component" ? "sidebar" : currentView;
+        return <ComponentDetailView id={componentId} />;
+    }
+  };
+
+  return (
+    <div className="flex h-screen bg-background text-foreground">
+      <Sidebar className="w-[280px] fixed h-full z-50">
+        <SidebarHeader className="px-6 py-5">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-foreground rounded-md flex items-center justify-center">
+              <span className="text-background font-bold text-lg">ST</span>
+            </div>
+            <div>
+              <div className="font-bold text-foreground">Strata DS</div>
+              <div className="text-xs text-muted-foreground">v1.0 · 93 components</div>
+            </div>
+          </div>
+        </SidebarHeader>
+
+        <SidebarBody>
+          {NAV.map((section) => (
+            <div key={section.title} className="mb-6 last:mb-0">
+              <SidebarLabel>{section.title}</SidebarLabel>
+              <SidebarSection>
+                {section.items.map((item) => (
+                  <SidebarItem
+                    key={item.id}
+                    current={currentView === item.id}
+                    onClick={() => setCurrentView(item.id)}
+                    badge={item.isNew ? <NewBadge /> : undefined}
+                  >
+                    {item.label}
+                  </SidebarItem>
+                ))}
+              </SidebarSection>
+            </div>
+          ))}
+        </SidebarBody>
+
+        <SidebarFooter className="px-3 py-4">
+          <button
+            onClick={() => setDarkMode((d) => !d)}
+            className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-card border border-border rounded-md text-sm font-semibold text-foreground hover:bg-muted transition-colors"
+          >
+            {darkMode ? (
+              <>
+                <Sun className="w-4 h-4" />
+                Light Mode
+              </>
+            ) : (
+              <>
+                <Moon className="w-4 h-4" />
+                Dark Mode
+              </>
+            )}
+          </button>
+        </SidebarFooter>
+      </Sidebar>
+
+      <main className="flex-1 ml-[280px] overflow-y-auto">
+        <div className="max-w-[1280px] mx-auto p-12">
+          <ErrorBoundary resetKey={currentView}>{renderView()}</ErrorBoundary>
+        </div>
+      </main>
+    </div>
+  );
+}
+
+function NewBadge() {
+  return (
+    <span className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wider text-status-ai bg-status-ai/10 px-1.5 py-0.5 rounded">
+      <Sparkles className="w-2.5 h-2.5" /> New
+    </span>
+  );
+}
+
