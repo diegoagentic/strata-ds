@@ -162,51 +162,144 @@ import { StackedList, StackedListItem } from "@/components/data-visualization/st
  * are wrapped with their own state.
  */
 export const COMPONENT_PREVIEWS: Record<string, () => React.ReactNode> = {
-  button: () => (
-    <div className="flex flex-wrap gap-2">
-      <Button>Default</Button>
-      <Button variant="secondary">Secondary</Button>
-      <Button variant="outline">Outline</Button>
-      <Button variant="ghost">Ghost</Button>
-      <Button variant="destructive">Destructive</Button>
-      <Button variant="outline" size="icon" aria-label="Add">
-        <Plus className="size-4" />
-      </Button>
-    </div>
-  ),
+  button: () => {
+    const variants = ["default", "secondary", "outline", "ghost", "destructive", "link", "brand", "accent"] as const;
+    const sizes = ["sm", "default", "lg"] as const;
+    return (
+      <div className="space-y-6 w-full">
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Variants × sizes</p>
+          <div className="space-y-2">
+            {variants.map((v) => (
+              <div key={v} className="flex flex-wrap items-center gap-2">
+                <code className="w-20 font-mono text-xs text-muted-foreground shrink-0">{v}</code>
+                {sizes.map((s) => (
+                  <Button key={s} variant={v} size={s}>{v}</Button>
+                ))}
+                <Button variant={v} size="icon" aria-label={`${v} icon`}>
+                  <Plus className="size-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
+        </section>
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Shape pill (brand CTA)</p>
+          <div className="flex flex-wrap items-center gap-2">
+            <Button shape="pill" size="sm">Pill sm</Button>
+            <Button shape="pill">Pill default</Button>
+            <Button shape="pill" size="lg">Pill large</Button>
+            <Button variant="brand" shape="pill" size="lg">Brand pill</Button>
+          </div>
+        </section>
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Disabled</p>
+          <div className="flex flex-wrap items-center gap-2">
+            <Button disabled>Disabled</Button>
+            <Button variant="outline" disabled>Disabled</Button>
+            <Button variant="destructive" disabled>Disabled</Button>
+          </div>
+        </section>
+      </div>
+    );
+  },
   badge: () => (
-    <div className="flex flex-wrap gap-2">
+    <div className="space-y-5 w-full">
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Variants × colors (sample)</p>
+        <div className="space-y-2">
+          {(["solid", "soft", "outline"] as const).map((variant) => (
+            <div key={variant} className="flex flex-wrap items-center gap-2">
+              <code className="w-16 font-mono text-xs text-muted-foreground shrink-0">{variant}</code>
+              {(["zinc", "blue", "green", "amber", "red", "brand"] as const).map((color) => (
+                <Badge key={color} variant={variant} color={color}>{color}</Badge>
+              ))}
+            </div>
+          ))}
+        </div>
+      </section>
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">DS status tokens (governance-compliant)</p>
+        <div className="flex flex-wrap gap-2">
       <Badge>Default</Badge>
       <Badge className="bg-status-success/10 text-status-success border-status-success/20">Active</Badge>
       <Badge className="bg-status-warning/10 text-status-warning border-status-warning/20">Pending</Badge>
       <Badge className="bg-status-error/10 text-status-error border-status-error/20">Failed</Badge>
       <Badge className="bg-status-ai/10 text-status-ai border-status-ai/20">AI</Badge>
+      <Badge className="bg-status-info/10 text-status-info border-status-info/20">In progress</Badge>
+        </div>
+      </section>
     </div>
   ),
   avatar: () => (
-    <div className="flex items-center gap-3">
-      <Avatar size="xs"><AvatarFallback>XS</AvatarFallback></Avatar>
-      <Avatar size="sm"><AvatarFallback>SM</AvatarFallback></Avatar>
-      <Avatar size="md"><AvatarFallback>MD</AvatarFallback></Avatar>
-      <Avatar size="lg"><AvatarFallback>LG</AvatarFallback></Avatar>
-      <Avatar size="xl"><AvatarFallback>XL</AvatarFallback></Avatar>
+    <div className="space-y-5 w-full">
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Sizes</p>
+        <div className="flex items-center gap-3">
+          <Avatar size="xs"><AvatarFallback>XS</AvatarFallback></Avatar>
+          <Avatar size="sm"><AvatarFallback>SM</AvatarFallback></Avatar>
+          <Avatar size="md"><AvatarFallback>MD</AvatarFallback></Avatar>
+          <Avatar size="lg"><AvatarFallback>LG</AvatarFallback></Avatar>
+          <Avatar size="xl"><AvatarFallback>XL</AvatarFallback></Avatar>
+        </div>
+      </section>
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Fallback variants</p>
+        <div className="flex items-center gap-3">
+          <Avatar size="lg"><AvatarFallback variant="default">DF</AvatarFallback></Avatar>
+          <Avatar size="lg"><AvatarFallback variant="muted">MT</AvatarFallback></Avatar>
+          <Avatar size="lg"><AvatarFallback variant="gradient">GR</AvatarFallback></Avatar>
+        </div>
+      </section>
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Stacked group</p>
+        <div className="flex -space-x-2">
+          {["DZ", "JK", "AM", "LH"].map((initials, i) => (
+            <Avatar key={i} size="md" className="ring-2 ring-background">
+              <AvatarFallback variant={i % 2 === 0 ? "default" : "gradient"}>{initials}</AvatarFallback>
+            </Avatar>
+          ))}
+          <span className="ring-2 ring-background flex items-center justify-center w-10 h-10 rounded-full bg-muted text-xs font-medium text-muted-foreground">+5</span>
+        </div>
+      </section>
     </div>
   ),
-  card: () => (
-    <Card className="max-w-sm">
-      <CardHeader>
-        <CardTitle>Card Title</CardTitle>
-        <CardDescription>A short description of the card content.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <p className="text-sm text-muted-foreground">Card body — any content goes here.</p>
-      </CardContent>
-      <CardFooter className="justify-end gap-2">
-        <Button variant="outline" size="sm">Cancel</Button>
-        <Button size="sm">Confirm</Button>
-      </CardFooter>
-    </Card>
-  ),
+  card: () => {
+    const variants = ["default", "flat", "glass", "brand"] as const;
+    return (
+      <div className="space-y-5 w-full">
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-3">Surface variants</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-3xl">
+            {variants.map((v) => (
+              <Card key={v} variant={v}>
+                <CardHeader>
+                  <CardTitle className="capitalize">{v}</CardTitle>
+                  <CardDescription>Short supporting copy for this surface style.</CardDescription>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+        </section>
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-3">Structured layout (Header + Content + Footer)</p>
+          <Card className="max-w-sm">
+            <CardHeader>
+              <CardTitle>Order Summary</CardTitle>
+              <CardDescription>Review before submitting.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">3 items · $299.00</p>
+            </CardContent>
+            <CardFooter className="justify-end gap-2">
+              <Button variant="outline" size="sm">Cancel</Button>
+              <Button size="sm">Confirm</Button>
+            </CardFooter>
+          </Card>
+        </section>
+      </div>
+    );
+  },
   skeleton: () => (
     // Wrap with bg-muted/30 to give Skeleton's bg-accent enough contrast on light card
     <div className="bg-muted/30 rounded-md p-4 max-w-sm">
@@ -276,77 +369,225 @@ export const COMPONENT_PREVIEWS: Record<string, () => React.ReactNode> = {
     </div>
   ),
   tabs: () => (
-    <Tabs defaultValue="overview" className="max-w-md">
-      <TabsList>
-        <TabsTrigger value="overview">Overview</TabsTrigger>
-        <TabsTrigger value="analytics">Analytics</TabsTrigger>
-        <TabsTrigger value="settings">Settings</TabsTrigger>
-      </TabsList>
-      <TabsContent value="overview" className="text-sm text-muted-foreground py-4">
-        Overview pane content goes here.
-      </TabsContent>
-      <TabsContent value="analytics" className="text-sm text-muted-foreground py-4">
-        Analytics pane content.
-      </TabsContent>
-      <TabsContent value="settings" className="text-sm text-muted-foreground py-4">
-        Settings pane content.
-      </TabsContent>
-    </Tabs>
-  ),
-  "status-badge": () => (
-    <div className="flex flex-wrap gap-2">
-      <StatusBadge status="active" />
-      <StatusBadge status="pending" />
-      <StatusBadge status="completed" />
-      <StatusBadge status="failed" />
-      <StatusBadge status="archived" />
+    <div className="space-y-6 w-full max-w-md">
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Variant: default (boxed)</p>
+        <Tabs defaultValue="overview">
+          <TabsList variant="default">
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="settings">Settings</TabsTrigger>
+          </TabsList>
+          <TabsContent value="overview" className="text-sm text-muted-foreground py-3">Overview content.</TabsContent>
+          <TabsContent value="analytics" className="text-sm text-muted-foreground py-3">Analytics content.</TabsContent>
+          <TabsContent value="settings" className="text-sm text-muted-foreground py-3">Settings content.</TabsContent>
+        </Tabs>
+      </section>
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Variant: muted (pill)</p>
+        <Tabs defaultValue="all">
+          <TabsList variant="muted">
+            <TabsTrigger value="all">All</TabsTrigger>
+            <TabsTrigger value="active">Active</TabsTrigger>
+            <TabsTrigger value="archived">Archived</TabsTrigger>
+          </TabsList>
+        </Tabs>
+      </section>
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Variant: link (underline)</p>
+        <Tabs defaultValue="overview">
+          <TabsList variant="link">
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="analytics">Analytics</TabsTrigger>
+            <TabsTrigger value="settings">Settings</TabsTrigger>
+          </TabsList>
+        </Tabs>
+      </section>
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Size: sm</p>
+        <Tabs defaultValue="day">
+          <TabsList variant="muted" size="sm">
+            <TabsTrigger value="day">Day</TabsTrigger>
+            <TabsTrigger value="week">Week</TabsTrigger>
+            <TabsTrigger value="month">Month</TabsTrigger>
+          </TabsList>
+        </Tabs>
+      </section>
     </div>
   ),
-  "priority-badge": () => (
-    <div className="flex flex-wrap gap-2">
-      <PriorityBadge priority="low" />
-      <PriorityBadge priority="medium" />
-      <PriorityBadge priority="high" />
-      <PriorityBadge priority="critical" />
-    </div>
-  ),
-  "kpi-card": () => (
-    <KPICard
-      label="Monthly Revenue"
-      value={124500}
-      valueFormat="currency"
-      currency="USD"
-      trend={{ direction: "up", value: "12.5%" }}
-      tone="success"
-      icon={<Star className="size-5" />}
-    />
-  ),
-  toggle: () => {
-    const [pressed, setPressed] = useState(false);
+  "status-badge": () => {
+    const all = ["active", "available", "in_progress", "pending", "completed", "maintenance", "warning", "error", "archived", "in-progress", "in use", "failed"] as const;
     return (
-      <Toggle pressed={pressed} onPressedChange={setPressed} aria-label="Toggle bell">
-        <Bell className="size-4" />
-        Notifications
-      </Toggle>
+      <div className="space-y-3 w-full">
+        <p className="text-xs font-semibold uppercase text-muted-foreground">All 12 canonical status values</p>
+        <div className="flex flex-wrap gap-2">
+          {all.map((s) => <StatusBadge key={s} status={s as never} />)}
+        </div>
+      </div>
     );
   },
+  "priority-badge": () => {
+    const priorities = ["low", "medium", "high", "critical"] as const;
+    return (
+      <div className="space-y-5 w-full">
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Priorities × sizes × shapes</p>
+          <div className="space-y-2">
+            {(["default", "nano"] as const).map((size) => (
+              <div key={size} className="flex flex-wrap items-center gap-2">
+                <code className="w-16 font-mono text-xs text-muted-foreground shrink-0">{size}</code>
+                {priorities.map((p) => (
+                  <PriorityBadge key={p} priority={p} size={size} />
+                ))}
+                {priorities.map((p) => (
+                  <PriorityBadge key={`${p}-pill`} priority={p} size={size} shape="pill" />
+                ))}
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    );
+  },
+  "kpi-card": () => (
+    <div className="space-y-5 w-full">
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Tones</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <KPICard
+            label="Monthly Revenue"
+            value={124500}
+            valueFormat="currency"
+            currency="USD"
+            trend={{ direction: "up", value: "12.5%" }}
+            tone="success"
+            icon={<Star className="size-5" />}
+          />
+          <KPICard
+            label="Failed Orders"
+            value={23}
+            trend={{ direction: "down", value: "4.2%" }}
+            tone="danger"
+            icon={<TriangleAlert className="size-5" />}
+          />
+          <KPICard
+            label="Active Users"
+            value={8492}
+            valueFormat={(v) => `${(v / 1000).toFixed(1)}k`}
+            trend={{ direction: "up", value: "8.7%" }}
+            tone="brand"
+            icon={<Users className="size-5" />}
+          />
+          <KPICard
+            label="Pending Approvals"
+            value={47}
+            tone="warning"
+            icon={<Bell className="size-5" />}
+          />
+        </div>
+      </section>
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Densities</p>
+        <div className="space-y-3">
+          {(["compact", "default", "comfortable"] as const).map((d) => (
+            <div key={d}>
+              <code className="text-xs text-muted-foreground">density={d}</code>
+              <KPICard
+                label="Total orders"
+                value={1284}
+                density={d}
+                trend={{ direction: "up", value: "3.1%" }}
+                tone="neutral"
+                icon={<Star className="size-5" />}
+              />
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  ),
+  toggle: () => (
+    <div className="space-y-5 w-full">
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Variants × sizes</p>
+        <div className="space-y-2">
+          {(["default", "outline", "pill"] as const).map((v) => (
+            <div key={v} className="flex items-center gap-2">
+              <code className="w-16 font-mono text-xs text-muted-foreground shrink-0">{v}</code>
+              {(["sm", "default", "lg"] as const).map((s) => (
+                <Toggle key={s} variant={v} size={s} aria-label={`${v}-${s}`}>
+                  <Bell className="size-4" />
+                </Toggle>
+              ))}
+              <Toggle variant={v} pressed aria-label={`${v}-pressed`}>
+                <Bell className="size-4" /> On
+              </Toggle>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  ),
   "toggle-group": () => {
     const [view, setView] = useState("grid");
+    const [formats, setFormats] = useState<string[]>(["bold"]);
     return (
-      <ToggleGroup type="single" value={view} onValueChange={(v) => v && setView(v)} variant="outline">
-        <ToggleGroupItem value="grid" aria-label="Grid">Grid</ToggleGroupItem>
-        <ToggleGroupItem value="list" aria-label="List">List</ToggleGroupItem>
-        <ToggleGroupItem value="table" aria-label="Table">Table</ToggleGroupItem>
-      </ToggleGroup>
+      <div className="space-y-5 w-full">
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Single-select (variant: outline)</p>
+          <ToggleGroup type="single" value={view} onValueChange={(v) => v && setView(v)} variant="outline">
+            <ToggleGroupItem value="grid" aria-label="Grid"><Grid2x2 className="size-4 mr-1" /> Grid</ToggleGroupItem>
+            <ToggleGroupItem value="list" aria-label="List"><ListIcon className="size-4 mr-1" /> List</ToggleGroupItem>
+            <ToggleGroupItem value="table" aria-label="Table">Table</ToggleGroupItem>
+          </ToggleGroup>
+        </section>
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Multi-select (variant: default)</p>
+          <ToggleGroup type="multiple" value={formats} onValueChange={setFormats}>
+            <ToggleGroupItem value="bold" aria-label="Bold">Bold</ToggleGroupItem>
+            <ToggleGroupItem value="italic" aria-label="Italic"><em>Italic</em></ToggleGroupItem>
+            <ToggleGroupItem value="underline" aria-label="Underline"><u>Underline</u></ToggleGroupItem>
+          </ToggleGroup>
+        </section>
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Pill segmented (size sm)</p>
+          <ToggleGroup type="single" defaultValue="day" variant="pill" size="sm">
+            <ToggleGroupItem value="day">Day</ToggleGroupItem>
+            <ToggleGroupItem value="week">Week</ToggleGroupItem>
+            <ToggleGroupItem value="month">Month</ToggleGroupItem>
+          </ToggleGroup>
+        </section>
+      </div>
     );
   },
   "company-greeting": () => (
     <CompanyGreeting heading="Good morning, Diego" subheading="Acme Corp · 12 active orders · 3 alerts" />
   ),
   input: () => (
-    <div className="max-w-sm space-y-3">
-      <Input placeholder="Search..." />
-      <Input placeholder="With search prefix" />
+    <div className="max-w-sm space-y-5 w-full">
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">States</p>
+        <div className="space-y-2">
+          <Input placeholder="Default state" />
+          <Input placeholder="Disabled" disabled />
+          <Input placeholder="Invalid" aria-invalid defaultValue="bad@input" />
+        </div>
+      </section>
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Slots</p>
+        <div className="space-y-2">
+          <Input placeholder="With prefix" prefix={<Search className="size-4" />} />
+          <Input placeholder="With suffix" suffix={<ChevronDown className="size-4" />} />
+          <Input placeholder="Both" prefix={<Search className="size-4" />} suffix={<Plus className="size-4" />} />
+        </div>
+      </section>
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Types</p>
+        <div className="space-y-2">
+          <Input label="Email" type="email" placeholder="you@example.com" />
+          <Input label="Password (auto toggle)" type="password" placeholder="••••••••" />
+        </div>
+      </section>
     </div>
   ),
   textarea: () => <Textarea placeholder="Multi-line text..." rows={3} className="max-w-sm" />,
@@ -475,27 +716,84 @@ export const COMPONENT_PREVIEWS: Record<string, () => React.ReactNode> = {
     </Table>
   ),
 
-  "stage-progress": () => (
-    <StageProgress
-      stages={["Order Placed", "Processing", "Shipped", "Delivered"]}
-      currentIndex={2}
-      color="brand"
-    />
-  ),
+  "stage-progress": () => {
+    const stages = ["Placed", "Processing", "Shipped", "Delivered"];
+    const colors = ["brand", "success", "warning", "error"] as const;
+    return (
+      <div className="space-y-5 w-full">
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Colors</p>
+          <div className="space-y-3">
+            {colors.map((c) => (
+              <div key={c}>
+                <code className="text-xs text-muted-foreground mb-1 block">color={c}</code>
+                <StageProgress stages={stages} currentIndex={2} color={c} />
+              </div>
+            ))}
+          </div>
+        </section>
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Vertical (asc)</p>
+          <StageProgress
+            vertical
+            verticalDirection="asc"
+            stages={["Application", "Interview", "Decision"]}
+            currentIndex={1}
+            color="brand"
+          />
+        </section>
+      </div>
+    );
+  },
 
   banner: () => (
-    <Banner variant="info" dismissible>
-      New features available — <a href="#" className="underline font-semibold">see what's new</a>
-    </Banner>
+    <div className="space-y-2 max-w-2xl w-full">
+      <p className="text-xs font-semibold uppercase text-muted-foreground">All 4 variants</p>
+      <Banner variant="info" dismissible>
+        New features available — <a href="#" className="underline font-semibold">see what's new</a>
+      </Banner>
+      <Banner variant="success">All systems operational.</Banner>
+      <Banner variant="warning">Scheduled maintenance: Saturday 10pm–12am UTC.</Banner>
+      <Banner variant="error" dismissible>
+        Payment failed. <a href="#" className="underline font-semibold">Update billing</a>.
+      </Banner>
+    </div>
   ),
 
   "info-banner": () => (
-    <InfoBanner
-      tone="info"
-      icon={<Info className="size-5" />}
-      title="Pro tip"
-      description="Use ⌘K to open the command palette from any page."
-    />
+    <div className="space-y-2 max-w-md w-full">
+      <p className="text-xs font-semibold uppercase text-muted-foreground">All 5 tones</p>
+      <InfoBanner
+        tone="neutral"
+        icon={<Info className="size-5" />}
+        title="Neutral"
+        description="Default tone for non-prioritized notes."
+      />
+      <InfoBanner
+        tone="info"
+        icon={<Info className="size-5" />}
+        title="Info"
+        description="Use ⌘K to open the command palette from any page."
+      />
+      <InfoBanner
+        tone="success"
+        icon={<Check className="size-5" />}
+        title="Synced"
+        description="Last sync: 2 minutes ago."
+      />
+      <InfoBanner
+        tone="warning"
+        icon={<TriangleAlert className="size-5" />}
+        title="Quota approaching"
+        description="You are using 90% of your storage."
+      />
+      <InfoBanner
+        tone="danger"
+        icon={<Trash className="size-5" />}
+        title="Action required"
+        description="Subscription expires in 3 days."
+      />
+    </div>
   ),
 
   "hover-card": () => (
@@ -565,7 +863,13 @@ export const COMPONENT_PREVIEWS: Record<string, () => React.ReactNode> = {
 
   // ── Overlays ────────────────────────────────────────────────────────────────
   alert: () => (
-    <div className="space-y-2 max-w-md">
+    <div className="space-y-2 max-w-md w-full">
+      <p className="text-xs font-semibold uppercase text-muted-foreground mb-1">All 6 variants</p>
+      <Alert>
+        <Info className="size-4" />
+        <AlertTitle>Default</AlertTitle>
+        <AlertDescription>Neutral inline message.</AlertDescription>
+      </Alert>
       <Alert variant="success">
         <Check className="size-4" />
         <AlertTitle>Saved</AlertTitle>
@@ -575,6 +879,21 @@ export const COMPONENT_PREVIEWS: Record<string, () => React.ReactNode> = {
         <TriangleAlert className="size-4" />
         <AlertTitle>Storage almost full</AlertTitle>
         <AlertDescription>You are using 90% of your 5GB storage.</AlertDescription>
+      </Alert>
+      <Alert variant="info">
+        <Info className="size-4" />
+        <AlertTitle>Heads up</AlertTitle>
+        <AlertDescription>Maintenance window scheduled for Saturday.</AlertDescription>
+      </Alert>
+      <Alert variant="destructive">
+        <Trash className="size-4" />
+        <AlertTitle>Upload failed</AlertTitle>
+        <AlertDescription>The file exceeded the 10MB limit.</AlertDescription>
+      </Alert>
+      <Alert variant="brand">
+        <Sparkles className="size-4" />
+        <AlertTitle>New feature</AlertTitle>
+        <AlertDescription>Try the redesigned dashboard — beta available now.</AlertDescription>
       </Alert>
     </div>
   ),
@@ -662,23 +981,49 @@ export const COMPONENT_PREVIEWS: Record<string, () => React.ReactNode> = {
 
   tooltip: () => (
     <TooltipProvider delayDuration={200}>
-      <div className="flex items-center gap-3">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant="ghost" size="icon" aria-label="Settings">
-              <MoreHorizontal className="size-4" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>Open menu (⌘K)</TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant="ghost" size="icon" aria-label="Delete">
-              <Trash className="size-4" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent side="right">Delete this row</TooltipContent>
-        </Tooltip>
+      <div className="space-y-5 w-full">
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">All 4 placements</p>
+          <div className="flex flex-wrap gap-3">
+            {(["top", "right", "bottom", "left"] as const).map((side) => (
+              <Tooltip key={side}>
+                <TooltipTrigger asChild>
+                  <Button variant="outline" size="sm">side: {side}</Button>
+                </TooltipTrigger>
+                <TooltipContent side={side}>Tooltip on {side}</TooltipContent>
+              </Tooltip>
+            ))}
+          </div>
+        </section>
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Common usage (icon buttons)</p>
+          <div className="flex items-center gap-2">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost" size="icon" aria-label="Settings">
+                  <Settings className="size-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Settings (⌘,)</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost" size="icon" aria-label="Edit">
+                  <Edit className="size-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Edit</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost" size="icon" aria-label="Delete">
+                  <Trash className="size-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="right">Delete</TooltipContent>
+            </Tooltip>
+          </div>
+        </section>
       </div>
     </TooltipProvider>
   ),

@@ -244,10 +244,9 @@ function TypographySection({ data }: { data: FoundationData }) {
 
 function SpacingSection({ data }: { data: FoundationData }) {
   const scale = (data.scale ?? {}) as Record<string, string>;
-  const containers = (data.containers ?? {}) as Record<string, string>;
   const grid = (data.grid ?? null) as { base: number; note?: string } | null;
   const hasScale = Object.keys(scale).length > 0;
-  const hasContainers = Object.keys(containers).length > 0;
+  // Containers and 12-col grid live in their own page: /grid-containers
 
   return (
     <div className="space-y-10">
@@ -278,19 +277,16 @@ function SpacingSection({ data }: { data: FoundationData }) {
         </section>
       )}
 
-      {hasContainers && (
-        <section>
-          <h2 className="text-xl font-bold text-foreground mb-3">Containers</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-            {Object.entries(containers).map(([name, value]) => (
-              <div key={name} className="bg-card border border-border rounded-lg p-3">
-                <p className="font-mono text-xs font-semibold text-foreground">{name}</p>
-                <p className="font-mono text-xs text-muted-foreground mt-0.5">{value}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
+      <section className="bg-card border border-border rounded-lg p-4 text-sm text-muted-foreground">
+        Looking for the 12-column grid system and container max-widths? See the dedicated{" "}
+        <button
+          onClick={() => window.dispatchEvent(new CustomEvent("strata:navigate", { detail: "grid-containers" }))}
+          className="text-status-ai hover:underline font-semibold"
+        >
+          Grid &amp; Containers
+        </button>{" "}
+        page.
+      </section>
     </div>
   );
 }
