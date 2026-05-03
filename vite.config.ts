@@ -21,6 +21,12 @@ export default defineConfig({
       '@': path.resolve(dirname, './src')
     }
   },
+  build: {
+    // Dev app builds to dev-dist/ to avoid colliding with the library build
+    // (`npm run build:lib` outputs to dist/ via vite.config.lib.ts).
+    outDir: 'dev-dist',
+    emptyOutDir: true,
+  },
   test: {
     // Storybook test integration temporarily disabled due to version mismatch
   }
