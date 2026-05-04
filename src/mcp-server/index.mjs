@@ -653,21 +653,51 @@ const COMPONENTS = {
   avatar: {
     name: "Avatar",
     import: `import { Avatar, AvatarImage, AvatarFallback } from 'strata-design-system';`,
+    category: "application-ui",
     description: "User profile image with auto fallback to initials.",
     variants: {
       size: ["xs (24px)", "sm (32px)", "md (40px)", "lg (48px)", "xl (64px)", "2xl (96px)"],
       fallbackVariant: ["default", "muted", "gradient"],
     },
+    props: [
+      "size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' — controls outer dimensions",
+      "className?: string — extends styles (e.g. ring-2 ring-background for stacks)",
+      "AvatarImage: src, alt — image source",
+      "AvatarFallback: variant?: 'default' | 'muted' | 'gradient', children — text shown when image fails or is missing",
+    ],
     tokens: {
       "bg-primary": "default fallback bg",
       "text-primary-foreground": "default fallback text",
       "bg-muted": "muted fallback bg",
       "rounded-full": "circular crop",
+      "ring-background": "border ring used in stacked avatar groups",
     },
+    whenToUse: [
+      "Identifying users in navbars, comments, list rows, mention chips",
+      "Stacked groups for collaborator/team displays (use -space-x-2 + ring-2 ring-background)",
+      "Initials fallback when image is missing, broken, or still loading",
+      "Pair with name + role text in compact rows (don't rely on avatar alone for identification)",
+    ],
+    antiPatterns: [
+      "❌ Plain <img> with rounded-full — loses fallback, sizing tokens, and ring composition",
+      "❌ Mixing inconsistent sizes in the same row (avatars in a list should share one size)",
+      "❌ Avatar without alt text on AvatarImage — fails screen readers",
+      "❌ Decorative-only usage with no name/label nearby — adds noise without identity",
+    ],
     example: `<Avatar size="md">
   <AvatarImage src={user.avatarUrl} alt={user.name} />
   <AvatarFallback>{user.initials}</AvatarFallback>
-</Avatar>`,
+</Avatar>
+
+// Stacked group
+<div className="flex -space-x-2">
+  {users.slice(0, 3).map(u => (
+    <Avatar key={u.id} size="sm" className="ring-2 ring-background">
+      <AvatarImage src={u.avatar} alt={u.name} />
+      <AvatarFallback variant="gradient">{u.initials}</AvatarFallback>
+    </Avatar>
+  ))}
+</div>`,
   },
 
   table: {
@@ -792,7 +822,11 @@ const COMPONENTS = {
       "children: ReactNode",
       "className?: string",
     ],
-    tokens: {},
+    tokens: {
+      "rounded-lg": "common companion class for rounded media corners",
+      "border-border": "thin frame around iframe/img embeds",
+      "object-cover": "applied on the inner img/video so it fills the box without distortion",
+    },
     whenToUse: [
       "Image cards in grids — keeps consistent shape across thumbnails",
       "Video and Loom embeds (ratio={16/9})",
@@ -1885,7 +1919,13 @@ useEffect(() => {
       "children?: ReactNode",
       "...all React.AnchorHTMLAttributes<HTMLAnchorElement> (href, target, rel, className, etc.)",
     ],
-    tokens: {},
+    tokens: {
+      "text-primary": "PREFERRED inline link color — pairs with focus ring",
+      "text-foreground": "neutral link color when sitting next to body text",
+      "hover:underline": "standard hover affordance",
+      "underline-offset-4": "comfortable spacing between text and underline",
+      "focus-visible:ring-ring": "focus ring inherited from parent components like Button",
+    },
     whenToUse: [
       "As asChild target inside Button (`<Button asChild><Link to='/x'>...</Link></Button>`)",
       "Inside BreadcrumbLink, NavbarItem, or any DS component that uses Slot",
