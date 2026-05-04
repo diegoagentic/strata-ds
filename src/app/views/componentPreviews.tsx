@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import {
   Bell, Calendar as CalendarIcon, Check, ChevronDown, Download, Edit,
-  FileText, Filter, Globe, Grid2x2, Home, Inbox, Info, List as ListIcon,
+  FileText, Filter, Globe, Grid2x2, Heart, Home, Inbox, Info, List as ListIcon,
   MoreHorizontal, Package, Pencil, Plus, RotateCw, Search, Settings, Share, ShoppingBag,
   Sparkles, Star, Trash, TriangleAlert, Truck, Upload, Users,
 } from "lucide-react";
@@ -82,6 +83,8 @@ import {
   PricingSection, PricingCard, PricingTitle, PricingPrice, PricingCost,
   PricingFeatures, PricingFeature,
 } from "@/components/application-ui/pricing";
+import { CopyButton } from "@/components/application-ui/copy-button";
+import { Toaster } from "@/components/overlays/sonner";
 import { ProductGrid, ProductCard } from "@/components/application-ui/product-list";
 import { ShoppingCart } from "@/components/application-ui/shopping-cart";
 import { SharedCatalogCard } from "@/components/application-ui/shared-catalog-card";
@@ -98,6 +101,7 @@ import { Label } from "@/components/application-ui/label";
 import { Field, FieldLabel, FieldDescription } from "@/components/forms/field";
 import {
   Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
+  SelectGroup, SelectLabel,
 } from "@/components/forms/select";
 import { Combobox, ComboboxOption } from "@/components/forms/combobox";
 import { DatePicker } from "@/components/forms/date-picker";
@@ -600,7 +604,22 @@ export const COMPONENT_PREVIEWS: Record<string, React.FC> = {
       </section>
     </div>
   ),
-  textarea: () => <Textarea placeholder="Multi-line text..." rows={3} className="max-w-sm" />,
+  textarea: () => (
+    <div className="max-w-sm space-y-5 w-full">
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Default</p>
+        <Textarea placeholder="Type your message here..." rows={3} />
+      </section>
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Disabled</p>
+        <Textarea defaultValue="This textarea is disabled" disabled rows={3} />
+      </section>
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Larger (rows=6)</p>
+        <Textarea placeholder="A taller textarea for longer content like descriptions, notes, or comments." rows={6} />
+      </section>
+    </div>
+  ),
   switch: () => {
     const [on, setOn] = useState(false);
     return (
@@ -635,11 +654,28 @@ export const COMPONENT_PREVIEWS: Record<string, React.FC> = {
     );
   },
   slider: () => {
-    const [val, setVal] = useState([50]);
+    const [single, setSingle] = useState([50]);
+    const [range, setRange] = useState([20, 80]);
     return (
-      <div className="max-w-sm space-y-2">
-        <Slider value={val} onValueChange={setVal} min={0} max={100} step={1} />
-        <p className="text-sm text-muted-foreground font-mono">Value: {val[0]}</p>
+      <div className="max-w-sm w-full space-y-6">
+        <section>
+          <div className="flex justify-between mb-2">
+            <p className="text-xs font-semibold uppercase text-muted-foreground">Single value</p>
+            <span className="text-xs font-mono text-muted-foreground">{single[0]}</span>
+          </div>
+          <Slider value={single} onValueChange={setSingle} min={0} max={100} step={1} />
+        </section>
+        <section>
+          <div className="flex justify-between mb-2">
+            <p className="text-xs font-semibold uppercase text-muted-foreground">Range (2 thumbs)</p>
+            <span className="text-xs font-mono text-muted-foreground">{range[0]} – {range[1]}</span>
+          </div>
+          <Slider value={range} onValueChange={setRange} min={0} max={100} step={1} />
+        </section>
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Disabled</p>
+          <Slider defaultValue={[35]} min={0} max={100} step={1} disabled />
+        </section>
       </div>
     );
   },
@@ -855,21 +891,84 @@ export const COMPONENT_PREVIEWS: Record<string, React.FC> = {
   },
 
   // ── Forms extras ────────────────────────────────────────────────────────────
-  select: () => {
-    const [value, setValue] = useState<string | undefined>();
-    return (
-      <Select value={value} onValueChange={setValue}>
-        <SelectTrigger className="w-[220px]">
-          <SelectValue placeholder="Select a role" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="admin">Admin</SelectItem>
-          <SelectItem value="editor">Editor</SelectItem>
-          <SelectItem value="viewer">Viewer</SelectItem>
-        </SelectContent>
-      </Select>
-    );
-  },
+  select: () => (
+    <div className="space-y-6 w-full">
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Trigger sizes (sm + default)</p>
+        <div className="flex items-center gap-3 flex-wrap">
+          <Select>
+            <SelectTrigger size="sm" className="w-[160px]">
+              <SelectValue placeholder="Small" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="a">Item A</SelectItem>
+              <SelectItem value="b">Item B</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Default size" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="a">Item A</SelectItem>
+              <SelectItem value="b">Item B</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </section>
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">States</p>
+        <div className="flex items-center gap-3 flex-wrap">
+          <Select>
+            <SelectTrigger className="w-[160px]">
+              <SelectValue placeholder="Default" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="a">Option A</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select disabled>
+            <SelectTrigger className="w-[160px]">
+              <SelectValue placeholder="Disabled" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="a">Option A</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select>
+            <SelectTrigger className="w-[160px]" aria-invalid>
+              <SelectValue placeholder="Invalid" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="a">Option A</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </section>
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">With groups + labels</p>
+        <Select>
+          <SelectTrigger className="w-[220px]">
+            <SelectValue placeholder="Select a food" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Fruits</SelectLabel>
+              <SelectItem value="apple">Apple</SelectItem>
+              <SelectItem value="banana">Banana</SelectItem>
+              <SelectItem value="orange">Orange</SelectItem>
+            </SelectGroup>
+            <SelectGroup>
+              <SelectLabel>Vegetables</SelectLabel>
+              <SelectItem value="carrot">Carrot</SelectItem>
+              <SelectItem value="broccoli">Broccoli</SelectItem>
+              <SelectItem value="spinach">Spinach</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </section>
+    </div>
+  ),
 
   // ── Overlays ────────────────────────────────────────────────────────────────
   alert: () => (
@@ -948,27 +1047,50 @@ export const COMPONENT_PREVIEWS: Record<string, React.FC> = {
   ),
 
   sheet: () => (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button variant="outline">Open Sheet</Button>
-      </SheetTrigger>
-      <SheetContent>
-        <SheetHeader>
-          <SheetTitle>Edit profile</SheetTitle>
-          <SheetDescription>Make changes to your profile and save.</SheetDescription>
-        </SheetHeader>
-        <div className="py-6 space-y-4">
-          <Field>
-            <FieldLabel>Display name</FieldLabel>
-            <Input defaultValue="Diego Zuluaga" />
-          </Field>
-          <Field>
-            <FieldLabel>Bio</FieldLabel>
-            <Textarea rows={3} defaultValue="Design Systems @ Strata" />
-          </Field>
+    <div className="space-y-6 w-full">
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">With form (default side: right)</p>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="outline">Edit profile</Button>
+          </SheetTrigger>
+          <SheetContent>
+            <SheetHeader>
+              <SheetTitle>Edit profile</SheetTitle>
+              <SheetDescription>Make changes to your profile and save.</SheetDescription>
+            </SheetHeader>
+            <div className="py-6 space-y-4 px-4">
+              <Field>
+                <FieldLabel>Display name</FieldLabel>
+                <Input defaultValue="Diego Zuluaga" />
+              </Field>
+              <Field>
+                <FieldLabel>Bio</FieldLabel>
+                <Textarea rows={3} defaultValue="Design Systems @ Strata" />
+              </Field>
+            </div>
+          </SheetContent>
+        </Sheet>
+      </section>
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Side variants (top / right / bottom / left)</p>
+        <div className="flex flex-wrap gap-2">
+          {(["top", "right", "bottom", "left"] as const).map((side) => (
+            <Sheet key={side}>
+              <SheetTrigger asChild>
+                <Button variant="outline" size="sm">{side}</Button>
+              </SheetTrigger>
+              <SheetContent side={side}>
+                <SheetHeader>
+                  <SheetTitle>{side} sheet</SheetTitle>
+                  <SheetDescription>This sheet slides in from the {side}.</SheetDescription>
+                </SheetHeader>
+              </SheetContent>
+            </Sheet>
+          ))}
         </div>
-      </SheetContent>
-    </Sheet>
+      </section>
+    </div>
   ),
 
   popover: () => (
@@ -1178,13 +1300,37 @@ export const COMPONENT_PREVIEWS: Record<string, React.FC> = {
   ),
 
   "copy-button": () => (
-    <div className="flex items-center gap-2 max-w-md">
-      <code className="flex-1 font-mono text-xs bg-muted px-3 py-2 rounded border border-border truncate">
-        npm install strata-design-system
-      </code>
-      <Button variant="outline" size="sm">
-        <FileText className="size-3.5 mr-1.5" /> Copy
-      </Button>
+    <div className="space-y-6 w-full max-w-xl">
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Single format (sm + md)</p>
+        <div className="flex flex-wrap items-center gap-3">
+          <CopyButton
+            size="sm"
+            formats={[{ label: "npm", value: "npm install strata-design-system" }]}
+          />
+          <CopyButton
+            size="md"
+            formats={[{ label: "yarn", value: "yarn add strata-design-system" }]}
+          />
+        </div>
+        <p className="mt-2 text-xs text-muted-foreground">
+          Click to copy. The button shows a "Copied" check for 2 seconds.
+        </p>
+      </section>
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Multiple formats (dropdown)</p>
+        <CopyButton
+          formats={[
+            { label: "npm", value: "npm install strata-design-system", description: "Node Package Manager" },
+            { label: "yarn", value: "yarn add strata-design-system", description: "Yarn package manager" },
+            { label: "pnpm", value: "pnpm add strata-design-system", description: "Performant npm" },
+            { label: "bun", value: "bun add strata-design-system", description: "Bun runtime" },
+          ]}
+        />
+        <p className="mt-2 text-xs text-muted-foreground">
+          Click the chevron to pick a format; the chosen one is remembered.
+        </p>
+      </section>
     </div>
   ),
 
@@ -1651,6 +1797,16 @@ export const COMPONENT_PREVIEWS: Record<string, React.FC> = {
   },
 
   "searchable-multi-select": () => {
+    const fruits = [
+      { id: "1", label: "Apple" },
+      { id: "2", label: "Banana" },
+      { id: "3", label: "Cherry" },
+      { id: "4", label: "Date" },
+      { id: "5", label: "Elderberry" },
+      { id: "6", label: "Fig" },
+      { id: "7", label: "Grape" },
+      { id: "8", label: "Honeydew" },
+    ];
     const skills = [
       { id: "react", label: "React" },
       { id: "ts", label: "TypeScript" },
@@ -1658,15 +1814,54 @@ export const COMPONENT_PREVIEWS: Record<string, React.FC> = {
       { id: "node", label: "Node.js" },
       { id: "go", label: "Go" },
     ];
-    const [selected, setSelected] = useState<typeof skills>([]);
+    const manyOptions = Array.from({ length: 24 }, (_, i) => ({
+      id: `opt-${i + 1}`,
+      label: `Option ${i + 1}`,
+    }));
+    const [empty, setEmpty] = useState<typeof skills>([]);
+    const [preselected, setPreselected] = useState([fruits[0], fruits[2], fruits[4]]);
+    const [withIcon, setWithIcon] = useState([fruits[0], fruits[1]]);
+    const [many, setMany] = useState<typeof manyOptions>([]);
     return (
-      <SearchableMultiSelect
-        options={skills}
-        value={selected}
-        onChange={setSelected}
-        placeholder="Add skills..."
-        className="max-w-sm"
-      />
+      <div className="max-w-sm space-y-6 w-full">
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Default (empty)</p>
+          <SearchableMultiSelect
+            options={skills}
+            value={empty}
+            onChange={setEmpty}
+            placeholder="Add skills..."
+          />
+        </section>
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">With pre-selected values</p>
+          <SearchableMultiSelect
+            options={fruits}
+            value={preselected}
+            onChange={setPreselected}
+            placeholder="Search..."
+          />
+        </section>
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">With tag icon</p>
+          <SearchableMultiSelect
+            options={fruits}
+            value={withIcon}
+            onChange={setWithIcon}
+            icon={<Heart className="fill-current size-3" />}
+            placeholder="Search..."
+          />
+        </section>
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Many options (+ add custom)</p>
+          <SearchableMultiSelect
+            options={manyOptions}
+            value={many}
+            onChange={setMany}
+            placeholder="Search or add custom..."
+          />
+        </section>
+      </div>
     );
   },
 
@@ -1854,21 +2049,77 @@ export const COMPONENT_PREVIEWS: Record<string, React.FC> = {
   ),
 
   sonner: () => (
-    <div className="space-y-3">
+    <div className="space-y-4 w-full max-w-xl">
+      <Toaster />
       <p className="text-sm text-muted-foreground">
-        Sonner toasts also render via portal. Add{" "}
+        Sonner toasts render via portal. Add{" "}
         <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">{"<Toaster />"}</code>{" "}
         once at the app root, then call{" "}
-        <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">toast.success("…")</code>{" "}
-        anywhere.
+        <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">toast.success(...)</code>{" "}
+        anywhere. Click any button below to see it live.
       </p>
-      <div className="flex flex-wrap gap-2">
-        <Button variant="outline" size="sm">toast.success</Button>
-        <Button variant="outline" size="sm">toast.error</Button>
-        <Button variant="outline" size="sm">
-          <RotateCw className="size-3.5 mr-1.5" /> toast.promise
-        </Button>
-      </div>
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Variants</p>
+        <div className="flex flex-wrap gap-2">
+          <Button variant="outline" size="sm" onClick={() => toast("Heads up — something happened")}>
+            toast()
+          </Button>
+          <Button variant="outline" size="sm" onClick={() => toast.success("Profile saved successfully")}>
+            <Check className="size-3.5 mr-1.5" /> success
+          </Button>
+          <Button variant="outline" size="sm" onClick={() => toast.error("Could not connect to server")}>
+            <TriangleAlert className="size-3.5 mr-1.5" /> error
+          </Button>
+          <Button variant="outline" size="sm" onClick={() => toast.warning("Your session expires in 5 minutes")}>
+            warning
+          </Button>
+          <Button variant="outline" size="sm" onClick={() => toast.info("New version available")}>
+            <Info className="size-3.5 mr-1.5" /> info
+          </Button>
+        </div>
+      </section>
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Patterns</p>
+        <div className="flex flex-wrap gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() =>
+              toast("File deleted", {
+                action: { label: "Undo", onClick: () => toast.success("Restored") },
+              })
+            }
+          >
+            with action
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              const id = toast.loading("Uploading...");
+              setTimeout(() => toast.success("Upload complete", { id }), 1800);
+            }}
+          >
+            <RotateCw className="size-3.5 mr-1.5" /> loading → success
+          </Button>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() =>
+              toast.promise(
+                new Promise((resolve) => setTimeout(resolve, 1500)),
+                {
+                  loading: "Saving order...",
+                  success: "Order #4821 saved",
+                  error: "Save failed",
+                },
+              )
+            }
+          >
+            promise
+          </Button>
+        </div>
+      </section>
     </div>
   ),
 
