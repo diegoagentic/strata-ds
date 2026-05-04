@@ -1,9 +1,9 @@
 import { useState } from "react";
 import {
-  Bell, Calendar as CalendarIcon, Check, ChevronDown, Edit,
+  Bell, Calendar as CalendarIcon, Check, ChevronDown, Download, Edit,
   FileText, Filter, Globe, Grid2x2, Home, Inbox, Info, List as ListIcon,
-  MoreHorizontal, Pencil, Plus, RotateCw, Search, Settings, Share, ShoppingBag,
-  Sparkles, Star, Trash, TriangleAlert, Upload, Users,
+  MoreHorizontal, Package, Pencil, Plus, RotateCw, Search, Settings, Share, ShoppingBag,
+  Sparkles, Star, Trash, TriangleAlert, Truck, Upload, Users,
 } from "lucide-react";
 
 import { Button } from "@/components/application-ui/button";
@@ -106,6 +106,16 @@ import {
 } from "@/components/forms/input-otp";
 import { SearchableMultiSelect } from "@/components/forms/searchable-multi-select";
 import { Fieldset, Legend, FieldGroup, Field as HFField, Label as HLabel } from "@/components/forms/fieldset";
+import { Listbox, ListboxOption, ListboxLabel, ListboxDescription } from "@/components/forms/listbox";
+
+import ActionCenter from "@/components/application-ui/action-center";
+import {
+  ActivityTimeline, type ActivityTimelineItem,
+} from "@/components/application-ui/activity-timeline";
+import {
+  ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig,
+} from "@/components/application-ui/chart";
+import { ProductLayout, ProductGallery, ProductDetails, ProductTitle, ProductPrice } from "@/components/application-ui/product-overview";
 
 import { Alert, AlertTitle, AlertDescription } from "@/components/overlays/alert";
 import {
@@ -157,11 +167,13 @@ import {
 import { StackedList, StackedListItem } from "@/components/data-visualization/stacked-list";
 
 /**
- * Live preview map for components. Returns a renderable preview for components
- * that have a clean default rendering. Components requiring trigger state (Dialog, Sheet, Drawer)
- * are wrapped with their own state.
+ * Live preview map for components. Each entry is a React functional component
+ * (not a plain function) so any hooks inside it are scoped to that preview's
+ * own component instance — avoids "Rendered more hooks than during the previous
+ * render" errors in the parent ComponentDetailView when navigating between
+ * different components with different hook counts.
  */
-export const COMPONENT_PREVIEWS: Record<string, () => React.ReactNode> = {
+export const COMPONENT_PREVIEWS: Record<string, React.FC> = {
   button: () => {
     const variants = ["default", "secondary", "outline", "ghost", "destructive", "link", "brand", "accent"] as const;
     const sizes = ["sm", "default", "lg"] as const;
@@ -560,9 +572,7 @@ export const COMPONENT_PREVIEWS: Record<string, () => React.ReactNode> = {
       </div>
     );
   },
-  "company-greeting": () => (
-    <CompanyGreeting heading="Good morning, Diego" subheading="Acme Corp · 12 active orders · 3 alerts" />
-  ),
+  // (company-greeting expanded version is defined at the bottom)
   input: () => (
     <div className="max-w-sm space-y-5 w-full">
       <section>
@@ -1211,9 +1221,7 @@ export const COMPONENT_PREVIEWS: Record<string, () => React.ReactNode> = {
     </div>
   ),
 
-  "page-header": () => (
-    <PageHeader heading="Orders" subheading="Manage and track all customer orders" />
-  ),
+  // (page-header expanded version is defined at the bottom)
 
   menubar: () => (
     <Menubar>
@@ -1863,9 +1871,292 @@ export const COMPONENT_PREVIEWS: Record<string, () => React.ReactNode> = {
       </div>
     </div>
   ),
+
+  // ── Newly added (previously missing) ────────────────────────────────────────
+  "action-center": () => (
+    <div className="flex items-start gap-4">
+      <ActionCenter />
+      <p className="text-sm text-muted-foreground max-w-md">
+        Click the bell icon to open the Action Center popover. Notifications categorized by tab,
+        searchable, with chat view integration.
+      </p>
+    </div>
+  ),
+
+  "activity-timeline": () => {
+    const items: ActivityTimelineItem<Record<string, unknown>>[] = [
+      {
+        id: "1",
+        icon: <Check className="size-4 text-status-success" aria-hidden />,
+        circleBackgroundClassName: "bg-status-success/10",
+        separatorClassName: "bg-status-success/30",
+        content: (
+          <div className="space-y-1">
+            <p className="text-sm font-medium text-foreground">Order confirmed</p>
+            <p className="text-xs text-muted-foreground">Payment captured · #PO-48291</p>
+          </div>
+        ),
+      },
+      {
+        id: "2",
+        icon: <Package className="size-4 text-status-info" aria-hidden />,
+        circleBackgroundClassName: "bg-status-info/10",
+        separatorClassName: "bg-status-info/30",
+        content: (
+          <div className="space-y-1">
+            <p className="text-sm font-medium text-foreground">Picking started</p>
+            <p className="text-xs text-muted-foreground">Warehouse B · 12 SKUs</p>
+          </div>
+        ),
+      },
+      {
+        id: "3",
+        icon: <Truck className="size-4 text-status-ai" aria-hidden />,
+        circleBackgroundClassName: "bg-status-ai/10",
+        separatorClassName: "bg-status-ai/30",
+        content: (
+          <div className="space-y-1">
+            <p className="text-sm font-medium text-foreground">Shipped</p>
+            <p className="text-xs text-muted-foreground">Carrier: Northwind · ETA Apr 24</p>
+          </div>
+        ),
+      },
+      {
+        id: "4",
+        icon: <Bell className="size-4 text-muted-foreground" aria-hidden />,
+        circleBackgroundClassName: "bg-muted",
+        separatorClassName: "bg-border",
+        content: (
+          <div className="space-y-1">
+            <p className="text-sm font-medium text-foreground">Out for delivery</p>
+            <p className="text-xs text-muted-foreground">Awaiting carrier scan</p>
+          </div>
+        ),
+      },
+    ];
+    return <ActivityTimeline items={items} className="max-w-lg w-full" />;
+  },
+
+  chart: () => {
+    const data = [
+      { month: "Jan", revenue: 4200, expenses: 2400 },
+      { month: "Feb", revenue: 5300, expenses: 2800 },
+      { month: "Mar", revenue: 6100, expenses: 3100 },
+      { month: "Apr", revenue: 5800, expenses: 2900 },
+      { month: "May", revenue: 7200, expenses: 3400 },
+      { month: "Jun", revenue: 8400, expenses: 3700 },
+    ];
+    const config = {
+      revenue: { label: "Revenue", color: "var(--color-chart-1, #6366f1)" },
+      expenses: { label: "Expenses", color: "var(--color-chart-2, #8b5cf6)" },
+    } satisfies ChartConfig;
+    return (
+      <div className="w-full max-w-2xl space-y-3">
+        <p className="text-xs font-semibold uppercase text-muted-foreground">Revenue vs Expenses (last 6 months)</p>
+        <ChartContainer config={config} className="h-64 w-full">
+          <svg viewBox="0 0 600 250" className="w-full h-full">
+            {/* Simple bar chart in SVG to avoid recharts complexity in preview */}
+            {data.map((d, i) => {
+              const x = 60 + i * 90;
+              const maxVal = 9000;
+              const revHeight = (d.revenue / maxVal) * 180;
+              const expHeight = (d.expenses / maxVal) * 180;
+              return (
+                <g key={d.month}>
+                  <rect x={x} y={210 - revHeight} width="30" height={revHeight} fill="var(--color-chart-1, #6366f1)" rx="2" />
+                  <rect x={x + 35} y={210 - expHeight} width="30" height={expHeight} fill="var(--color-chart-2, #8b5cf6)" rx="2" />
+                  <text x={x + 32} y="230" fontSize="11" fill="currentColor" textAnchor="middle" className="text-muted-foreground">{d.month}</text>
+                </g>
+              );
+            })}
+            <line x1="50" y1="210" x2="590" y2="210" stroke="currentColor" className="text-border" strokeWidth="1" />
+          </svg>
+          <ChartTooltip content={<ChartTooltipContent />} />
+        </ChartContainer>
+        <div className="flex items-center gap-4 text-xs">
+          <span className="flex items-center gap-1.5"><span className="size-3 rounded-sm" style={{ backgroundColor: "var(--color-chart-1, #6366f1)" }} /> Revenue</span>
+          <span className="flex items-center gap-1.5"><span className="size-3 rounded-sm" style={{ backgroundColor: "var(--color-chart-2, #8b5cf6)" }} /> Expenses</span>
+        </div>
+        <p className="text-xs text-muted-foreground italic">
+          (Simplified SVG bars for preview. In real apps, compose Recharts BarChart + Bar inside ChartContainer.)
+        </p>
+      </div>
+    );
+  },
+
+  "create-order-dialog": () => (
+    <div className="text-sm text-muted-foreground max-w-md">
+      <p className="mb-2">
+        <strong className="text-foreground">CreateOrderDialog</strong> is a multi-step modal with 4 flows:
+        From Quote, From Template, Manual Creation, and Import.
+      </p>
+      <p className="mb-3">It requires <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">approvedQuotes</code>,
+        <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded mx-1">orderTemplates</code>,
+        <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">manualOrderCustomers</code>,
+        and <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">importOrderAnalysis</code> data.
+        See P2 Storybook for an interactive demo.
+      </p>
+      <Button variant="outline" size="sm">Mock trigger (no data wired)</Button>
+    </div>
+  ),
+
+  "experiences-navbar": () => (
+    <div className="text-sm text-muted-foreground space-y-3 max-w-2xl">
+      <p>
+        <strong className="text-foreground">ExperiencesNavbar</strong> is a product-specific navbar with
+        12+ required props (navItems, onLogout, onNavigate, logos, ActionCenter wiring). Visiting this page
+        in a real Experiences shell shows the full chrome.
+      </p>
+      <div className="bg-card border border-border rounded-xl p-3 flex items-center justify-between">
+        <span className="font-bold text-foreground">[ Experiences brand ]</span>
+        <div className="flex items-center gap-2 text-xs">
+          <span className="px-2 py-1 rounded bg-brand-300 dark:bg-brand-500 text-foreground">Dashboard</span>
+          <span className="px-2 py-1 text-muted-foreground">Orders</span>
+          <span className="px-2 py-1 text-muted-foreground">Inventory</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Bell className="size-4 text-muted-foreground" />
+          <Avatar size="sm"><AvatarFallback>DZ</AvatarFallback></Avatar>
+        </div>
+      </div>
+      <p className="text-xs italic">Schematic only — see ExperiencesNavbar in production for the full version.</p>
+    </div>
+  ),
+
+  layout: () => (
+    <div className="text-sm text-muted-foreground space-y-3 max-w-2xl">
+      <p>
+        <strong className="text-foreground">Layout</strong> is a page-level shell that wraps the entire
+        app: ExperiencesNavbar at top + main content area. Visiting any page in this dev app uses a
+        similar shell.
+      </p>
+      <div className="bg-card border border-border rounded-lg overflow-hidden">
+        <div className="bg-foreground/5 border-b border-border px-3 py-2 flex items-center justify-between text-xs">
+          <span className="font-bold text-foreground">STRATA</span>
+          <div className="flex gap-2 text-muted-foreground">
+            <span>Dashboard</span><span>Orders</span><span>Settings</span>
+          </div>
+          <Avatar size="xs"><AvatarFallback>DZ</AvatarFallback></Avatar>
+        </div>
+        <div className="p-4">
+          <p className="text-base font-semibold text-foreground mb-1">Page Heading</p>
+          <p className="text-xs text-muted-foreground mb-3">Page subheading describing the section.</p>
+          <div className="bg-muted/30 border border-dashed border-border rounded p-6 text-center text-xs">
+            Main content area
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+
+  "page-layout": () => (
+    <div className="text-sm text-muted-foreground space-y-3 max-w-2xl">
+      <p>
+        <strong className="text-foreground">PageLayout</strong> is a thinner wrapper around Layout where most
+        navigation props are optional — useful for demo screens or pages without full auth context.
+      </p>
+      <div className="bg-card border border-border rounded-lg overflow-hidden">
+        <div className="bg-foreground/5 border-b border-border px-3 py-2 text-xs">
+          <span className="font-bold text-foreground">STRATA · Demo</span>
+        </div>
+        <div className="p-4">
+          <p className="text-base font-semibold text-foreground mb-1">Demo Dashboard</p>
+          <p className="text-xs text-muted-foreground mb-3">Component playground</p>
+          <div className="bg-muted/30 border border-dashed border-border rounded p-6 text-center text-xs">
+            Main content
+          </div>
+        </div>
+      </div>
+    </div>
+  ),
+
+  listbox: () => (
+    <Listbox value={undefined} onChange={() => {}} placeholder="Select a role" aria-label="Role" className="max-w-[280px]">
+      <ListboxOption value="admin">
+        <ListboxLabel>Admin</ListboxLabel>
+        <ListboxDescription>Full access to all settings and billing.</ListboxDescription>
+      </ListboxOption>
+      <ListboxOption value="editor">
+        <ListboxLabel>Editor</ListboxLabel>
+        <ListboxDescription>Can edit content but not billing.</ListboxDescription>
+      </ListboxOption>
+      <ListboxOption value="viewer">
+        <ListboxLabel>Viewer</ListboxLabel>
+        <ListboxDescription>Read-only access.</ListboxDescription>
+      </ListboxOption>
+    </Listbox>
+  ),
+
+  "product-overview": () => (
+    <ProductLayout className="max-w-3xl grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <ProductGallery
+        images={[
+          { id: 1, name: "Front", src: "", alt: "Product front" },
+          { id: 2, name: "Side", src: "", alt: "Product side" },
+        ]}
+      />
+      <ProductDetails>
+        <ProductTitle>Strata Runner</ProductTitle>
+        <ProductPrice>$129.00</ProductPrice>
+        <p className="mt-3 text-sm text-muted-foreground">
+          Lightweight everyday running shoe. Sustainable materials, breathable mesh upper.
+        </p>
+        <Button className="mt-6 w-full">Add to Cart</Button>
+        <p className="mt-3 text-xs text-muted-foreground">Free shipping on orders over $75.</p>
+      </ProductDetails>
+    </ProductLayout>
+  ),
+
+  // Override "thin" previews with richer composition
+
+  "company-greeting": () => (
+    <div className="space-y-3 w-full max-w-2xl">
+      <CompanyGreeting heading="Good morning, Diego" subheading="Acme Corp · 12 active orders · 3 alerts" />
+      <CompanyGreeting heading="Welcome back" subheading="Last sign-in: 2 hours ago" />
+      <CompanyGreeting heading="Q2 Summary" subheading="Revenue +12.5% · Active users 8,492 · Pending approvals 47" />
+    </div>
+  ),
+
+  "page-header": () => (
+    <div className="space-y-6 w-full max-w-2xl">
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Heading + subheading</p>
+        <PageHeader heading="Orders" subheading="Manage and track all customer orders" />
+      </section>
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">With breadcrumb above</p>
+        <div className="space-y-3">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem><BreadcrumbLink href="#">Home</BreadcrumbLink></BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem><BreadcrumbLink href="#">Settings</BreadcrumbLink></BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem><BreadcrumbPage>Team</BreadcrumbPage></BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+          <PageHeader heading="Team Members" subheading="Manage who has access to this project" />
+        </div>
+      </section>
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">With actions row</p>
+        <div className="flex items-start justify-between gap-4">
+          <PageHeader heading="Reports" subheading="Quarterly financial overview" />
+          <Button>
+            <Download className="size-4 mr-2" /> Export CSV
+          </Button>
+        </div>
+      </section>
+    </div>
+  ),
 };
 
+export function getPreviewComponent(id: string): React.FC | null {
+  return COMPONENT_PREVIEWS[id] ?? null;
+}
+
+/** @deprecated Use `getPreviewComponent` and render the returned Component as JSX. */
 export function getComponentPreview(id: string): React.ReactNode | null {
-  const fn = COMPONENT_PREVIEWS[id];
-  return fn ? fn() : null;
+  const Component = COMPONENT_PREVIEWS[id];
+  return Component ? <Component /> : null;
 }

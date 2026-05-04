@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AlertTriangle, BookOpen, Code2, Eye, Sparkles, X } from "lucide-react";
 import { CodeViewer } from "../components/CodeViewer";
-import { getComponentPreview } from "./componentPreviews";
+import { getPreviewComponent } from "./componentPreviews";
 import { copyToClipboard } from "@/utils/clipboard";
 import { cn } from "@/utils/cn";
 
@@ -99,8 +99,8 @@ export function ComponentDetailView({ id }: { id: string }) {
 
       {/* Live Preview (only if available for this component) */}
       {(() => {
-        const preview = getComponentPreview(spec.id);
-        if (!preview) return null;
+        const PreviewComponent = getPreviewComponent(spec.id);
+        if (!PreviewComponent) return null;
         return (
           <section>
             <h2 className="text-xl font-bold text-foreground mb-3 flex items-center gap-2">
@@ -108,7 +108,9 @@ export function ComponentDetailView({ id }: { id: string }) {
               Live Preview
             </h2>
             <div className="bg-card border border-border rounded-xl p-8 flex items-center justify-center">
-              {preview}
+              {/* Key on spec.id forces React to remount when component changes,
+                  so hook count differences between previews don't cause errors. */}
+              <PreviewComponent key={spec.id} />
             </div>
           </section>
         );
