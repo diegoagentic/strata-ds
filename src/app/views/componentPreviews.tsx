@@ -1112,17 +1112,20 @@ export const COMPONENT_PREVIEWS: Record<string, React.FC> = {
   ),
 
   tooltip: () => (
-    <TooltipProvider delayDuration={200}>
+    <TooltipProvider delayDuration={150}>
       <div className="space-y-5 w-full">
+        <p className="text-sm text-muted-foreground">
+          Hover any button below to see its tooltip.
+        </p>
         <section>
           <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">All 4 placements</p>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-3 px-8 py-6 bg-muted/30 rounded-md">
             {(["top", "right", "bottom", "left"] as const).map((side) => (
               <Tooltip key={side}>
                 <TooltipTrigger asChild>
                   <Button variant="outline" size="sm">side: {side}</Button>
                 </TooltipTrigger>
-                <TooltipContent side={side}>Tooltip on {side}</TooltipContent>
+                <TooltipContent side={side} sideOffset={6}>Tooltip on {side}</TooltipContent>
               </Tooltip>
             ))}
           </div>
@@ -1136,7 +1139,7 @@ export const COMPONENT_PREVIEWS: Record<string, React.FC> = {
                   <Settings className="size-4" />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Settings (⌘,)</TooltipContent>
+              <TooltipContent sideOffset={6}>Settings (⌘,)</TooltipContent>
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -1144,7 +1147,7 @@ export const COMPONENT_PREVIEWS: Record<string, React.FC> = {
                   <Edit className="size-4" />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Edit</TooltipContent>
+              <TooltipContent sideOffset={6}>Edit</TooltipContent>
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -1152,7 +1155,7 @@ export const COMPONENT_PREVIEWS: Record<string, React.FC> = {
                   <Trash className="size-4" />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent side="right">Delete</TooltipContent>
+              <TooltipContent side="right" sideOffset={6}>Delete</TooltipContent>
             </Tooltip>
           </div>
         </section>
@@ -1653,29 +1656,33 @@ export const COMPONENT_PREVIEWS: Record<string, React.FC> = {
   ),
 
   // ── Application UI: Ecommerce ───────────────────────────────────────────────
-  "product-list": () => (
-    <ProductGrid className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-2xl">
-      {[
-        { id: 1, name: "Strata Runner", category: "Shoes", price: "$129.00", inStock: true },
-        { id: 2, name: "Cotton Tee", category: "Apparel", price: "$29.00", inStock: true },
-        { id: 3, name: "Daypack", category: "Bags", price: "$89.00", inStock: false },
-      ].map((p) => (
-        <ProductCard
-          key={p.id}
-          product={{
-            id: p.id,
-            name: p.name,
-            href: "#",
-            price: p.price,
-            imageSrc: "",
-            imageAlt: p.name,
-            category: p.category,
-            inStock: p.inStock,
-          }}
-        />
-      ))}
-    </ProductGrid>
-  ),
+  "product-list": () => {
+    const placeholder = (label: string, color: string) =>
+      `https://placehold.co/400x400/${color}/52525b?text=${encodeURIComponent(label)}`;
+    return (
+      <ProductGrid className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-2xl">
+        {[
+          { id: 1, name: "Strata Runner", category: "Shoes", price: "$129.00", inStock: true, color: "e4e4e7" },
+          { id: 2, name: "Cotton Tee", category: "Apparel", price: "$29.00", inStock: true, color: "f4f4f5" },
+          { id: 3, name: "Daypack", category: "Bags", price: "$89.00", inStock: false, color: "d4d4d8" },
+        ].map((p) => (
+          <ProductCard
+            key={p.id}
+            product={{
+              id: p.id,
+              name: p.name,
+              href: "#",
+              price: p.price,
+              imageSrc: placeholder(p.name, p.color),
+              imageAlt: p.name,
+              category: p.category,
+              inStock: p.inStock,
+            }}
+          />
+        ))}
+      </ProductGrid>
+    );
+  },
 
   "shopping-cart": () => {
     const [open, setOpen] = useState(false);
@@ -1688,8 +1695,8 @@ export const COMPONENT_PREVIEWS: Record<string, React.FC> = {
           open={open}
           onClose={setOpen}
           items={[
-            { id: 1, name: "Strata Runner", href: "#", color: "Black", price: "$129.00", quantity: 1, imageSrc: "", imageAlt: "Runner" },
-            { id: 2, name: "Cotton Tee", href: "#", color: "White", price: "$29.00", quantity: 2, imageSrc: "", imageAlt: "Tee" },
+            { id: 1, name: "Strata Runner", href: "#", color: "Black", price: "$129.00", quantity: 1, imageSrc: "https://placehold.co/120x120/e4e4e7/52525b?text=Runner", imageAlt: "Runner" },
+            { id: 2, name: "Cotton Tee", href: "#", color: "White", price: "$29.00", quantity: 2, imageSrc: "https://placehold.co/120x120/f4f4f5/52525b?text=Tee", imageAlt: "Tee" },
           ]}
         />
       </div>
@@ -2342,8 +2349,9 @@ export const COMPONENT_PREVIEWS: Record<string, React.FC> = {
     <ProductLayout className="max-w-3xl grid grid-cols-1 sm:grid-cols-2 gap-6">
       <ProductGallery
         images={[
-          { id: 1, name: "Front", src: "", alt: "Product front" },
-          { id: 2, name: "Side", src: "", alt: "Product side" },
+          { id: 1, name: "Front", src: "https://placehold.co/600x600/e4e4e7/52525b?text=Front", alt: "Product front" },
+          { id: 2, name: "Side", src: "https://placehold.co/600x600/d4d4d8/52525b?text=Side", alt: "Product side" },
+          { id: 3, name: "Detail", src: "https://placehold.co/600x600/f4f4f5/52525b?text=Detail", alt: "Product detail" },
         ]}
       />
       <ProductDetails>
