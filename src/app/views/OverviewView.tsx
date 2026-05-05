@@ -45,17 +45,32 @@ export function OverviewView() {
               component, exact tokens, applicable rules, and anti-patterns to
               avoid — so your AI never invents patterns the DS already provides.
             </p>
-            <a
-              href="#mcp"
-              onClick={(e) => {
-                e.preventDefault();
-                window.dispatchEvent(new CustomEvent("strata:navigate", { detail: "mcp" }));
-              }}
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-md bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
-            >
-              Try the live demo
-              <ArrowRight className="w-4 h-4" />
-            </a>
+            <div className="flex flex-wrap items-center gap-2">
+              <a
+                href="#developer-guide"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.dispatchEvent(new CustomEvent("strata:navigate", { detail: "developer-guide" }));
+                }}
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-md bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+              >
+                Read the Developer Guide
+                <ArrowRight className="w-4 h-4" />
+              </a>
+              <a
+                href="#mcp"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.dispatchEvent(new CustomEvent("strata:navigate", { detail: "mcp" }));
+                }}
+                className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-md border border-border hover:bg-muted transition-colors text-foreground"
+              >
+                Try the live demo
+              </a>
+            </div>
+            <p className="text-xs text-muted-foreground mt-3">
+              The Developer Guide covers: mental model, glossary, your-first-5-min, 5 worked examples, troubleshooting, and FAQ.
+            </p>
           </div>
         </div>
       </section>

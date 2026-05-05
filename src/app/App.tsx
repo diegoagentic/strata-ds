@@ -13,6 +13,7 @@ import { ErrorBoundary } from "./components/ErrorBoundary";
 
 import { OverviewView } from "./views/OverviewView";
 import { MCPView } from "./views/MCPView";
+import { DeveloperGuideView } from "./views/DeveloperGuideView";
 import { ComponentsMapView } from "./views/ComponentsMapView";
 import { ComponentDetailView } from "./views/ComponentDetailView";
 import { FoundationsView } from "./views/FoundationsView";
@@ -38,6 +39,7 @@ const NAV: NavSection[] = [
     title: "Get Started",
     items: [
       { id: "overview", label: "Overview" },
+      { id: "developer-guide", label: "Developer Guide", isNew: true },
       { id: "mcp", label: "MCP Connection", isNew: true },
       { id: "components-map", label: "All Components", isNew: true },
     ],
@@ -183,6 +185,8 @@ export default function App() {
     switch (currentView) {
       case "overview":
         return <OverviewView />;
+      case "developer-guide":
+        return <DeveloperGuideView />;
       case "mcp":
         return <MCPView />;
       case "components-map":
