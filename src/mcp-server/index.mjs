@@ -772,6 +772,94 @@ const COMPONENTS = {
 
   // ── APPLICATION UI ───────────────────────────────────────────────────────────
 
+  "action-center": {
+    name: "ActionCenter",
+    import: `import ActionCenter from 'strata-design-system/action-center';`,
+    category: "application-ui",
+    description: "Notification hub displayed as a Popover anchored to a bell icon. Categorized tabs (Alerts, Discrepancies, Payments, Approvals, Live chat) with search and an integrated chat view.",
+    props: [
+      "actionConfigMap?: Record<string, ActionConfig> — map of notification action IDs to action config",
+      "onActionExecute?: (action, notification) => void — handler invoked when a notification action is clicked",
+      "dataState?: { status: 'loading' | 'success' | 'error' | 'empty', notifications?, error? } — external data state for loading/empty/error rendering",
+      "className?: string",
+    ],
+    tokens: {
+      "bg-popover": "panel background",
+      "border-border": "panel border",
+      "text-status-error": "alert/error notifications",
+      "text-status-warning": "discrepancy notifications",
+      "text-status-success": "approval notifications",
+      "bg-muted": "search input + chat view neutral surface",
+    },
+    whenToUse: [
+      "Top-right bell in app shells where users see system-generated notifications",
+      "Multi-category alerts mixing alerts, payments, approvals — let the user filter via tabs",
+      "Apps with a chat fallback when an action requires human follow-up (Live chat tab)",
+      "When you need controlled empty/loading/error states from upstream data",
+    ],
+    antiPatterns: [
+      "❌ As a primary navigation menu — use Navbar/NavigationMenu instead",
+      "❌ For toast-style transient feedback — use Sonner toasts",
+      "❌ Embedding directly in page content (it's a Popover; needs a trigger)",
+      "❌ Skipping dataState when wiring real data — internal mocks are dev-only",
+    ],
+    example: `// Default with internal mocks
+<ActionCenter />
+
+// Wired to real data with action handlers
+<ActionCenter
+  dataState={{ status: 'success', notifications }}
+  actionConfigMap={{
+    approve: { label: 'Approve', type: 'primary', requiresConfirmation: true },
+    dismiss: { label: 'Dismiss', type: 'ghost' },
+  }}
+  onActionExecute={(action, notif) => handleAction(action.id, notif.id)}
+/>`,
+  },
+
+  "create-order-dialog": {
+    name: "CreateOrderDialog",
+    import: `import { CreateOrderDialog, type CreateOrderStep } from 'strata-design-system';`,
+    category: "application-ui",
+    description: "Multi-step dialog for guided order creation. Composes initial selection, manual creation, template selection, quote selection, file import, analysis, draft, and processing views into a single flow.",
+    props: [
+      "open: boolean — controlled open state",
+      "onOpenChange: (open: boolean) => void — toggle handler",
+      "step?: CreateOrderStep — current step ('initial' | 'manual' | 'template' | 'quote' | 'import-file' | 'import-analysis' | 'draft' | 'processing')",
+      "onStepChange?: (step: CreateOrderStep) => void",
+      "initialData?: Partial<OrderDraft>",
+      "onSubmit?: (order: OrderDraft) => Promise<void> | void",
+    ],
+    tokens: {
+      "bg-card": "surface for sub-views",
+      "border-border": "step separator + container borders",
+      "bg-muted": "dropzone idle background",
+      "ring-brand-500": "active step indicator",
+      "text-status-error": "validation errors",
+    },
+    whenToUse: [
+      "Sales/operations apps where a draft → review → submit order flow is needed",
+      "When users must choose between manual entry, file import, template, or existing quote as the order source",
+      "When the order creation cannot fit a single screen and needs a wizard",
+    ],
+    antiPatterns: [
+      "❌ Inline order forms — use this dialog so the rest of the page stays scrollable",
+      "❌ Bypassing the steps to render a single sub-view directly — compose CreateOrder*View pieces yourself if you need that",
+      "❌ Calling onSubmit without the processing step — users lose feedback during async work",
+    ],
+    example: `<CreateOrderDialog
+  open={open}
+  onOpenChange={setOpen}
+  step={step}
+  onStepChange={setStep}
+  onSubmit={async (order) => {
+    await api.orders.create(order);
+    setOpen(false);
+  }}
+/>`,
+    governance: { tier: 1, notes: "Composite component — all sub-views are also exported for advanced composition." },
+  },
+
   "activity-timeline": {
     name: "ActivityTimeline",
     import: `import { ActivityTimeline, ActivityTimelineStageRow, type ActivityTimelineItem } from 'strata-design-system';`,

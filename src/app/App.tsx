@@ -158,25 +158,6 @@ const NAV: NavSection[] = [
       { id: "stacked-list", label: "StackedList" },
     ],
   },
-  {
-    title: "Marketing",
-    items: [
-      { id: "hero-section", label: "HeroSection" },
-      { id: "feature-section", label: "FeatureSection" },
-      { id: "pricing", label: "Pricing" },
-    ],
-  },
-  {
-    title: "Ecommerce",
-    items: [
-      { id: "product-list", label: "ProductList" },
-      { id: "product-overview", label: "ProductOverview" },
-      { id: "shopping-cart", label: "ShoppingCart" },
-      { id: "shared-catalog-card", label: "SharedCatalogCard" },
-      { id: "shared-inventory-card", label: "SharedInventoryCard" },
-      { id: "shared-order-card", label: "SharedOrderCard" },
-    ],
-  },
 ];
 
 export default function App() {
