@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Moon, Sun } from 'lucide-react';
+import { GovernanceView } from './components/GovernanceView';
 import { OverviewView } from './components/OverviewView';
 import { BrandingView } from './components/BrandingView';
 import { ColorsView } from './components/ColorsView';
@@ -110,6 +111,7 @@ type ViewType =
   | 'drag-drop'
   | 'data-visualization'
   | 'figma-export-guide'
+  | 'governance'
   | 'admin'
   | 'mcp'
   | 'advanced-forms'
@@ -272,6 +274,7 @@ function App() {
     {
       title: 'Developer Tools',
       items: [
+        { id: 'governance', label: 'Governance', isNew: true },
         { id: 'mcp', label: 'Model Context Protocol' },
         { id: 'figma-export-guide', label: 'Figma Export Guide' },
       ],
@@ -389,6 +392,8 @@ function App() {
         return <DescriptionListView />;
       case 'shopping-cart':
         return <ShoppingCartView />;
+      case 'governance':
+        return <GovernanceView />;
       case 'app-shells':
         return <AppShellsView />;
       case 'page-headings':
