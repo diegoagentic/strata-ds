@@ -162,12 +162,6 @@ export function MCPView() {
         </p>
       </header>
 
-      {/* Two ways to plug in */}
-      <TwoWaysSection />
-
-      {/* End-to-end flow diagram */}
-      <FlowDiagramSection />
-
       {/* Server status */}
       <section className="bg-card border border-border rounded-xl p-6">
         <div className="flex items-start justify-between gap-4 flex-wrap">
@@ -292,9 +286,6 @@ export function MCPView() {
       {/* DS Architect — featured agent */}
       <DSArchitectSection />
 
-      {/* Use cases — with vs without */}
-      <UseCasesSection />
-
       {/* Available tools */}
       <section>
         <h2 className="text-2xl font-bold text-foreground mb-1">Available tools</h2>
@@ -327,6 +318,31 @@ export function MCPView() {
           ))}
         </div>
       </section>
+
+      {/* ── Docs at the bottom ─────────────────────────────────────────── */}
+      <div className="pt-4 border-t border-border space-y-10">
+        <header>
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+            Background reading
+          </p>
+          <h2 className="text-2xl font-bold text-foreground">
+            Understanding the workflow
+          </h2>
+          <p className="text-sm text-muted-foreground mt-1 max-w-3xl">
+            For devs integrating the DS into a new project — what the agent
+            unlocks, how to plug it in, and what changes for your day-to-day.
+          </p>
+        </header>
+
+        {/* Two ways to plug in */}
+        <TwoWaysSection />
+
+        {/* What the agent does — generic capabilities */}
+        <FlowDiagramSection />
+
+        {/* Use cases — with vs without */}
+        <UseCasesSection />
+      </div>
     </div>
   );
 }
@@ -761,124 +777,137 @@ function Bullet({
   );
 }
 
-// ─── Flow Diagram ─────────────────────────────────────────────────────────
+// ─── What the agent does (generic capabilities) ──────────────────────────
+
+const WITH_CAPABILITIES = [
+  {
+    title: "Auto-plans every UI request",
+    detail:
+      "Triggers on any 'build / add / create / make a [UI]' prompt — your AI never starts coding without a DS lookup first.",
+  },
+  {
+    title: "Returns the canonical component",
+    detail:
+      "Maps your description to the correct component from the 95-component catalogue (NavbarFloating, Card, Dialog, Table, etc.), with the exact import statement.",
+  },
+  {
+    title: "Pulls verified tokens",
+    detail:
+      "Tokens come straight from the MCP foundations — never hex-coded, never approximated. Same source of truth across all your projects.",
+  },
+  {
+    title: "Surfaces anti-patterns up front",
+    detail:
+      "The blueprint includes 'don't do this' rules (raw zinc, custom modals, hardcoded greens) before code is written, not after PR review.",
+  },
+  {
+    title: "Provides starter snippets",
+    detail:
+      "Code blocks compile against the DS source. Copy, adapt to your data, ship.",
+  },
+  {
+    title: "Flags real DS gaps",
+    detail:
+      "If no good match exists, the agent says so explicitly and recommends opening a gap ticket — instead of silently hallucinating.",
+  },
+];
+
+const WITHOUT_GAPS = [
+  {
+    title: "AI guesses from training data",
+    detail:
+      "The model has seen thousands of navbars/cards/forms — none of them yours. It picks an average that drifts from your DS.",
+  },
+  {
+    title: "Tokens are invented or approximated",
+    detail:
+      "bg-zinc-900, bg-blue-500, #84cc16 instead of bg-card, bg-primary, brand-500. Looks fine, fails token audit.",
+  },
+  {
+    title: "Custom code instead of DS components",
+    detail:
+      "Raw <table>, custom <dialog>, hand-rolled dropdowns. Each one diverges from the DS in subtle ways (focus rings, dark mode, a11y).",
+  },
+  {
+    title: "Drift discovered late",
+    detail:
+      "PR review (best case) or production (worst case). Each finding triggers a rework cycle that the team pays for.",
+  },
+  {
+    title: "Onboarding is slow",
+    detail:
+      "Each new dev re-discovers the rules by trial and error. The DS docs are static — no live consultant in the IDE.",
+  },
+  {
+    title: "DS gaps stay invisible",
+    detail:
+      "When something is missing, devs build local workarounds. The DS team doesn't hear about it because there's no feedback channel.",
+  },
+];
 
 function FlowDiagramSection() {
   return (
     <section>
       <h2 className="text-2xl font-bold text-foreground mb-1">
-        How a request flows
+        What changes when you adopt the agent
       </h2>
       <p className="text-sm text-muted-foreground mb-5 max-w-3xl">
-        Side-by-side: what happens when a developer asks for "build me a
-        navbar with tabs" — with the agent vs without.
+        Two columns — capabilities the agent unlocks for any project that
+        consumes the DS, vs the gaps you live with if you skip it.
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* WITH the agent */}
+        {/* WITH */}
         <div className="bg-card border border-status-success/30 rounded-xl p-5">
           <div className="flex items-center gap-2 mb-4">
             <Zap className="w-4 h-4 text-status-success" />
             <h3 className="text-sm font-bold uppercase tracking-wider text-status-success">
-              With ds-architect
+              What the agent unlocks
             </h3>
           </div>
 
-          <ol className="space-y-3">
-            <FlowStep
-              number={1}
-              title='User: "build a navbar with tabs"'
-              detail="Prompt enters Claude Code"
-            />
-            <FlowStep
-              number={2}
-              title="ds-architect fires automatically"
-              detail="The orchestrator detects 'build a [UI]' and routes to the agent BEFORE the implementer"
-            />
-            <FlowStep
-              number={3}
-              title={
-                <>
-                  Calls{" "}
-                  <code className="font-mono text-xs bg-muted px-1 rounded">
-                    plan_ui()
-                  </code>{" "}
-                  on the MCP
-                </>
-              }
-              detail="MCP returns: NavbarFloating + tokens + rules + anti-patterns"
-            />
-            <FlowStep
-              number={4}
-              title="Renders blueprint markdown"
-              detail="Component to use, exact tokens, anti-patterns to AVOID, starter snippet"
-            />
-            <FlowStep
-              number={5}
-              title="Implementer codes the blueprint"
-              detail="Copy snippet, adapt — DS-compliant by construction"
-              done
-            />
-          </ol>
+          <ul className="space-y-3">
+            {WITH_CAPABILITIES.map((item) => (
+              <CapabilityItem
+                key={item.title}
+                title={item.title}
+                detail={item.detail}
+                positive
+              />
+            ))}
+          </ul>
 
           <div className="mt-4 pt-4 border-t border-border">
             <p className="text-xs text-status-success font-semibold flex items-center gap-2">
               <Check className="w-4 h-4" />
-              PR review: ships first time
+              DS-compliant by construction · zero invention drift
             </p>
           </div>
         </div>
 
-        {/* WITHOUT the agent */}
+        {/* WITHOUT */}
         <div className="bg-card border border-status-error/30 rounded-xl p-5">
           <div className="flex items-center gap-2 mb-4">
             <X className="w-4 h-4 text-status-error" />
             <h3 className="text-sm font-bold uppercase tracking-wider text-status-error">
-              Without ds-architect
+              What you live with otherwise
             </h3>
           </div>
 
-          <ol className="space-y-3">
-            <FlowStep
-              number={1}
-              title='User: "build a navbar with tabs"'
-              detail="Prompt enters Claude Code"
-            />
-            <FlowStep
-              number={2}
-              title="LLM guesses based on training"
-              detail="No DS lookup — picks a generic full-width navbar pattern"
-              warn
-            />
-            <FlowStep
-              number={3}
-              title="Generates raw HTML/CSS"
-              detail={
-                <>
-                  Uses <code className="font-mono text-xs">bg-zinc-900</code>,
-                  flat full-width, hardcoded colors
-                </>
-              }
-              warn
-            />
-            <FlowStep
-              number={4}
-              title="PR review fails"
-              detail="Reviewer: 'this isn't the DS pattern. We have NavbarFloating.'"
-              bad
-            />
-            <FlowStep
-              number={5}
-              title="Rework"
-              detail="Re-read DS docs, swap to NavbarFloating, re-test"
-              bad
-            />
-          </ol>
+          <ul className="space-y-3">
+            {WITHOUT_GAPS.map((item) => (
+              <CapabilityItem
+                key={item.title}
+                title={item.title}
+                detail={item.detail}
+              />
+            ))}
+          </ul>
 
           <div className="mt-4 pt-4 border-t border-border">
             <p className="text-xs text-status-error font-semibold flex items-center gap-2">
               <X className="w-4 h-4" />
-              ~30 min lost · invents drift
+              Drift compounds · rework cycles · slow onboarding
             </p>
           </div>
         </div>
@@ -887,39 +916,30 @@ function FlowDiagramSection() {
   );
 }
 
-function FlowStep({
-  number,
+function CapabilityItem({
   title,
   detail,
-  done,
-  warn,
-  bad,
+  positive,
 }: {
-  number: number;
-  title: React.ReactNode;
-  detail?: React.ReactNode;
-  done?: boolean;
-  warn?: boolean;
-  bad?: boolean;
+  title: string;
+  detail: string;
+  positive?: boolean;
 }) {
   return (
     <li className="flex gap-3">
       <span
         className={cn(
-          "shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold",
-          done && "bg-status-success/15 text-status-success",
-          warn && "bg-status-warning/15 text-status-warning",
-          bad && "bg-status-error/15 text-status-error",
-          !done && !warn && !bad && "bg-muted text-muted-foreground",
+          "shrink-0 w-5 h-5 rounded-full flex items-center justify-center mt-0.5",
+          positive
+            ? "bg-status-success/15 text-status-success"
+            : "bg-status-error/15 text-status-error",
         )}
       >
-        {number}
+        {positive ? <Check className="w-3 h-3" /> : <X className="w-3 h-3" />}
       </span>
       <div className="flex-1 min-w-0">
         <p className="text-sm font-semibold text-foreground">{title}</p>
-        {detail && (
-          <p className="text-xs text-muted-foreground mt-0.5">{detail}</p>
-        )}
+        <p className="text-xs text-muted-foreground mt-0.5">{detail}</p>
       </div>
     </li>
   );
