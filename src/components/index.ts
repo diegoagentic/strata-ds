@@ -1,6 +1,7 @@
 // App-level components barrel — re-exports all .tsx components and types (excludes .stories)
 
 export * from './Navbar';
+export * from './ThemeProvider';
 export * from './theme-tokens-provider';
 
 // application-ui
