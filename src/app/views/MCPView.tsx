@@ -12,6 +12,7 @@ import {
   ArrowRight,
   Zap,
   X,
+  Shield,
 } from "lucide-react";
 import { copyToClipboard } from "@/utils/clipboard";
 import { cn } from "@/utils/cn";
@@ -32,7 +33,8 @@ interface HealthData {
 const HEALTH_URL = "http://localhost:3001/health";
 
 const TOOLS = [
-  { name: "plan_ui", description: "BLUEPRINT BEFORE CODE. Given a description like 'navbar with tabs', returns the recommended component, tokens, rules, and anti-patterns. Call this FIRST.", isNew: true },
+  { name: "get_session_briefing", description: "MUST BE CALLED ONCE AT SESSION START. Returns active rules + mandatory workflow. Equivalent to reading CLAUDE.md but live.", isNew: true },
+  { name: "plan_ui", description: "🚨 MANDATORY BEFORE ANY UI. Given a description like 'navbar with tabs', returns the recommended component, tokens, rules, and anti-patterns.", isNew: true },
   { name: "get_overview", description: "Full DS overview, stack, and architecture." },
   { name: "get_component", description: "Detailed spec for a component (variants, tokens, anti-patterns)." },
   { name: "get_component_code", description: "React, HTML, CSS, and AI Prompt code blocks for a component." },
@@ -285,6 +287,9 @@ export function MCPView() {
 
       {/* DS Architect — featured agent */}
       <DSArchitectSection />
+
+      {/* Aggressive enforcement — 5-layer strategy */}
+      <EnforcementLayersSection />
 
       {/* Available tools */}
       <section>
@@ -911,6 +916,156 @@ function FlowDiagramSection() {
             </p>
           </div>
         </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Enforcement Layers ──────────────────────────────────────────────────
+
+const ENFORCEMENT_LAYERS = [
+  {
+    n: 1,
+    name: "System prompt (always loaded)",
+    file: ".cursor/rules/strata-ds.md  /  CLAUDE.md",
+    detail:
+      "Rules become part of the AI's base context every conversation. Cursor auto-loads .cursor/rules/, Claude Code auto-loads CLAUDE.md, Antigravity uses an equivalent system-prompt field.",
+    template: "templates/cursor-rules-strata-ds.md",
+  },
+  {
+    n: 2,
+    name: "Session briefing tool",
+    file: "MCP get_session_briefing()",
+    detail:
+      "AI calls this once at session start and receives a fresh rules dump from the DS source. Equivalent to reading CLAUDE.md but live and always current. The MCP tool description tells the AI to call it.",
+    template: null,
+  },
+  {
+    n: 3,
+    name: "Assertive tool descriptions",
+    file: "MCP plan_ui — '🚨 MANDATORY for any UI task'",
+    detail:
+      "The MCP exposes 11 tools, and plan_ui's description literally says 'MUST be called BEFORE writing any UI code'. AI clients scan tool descriptions when deciding what to call — this nudges aggressively.",
+    template: null,
+  },
+  {
+    n: 4,
+    name: "Pre-prompt hook (Claude Code)",
+    file: ".claude/hooks/UserPromptSubmit.json",
+    detail:
+      "Fires BEFORE the AI processes the user's prompt. Detects 30+ UI keywords via regex and auto-injects '[Strata DS active] Call plan_ui first' into the AI's context. Doesn't depend on the AI deciding to consult.",
+    template: "templates/claude-code-hook-user-prompt-submit.json",
+  },
+  {
+    n: 5,
+    name: "Subagent (Claude Code)",
+    file: ".claude/agents/ds-architect.md",
+    detail:
+      "Specialized subagent that fires automatically on 'build / add / create a [UI]' patterns. Runs the deterministic blueprint workflow: plan_ui → get_component → markdown blueprint. Hard rule: never invent tokens.",
+    template: ".claude/agents/ds-architect.md (canonical, copy as-is)",
+  },
+];
+
+function EnforcementLayersSection() {
+  return (
+    <section>
+      <div className="flex items-center gap-2 mb-1">
+        <Shield className="w-5 h-5 text-status-ai" />
+        <h2 className="text-2xl font-bold text-foreground">
+          Aggressive enforcement — 5-layer strategy
+        </h2>
+      </div>
+      <p className="text-sm text-muted-foreground mb-5 max-w-3xl">
+        Even with the MCP connected, an AI <em>can</em> still skip the lookup
+        if the user's prompt is implicit. These 5 layers stack so the rules
+        reach the AI through multiple channels — combine them all for zero-skip
+        enforcement.
+      </p>
+
+      <div className="space-y-3">
+        {ENFORCEMENT_LAYERS.map((layer) => (
+          <div
+            key={layer.n}
+            className="bg-card border border-border rounded-xl p-4 flex gap-4"
+          >
+            <div className="shrink-0 w-9 h-9 rounded-full bg-status-ai/15 text-status-ai flex items-center justify-center font-bold text-sm">
+              {layer.n}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="text-sm font-bold text-foreground">
+                  {layer.name}
+                </h3>
+                <code className="font-mono text-[11px] text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
+                  {layer.file}
+                </code>
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                {layer.detail}
+              </p>
+              {layer.template && (
+                <p className="text-[11px] text-status-ai mt-1">
+                  Template:{" "}
+                  <code className="font-mono">{layer.template}</code>
+                </p>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-4 rounded-lg bg-status-success/5 border border-status-success/20 p-4">
+        <p className="text-sm text-foreground">
+          <strong>Quick install:</strong> copy{" "}
+          <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">
+            templates/
+          </code>{" "}
+          from the DS repo into your project. The folder ships with
+          ready-to-use Cursor rules, Claude Code hook, and an Antigravity
+          system-prompt template. See{" "}
+          <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">
+            templates/README.md
+          </code>{" "}
+          for the install commands.
+        </p>
+      </div>
+
+      {/* Trace example */}
+      <div className="mt-4 bg-card border border-border rounded-xl p-5">
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-3">
+          Trace: what happens when a dev writes an implicit prompt
+        </p>
+        <pre className="font-mono text-[11px] text-foreground bg-background border border-border rounded p-3 overflow-x-auto leading-relaxed">{`Dev: "necesito una pantalla para que los usuarios firmen contratos"
+       │
+       ▼
+[Layer 4 · Hook] regex detects "pantalla" → injects:
+   🎨 [Strata DS active] You MUST call plan_ui first.
+       │
+       ▼
+[Layer 1 · System prompt] reaffirms: "before any UI, plan_ui"
+       │
+       ▼
+[Layer 5 · ds-architect subagent] fires on the auto-trigger keywords
+       │
+       ▼
+[Layer 3 · plan_ui description] confirms: "MANDATORY for UI"
+       │
+       ▼
+Agent calls plan_ui("pantalla para firmar contratos")
+       │
+       ▼
+[Layer 2 · briefing already loaded] AI knows the token rules
+       │
+       ▼
+MCP returns: Form + Card + Dialog + Button (signature flow)
+       + tokens (bg-card, bg-primary, etc.)
+       + anti-patterns (no raw <form>, no bg-blue-500)
+       │
+       ▼
+Blueprint shown to dev BEFORE any code is written
+       │
+       ▼
+Dev: "perfect — that matches our DS, ship it"`}</pre>
       </div>
     </section>
   );

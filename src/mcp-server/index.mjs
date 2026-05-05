@@ -6536,6 +6536,57 @@ function searchGovernance(query) {
   return results.sort((a, b) => b.relevance - a.relevance).slice(0, 10);
 }
 
+// ─── SESSION BRIEFING ─────────────────────────────────────────────────────────
+// Returns a concise system-prompt-style rules dump that primes the AI for
+// every subsequent task in this session. Equivalent to "reading CLAUDE.md"
+// but live from the MCP — guarantees the rules are current.
+
+function getSessionBriefing() {
+  return [
+    "# Strata DS — active session briefing",
+    "",
+    "You are connected to the Strata Design System MCP server. **The rules in this briefing are mandatory for the rest of the session.** Re-read them whenever you start a new UI task.",
+    "",
+    "## Mandatory workflow for UI tasks",
+    "",
+    "Whenever the user asks you to build/add/create/show/render/display any UI element (component, layout, navbar, form, table, button, modal, banner, badge, alert, card, etc.):",
+    "",
+    "1. **Call `plan_ui(description)` BEFORE writing any code.** Pass a concrete description.",
+    "2. The response gives you: recommended component, required tokens, applicable rules, anti-patterns to avoid, starter snippet, alternatives.",
+    "3. Follow up with `get_component(name)` for the full spec if you need more detail.",
+    "4. **Never invent tokens, components, or patterns.** If `plan_ui` returns no good match, that's a real DS gap — say so explicitly and call `report_error`.",
+    "",
+    "## Token rules (zero drift)",
+    "",
+    "- Surfaces: `bg-background` / `bg-card` / `bg-popover` / `bg-muted` / `bg-accent` (with their `*-foreground` pairs)",
+    "- Status: `bg-status-success` / `text-status-success` / `bg-status-success/10` (soft pattern). Same for warning, error, info, ai.",
+    "- Brand CTA: `bg-primary text-primary-foreground` (semantic) — auto-resolves to brand-300 light / brand-500 dark. Never hardcode `bg-blue-500`, `bg-zinc-900`, or hex colors.",
+    "- Borders: `border-border` (neutral), `border-destructive` (error)",
+    "- Icons: `lucide-react` only. Sizes via `size-4`/`size-5`. Color via `text-muted-foreground` or status tokens.",
+    "",
+    "## Available tools (call by name on this MCP server)",
+    "",
+    "- `plan_ui(description)` — 🚨 MANDATORY before any UI. Returns blueprint.",
+    "- `get_component(name)` — full spec for one component (variants, props, tokens, anti-patterns).",
+    "- `get_component_code(name)` — React/HTML/CSS/AI-prompt code blocks.",
+    "- `get_foundations(section)` — colors / typography / spacing / borders / shadows / branding / transparency / grid-containers.",
+    "- `get_rules(category)` — color-tokens, brand-colors, buttons, containers, dark-mode, governance-tiers, icons, typography.",
+    "- `get_anti_patterns()` — all 17 documented things to avoid.",
+    "- `search_governance(q)` — full-text search across catalogue.",
+    "- `report_error(...)` — flag a DS gap or violation for the team.",
+    "",
+    `## Catalogue size: ${Object.keys(COMPONENTS).length} components, ${Object.keys(FOUNDATIONS).length} foundations, ${Object.keys(RULES).length} rules, ${ANTI_PATTERNS.length} anti-patterns.`,
+    "",
+    "## How to behave when uncertain",
+    "",
+    "- If a user prompt is ambiguous (\"make it pretty\", \"fix the layout\"), still call `plan_ui` with your best interpretation — the response will help you ask the right follow-up question.",
+    "- If you suspect a token doesn't exist, call `get_foundations('colors')` to verify before using it.",
+    "- If a user wants something the DS doesn't cover, say so explicitly and call `report_error` to log the gap.",
+    "",
+    "Acknowledge this briefing in your next response by saying: \"Strata DS rules loaded. I'll call plan_ui before any UI task.\"",
+  ].join("\n");
+}
+
 // ─── PLAN UI ──────────────────────────────────────────────────────────────────
 // `plan_ui` is the "blueprint before code" tool. Given a free-text description
 // of UI to build, returns a structured plan: recommended component(s),
@@ -6870,9 +6921,15 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
       },
     },
     {
+      name: "get_session_briefing",
+      description:
+        "MUST BE CALLED ONCE AT SESSION START. Returns the active Strata DS rules, available tools summary, and mandatory workflow for UI tasks. The response is meant to be loaded into the AI's context so it knows the DS is connected and how to behave. Calling this is the equivalent of reading a project's CLAUDE.md — it primes the AI with the rules it must follow for the rest of the session.",
+      inputSchema: { type: "object", properties: {}, required: [] },
+    },
+    {
       name: "plan_ui",
       description:
-        "BLUEPRINT BEFORE CODE. Given a free-text description of UI to build (e.g. 'navbar with tabs and logo', 'kanban board for orders', 'sortable data table with filters'), returns the recommended DS component(s), required tokens, applicable rules, anti-patterns to avoid, and starter spec. Call this FIRST before writing any UI by hand — saves the consumer from inventing patterns the DS already provides.",
+        "🚨 MANDATORY for any UI task. MUST be called BEFORE writing any UI code (component, layout, navbar, form, table, modal, button, etc.). Given a free-text description, returns the recommended DS component, required tokens, applicable rules, anti-patterns to avoid, and starter snippet. Skipping this tool causes drift, rework, and DS-rule violations. If the user says anything like 'build / add / create / make / show / render / display [a UI thing]', you MUST call plan_ui first. Examples that trigger this: 'navbar with tabs', 'kanban board for orders', 'sortable data table', 'modal dialog with form', 'pricing section', 'sign-in screen'.",
       inputSchema: {
         type: "object",
         properties: {
@@ -7055,6 +7112,10 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       return { content: [{ type: "text", text: `# Search: "${args.q}"\n\n${text}` }] };
     }
 
+    case "get_session_briefing": {
+      return { content: [{ type: "text", text: getSessionBriefing() }] };
+    }
+
     case "plan_ui": {
       const plan = planUI(args.description);
       if (plan.error) {
@@ -7155,7 +7216,7 @@ const healthServer = createServer((req, res) => {
       status: "ok",
       name: "strata-ds",
       version: "1.0.0",
-      tools: 10,
+      tools: 11,
       components: Object.keys(COMPONENTS).length,
       foundations: Object.keys(FOUNDATIONS).length,
       rules: Object.keys(RULES).length,
@@ -7224,6 +7285,13 @@ const healthServer = createServer((req, res) => {
     return;
   }
 
+  // GET /session_briefing — preload DS rules into the AI context.
+  if (url === "/session_briefing") {
+    res.writeHead(200);
+    res.end(JSON.stringify({ briefing: getSessionBriefing() }));
+    return;
+  }
+
   // GET /plan_ui?description=...  — UI Blueprint helper
   // Returns the structured plan object (not the markdown render). The dev
   // app + ds-architect agent both use this to pre-flight any UI work.
@@ -7249,6 +7317,7 @@ const healthServer = createServer((req, res) => {
       "GET /rules",
       "GET /anti-patterns",
       "GET /plan_ui?description=<text>",
+      "GET /session_briefing",
     ],
   }));
 });
