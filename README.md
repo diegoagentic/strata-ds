@@ -12,17 +12,100 @@ A technical, functional, and precise design system operating as the intelligence
 - 🔷 **TypeScript** - Full type safety.
 - ♿ **Accessible** - ARIA compliant components.
 
-## Installation
+## Quickstart for AI-assisted projects
+
+The DS ships with an **MCP server** + a **`ds-architect` subagent** so any AI
+tool (Cursor, Claude Code, VS Code Copilot) can consult tokens, components,
+governance rules, and anti-patterns *before* writing UI — preventing drift.
+
+### Three integration paths
+
+#### 1. MCP only (any IDE) — universal
+
+Configure your IDE to point at the local MCP server. Your AI gets 10
+callable tools (`plan_ui`, `get_component`, `get_foundations`, etc.).
+
+**Cursor** (`.cursor/mcp.json`):
+```json
+{
+  "mcpServers": {
+    "strata-ds": {
+      "command": "node",
+      "args": ["./design system/strata-ds/src/mcp-server/index.mjs"]
+    }
+  }
+}
+```
+
+**Claude Code** (`.claude/settings.json`):
+```json
+{
+  "mcpServers": {
+    "strata-ds": {
+      "command": "node",
+      "args": ["../design system/strata-ds/src/mcp-server/index.mjs"]
+    }
+  }
+}
+```
+
+**VS Code Copilot** (`.vscode/mcp.json`):
+```json
+{
+  "servers": {
+    "strata-ds": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["./design system/strata-ds/src/mcp-server/index.mjs"]
+    }
+  }
+}
+```
+
+#### 2. MCP + ds-architect agent (Claude Code) — recommended
+
+The agent fires automatically on "build/add/create a [UI thing]" prompts and
+forces a deterministic blueprint workflow. Copy two files into your project:
 
 ```bash
-npm install @strata/design-system
+mkdir -p .claude/agents .claude/commands
+cp "../design system/strata-ds/.claude/agents/ds-architect.md" .claude/agents/
+cp "../design system/strata-ds/.claude/commands/ds-plan.md" .claude/commands/
+```
+
+Then in any task: `/ds-plan navbar with tabs and avatar` returns the
+component to use, tokens, anti-patterns, and a starter snippet.
+
+#### 3. Curl/CLI direct (no AI)
+
+The MCP exposes an HTTP demo endpoint on `localhost:3001`:
+
+```bash
+# Start server
+node "../design system/strata-ds/src/mcp-server/index.mjs"
+
+# Query
+curl 'http://localhost:3001/plan_ui?description=floating+pill+navbar+with+tabs'
+curl http://localhost:3001/foundations/colors
+curl http://localhost:3001/components/button
+```
+
+See the live demo at `localhost:5173` (run `npm run dev` from this folder)
+→ MCP Connection page.
+
+---
+
+## Library installation
+
+```bash
+npm install strata-design-system
 ```
 
 ## Quick Start
 
 ```tsx
-import { Button, Card, CardHeader, CardTitle, CardContent } from '@strata/design-system';
-import '@strata/design-system/styles';
+import { Button, Card, CardHeader, CardTitle, CardContent } from 'strata-design-system';
+import 'strata-design-system/styles';
 
 function App() {
   return (
@@ -31,7 +114,7 @@ function App() {
         <CardTitle className="font-brand">Welcome to Strata</CardTitle>
       </CardHeader>
       <CardContent>
-        <Button variant="primary">Initialize System</Button>
+        <Button variant="default">Initialize System</Button>
       </CardContent>
     </Card>
   );
