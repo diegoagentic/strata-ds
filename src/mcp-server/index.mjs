@@ -6536,6 +6536,223 @@ function searchGovernance(query) {
   return results.sort((a, b) => b.relevance - a.relevance).slice(0, 10);
 }
 
+// ─── PLAN UI ──────────────────────────────────────────────────────────────────
+// `plan_ui` is the "blueprint before code" tool. Given a free-text description
+// of UI to build, returns a structured plan: recommended component(s),
+// required tokens, applicable rules, anti-patterns to avoid, and a starter
+// code snippet. Designed to be called by the ds-architect agent BEFORE any
+// hand-written UI is produced.
+
+const PLAN_UI_KEYWORDS = {
+  // Layout / chrome
+  navbar: ["navbar-floating", "navbar", "experiences-navbar"],
+  navigation: ["navbar-floating", "navbar", "experiences-navbar", "navigation-menu", "menubar"],
+  sidebar: ["sidebar"],
+  header: ["page-header", "navbar-floating"],
+  footer: ["divider", "page-layout"],
+
+  // Content surfaces
+  card: ["card", "section-card", "kpi-card"],
+  surface: ["card", "section-card"],
+  container: ["card", "page-layout"],
+  hero: ["hero-section"],
+  feature: ["feature-section"],
+  pricing: ["pricing"],
+
+  // Data display
+  table: ["table", "table-empty-state"],
+  list: ["stacked-list", "list-toolbar"],
+  grid: ["product-list"],
+  kanban: ["product-list"],
+  empty: ["empty-state", "table-empty-state"],
+  chart: ["chart"],
+  metrics: ["kpi-card", "chart"],
+  kpi: ["kpi-card"],
+  progress: ["progress", "stage-progress"],
+  timeline: ["activity-timeline"],
+  description: ["description-list"],
+
+  // Buttons / triggers
+  button: ["button"],
+  cta: ["button"],
+  toggle: ["toggle", "toggle-group", "switch"],
+  copy: ["copy-button"],
+
+  // Inputs
+  input: ["input"],
+  search: ["input", "command"],
+  textarea: ["textarea"],
+  select: ["select", "combobox", "listbox", "searchable-multi-select"],
+  combo: ["combobox"],
+  multi: ["searchable-multi-select"],
+  checkbox: ["checkbox"],
+  radio: ["radio-group"],
+  slider: ["slider"],
+  date: ["date-picker", "calendar"],
+  calendar: ["calendar"],
+  form: ["form", "field", "fieldset"],
+  otp: ["input-otp"],
+
+  // Status / signals
+  badge: ["badge", "status-badge", "priority-badge"],
+  status: ["status-badge", "badge"],
+  priority: ["priority-badge"],
+  alert: ["alert", "banner", "info-banner"],
+  banner: ["banner", "info-banner"],
+  toast: ["sonner", "feedback-toast"],
+  notification: ["sonner", "feedback-toast", "action-center"],
+
+  // Overlays
+  dialog: ["dialog", "alert-dialog", "confirm-dialog"],
+  modal: ["dialog", "alert-dialog"],
+  drawer: ["drawer", "sheet", "slide-over"],
+  sheet: ["sheet", "drawer"],
+  popover: ["popover", "hover-card"],
+  tooltip: ["tooltip"],
+  dropdown: ["dropdown-menu", "select"],
+  menu: ["dropdown-menu", "menubar", "context-menu"],
+  contextmenu: ["context-menu"],
+  command: ["command"],
+  palette: ["command"],
+
+  // Misc
+  tab: ["tabs"],
+  accordion: ["accordion", "collapsible", "disclosure"],
+  collapse: ["collapsible", "accordion"],
+  disclosure: ["disclosure", "collapsible"],
+  carousel: ["carousel"],
+  separator: ["separator", "divider"],
+  divider: ["divider", "separator"],
+  skeleton: ["skeleton"],
+  avatar: ["avatar"],
+  link: ["link"],
+  label: ["label"],
+  text: ["text", "heading"],
+  heading: ["heading", "text"],
+  breadcrumb: ["breadcrumb"],
+  pagination: ["pagination"],
+  scroll: ["scroll-area"],
+  resize: ["resizable"],
+  ratio: ["aspect-ratio"],
+  greeting: ["company-greeting"],
+  filter: ["filter-panel"],
+  toolbar: ["section-toolbar", "list-toolbar"],
+  tracking: ["tracking"],
+  layout: ["layout", "page-layout"],
+  page: ["page-layout", "page-header"],
+};
+
+const FLOATING_HINTS = ["floating", "pill", "rounded", "demo", "landing", "marketing", "transparent", "glass", "blur"];
+const PRODUCT_HINTS = ["app", "shell", "dashboard", "tenant", "experience", "product", "internal"];
+
+function planUI(description) {
+  if (!description || typeof description !== "string") {
+    return { error: "Provide a description of the UI you want to build (e.g. 'navbar with logo and tabs')." };
+  }
+
+  const desc = description.toLowerCase();
+  const wordHits = new Map();
+
+  // Score components by keyword matches
+  for (const [keyword, components] of Object.entries(PLAN_UI_KEYWORDS)) {
+    if (desc.includes(keyword)) {
+      for (const comp of components) {
+        wordHits.set(comp, (wordHits.get(comp) || 0) + 1);
+      }
+    }
+  }
+
+  // Hint-based bias: floating/landing/demo → prefer NavbarFloating over Navbar
+  const isFloating = FLOATING_HINTS.some((h) => desc.includes(h));
+  const isProduct = PRODUCT_HINTS.some((h) => desc.includes(h));
+
+  if (wordHits.has("navbar-floating") && wordHits.has("navbar")) {
+    if (isFloating) wordHits.set("navbar-floating", wordHits.get("navbar-floating") + 5);
+    if (isProduct) wordHits.set("navbar", wordHits.get("navbar") + 3);
+  }
+
+  if (wordHits.size === 0) {
+    return {
+      error: `No matching components found for "${description}". Try simpler keywords like "navbar", "card", "table", "form", or call search_governance for free-text matching.`,
+      suggestion: "Use search_governance(q) for fuzzy lookup across the catalogue.",
+    };
+  }
+
+  // Sort by relevance
+  const ranked = [...wordHits.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 4);
+
+  const [primaryId] = ranked[0];
+  const primary = COMPONENTS[primaryId];
+
+  if (!primary) {
+    return { error: `Internal: keyword matched ${primaryId} but COMPONENTS doesn't have it.` };
+  }
+
+  // Pull rules that match the description's tokens
+  const rulesMatched = [];
+  for (const [ruleKey, ruleText] of Object.entries(RULES)) {
+    const ruleStr = String(ruleText).toLowerCase();
+    if (
+      desc.split(/\s+/).some((word) => word.length > 3 && ruleStr.includes(word)) ||
+      desc.includes(ruleKey.replace("-", " "))
+    ) {
+      rulesMatched.push(ruleKey);
+    }
+  }
+
+  // Always include color-tokens + brand-colors when the description
+  // mentions any color/brand/status word — they apply to almost all UI.
+  if (/(brand|color|status|lime|primary|destructive|warning|success|error)/i.test(desc)) {
+    if (!rulesMatched.includes("brand-colors")) rulesMatched.push("brand-colors");
+    if (!rulesMatched.includes("color-tokens")) rulesMatched.push("color-tokens");
+  }
+
+  // Pull anti-patterns that mention the primary component or related keywords
+  const apMatched = ANTI_PATTERNS.filter((ap) => {
+    const text = JSON.stringify(ap).toLowerCase();
+    return text.includes(primaryId) || text.includes(primary.name.toLowerCase());
+  }).slice(0, 5);
+
+  return {
+    query: description,
+    primary_recommendation: {
+      component: primary.name,
+      id: primaryId,
+      rationale: primary.description,
+      import: primary.import,
+      tokens: primary.tokens || {},
+      example: primary.example || null,
+      governance: primary.governance || null,
+    },
+    alternatives: ranked.slice(1).map(([id, score]) => {
+      const c = COMPONENTS[id];
+      return c
+        ? {
+            component: c.name,
+            id,
+            score,
+            rationale: c.description,
+            when_to_choose: (c.whenToUse || [])[0] || "—",
+          }
+        : null;
+    }).filter(Boolean),
+    rules_that_apply: rulesMatched,
+    anti_patterns: apMatched.map((ap) => `❌ ${ap.pattern} → ${ap.fix}`),
+    blueprint_questions: [
+      "What's the active/inactive state pattern? (e.g. bg-primary text-primary-foreground for active)",
+      "Is dark mode required? Pair with tokens that have light/dark pairs (avoid raw zinc/lime).",
+      "Where does this live in the page tree? (chrome, content, overlay)",
+    ],
+    next_steps: [
+      `Call get_component('${primary.name}') for the full spec`,
+      `Call get_component_code('${primary.name}') for the React/HTML/CSS snippet`,
+      ...(rulesMatched.length ? [`Read the matched rules: ${rulesMatched.join(", ")}`] : []),
+    ],
+  };
+}
+
 // ─── ERROR REPORTING ──────────────────────────────────────────────────────────
 
 function reportError(payload) {
@@ -6650,6 +6867,22 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
           q: { type: "string", description: "Search query (e.g. 'green status color', 'button destructive', 'card glass', 'icon size')" },
         },
         required: ["q"],
+      },
+    },
+    {
+      name: "plan_ui",
+      description:
+        "BLUEPRINT BEFORE CODE. Given a free-text description of UI to build (e.g. 'navbar with tabs and logo', 'kanban board for orders', 'sortable data table with filters'), returns the recommended DS component(s), required tokens, applicable rules, anti-patterns to avoid, and starter spec. Call this FIRST before writing any UI by hand — saves the consumer from inventing patterns the DS already provides.",
+      inputSchema: {
+        type: "object",
+        properties: {
+          description: {
+            type: "string",
+            description:
+              "Plain-language description of the UI element you need. Be concrete: 'floating pill navbar for product app with logo, tenant subtitle, tabs, bell, theme toggle, avatar' is better than 'navbar'.",
+          },
+        },
+        required: ["description"],
       },
     },
     {
@@ -6822,6 +7055,59 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       return { content: [{ type: "text", text: `# Search: "${args.q}"\n\n${text}` }] };
     }
 
+    case "plan_ui": {
+      const plan = planUI(args.description);
+      if (plan.error) {
+        return { content: [{ type: "text", text: `${plan.error}\n${plan.suggestion || ""}` }] };
+      }
+      // Render as markdown so the agent can quote it directly
+      const lines = [
+        `# UI Blueprint for: "${plan.query}"`,
+        "",
+        `## ✅ Use: \`${plan.primary_recommendation.component}\``,
+        "",
+        plan.primary_recommendation.rationale,
+        "",
+        "```ts",
+        plan.primary_recommendation.import,
+        "```",
+        "",
+        "### Tokens",
+        ...Object.entries(plan.primary_recommendation.tokens).map(
+          ([t, use]) => `- \`${t}\` — ${use}`,
+        ),
+        "",
+        ...(plan.primary_recommendation.example
+          ? ["### Starter snippet", "```tsx", plan.primary_recommendation.example, "```", ""]
+          : []),
+        ...(plan.alternatives.length
+          ? [
+              "### Alternatives",
+              ...plan.alternatives.map(
+                (a) => `- **${a.component}** (score ${a.score}) — ${a.when_to_choose}`,
+              ),
+              "",
+            ]
+          : []),
+        ...(plan.rules_that_apply.length
+          ? [
+              "### Rules that apply",
+              ...plan.rules_that_apply.map((r) => `- \`get_rules('${r}')\``),
+              "",
+            ]
+          : []),
+        ...(plan.anti_patterns.length
+          ? ["### Anti-patterns to avoid", ...plan.anti_patterns, ""]
+          : []),
+        "### Blueprint questions",
+        ...plan.blueprint_questions.map((q) => `- ${q}`),
+        "",
+        "### Next steps",
+        ...plan.next_steps.map((s) => `1. ${s}`),
+      ];
+      return { content: [{ type: "text", text: lines.join("\n") }] };
+    }
+
     case "report_error": {
       const result = reportError(args);
       return {
@@ -6869,7 +7155,7 @@ const healthServer = createServer((req, res) => {
       status: "ok",
       name: "strata-ds",
       version: "1.0.0",
-      tools: 9,
+      tools: 10,
       components: Object.keys(COMPONENTS).length,
       foundations: Object.keys(FOUNDATIONS).length,
       rules: Object.keys(RULES).length,
@@ -6938,6 +7224,18 @@ const healthServer = createServer((req, res) => {
     return;
   }
 
+  // GET /plan_ui?description=...  — UI Blueprint helper
+  // Returns the structured plan object (not the markdown render). The dev
+  // app + ds-architect agent both use this to pre-flight any UI work.
+  const planMatch = url.match(/^\/plan_ui(?:\?description=(.+))?$/);
+  if (planMatch) {
+    const raw = planMatch[1] ? decodeURIComponent(planMatch[1]) : "";
+    const plan = planUI(raw);
+    res.writeHead(plan.error ? 400 : 200);
+    res.end(JSON.stringify(plan));
+    return;
+  }
+
   // 404 with available routes
   res.writeHead(404);
   res.end(JSON.stringify({
@@ -6950,6 +7248,7 @@ const healthServer = createServer((req, res) => {
       "GET /foundations/:section",
       "GET /rules",
       "GET /anti-patterns",
+      "GET /plan_ui?description=<text>",
     ],
   }));
 });
