@@ -1,4 +1,4 @@
-import { Sparkles, Component as ComponentIcon, Layers, Palette } from "lucide-react";
+import { Sparkles, Component as ComponentIcon, Layers, Palette, Bot, ArrowRight } from "lucide-react";
 
 export function OverviewView() {
   return (
@@ -11,17 +11,53 @@ export function OverviewView() {
           The single source of truth for the Strata product surface
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl">
-          93 production components, 17 governance rules, and an MCP server that delivers
+          95 production components, 17 governance rules, and an MCP server that delivers
           the design system directly into Cursor, Claude Code, GitHub Copilot, and other
           AI development tools.
         </p>
       </header>
 
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard icon={ComponentIcon} label="Components" value="93" hint="React + TypeScript" />
-        <StatCard icon={Layers} label="Token Categories" value="5" hint="status · semantic · brand · primitives · foundations" />
+        <StatCard icon={ComponentIcon} label="Components" value="95" hint="React + TypeScript" />
+        <StatCard icon={Layers} label="Foundations" value="8" hint="colors · typography · spacing · borders · shadows · branding · transparency · grid" />
         <StatCard icon={Palette} label="Governance Rules" value="8" hint="17 documented anti-patterns" />
-        <StatCard icon={Sparkles} label="MCP Tools" value="9" hint="Available to AI tools via stdio" />
+        <StatCard icon={Sparkles} label="MCP Tools" value="10" hint="Available to AI tools via stdio + HTTP" />
+      </section>
+
+      {/* Featured: DS Architect */}
+      <section className="bg-card border border-status-ai/30 ring-2 ring-status-ai/20 rounded-xl p-6">
+        <div className="flex items-start gap-4">
+          <div className="p-2 rounded-lg bg-status-ai/10 shrink-0">
+            <Bot className="w-5 h-5 text-status-ai" />
+          </div>
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-1">
+              <h2 className="text-lg font-semibold text-foreground">
+                New · DS Architect — blueprint before code
+              </h2>
+              <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-status-ai/15 text-status-ai">
+                NEW
+              </span>
+            </div>
+            <p className="text-sm text-muted-foreground mb-4 max-w-3xl">
+              A Claude Code subagent + MCP tool (<code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">plan_ui</code>) that
+              fires automatically when you ask for UI. Returns the recommended
+              component, exact tokens, applicable rules, and anti-patterns to
+              avoid — so your AI never invents patterns the DS already provides.
+            </p>
+            <a
+              href="#mcp"
+              onClick={(e) => {
+                e.preventDefault();
+                window.dispatchEvent(new CustomEvent("strata:navigate", { detail: "mcp" }));
+              }}
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-md bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
+            >
+              Try the live demo
+              <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
       </section>
 
       <section className="bg-card border border-border rounded-xl p-6">

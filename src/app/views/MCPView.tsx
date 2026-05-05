@@ -1,5 +1,18 @@
 import { useEffect, useState } from "react";
-import { Copy, Check, RefreshCw, Server, Wrench, Sparkles, Send } from "lucide-react";
+import {
+  Copy,
+  Check,
+  RefreshCw,
+  Server,
+  Wrench,
+  Sparkles,
+  Send,
+  Plug,
+  Bot,
+  ArrowRight,
+  Zap,
+  X,
+} from "lucide-react";
 import { copyToClipboard } from "@/utils/clipboard";
 import { cn } from "@/utils/cn";
 
@@ -149,6 +162,12 @@ export function MCPView() {
         </p>
       </header>
 
+      {/* Two ways to plug in */}
+      <TwoWaysSection />
+
+      {/* End-to-end flow diagram */}
+      <FlowDiagramSection />
+
       {/* Server status */}
       <section className="bg-card border border-border rounded-xl p-6">
         <div className="flex items-start justify-between gap-4 flex-wrap">
@@ -272,6 +291,9 @@ export function MCPView() {
 
       {/* DS Architect — featured agent */}
       <DSArchitectSection />
+
+      {/* Use cases — with vs without */}
+      <UseCasesSection />
 
       {/* Available tools */}
       <section>
@@ -619,4 +641,407 @@ const LABELS: Record<keyof typeof CONFIGS, string> = {
 
 function labelFor(key: keyof typeof CONFIGS): string {
   return LABELS[key];
+}
+
+// ─── Two Ways Section ─────────────────────────────────────────────────────
+
+function TwoWaysSection() {
+  return (
+    <section>
+      <h2 className="text-2xl font-bold text-foreground mb-1">
+        Two ways to plug in
+      </h2>
+      <p className="text-sm text-muted-foreground mb-5 max-w-3xl">
+        The MCP and the ds-architect agent are independent layers — use one,
+        the other, or both. They reinforce each other.
+      </p>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Layer A — MCP only */}
+        <div className="bg-card border border-border rounded-xl p-5">
+          <div className="flex items-center gap-2 mb-3">
+            <Plug className="w-5 h-5 text-status-ai" />
+            <h3 className="text-lg font-bold text-foreground">A · MCP server</h3>
+            <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
+              Any IDE
+            </span>
+          </div>
+          <p className="text-sm text-muted-foreground mb-4">
+            Configure your IDE's MCP client to point at the Strata server.
+            Your AI assistant gets <strong>10 callable tools</strong> available.
+          </p>
+
+          <ul className="text-sm space-y-1.5 mb-4">
+            <Bullet good>Works in Cursor, Claude Code, VS Code Copilot, and any MCP-aware tool</Bullet>
+            <Bullet good>10 tools instantly: <code className="font-mono text-xs bg-muted px-1 rounded">plan_ui</code>, <code className="font-mono text-xs bg-muted px-1 rounded">get_component</code>, <code className="font-mono text-xs bg-muted px-1 rounded">get_foundations</code>, etc.</Bullet>
+            <Bullet good>One config file, every project benefits</Bullet>
+            <Bullet warn>The AI <em>can</em> still skip the lookup if it forgets</Bullet>
+          </ul>
+
+          <div className="text-xs text-muted-foreground">
+            <strong className="text-foreground">Files:</strong>{" "}
+            <code className="font-mono bg-muted px-1.5 py-0.5 rounded">.cursor/mcp.json</code>
+            {" or "}
+            <code className="font-mono bg-muted px-1.5 py-0.5 rounded">.claude/settings.json</code>
+            {" or "}
+            <code className="font-mono bg-muted px-1.5 py-0.5 rounded">.vscode/mcp.json</code>
+          </div>
+        </div>
+
+        {/* Layer B — Subagent */}
+        <div className="bg-card border border-border rounded-xl p-5 ring-2 ring-status-ai/30">
+          <div className="flex items-center gap-2 mb-3">
+            <Bot className="w-5 h-5 text-status-ai" />
+            <h3 className="text-lg font-bold text-foreground">
+              B · ds-architect agent
+            </h3>
+            <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-status-ai/15 text-status-ai">
+              Recommended
+            </span>
+          </div>
+          <p className="text-sm text-muted-foreground mb-4">
+            A subagent that fires <strong>automatically</strong> on UI prompts
+            and forces a deterministic workflow:{" "}
+            <code className="font-mono text-xs bg-muted px-1 rounded">plan_ui</code>{" "}
+            → <code className="font-mono text-xs bg-muted px-1 rounded">get_component</code>{" "}
+            → blueprint.
+          </p>
+
+          <ul className="text-sm space-y-1.5 mb-4">
+            <Bullet good>Auto-trigger on "build / add / create a [UI]" prompts</Bullet>
+            <Bullet good>Slash command <code className="font-mono text-xs bg-muted px-1 rounded">/ds-plan</code> for explicit invocation</Bullet>
+            <Bullet good>Hard rule: never invent tokens; raise DS gaps explicitly</Bullet>
+            <Bullet warn>Currently Claude Code-specific (Cursor mimic via <code className="font-mono text-xs bg-muted px-1 rounded">.cursor/rules/</code>)</Bullet>
+          </ul>
+
+          <div className="text-xs text-muted-foreground">
+            <strong className="text-foreground">Files:</strong>{" "}
+            <code className="font-mono bg-muted px-1.5 py-0.5 rounded">.claude/agents/ds-architect.md</code>
+            {" + "}
+            <code className="font-mono bg-muted px-1.5 py-0.5 rounded">.claude/commands/ds-plan.md</code>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-4 rounded-lg bg-status-ai/5 border border-status-ai/20 p-3 text-sm">
+        <p className="text-foreground">
+          <strong>Pro tip:</strong> install both. A gives the tools, B forces
+          their use. New devs onboard faster, mistakes drop.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function Bullet({
+  children,
+  good,
+  warn,
+  bad,
+}: {
+  children: React.ReactNode;
+  good?: boolean;
+  warn?: boolean;
+  bad?: boolean;
+}) {
+  return (
+    <li className="flex items-start gap-2 text-foreground">
+      <span
+        className={cn(
+          "mt-0.5 shrink-0",
+          good && "text-status-success",
+          warn && "text-status-warning",
+          bad && "text-status-error",
+        )}
+      >
+        {good ? "✓" : warn ? "△" : "✗"}
+      </span>
+      <span className="flex-1">{children}</span>
+    </li>
+  );
+}
+
+// ─── Flow Diagram ─────────────────────────────────────────────────────────
+
+function FlowDiagramSection() {
+  return (
+    <section>
+      <h2 className="text-2xl font-bold text-foreground mb-1">
+        How a request flows
+      </h2>
+      <p className="text-sm text-muted-foreground mb-5 max-w-3xl">
+        Side-by-side: what happens when a developer asks for "build me a
+        navbar with tabs" — with the agent vs without.
+      </p>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* WITH the agent */}
+        <div className="bg-card border border-status-success/30 rounded-xl p-5">
+          <div className="flex items-center gap-2 mb-4">
+            <Zap className="w-4 h-4 text-status-success" />
+            <h3 className="text-sm font-bold uppercase tracking-wider text-status-success">
+              With ds-architect
+            </h3>
+          </div>
+
+          <ol className="space-y-3">
+            <FlowStep
+              number={1}
+              title='User: "build a navbar with tabs"'
+              detail="Prompt enters Claude Code"
+            />
+            <FlowStep
+              number={2}
+              title="ds-architect fires automatically"
+              detail="The orchestrator detects 'build a [UI]' and routes to the agent BEFORE the implementer"
+            />
+            <FlowStep
+              number={3}
+              title={
+                <>
+                  Calls{" "}
+                  <code className="font-mono text-xs bg-muted px-1 rounded">
+                    plan_ui()
+                  </code>{" "}
+                  on the MCP
+                </>
+              }
+              detail="MCP returns: NavbarFloating + tokens + rules + anti-patterns"
+            />
+            <FlowStep
+              number={4}
+              title="Renders blueprint markdown"
+              detail="Component to use, exact tokens, anti-patterns to AVOID, starter snippet"
+            />
+            <FlowStep
+              number={5}
+              title="Implementer codes the blueprint"
+              detail="Copy snippet, adapt — DS-compliant by construction"
+              done
+            />
+          </ol>
+
+          <div className="mt-4 pt-4 border-t border-border">
+            <p className="text-xs text-status-success font-semibold flex items-center gap-2">
+              <Check className="w-4 h-4" />
+              PR review: ships first time
+            </p>
+          </div>
+        </div>
+
+        {/* WITHOUT the agent */}
+        <div className="bg-card border border-status-error/30 rounded-xl p-5">
+          <div className="flex items-center gap-2 mb-4">
+            <X className="w-4 h-4 text-status-error" />
+            <h3 className="text-sm font-bold uppercase tracking-wider text-status-error">
+              Without ds-architect
+            </h3>
+          </div>
+
+          <ol className="space-y-3">
+            <FlowStep
+              number={1}
+              title='User: "build a navbar with tabs"'
+              detail="Prompt enters Claude Code"
+            />
+            <FlowStep
+              number={2}
+              title="LLM guesses based on training"
+              detail="No DS lookup — picks a generic full-width navbar pattern"
+              warn
+            />
+            <FlowStep
+              number={3}
+              title="Generates raw HTML/CSS"
+              detail={
+                <>
+                  Uses <code className="font-mono text-xs">bg-zinc-900</code>,
+                  flat full-width, hardcoded colors
+                </>
+              }
+              warn
+            />
+            <FlowStep
+              number={4}
+              title="PR review fails"
+              detail="Reviewer: 'this isn't the DS pattern. We have NavbarFloating.'"
+              bad
+            />
+            <FlowStep
+              number={5}
+              title="Rework"
+              detail="Re-read DS docs, swap to NavbarFloating, re-test"
+              bad
+            />
+          </ol>
+
+          <div className="mt-4 pt-4 border-t border-border">
+            <p className="text-xs text-status-error font-semibold flex items-center gap-2">
+              <X className="w-4 h-4" />
+              ~30 min lost · invents drift
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FlowStep({
+  number,
+  title,
+  detail,
+  done,
+  warn,
+  bad,
+}: {
+  number: number;
+  title: React.ReactNode;
+  detail?: React.ReactNode;
+  done?: boolean;
+  warn?: boolean;
+  bad?: boolean;
+}) {
+  return (
+    <li className="flex gap-3">
+      <span
+        className={cn(
+          "shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold",
+          done && "bg-status-success/15 text-status-success",
+          warn && "bg-status-warning/15 text-status-warning",
+          bad && "bg-status-error/15 text-status-error",
+          !done && !warn && !bad && "bg-muted text-muted-foreground",
+        )}
+      >
+        {number}
+      </span>
+      <div className="flex-1 min-w-0">
+        <p className="text-sm font-semibold text-foreground">{title}</p>
+        {detail && (
+          <p className="text-xs text-muted-foreground mt-0.5">{detail}</p>
+        )}
+      </div>
+    </li>
+  );
+}
+
+// ─── Use Cases ────────────────────────────────────────────────────────────
+
+const USE_CASES = [
+  {
+    prompt: "build a navbar with tabs",
+    without: {
+      title: "Generic full-width navbar",
+      detail: "bg-zinc-900, flat, hardcoded colors — drifts from DS",
+    },
+    with: {
+      title: "NavbarFloating",
+      detail:
+        "bg-card/80 backdrop-blur-xl rounded-full shadow-lg dark:shadow-glow-md — matches the DS demo pattern",
+    },
+  },
+  {
+    prompt: "add a primary CTA button",
+    without: {
+      title: '<button className="bg-blue-500">',
+      detail: "Raw element with non-DS color — fails token audit",
+    },
+    with: {
+      title: '<Button variant="default">',
+      detail:
+        "Resolves to bg-primary text-primary-foreground (auto brand-300/500 light/dark)",
+    },
+  },
+  {
+    prompt: "create a status badge for 'success'",
+    without: {
+      title: '<span className="bg-green-100 text-green-700">',
+      detail: "Wrong green shade, no dark-mode pair, breaks WCAG",
+    },
+    with: {
+      title: '<Badge> with status tokens',
+      detail:
+        "bg-status-success/10 + text-status-success + border-status-success/20 (governance soft pattern)",
+    },
+  },
+  {
+    prompt: "data table with sortable cols",
+    without: {
+      title: "Raw <table> + custom CSS",
+      detail: "Inconsistent borders, no row hover, no dark-mode pair",
+    },
+    with: {
+      title: "<Table> + TableHeader + sort icons",
+      detail:
+        "border-border, bg-muted/50 alt rows, hover:bg-muted/50, fully tokenized",
+    },
+  },
+];
+
+function UseCasesSection() {
+  return (
+    <section>
+      <h2 className="text-2xl font-bold text-foreground mb-1">
+        Concrete use cases
+      </h2>
+      <p className="text-sm text-muted-foreground mb-5 max-w-3xl">
+        Real examples showing what the agent prevents — same prompt, two
+        outcomes.
+      </p>
+
+      <div className="space-y-3">
+        {USE_CASES.map((uc) => (
+          <div
+            key={uc.prompt}
+            className="bg-card border border-border rounded-xl p-5"
+          >
+            <p className="text-xs font-semibold uppercase text-muted-foreground mb-3">
+              Prompt: <span className="font-mono normal-case text-foreground">"{uc.prompt}"</span>
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="rounded-md bg-status-error/5 border border-status-error/20 p-3">
+                <div className="flex items-center gap-2 mb-1">
+                  <X className="w-3.5 h-3.5 text-status-error" />
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-status-error">
+                    Without architect
+                  </span>
+                </div>
+                <p className="font-mono text-xs text-foreground mb-1">
+                  {uc.without.title}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {uc.without.detail}
+                </p>
+              </div>
+
+              <div className="rounded-md bg-status-success/5 border border-status-success/20 p-3">
+                <div className="flex items-center gap-2 mb-1">
+                  <Check className="w-3.5 h-3.5 text-status-success" />
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-status-success">
+                    With architect
+                  </span>
+                </div>
+                <p className="font-mono text-xs text-foreground mb-1">
+                  {uc.with.title}
+                </p>
+                <p className="text-xs text-muted-foreground">{uc.with.detail}</p>
+              </div>
+            </div>
+
+            <div className="mt-3 flex items-center gap-2 text-[10px] text-muted-foreground">
+              <ArrowRight className="w-3 h-3" />
+              <span>
+                The agent calls{" "}
+                <code className="font-mono bg-muted px-1.5 py-0.5 rounded">
+                  plan_ui("{uc.prompt}")
+                </code>{" "}
+                and surfaces the right answer in seconds.
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 }
