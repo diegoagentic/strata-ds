@@ -1,6 +1,10 @@
 import { Sparkles, Download, Quote } from "lucide-react";
 import { copyToClipboard } from "@/utils/clipboard";
 import { useState } from "react";
+import logoBlack from "@/assets/branding/logo-black.png";
+import logoWhite from "@/assets/branding/logo-white.png";
+import logoLime from "@/assets/branding/logo-lime.png";
+import logoGray from "@/assets/branding/logo-gray.png";
 
 export function BrandingView() {
   const [copied, setCopied] = useState<string | null>(null);
@@ -41,33 +45,32 @@ export function BrandingView() {
       <section>
         <h2 className="text-2xl font-bold text-foreground mb-4">Logo Variants</h2>
         <p className="text-sm text-muted-foreground mb-6">
-          The Strata mark is a flat geometric monogram. Renderings shown here are CSS placeholders — full
-          PNG/SVG assets live in the brand kit.
+          The Strata mark is a flat geometric monogram. Click any variant to download the PNG.
         </p>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
           <LogoCard
-            label="Black on Light"
+            label="Logo Black (Mark)"
             description="Light backgrounds — official documents, light mode"
-            mark={<MarkBlock textClass="text-foreground" bgClass="bg-card" />}
+            src={logoBlack}
             wrapperClass="bg-muted"
           />
           <LogoCard
-            label="White on Dark"
+            label="Logo White (Mark)"
             description="Dark backgrounds — dark mode primary nav"
-            mark={<MarkBlock textClass="text-background" bgClass="bg-foreground" />}
+            src={logoWhite}
             wrapperClass="bg-foreground"
           />
           <LogoCard
-            label="Volt Lime"
+            label="Logo Lime (Mark)"
             description="Accent / signal usage (dark mode only)"
-            mark={<MarkBlock textClass="text-brand-300" bgClass="bg-foreground border border-brand-300/40" />}
+            src={logoLime}
             wrapperClass="bg-foreground"
           />
           <LogoCard
-            label="Muted Gray"
-            description="Secondary contexts, footers"
-            mark={<MarkBlock textClass="text-muted-foreground" bgClass="bg-card border border-border" />}
-            wrapperClass="bg-muted/50"
+            label="Logo Gray (Mark)"
+            description="Muted/secondary contexts, footers"
+            src={logoGray}
+            wrapperClass="bg-card border border-border"
           />
         </div>
       </section>
@@ -129,9 +132,7 @@ export function BrandingView() {
           <div className="bg-card border border-border rounded-xl overflow-hidden">
             <div className="bg-foreground p-4">
               <div className="flex items-center gap-3">
-                <div className="size-8 bg-brand-500 rounded flex items-center justify-center">
-                  <span className="text-foreground font-bold text-sm">ST</span>
-                </div>
+                <img src={logoLime} alt="Strata" className="size-8" />
                 <div>
                   <p className="text-background font-bold text-sm tracking-wide">STRATA</p>
                   <p className="text-muted-foreground text-[10px] uppercase tracking-wider">Intelligence Layer</p>
@@ -141,7 +142,7 @@ export function BrandingView() {
             <div className="p-4">
               <p className="text-xs font-semibold text-foreground mb-1">Sidebar Header (Dark)</p>
               <p className="text-xs text-muted-foreground">
-                Use the Lime mark at 32px for application headers in dark mode.
+                Use the Lime mark at 32px (w-8) for application headers in dark mode.
               </p>
             </div>
           </div>
@@ -149,9 +150,8 @@ export function BrandingView() {
           {/* Auth hero */}
           <div className="bg-card border border-border rounded-xl overflow-hidden">
             <div className="bg-muted p-8 flex flex-col items-center gap-4 min-h-[160px] justify-center">
-              <div className="size-12 bg-foreground rounded flex items-center justify-center">
-                <span className="text-background font-bold">ST</span>
-              </div>
+              <img src={logoBlack} alt="Strata" className="size-12 dark:hidden" />
+              <img src={logoWhite} alt="Strata" className="size-12 hidden dark:block" />
               <div className="text-center space-y-1">
                 <div className="h-2 w-24 bg-muted-foreground/30 rounded mx-auto" />
                 <div className="h-2 w-16 bg-muted-foreground/30 rounded mx-auto" />
@@ -160,7 +160,7 @@ export function BrandingView() {
             <div className="p-4">
               <p className="text-xs font-semibold text-foreground mb-1">Auth Hero (Centered)</p>
               <p className="text-xs text-muted-foreground">
-                For authentication or centered layouts, use the mark at 48px or larger.
+                For authentication or centered layouts, use the mark at 48px (w-12) or larger.
               </p>
             </div>
           </div>
@@ -169,16 +169,15 @@ export function BrandingView() {
           <div className="bg-card border border-border rounded-xl overflow-hidden">
             <div className="p-4 border-b border-border flex items-center justify-between">
               <div className="flex items-center gap-2 opacity-60 hover:opacity-100 transition-opacity">
-                <div className="size-6 bg-muted-foreground rounded flex items-center justify-center">
-                  <span className="text-background text-[10px] font-bold">ST</span>
-                </div>
+                <img src={logoBlack} alt="Strata" className="size-6 dark:hidden" />
+                <img src={logoWhite} alt="Strata" className="size-6 hidden dark:block" />
                 <span className="text-xs font-bold text-foreground">STRATA</span>
               </div>
             </div>
             <div className="p-4">
               <p className="text-xs font-semibold text-foreground mb-1">Footer / Condensed</p>
               <p className="text-xs text-muted-foreground">
-                Use the mark at 24px for footers or secondary attribution.
+                Use the mark at 24px (w-6) for footers or secondary attribution.
               </p>
             </div>
           </div>
@@ -234,33 +233,32 @@ export function BrandingView() {
 function LogoCard({
   label,
   description,
-  mark,
+  src,
   wrapperClass,
 }: {
   label: string;
   description: string;
-  mark: React.ReactNode;
+  src: string;
   wrapperClass: string;
 }) {
   return (
     <div className="space-y-3">
       <div
-        className={`aspect-square rounded-lg border border-border flex items-center justify-center p-8 transition-shadow hover:shadow-md ${wrapperClass}`}
+        className={`aspect-square rounded-lg border border-border flex items-center justify-center p-10 transition-shadow hover:shadow-md ${wrapperClass}`}
       >
-        {mark}
+        <img src={src} alt={label} className="w-full h-auto object-contain" />
       </div>
       <div>
         <p className="text-sm font-semibold text-foreground">{label}</p>
         <p className="text-xs text-muted-foreground mt-0.5">{description}</p>
+        <a
+          href={src}
+          download
+          className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <Download className="w-3 h-3" /> Download PNG
+        </a>
       </div>
-    </div>
-  );
-}
-
-function MarkBlock({ textClass, bgClass }: { textClass: string; bgClass: string }) {
-  return (
-    <div className={`size-full max-w-24 max-h-24 rounded-md flex items-center justify-center ${bgClass}`}>
-      <span className={`text-3xl font-bold tracking-tight ${textClass}`}>ST</span>
     </div>
   );
 }
