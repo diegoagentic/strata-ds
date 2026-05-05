@@ -5,12 +5,12 @@ import * as React from 'react';
  * Distinct from light/dark `ThemeProvider` in `contexts/ThemeContext` (used by Toaster, navbar, etc.).
  */
 
-export interface ThemeConfig {
+export interface ThemeTokensConfig {
   [key: string]: string | number;
 }
 
 export interface ThemeTokensProviderProps {
-  theme?: ThemeConfig;
+  theme?: ThemeTokensConfig;
   children: React.ReactNode;
   className?: string;
 }

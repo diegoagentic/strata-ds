@@ -78,38 +78,193 @@ ContextMenu, ConfirmDialog, FeedbackToast, Sonner, Sidebar, SlideOver, ScrollAre
 
 // ─── FOUNDATIONS ──────────────────────────────────────────────────────────────
 
+// Source of truth: design system/strata-ds/src/styles/tokens/variables.css
+//                  + variables-dark.css + theme.css (glass + glow extensions)
+// All hex/value pairs must match those files exactly. If you change a token
+// here, update variables.css first; if you change variables.css, update here.
 const FOUNDATIONS = {
   colors: {
-    description: "Core color palette — primitives that power semantic tokens.",
-    zinc: {
-      "50": "#fafafa", "100": "#f4f4f5", "200": "#e4e4e7", "300": "#d4d4d8",
-      "400": "#a1a1aa", "500": "#71717a", "600": "#52525b", "700": "#3f3f46",
-      "800": "#27272a", "900": "#18181b", "950": "#09090b",
+    description:
+      "Full color system: surface tokens (background/card/popover/etc.), status, sidebar, charts, brand + 6 extended palettes, plus base white/black. Light/dark pairs come from variables.css and variables-dark.css.",
+
+    // ── Surface + intent tokens (used everywhere via Tailwind: bg-*, text-*, border-*)
+    surfaces: {
+      background:           { light: "#EBECEE", dark: "#02060C", use: "Page background" },
+      foreground:           { light: "#02060C", dark: "#EBECEE", use: "Default text color" },
+      card:                 { light: "#fafafa", dark: "#02060C", use: "Card / container surface" },
+      "card-foreground":    { light: "#02060C", dark: "#EBECEE", use: "Text inside Card" },
+      popover:              { light: "#fafafa", dark: "#02060C", use: "Floating overlays (Dialog, Popover, DropdownMenu)" },
+      "popover-foreground": { light: "#02060C", dark: "#EBECEE", use: "Text inside popovers" },
+      primary:              { light: "#E6F993", dark: "#C3E433", use: "Primary CTA fill (Volt Lime)" },
+      "primary-foreground": { light: "#02060C", dark: "#02060C", use: "Text on primary fill" },
+      secondary:            { light: "#fafafa", dark: "#141E2C", use: "Secondary surface" },
+      "secondary-foreground":{ light: "#02060C", dark: "#EBECEE", use: "Text on secondary" },
+      muted:                { light: "#fafafa", dark: "#141E2C", use: "Subtle backgrounds (badges, hover)" },
+      "muted-foreground":   { light: "#959DA7", dark: "#B4BBC2", use: "Secondary text, captions, placeholders" },
+      accent:               { light: "#fafafa", dark: "#141E2C", use: "Hover/active accent surfaces" },
+      "accent-foreground":  { light: "#02060C", dark: "#EBECEE", use: "Text on accent" },
+      destructive:          { light: "#E52D49", dark: "#340209", use: "Destructive action fill (delete, error)" },
+      "destructive-foreground":{ light: "#ffffff", dark: "#fff5f6", use: "Text on destructive fill" },
+      border:               { light: "#D0D4D8", dark: "#141E2C", use: "Standard border / divider" },
+      input:                { light: "#D0D4D8", dark: "#141E2C", use: "Form input border" },
+      "input-background":   { light: "#fafafa", dark: "#141E2C", use: "Form input fill" },
+      ring:                 { light: "#959DA7", dark: "#B4BBC2", use: "Focus ring color" },
     },
-    semantic: {
-      success: { light: "#10b981", dark: "#6ee7b7" },
-      error: { light: "#ef4444", dark: "#fca5a5" },
-      warning: { light: "#f59e0b", dark: "#fcd34d" },
-      info: { light: "#3b82f6", dark: "#93c5fd" },
-      ai: { light: "#8b5cf6", dark: "#c4b5fd" },
+
+    // ── Status (semantic intent — preferred over raw color names)
+    status: {
+      success:                  { light: "#16a34a", dark: "#4ade80", use: "Success indicators" },
+      "success-foreground":     { light: "#ffffff", dark: "#000000", use: "Text on success fill" },
+      warning:                  { light: "#b45309", dark: "#fbbf24", use: "Warning indicators" },
+      "warning-foreground":     { light: "#ffffff", dark: "#000000", use: "Text on warning fill" },
+      error:                    { light: "#C11736", dark: "#ED5F74", use: "Error indicators (subtle red)" },
+      "error-foreground":       { light: "#ffffff", dark: "#000000", use: "Text on error fill" },
+      info:                     { light: "#2563eb", dark: "#60a5fa", use: "Info indicators (links, hints)" },
+      "info-foreground":        { light: "#ffffff", dark: "#000000", use: "Text on info fill" },
+      ai:                       { light: "#8b5cf6", dark: "#a78bfa", use: "AI-generated content marker" },
+      "ai-foreground":          { light: "#ffffff", dark: "#000000", use: "Text on AI fill" },
     },
-    dataViz: [
-      "#6366f1", "#8b5cf6", "#ec4899", "#f59e0b",
-      "#10b981", "#3b82f6", "#ef4444", "#14b8a6",
-    ],
+
+    // ── Sidebar (independent so app shells can style sidebars without touching surfaces)
+    sidebar: {
+      sidebar:                  { light: "#fafafa", dark: "#02060C", use: "Sidebar background" },
+      "sidebar-foreground":     { light: "#02060C", dark: "#EBECEE", use: "Sidebar text" },
+      "sidebar-primary":        { light: "#E6F993", dark: "#C3E433", use: "Sidebar active item / CTA" },
+      "sidebar-primary-foreground":{ light: "#02060C", dark: "#02060C", use: "Text on active sidebar item" },
+      "sidebar-accent":         { light: "#fafafa", dark: "#141E2C", use: "Sidebar hover / accent" },
+      "sidebar-accent-foreground":{ light: "#02060C", dark: "#EBECEE", use: "Text on accent" },
+      "sidebar-border":         { light: "#D0D4D8", dark: "#141E2C", use: "Sidebar divider" },
+      "sidebar-ring":           { light: "#959DA7", dark: "#B4BBC2", use: "Sidebar focus ring" },
+    },
+
+    // ── Charts (data viz palette — same in light & dark)
+    charts: {
+      "chart-1": { value: "#6366f1", use: "Primary series — indigo" },
+      "chart-2": { value: "#22c55e", use: "Secondary series — green" },
+      "chart-3": { value: "#E52D49", use: "Tertiary series — red" },
+      "chart-4": { value: "#f59e0b", use: "Quaternary series — amber" },
+      "chart-5": { value: "#818cf8", use: "Quinary series — indigo-light" },
+    },
+
+    // ── Brand palette (Volt Lime — 11 shades + lime accent)
     brand: {
-      "50": "#f7fee7", "100": "#ecfccb", "200": "#d9f99d",
-      "300": "#E6F993", "400": "#C3E433", "500": "#84cc16",
-      "600": "#65a30d", "700": "#4d7c0f", "800": "#3f6212",
-      "900": "#365314", "950": "#1a2e05",
+      "50":  "#fdfee7",
+      "100": "#F4F8E1",
+      "200": "#F4FFC9",
+      "300": "#E6F993",
+      "400": "#DAF75F",
+      "500": "#C3E433",
+      "600": "#A0C114",
+      "700": "#718B03",
+      "800": "#507206",
+      "900": "#2A3400",
+      "950": "#233502",
+      lime:  "#d6ff3c",
+    },
+
+    // ── Neutral primitive (Strata zinc — 11 shades, replaces Tailwind default)
+    zinc: {
+      "50": "#fafafa", "100": "#EBECEE", "200": "#E0E2E5", "300": "#D0D4D8",
+      "400": "#B4BBC2", "500": "#959DA7", "600": "#546070", "700": "#333F4E",
+      "800": "#141E2C", "900": "#02060C", "950": "#09090b",
+    },
+
+    // ── Extended palettes (Tailwind-aligned 11-step scales)
+    red: {
+      "50": "#fff5f6", "100": "#FFECEE", "200": "#FFD6DC", "300": "#F99DAA",
+      "400": "#ED5F74", "500": "#E52D49", "600": "#C11736", "700": "#8B091D",
+      "800": "#580410", "900": "#340209", "950": "#1a0104",
+    },
+    green: {
+      "50": "#f0fdf4", "100": "#dcfce7", "200": "#bbf7d0", "300": "#86efac",
+      "400": "#4ade80", "500": "#22c55e", "600": "#16a34a", "700": "#15803d",
+      "800": "#166534", "900": "#14532d", "950": "#052e16",
+    },
+    blue: {
+      "50": "#eff6ff", "100": "#dbeafe", "200": "#bfdbfe", "300": "#93c5fd",
+      "400": "#60a5fa", "500": "#3b82f6", "600": "#2563eb", "700": "#1d4ed8",
+      "800": "#1e40af", "900": "#1e3a8a", "950": "#172554",
+    },
+    amber: {
+      "50": "#fffbeb", "100": "#fef3c7", "200": "#fde68a", "300": "#fcd34d",
+      "400": "#fbbf24", "500": "#f59e0b", "600": "#d97706", "700": "#b45309",
+      "800": "#92400e", "900": "#78350f", "950": "#451a03",
+    },
+    indigo: {
+      "50": "#eef2ff", "100": "#e0e7ff", "200": "#c7d2fe", "300": "#a5b4fc",
+      "400": "#818cf8", "500": "#6366f1", "600": "#4f46e5", "700": "#4338ca",
+      "800": "#3730a3", "900": "#312e81", "950": "#1e1b4b",
+    },
+    violet: {
+      "300": "#c4b5fd", "400": "#a78bfa", "500": "#8b5cf6",
+      "600": "#7c3aed", "700": "#6d28d9",
+    },
+
+    // ── Base
+    base: {
+      white: "#ffffff",
+      black: "#000000",
     },
   },
+
   typography: {
-    description: "Type system — Inter for UI, JetBrains Mono for code.",
-    fontFamily: {
-      primary: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-      mono: 'JetBrains Mono, "Fira Code", Consolas, monospace',
+    description:
+      "Strata type system — PP Monument Extended for brand display, Inter for UI, Georgia for serif, system mono. All sizes/weights/line-heights/letter-spacings come from variables.css.",
+
+    families: {
+      brand: { value: "'PP Monument Extended', sans-serif", use: "Brand display headings, hero titles, tenant names" },
+      sans:  { value: "Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", use: "All UI body and headings (default)" },
+      serif: { value: "Georgia, Cambria, 'Times New Roman', Times, serif", use: "Editorial / long-form content" },
+      mono:  { value: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace", use: "Code blocks, IDs, keyboard shortcuts" },
     },
+
+    sizes: {
+      xs:   { rem: "0.75rem",  px: "12px",  use: "Captions, helper text" },
+      sm:   { rem: "0.875rem", px: "14px",  use: "Body small, labels" },
+      base: { rem: "1rem",     px: "16px",  use: "Body default" },
+      lg:   { rem: "1.125rem", px: "18px",  use: "Lead paragraphs, sub-heading" },
+      xl:   { rem: "1.25rem",  px: "20px",  use: "Heading-3, card titles" },
+      "2xl":{ rem: "1.5rem",   px: "24px",  use: "Heading-2, section titles" },
+      "3xl":{ rem: "1.875rem", px: "30px",  use: "Heading-1, page titles" },
+      "4xl":{ rem: "2.25rem",  px: "36px",  use: "Display small" },
+      "5xl":{ rem: "3rem",     px: "48px",  use: "Display medium" },
+      "6xl":{ rem: "3.75rem",  px: "60px",  use: "Display large" },
+      "7xl":{ rem: "4.5rem",   px: "72px",  use: "Hero" },
+      "8xl":{ rem: "6rem",     px: "96px",  use: "Marketing hero" },
+      "9xl":{ rem: "8rem",     px: "128px", use: "Editorial mega" },
+    },
+
+    weights: {
+      thin:       100,
+      extralight: 200,
+      light:      300,
+      normal:     400,
+      medium:     500,
+      semibold:   600,
+      bold:       700,
+      extrabold:  800,
+      black:      900,
+    },
+
+    lineHeights: {
+      none:    "1",
+      tight:   "1.25",
+      snug:    "1.375",
+      normal:  "1.5",
+      relaxed: "1.625",
+      loose:   "2",
+    },
+
+    letterSpacings: {
+      tighter: "-0.05em",
+      tight:   "-0.025em",
+      normal:  "0",
+      wide:    "0.025em",
+      wider:   "0.05em",
+      widest:  "0.1em",
+    },
+
+    // Curated semantic scale (for opinionated apps that want one-word tokens)
     scale: {
       "display-lg": { size: "36px", lineHeight: "40px", weight: 700, use: "Hero titles" },
       "heading-1":  { size: "30px", lineHeight: "36px", weight: 700, use: "Page titles" },
@@ -119,40 +274,232 @@ const FOUNDATIONS = {
       "body-lg":    { size: "18px", lineHeight: "28px", weight: 400, use: "Lead paragraphs" },
       "body-base":  { size: "16px", lineHeight: "24px", weight: 400, use: "Default body text" },
       "body-sm":    { size: "14px", lineHeight: "20px", weight: 400, use: "Secondary, captions" },
-      "label":      { size: "14px", lineHeight: "20px", weight: 500, use: "Form labels, metadata" },
-      "caption":    { size: "12px", lineHeight: "16px", weight: 400, use: "Timestamps, helper text" },
-      "code":       { size: "14px", lineHeight: "20px", weight: 400, family: "mono", use: "Code blocks, IDs" },
+      label:        { size: "14px", lineHeight: "20px", weight: 500, use: "Form labels, metadata" },
+      caption:      { size: "12px", lineHeight: "16px", weight: 400, use: "Timestamps, helper text" },
+      code:         { size: "14px", lineHeight: "20px", weight: 400, family: "mono", use: "Code blocks, IDs" },
     },
-    weights: { regular: 400, medium: 500, semibold: 600, bold: 700 },
   },
+
   spacing: {
-    description: "8px base grid. All spacing should be multiples of 8.",
+    description:
+      "8px base grid. Spacing scale matches Tailwind's spacing-* utilities directly. All 19 stops from variables.css are exposed (with rem + px for clarity).",
+
     scale: {
-      "0": "0px", "1": "8px", "2": "16px", "3": "24px", "4": "32px",
-      "5": "40px", "6": "48px", "7": "56px", "8": "64px", "9": "72px",
-      "10": "80px", "11": "88px", "12": "96px",
+      "0":  { rem: "0",       px: "0px"   },
+      "1":  { rem: "0.25rem", px: "4px"   },
+      "2":  { rem: "0.5rem",  px: "8px"   },
+      "3":  { rem: "0.75rem", px: "12px"  },
+      "4":  { rem: "1rem",    px: "16px"  },
+      "5":  { rem: "1.25rem", px: "20px"  },
+      "6":  { rem: "1.5rem",  px: "24px"  },
+      "8":  { rem: "2rem",    px: "32px"  },
+      "10": { rem: "2.5rem",  px: "40px"  },
+      "11": { rem: "2.75rem", px: "44px"  },
+      "12": { rem: "3rem",    px: "48px"  },
+      "16": { rem: "4rem",    px: "64px"  },
+      "20": { rem: "5rem",    px: "80px"  },
+      "24": { rem: "6rem",    px: "96px"  },
+      "32": { rem: "8rem",    px: "128px" },
+      "40": { rem: "10rem",   px: "160px" },
+      "48": { rem: "12rem",   px: "192px" },
+      "56": { rem: "14rem",   px: "224px" },
+      "64": { rem: "16rem",   px: "256px" },
     },
-    grid: { base: 8, note: "All layout values should be divisible by 8" },
-    containers: { sm: "640px", md: "768px", lg: "1024px", xl: "1280px", "2xl": "1536px" },
+
+    grid: {
+      base: 8,
+      note: "All layout values should be divisible by 8. Use the spacing scale (p-2, m-4, gap-6) instead of arbitrary [px] values.",
+    },
   },
+
   borders: {
-    description: "Border radius and width tokens.",
+    description:
+      "Border radius (9 values) and width (5 values) tokens. Names match Tailwind utilities directly (rounded-*, border-*).",
+
     radius: {
-      none: "0px", sm: "2px", base: "4px", md: "6px",
-      lg: "8px", xl: "12px", "2xl": "16px", full: "9999px",
+      none:  { rem: "0",        px: "0px",     class: "rounded-none" },
+      sm:    { rem: "0.125rem", px: "2px",     class: "rounded-sm"   },
+      base:  { rem: "0.25rem",  px: "4px",     class: "rounded"      },
+      md:    { rem: "0.375rem", px: "6px",     class: "rounded-md"   },
+      lg:    { rem: "0.5rem",   px: "8px",     class: "rounded-lg"   },
+      xl:    { rem: "0.75rem",  px: "12px",    class: "rounded-xl"   },
+      "2xl": { rem: "1rem",     px: "16px",    class: "rounded-2xl"  },
+      "3xl": { rem: "1.5rem",   px: "24px",    class: "rounded-3xl"  },
+      full:  { rem: "9999px",   px: "9999px",  class: "rounded-full" },
     },
-    width: { none: "0px", thin: "1px", base: "1.5px", thick: "2px" },
+
+    widths: {
+      "0": { value: "0",   class: "border-0" },
+      "1": { value: "1px", class: "border"   },
+      "2": { value: "2px", class: "border-2" },
+      "4": { value: "4px", class: "border-4" },
+      "8": { value: "8px", class: "border-8" },
+    },
   },
+
   shadows: {
-    description: "Elevation system — use to convey z-depth.",
-    elevation: {
+    description:
+      "Two shadow systems: `elevations` (z-depth, used by Card / Dialog / Popover) and `glow` (subtle ambient lift, used by hero CTAs and floating panels). Z-index ladder covers the overlay stack.",
+
+    elevations: {
       none: "none",
       sm:   "0 1px 2px 0 rgb(0 0 0 / 0.05)",
       base: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
       md:   "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
       lg:   "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
       xl:   "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+      "2xl":"0 25px 50px -12px rgb(0 0 0 / 0.25)",
+      inner:"inset 0 2px 4px 0 rgb(0 0 0 / 0.05)",
     },
+
+    glow: {
+      sm: { light: "0 2px 12px rgba(0, 0, 0, 0.08)",  dark: "0 2px 12px rgba(0, 0, 0, 0.25)", use: "Subtle hover lift" },
+      md: { light: "0 4px 24px rgba(0, 0, 0, 0.12)",  dark: "0 4px 24px rgba(0, 0, 0, 0.40)", use: "Floating cards / panels" },
+      lg: { light: "0 8px 40px rgba(0, 0, 0, 0.18)",  dark: "0 8px 40px rgba(0, 0, 0, 0.50)", use: "Hero CTAs / focus states" },
+    },
+
+    zIndex: {
+      "10": "Sticky elements, navbar",
+      "20": "Dropdowns, tooltips",
+      "30": "Modal overlays",
+      "50": "Toasts, command palette",
+    },
+  },
+
+  branding: {
+    description:
+      "Strata brand identity — flat geometric monogram + Volt Lime as primary signal. The mark is technical, functional, precise. Volt Lime says \"act now\" and should be used sparingly (one signal per screen section).",
+
+    logos: [
+      { name: "Logo Black",  file: "src/assets/branding/logo-black.png",  use: "Light backgrounds — official documents, light mode" },
+      { name: "Logo White",  file: "src/assets/branding/logo-white.png",  use: "Dark backgrounds — dark mode primary nav" },
+      { name: "Logo Lime",   file: "src/assets/branding/logo-lime.png",   use: "Accent / signal usage (dark mode only)" },
+      { name: "Logo Gray",   file: "src/assets/branding/logo-gray.png",   use: "Secondary contexts, footers" },
+    ],
+
+    voltLimeRule: {
+      pattern: "bg-brand-300 dark:bg-brand-500",
+      tokens: { light: "#E6F993", dark: "#C3E433" },
+      meaning: "The lime accent that says 'act now' — primary CTAs, active state indicators, focus rings.",
+      principle: "One signal per screen section.",
+    },
+
+    palette: {
+      "50":  "#fdfee7",
+      "100": "#F4F8E1",
+      "200": "#F4FFC9",
+      "300": "#E6F993",
+      "400": "#DAF75F",
+      "500": "#C3E433",
+      "600": "#A0C114",
+      "700": "#718B03",
+      "800": "#507206",
+      "900": "#2A3400",
+      "950": "#233502",
+      lime:  "#d6ff3c",
+    },
+
+    whenToUse: [
+      "Primary CTA buttons (default / brand variant)",
+      "Active nav indicators / selected state underlines",
+      "Card accent strips / icon container backgrounds",
+      "Hero brand mark in app shells (light or dark)",
+    ],
+
+    antiPatterns: [
+      "❌ Body text or headings (Volt Lime fails WCAG AA contrast)",
+      "❌ Full section / page backgrounds (too heavy, eye-fatigue)",
+      "❌ Status indicators (use status-success / warning / error / info / ai)",
+      "❌ Multiple lime signals in a single section (loses semantic value)",
+      "❌ Custom hex variants of lime (#84cc16, #d4f06a, etc.) — use brand-* tokens only",
+    ],
+
+    typography: {
+      brandFont: "'PP Monument Extended', sans-serif",
+      use: "Brand mark, hero displays, tenant names. Pair with Inter for body text.",
+    },
+  },
+
+  transparency: {
+    description:
+      "Glassmorphism tokens for navbar/popover surfaces. Two variants (navbar, popover) each with a translucent background + tinted border + backdrop blur. Always pair with `bg-glass-*` + `border-glass-*-border` + `backdrop-blur-glass-xl`.",
+
+    glass: {
+      navbar: {
+        "bg-class":     "bg-glass-navbar",
+        "border-class": "border border-glass-navbar-border",
+        use:            "Top nav bars over hero/photo backgrounds",
+      },
+      popover: {
+        "bg-class":     "bg-glass-popover",
+        "border-class": "border border-glass-popover-border",
+        use:            "Floating popovers, dropdowns, tooltips when over busy backgrounds",
+      },
+    },
+
+    blur: {
+      "blur-glass-xl": { class: "backdrop-blur-glass-xl", value: "24px", use: "Standard glass blur for navbar + popover" },
+    },
+
+    shadow: {
+      "shadow-glass-lg": { class: "shadow-glass-lg", use: "Lifts the glass surface off the background" },
+    },
+
+    pattern: {
+      example: "<div class=\"bg-glass-navbar border border-glass-navbar-border backdrop-blur-glass-xl shadow-glass-lg\">...</div>",
+      principle: "Always combine 3 utilities: bg + border + blur. Optionally add shadow-glass-lg.",
+    },
+
+    whenToUse: [
+      "Top navbar over a hero image / colored section",
+      "Sticky search bar over scrolling content",
+      "Popover/dropdown over rich UI (catalog grids, dashboards)",
+      "Floating action panels in storytelling demos",
+    ],
+
+    antiPatterns: [
+      "❌ Using bg-card/80 or bg-popover/95 to fake glass — those are slash-opacity tokens, not glass tokens (different intent)",
+      "❌ Forgetting backdrop-blur — without blur, glass becomes a tinted overlay, loses the depth signal",
+      "❌ Stacking 3+ glass layers — performance degrades and visual hierarchy collapses",
+      "❌ Glass on solid white/black backgrounds — defeats the purpose; use bg-card or bg-popover instead",
+    ],
+  },
+
+  "grid-containers": {
+    description:
+      "12-column grid system (Tailwind grid-cols-*) + 5 container max-widths matching standard breakpoints. Containers are for centered page content; grids are for layouts inside containers.",
+
+    grids: {
+      "2-col":  { class: "grid grid-cols-2 gap-4",  use: "Two-column splits (sidebar + content, side-by-side cards)" },
+      "3-col":  { class: "grid grid-cols-3 gap-4",  use: "Three-column layouts (feature grids, KPI rows)" },
+      "4-col":  { class: "grid grid-cols-4 gap-4",  use: "Four-column dashboards, tile grids" },
+      "6-col":  { class: "grid grid-cols-6 gap-4",  use: "Six-column flexibility for symmetric splits" },
+      "12-col": { class: "grid grid-cols-12 gap-4", use: "Full 12-column composition (use col-span-* for asymmetric layouts)" },
+    },
+
+    containers: {
+      sm:   { maxWidth: "640px",  class: "max-w-screen-sm",  use: "Mobile-first, single-column reading" },
+      md:   { maxWidth: "768px",  class: "max-w-screen-md",  use: "Tablet, narrow article layouts" },
+      lg:   { maxWidth: "1024px", class: "max-w-screen-lg",  use: "Standard desktop content (most pages)" },
+      xl:   { maxWidth: "1280px", class: "max-w-screen-xl",  use: "Wide desktop, dashboard layouts" },
+      "2xl":{ maxWidth: "1536px", class: "max-w-screen-2xl", use: "Extra-wide marketing / hero sections" },
+    },
+
+    compositions: [
+      { name: "Centered article",   pattern: '<div class="container mx-auto max-w-screen-lg px-4">...</div>' },
+      { name: "App shell",          pattern: '<div class="grid grid-cols-12 gap-6 max-w-screen-2xl mx-auto"><aside class="col-span-3">...</aside><main class="col-span-9">...</main></div>' },
+      { name: "Symmetric split",    pattern: '<div class="grid grid-cols-2 gap-6">...</div>' },
+      { name: "KPI row",            pattern: '<div class="grid grid-cols-4 gap-4">...</div>' },
+      { name: "Sidebar + content",  pattern: '<div class="grid grid-cols-12 gap-6"><aside class="col-span-3">...</aside><section class="col-span-9">...</section></div>' },
+    ],
+
+    antiPatterns: [
+      "❌ Hardcoded widths (w-[1200px]) — use max-w-screen-* containers",
+      "❌ Margin tricks (mx-12) for centering — use container mx-auto + max-w",
+      "❌ Mixing grid + flex for the same layout — pick one and stay consistent",
+      "❌ Skipping px-4 padding on container — content touches viewport edge on mobile",
+      "❌ Unbalanced spans (col-span-7 + col-span-5) without semantic reason",
+    ],
   },
 };
 
