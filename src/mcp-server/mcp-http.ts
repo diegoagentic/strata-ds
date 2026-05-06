@@ -209,7 +209,7 @@ function createServer() {
   return server;
 }
 
-const PORT = parseInt(process.env.PORT || '3001', 10);
+const PORT = 3001; // Railway networking is mapped to port 3001 — Railway's PORT env var is intentionally ignored
 
 const httpServer = http.createServer(async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
