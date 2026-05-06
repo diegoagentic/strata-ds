@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { Layers } from "lucide-react";
+import { foundationsData } from "../data/foundations-data";
 
 interface FoundationData {
   section: string;
@@ -53,52 +53,14 @@ interface ScaleToken {
   use: string;
 }
 
-const ENDPOINT = "http://localhost:3001/foundations";
-
 export function FoundationsView({ section }: { section: string }) {
-  const [data, setData] = useState<FoundationData | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    setData(null);
-    setError(null);
-
-    fetch(`${ENDPOINT}/${section}`)
-      .then(async (res) => {
-        const json = await res.json();
-        if (cancelled) return;
-        if (!res.ok) {
-          setError(json.error || `Failed to fetch foundation "${section}"`);
-        } else {
-          setData(json as FoundationData);
-        }
-      })
-      .catch((e) => {
-        if (cancelled) return;
-        setError(e.message);
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [section]);
-
-  if (error) {
-    return (
-      <div className="space-y-4">
-        <h1 className="text-3xl font-bold text-foreground">Could not load "{section}"</h1>
-        <p className="text-sm text-muted-foreground">{error}</p>
-      </div>
-    );
-  }
+  const data = (foundationsData[section] ?? null) as FoundationData | null;
 
   if (!data) {
     return (
-      <div className="space-y-3">
-        <div className="h-3 w-24 bg-muted rounded animate-pulse" />
-        <div className="h-10 w-72 bg-muted rounded animate-pulse" />
-        <div className="h-4 w-full max-w-2xl bg-muted rounded animate-pulse" />
+      <div className="space-y-4">
+        <h1 className="text-3xl font-bold text-foreground">Section not found: "{section}"</h1>
+        <p className="text-sm text-muted-foreground">This foundation section has not been documented yet.</p>
       </div>
     );
   }
