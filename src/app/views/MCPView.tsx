@@ -30,7 +30,10 @@ interface HealthData {
   antiPatterns: number;
 }
 
+// Vercel serverless fallback — always responds. Replace with Railway URL once deployed:
+// const HEALTH_URL = "https://strata-ds-mcp.up.railway.app/health";
 const HEALTH_URL = "/api/health";
+const MCP_HTTP_URL = "https://strata-ds-mcp.up.railway.app/mcp"; // set after Railway deploy
 
 const TOOLS = [
   { name: "get_session_briefing", description: "MUST BE CALLED ONCE AT SESSION START. Returns active rules + mandatory workflow. Equivalent to reading CLAUDE.md but live.", isNew: true },
