@@ -28,8 +28,8 @@ type SectionId =
   | "architecture";
 
 const SECTIONS: { id: SectionId; label: string; icon: React.ElementType }[] = [
-  { id: "mental-model", label: "Mental model", icon: Compass },
   { id: "first-5-min", label: "Your first 5 minutes", icon: Zap },
+  { id: "mental-model", label: "Mental model", icon: Compass },
   { id: "request-flow", label: "How a request flows", icon: GitBranch },
   { id: "examples", label: "Worked examples", icon: Code2 },
   { id: "troubleshooting", label: "Troubleshooting", icon: Wrench },
@@ -39,7 +39,7 @@ const SECTIONS: { id: SectionId; label: string; icon: React.ElementType }[] = [
 ];
 
 export function DeveloperGuideView() {
-  const [active, setActive] = useState<SectionId>("mental-model");
+  const [active, setActive] = useState<SectionId>("first-5-min");
 
   return (
     <div className="space-y-10">
