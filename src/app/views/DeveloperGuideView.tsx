@@ -29,13 +29,13 @@ type SectionId =
 
 const SECTIONS: { id: SectionId; label: string; icon: React.ElementType }[] = [
   { id: "mental-model", label: "Mental model", icon: Compass },
-  { id: "glossary", label: "Glossary", icon: BookOpen },
   { id: "first-5-min", label: "Your first 5 minutes", icon: Zap },
   { id: "request-flow", label: "How a request flows", icon: GitBranch },
   { id: "examples", label: "Worked examples", icon: Code2 },
   { id: "troubleshooting", label: "Troubleshooting", icon: Wrench },
   { id: "faq", label: "FAQ", icon: HelpCircle },
   { id: "architecture", label: "Architecture", icon: Layers },
+  { id: "glossary", label: "Glossary", icon: BookOpen },
 ];
 
 export function DeveloperGuideView() {
