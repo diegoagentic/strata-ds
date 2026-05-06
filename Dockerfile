@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Install dependencies
 COPY package.json package-lock.json ./
-RUN npm ci --omit=dev --ignore-scripts && npm install tsx
+RUN npm ci --omit=dev --ignore-scripts
 
 # Copy server source and governance
 COPY src/mcp-server/ ./src/mcp-server/
