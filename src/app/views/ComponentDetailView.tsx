@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AlertTriangle, BookOpen, Code2, Eye, Sparkles, X } from "lucide-react";
 import { CodeViewer } from "../components/CodeViewer";
 import { getPreviewComponent } from "./componentPreviews";
 import { copyToClipboard } from "@/utils/clipboard";
-import { cn } from "@/utils/cn";
+import { getComponentSpec } from "../data/components-data";
 
 interface ComponentSpec {
   id: string;
@@ -26,44 +26,19 @@ interface ComponentSpec {
   } | null;
 }
 
-const ENDPOINT = "http://localhost:3001/components";
-
 export function ComponentDetailView({ id }: { id: string }) {
-  const [spec, setSpec] = useState<ComponentSpec | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
-    let cancelled = false;
-    setSpec(null);
-    setError(null);
-
-    fetch(`${ENDPOINT}/${id}`)
-      .then(async (res) => {
-        const data = await res.json();
-        if (cancelled) return;
-        if (!res.ok) {
-          setError(data.error || `Failed to fetch component "${id}"`);
-        } else {
-          setSpec(data as ComponentSpec);
-        }
-      })
-      .catch((e) => {
-        if (cancelled) return;
-        setError(e.message || "Network error — is the MCP server running on port 3001?");
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [id]);
-
-  if (error) {
-    return <ErrorBlock id={id} error={error} />;
-  }
+  const spec = (getComponentSpec(id) ?? null) as ComponentSpec | null;
 
   if (!spec) {
-    return <LoadingBlock />;
+    return (
+      <div className="space-y-4">
+        <p className="text-sm font-semibold text-status-warning uppercase tracking-wider">Not documented</p>
+        <h1 className="text-3xl font-bold text-foreground">"{id}"</h1>
+        <p className="text-muted-foreground">This component hasn't been documented yet in the design system.</p>
+      </div>
+    );
   }
 
   const handleCopyImport = async () => {
@@ -290,46 +265,3 @@ export function ComponentDetailView({ id }: { id: string }) {
   );
 }
 
-function LoadingBlock() {
-  return (
-    <div className="space-y-6">
-      <div className="space-y-3">
-        <div className="h-3 w-24 bg-muted rounded animate-pulse" />
-        <div className="h-10 w-72 bg-muted rounded animate-pulse" />
-        <div className="h-4 w-full max-w-2xl bg-muted rounded animate-pulse" />
-        <div className="h-4 w-3/4 max-w-2xl bg-muted rounded animate-pulse" />
-      </div>
-      <div className="space-y-2 mt-8">
-        <div className="h-6 w-32 bg-muted rounded animate-pulse" />
-        <div className="h-12 w-full bg-muted rounded animate-pulse" />
-      </div>
-    </div>
-  );
-}
-
-function ErrorBlock({ id, error }: { id: string; error: string }) {
-  return (
-    <div className="space-y-4">
-      <p className="text-sm font-semibold text-status-error uppercase tracking-wider">Error</p>
-      <h1 className="text-3xl font-bold text-foreground">Could not load "{id}"</h1>
-      <div className="bg-status-error/5 border border-status-error/20 rounded-lg p-4">
-        <p className="text-sm text-foreground mb-2">
-          <strong>Reason:</strong> {error}
-        </p>
-        <p className="text-sm text-muted-foreground">
-          The MCP server should be running at <code className="font-mono bg-muted px-1.5 py-0.5 rounded">localhost:3001</code>.
-          Start it with <code className="font-mono bg-muted px-1.5 py-0.5 rounded">node src/mcp-server/index.mjs</code>.
-        </p>
-      </div>
-      <button
-        onClick={() => window.dispatchEvent(new CustomEvent("strata:navigate", { detail: "mcp" }))}
-        className={cn(
-          "inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-md",
-          "bg-brand-300 dark:bg-brand-500 text-foreground hover:bg-brand-400 transition-colors",
-        )}
-      >
-        Open MCP setup →
-      </button>
-    </div>
-  );
-}
