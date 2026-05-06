@@ -318,35 +318,31 @@ interface QuickstartStep {
 const QUICKSTART_STEPS: QuickstartStep[] = [
   {
     n: 1,
-    title: "Start the MCP server",
-    detail: "From the DS folder. Runs on stdio for IDEs and exposes a health endpoint on port 3001.",
-    code: `cd "design system/strata-ds"
-node src/mcp-server/index.mjs
-
-# Verify in a separate terminal:
-curl http://localhost:3001/health
-# → {"status":"ok","tools":11,...}`,
+    title: "The MCP server is already online",
+    detail: "No installation or local setup needed. The Strata DS MCP server runs on Railway — always available.",
+    code: `# Verify it's up:
+curl https://strata-ds-production.up.railway.app/health
+# → {"status":"ok","governanceReady":true,"tools":11,...}`,
   },
   {
     n: 2,
     title: "Configure your IDE",
-    detail: "Pick one. Each maps the MCP server into your AI's tool list.",
+    detail: "Pick one. Each maps the MCP server into your AI's tool list via HTTP — no local process required.",
     tabs: {
       Cursor: `// .cursor/mcp.json
 {
   "mcpServers": {
     "strata-ds": {
-      "command": "node",
-      "args": ["./design system/strata-ds/src/mcp-server/index.mjs"]
+      "url": "https://strata-ds-production.up.railway.app/mcp"
     }
   }
 }`,
-      "Claude Code": `// .claude/settings.json
+      "Claude Code": `// .mcp.json  (project root)
 {
   "mcpServers": {
     "strata-ds": {
-      "command": "node",
-      "args": ["../design system/strata-ds/src/mcp-server/index.mjs"]
+      "type": "http",
+      "url": "https://strata-ds-production.up.railway.app/mcp"
     }
   }
 }`,
@@ -354,9 +350,8 @@ curl http://localhost:3001/health
 {
   "servers": {
     "strata-ds": {
-      "type": "stdio",
-      "command": "node",
-      "args": ["./design system/strata-ds/src/mcp-server/index.mjs"]
+      "type": "http",
+      "url": "https://strata-ds-production.up.railway.app/mcp"
     }
   }
 }`,
@@ -861,7 +856,7 @@ const TROUBLESHOOTING = [
     causes: [
       "Hook not installed (`.claude/hooks/UserPromptSubmit.json` missing)",
       "System prompt not loaded (`.cursor/rules/` or `CLAUDE.md` not at project root)",
-      "MCP server not running — check `curl http://localhost:3001/health`",
+      "MCP server unreachable — check `curl https://strata-ds-production.up.railway.app/health`",
       "IDE didn't pick up the config — restart the IDE",
     ],
     diagnostic:
@@ -900,7 +895,7 @@ const TROUBLESHOOTING = [
   {
     problem: "I'm using a tool that doesn't support MCP",
     causes: [
-      "Direct curl: `curl 'localhost:3001/plan_ui?description=...'` and paste the JSON into your AI chat",
+      "Direct curl: `curl 'https://strata-ds-production.up.railway.app/plan_ui?description=...'` and paste the JSON into your AI chat",
       "System prompt only: paste templates/antigravity-system-strata-ds.md content into the tool's system prompt field",
       "CLI helper coming soon: `npx strata-ds plan ...`",
     ],

@@ -41,7 +41,6 @@ const NAV: NavSection[] = [
       { id: "overview", label: "Overview" },
       { id: "developer-guide", label: "Developer Guide", isNew: true },
       { id: "mcp", label: "MCP Connection", isNew: true },
-      { id: "components-map", label: "All Components", isNew: true },
     ],
   },
   {
@@ -189,8 +188,6 @@ export default function App() {
         return <DeveloperGuideView />;
       case "mcp":
         return <MCPView />;
-      case "components-map":
-        return <ComponentsMapView />;
       case "branding":
         return <BrandingView />;
       case "transparency":

@@ -30,10 +30,8 @@ interface HealthData {
   antiPatterns: number;
 }
 
-// Vercel serverless fallback — always responds. Replace with Railway URL once deployed:
-// const HEALTH_URL = "https://strata-ds-mcp.up.railway.app/health";
-const HEALTH_URL = "/api/health";
-const MCP_HTTP_URL = "https://strata-ds-mcp.up.railway.app/mcp"; // set after Railway deploy
+const HEALTH_URL = "https://strata-ds-production.up.railway.app/health";
+const MCP_HTTP_URL = "https://strata-ds-production.up.railway.app/mcp";
 
 const TOOLS = [
   { name: "get_session_briefing", description: "MUST BE CALLED ONCE AT SESSION START. Returns active rules + mandatory workflow. Equivalent to reading CLAUDE.md but live.", isNew: true },
@@ -56,8 +54,7 @@ const CONFIGS: Record<string, { path: string; json: string; note?: string }> = {
       {
         mcpServers: {
           "strata-ds": {
-            command: "node",
-            args: ["./design system/strata-ds/src/mcp-server/index.mjs"],
+            url: "https://strata-ds-production.up.railway.app/mcp",
           },
         },
       },
@@ -66,20 +63,20 @@ const CONFIGS: Record<string, { path: string; json: string; note?: string }> = {
     ),
   },
   "claude-code": {
-    path: ".claude/settings.json",
+    path: ".mcp.json",
     json: JSON.stringify(
       {
         mcpServers: {
           "strata-ds": {
-            command: "node",
-            args: ["../design system/strata-ds/src/mcp-server/index.mjs"],
+            type: "http",
+            url: "https://strata-ds-production.up.railway.app/mcp",
           },
         },
       },
       null,
       2,
     ),
-    note: "Path is relative to your project root. Adjust if your project layout differs.",
+    note: "Place this file at your project root. The server is always online — no local setup needed.",
   },
   "vscode-copilot": {
     path: ".vscode/mcp.json",
@@ -87,9 +84,8 @@ const CONFIGS: Record<string, { path: string; json: string; note?: string }> = {
       {
         servers: {
           "strata-ds": {
-            type: "stdio",
-            command: "node",
-            args: ["./design system/strata-ds/src/mcp-server/index.mjs"],
+            type: "http",
+            url: "https://strata-ds-production.up.railway.app/mcp",
           },
         },
       },
@@ -104,15 +100,15 @@ const CONFIGS: Record<string, { path: string; json: string; note?: string }> = {
       {
         mcpServers: {
           "strata-ds": {
-            command: "node",
-            args: ["/absolute/path/to/strata-ds/src/mcp-server/index.mjs"],
+            type: "http",
+            url: "https://strata-ds-production.up.railway.app/mcp",
           },
         },
       },
       null,
       2,
     ),
-    note: "Generic stdio MCP config. Use the absolute path to index.mjs.",
+    note: "Generic HTTP MCP config. Works with any MCP-compatible tool that supports HTTP transport.",
   },
 };
 
@@ -150,7 +146,7 @@ export function MCPView() {
     }
   };
 
-  const startCommand = "node src/mcp-server/index.mjs";
+  const startCommand = "https://strata-ds-production.up.railway.app/mcp";
 
   return (
     <div className="space-y-10">
@@ -206,7 +202,7 @@ export function MCPView() {
 
         {status === "offline" && (
           <div className="mt-6 pt-6 border-t border-border">
-            <p className="text-sm font-semibold text-foreground mb-2">Start the server with:</p>
+            <p className="text-sm font-semibold text-foreground mb-2">MCP endpoint:</p>
             <div className="flex items-center gap-2">
               <code className="flex-1 font-mono text-sm bg-muted text-foreground px-3 py-2 rounded-md">
                 {startCommand}
@@ -223,7 +219,7 @@ export function MCPView() {
               </button>
             </div>
             <p className="text-xs text-muted-foreground mt-2">
-              Run from <code className="font-mono">design system/strata-ds/</code>. The server runs on stdio for IDEs and exposes a health endpoint on port 3001 for this dashboard.
+              The server runs on Railway — no local setup needed. If this shows offline, check Railway status.
             </p>
           </div>
         )}
@@ -393,7 +389,7 @@ function DSArchitectSection() {
     setError(null);
     setResult(null);
     try {
-      const url = `/api/plan_ui?description=${encodeURIComponent(text)}`;
+      const url = `https://strata-ds-production.up.railway.app/plan_ui?description=${encodeURIComponent(text)}`;
       const res = await fetch(url);
       const data = (await res.json()) as PlanResponse;
       if (data.error) {
