@@ -255,7 +255,7 @@ const httpServer = http.createServer(async (req, res) => {
   res.end('Not found');
 });
 
-httpServer.listen(PORT, () => {
+httpServer.listen(PORT, '0.0.0.0', () => {
   console.log(`Strata DS MCP HTTP Server — port ${PORT}`);
   console.log(`MCP endpoint:  http://localhost:${PORT}/mcp`);
   console.log(`Health:        http://localhost:${PORT}/health`);
