@@ -30,7 +30,7 @@ interface HealthData {
   antiPatterns: number;
 }
 
-const HEALTH_URL = "http://localhost:3001/health";
+const HEALTH_URL = "/api/health";
 
 const TOOLS = [
   { name: "get_session_briefing", description: "MUST BE CALLED ONCE AT SESSION START. Returns active rules + mandatory workflow. Equivalent to reading CLAUDE.md but live.", isNew: true },
@@ -390,7 +390,7 @@ function DSArchitectSection() {
     setError(null);
     setResult(null);
     try {
-      const url = `http://localhost:3001/plan_ui?description=${encodeURIComponent(text)}`;
+      const url = `/api/plan_ui?description=${encodeURIComponent(text)}`;
       const res = await fetch(url);
       const data = (await res.json()) as PlanResponse;
       if (data.error) {
