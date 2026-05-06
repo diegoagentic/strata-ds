@@ -318,26 +318,49 @@ interface QuickstartStep {
 const QUICKSTART_STEPS: QuickstartStep[] = [
   {
     n: 1,
-    title: "The MCP server is already online",
-    detail: "No installation or local setup needed. The Strata DS MCP server runs on Railway — always available.",
-    code: `# Verify it's up:
+    title: "Connect to the MCP server",
+    detail: "Use the online server (no setup needed) or run your own local copy from the DS repo.",
+    tabs: {
+      "Online (recommended)": `# No setup needed — the server runs 24/7 on Railway.
+# Verify it's up:
 curl https://strata-ds-production.up.railway.app/health
 # → {"status":"ok","governanceReady":true,"tools":11,...}`,
+      "Local (self-hosted)": `# Clone the DS repo and start the server locally:
+git clone https://github.com/diegoagentic/strata-ds
+cd strata-ds
+npm install
+npm run server
+# → Strata DS MCP HTTP Server — port 3001
+# → Governance OK: true
+
+# Verify in a separate terminal:
+curl http://localhost:3001/health
+# → {"status":"ok","governanceReady":true,...}`,
+    },
   },
   {
     n: 2,
     title: "Configure your IDE",
-    detail: "Pick one. Each maps the MCP server into your AI's tool list via HTTP — no local process required.",
+    detail: "Pick one. Each maps the MCP server into your AI's tool list. Use the Online URL or localhost:3001 if running locally.",
     tabs: {
-      Cursor: `// .cursor/mcp.json
+      Cursor: `// .cursor/mcp.json — Online:
 {
   "mcpServers": {
     "strata-ds": {
       "url": "https://strata-ds-production.up.railway.app/mcp"
     }
   }
+}
+
+// Local (if running npm run server):
+{
+  "mcpServers": {
+    "strata-ds": {
+      "url": "http://localhost:3001/mcp"
+    }
+  }
 }`,
-      "Claude Code": `// .mcp.json  (project root)
+      "Claude Code": `// .mcp.json (project root) — Online:
 {
   "mcpServers": {
     "strata-ds": {
@@ -345,13 +368,33 @@ curl https://strata-ds-production.up.railway.app/health
       "url": "https://strata-ds-production.up.railway.app/mcp"
     }
   }
+}
+
+// Local (if running npm run server):
+{
+  "mcpServers": {
+    "strata-ds": {
+      "type": "http",
+      "url": "http://localhost:3001/mcp"
+    }
+  }
 }`,
-      "VS Code Copilot": `// .vscode/mcp.json
+      "VS Code Copilot": `// .vscode/mcp.json — Online:
 {
   "servers": {
     "strata-ds": {
       "type": "http",
       "url": "https://strata-ds-production.up.railway.app/mcp"
+    }
+  }
+}
+
+// Local (if running npm run server):
+{
+  "servers": {
+    "strata-ds": {
+      "type": "http",
+      "url": "http://localhost:3001/mcp"
     }
   }
 }`,
@@ -901,6 +944,17 @@ const TROUBLESHOOTING = [
     ],
     diagnostic:
       "MCP is the convenience layer; the HTTP API is the universal one.",
+  },
+  {
+    problem: "I want to run the MCP server locally instead of Railway",
+    causes: [
+      "Clone the repo: `git clone https://github.com/diegoagentic/strata-ds && cd strata-ds && npm install`",
+      "Start the server: `npm run server` — listens on port 3001",
+      "Update your IDE config: replace the Railway URL with `http://localhost:3001/mcp`",
+      "Governance files live in `governance/` — edit them and restart the server to apply changes",
+    ],
+    diagnostic:
+      "`curl http://localhost:3001/health` should return `{\"status\":\"ok\",\"governanceReady\":true}`. If governanceReady is false, check that the governance/ folder exists in the repo root.",
   },
 ];
 

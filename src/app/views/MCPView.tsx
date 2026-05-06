@@ -61,6 +61,7 @@ const CONFIGS: Record<string, { path: string; json: string; note?: string }> = {
       null,
       2,
     ),
+    note: "Running locally? Replace the URL with http://localhost:3001/mcp after running npm run server in the DS repo.",
   },
   "claude-code": {
     path: ".mcp.json",
@@ -76,7 +77,7 @@ const CONFIGS: Record<string, { path: string; json: string; note?: string }> = {
       null,
       2,
     ),
-    note: "Place this file at your project root. The server is always online — no local setup needed.",
+    note: "Place at your project root. Running locally? Use http://localhost:3001/mcp instead.",
   },
   "vscode-copilot": {
     path: ".vscode/mcp.json",
@@ -92,7 +93,7 @@ const CONFIGS: Record<string, { path: string; json: string; note?: string }> = {
       null,
       2,
     ),
-    note: "Requires GitHub Copilot MCP support (preview / 2025+).",
+    note: "Requires GitHub Copilot MCP support (preview / 2025+). Running locally? Use http://localhost:3001/mcp instead.",
   },
   other: {
     path: "your-tool-config.json",
@@ -108,7 +109,7 @@ const CONFIGS: Record<string, { path: string; json: string; note?: string }> = {
       null,
       2,
     ),
-    note: "Generic HTTP MCP config. Works with any MCP-compatible tool that supports HTTP transport.",
+    note: "Generic HTTP MCP config. Running locally? Use http://localhost:3001/mcp instead (requires npm run server in the DS repo).",
   },
 };
 
