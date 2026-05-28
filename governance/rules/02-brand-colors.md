@@ -1,66 +1,66 @@
-# Regla 02 — Uso de Brand Colors (Lime)
+# Rule 02 — Brand Colors (Lime) Usage
 
-## El color brand es un SEÑALIZADOR, no un color de base
+## The brand color is a SIGNAL, not a base color
 
-Brand (lime #E6F993 / #C3E433) existe para llamar la atención hacia **una acción o estado específico**. No es un color de relleno general.
+Brand (lime #E6F993 / #C3E433) exists to draw attention to **a specific action or state**. It is not a general fill color.
 
 ---
 
-## Dónde SÍ usar brand
+## Where to USE brand
 
-### 1. Botón de acción primaria (CTA)
+### 1. Primary action button (CTA)
 
 ```tsx
 // Light mode
 <button className="bg-brand-300 text-zinc-900 hover:bg-brand-400 transition-colors">
-  Acción Principal
+  Primary Action
 </button>
 
 // Dark mode
 <button className="bg-brand-400 text-zinc-900 hover:bg-brand-500 transition-colors">
-  Acción Principal
+  Primary Action
 </button>
 
-// Con token semántico (recomendado — adapta modo automáticamente)
+// With semantic token (recommended — adapts to mode automatically)
 <button className="bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
-  Acción Principal
+  Primary Action
 </button>
 ```
 
-### 2. Indicador de elemento activo / seleccionado
+### 2. Active / selected element indicator
 
 ```tsx
-// Nav item activo
+// Active nav item
 <NavItem className="border-l-2 border-primary text-foreground bg-primary/10">
   Dashboard
 </NavItem>
 
-// Tab activo
+// Active tab
 <Tab className="border-b-2 border-primary text-foreground">
-  Transacciones
+  Transactions
 </Tab>
 ```
 
-### 3. Acento decorativo en cards branded
+### 3. Decorative accent on branded cards
 
 ```tsx
-// Borde superior de card destacada
+// Top border of featured card
 <Card className="bg-card border border-border">
   <div className="h-1 bg-brand-400 rounded-t-lg" />
-  {/* contenido */}
+  {/* content */}
 </Card>
 ```
 
-### 4. Fondo de contenedor de ícono de acción
+### 4. Action icon container background
 
 ```tsx
-// Ícono en contexto de acción principal
+// Icon in primary action context
 <div className="bg-primary/15 rounded-lg p-2">
   <SparklesIcon className="text-primary w-5 h-5" />
 </div>
 ```
 
-### 5. Focus ring / indicador de foco
+### 5. Focus ring / focus indicator
 
 ```tsx
 <input className="focus:ring-2 focus:ring-primary focus:ring-offset-2" />
@@ -68,65 +68,65 @@ Brand (lime #E6F993 / #C3E433) existe para llamar la atención hacia **una acci�
 
 ---
 
-## Dónde NO usar brand
+## Where NOT to use brand
 
-| Caso | Por qué |
+| Case | Why |
 |---|---|
-| Texto corrido sobre fondo claro | Contraste 1.8:1 — falla WCAG |
-| Headings o títulos | No es color de texto |
-| Fondo de sección completa | Demasiado dominante, pierde señal |
-| Bordes de inputs en estado normal | Reservado para foco/activo |
-| Iconos de estado (success, error) | Usar tokens semánticos de estado |
-| Badges informativos | Usar tokens info/success/warning |
+| Body text on light background | Contrast 1.8:1 — fails WCAG |
+| Headings or titles | It is not a text color |
+| Whole section background | Too dominant, signal is lost |
+| Input borders in normal state | Reserved for focus/active |
+| State icons (success, error) | Use semantic state tokens |
+| Informational badges | Use info/success/warning tokens |
 
 ---
 
-## Escala brand completa
+## Full brand scale
 
 ```
-brand-50:  #fdfee7  — casi blanco, muy sutil
-brand-100: #f9fdc3  — tint muy claro
-brand-200: #f4fb89  — tint claro
+brand-50:  #fdfee7  — almost white, very subtle
+brand-100: #f9fdc3  — very light tint
+brand-200: #f4fb89  — light tint
 brand-300: #E6F993  — ← PRIMARY LIGHT MODE (CTA)
 brand-400: #C3E433  — ← PRIMARY DARK MODE (CTA) / hover light
-brand-500: #a3c414  — hover dark / decoración fuerte
-brand-600: #A0C114  — bordes de énfasis
-brand-700: #7a9410  — texto sobre brand (accesible)
-brand-800: #5c6f0f  — texto oscuro sobre brand
-brand-900: #4a5810  — muy oscuro
-brand-950: #233502  — casi negro brand
+brand-500: #a3c414  — hover dark / strong decoration
+brand-600: #A0C114  — emphasis borders
+brand-700: #7a9410  — text over brand (accessible)
+brand-800: #5c6f0f  — dark text over brand
+brand-900: #4a5810  — very dark
+brand-950: #233502  — almost black brand
 ```
 
-### Regla de contraste con brand de fondo:
-- Sobre `brand-300` → siempre `text-zinc-900` o `text-primary-foreground` (#02060C)
-- Sobre `brand-400` → siempre `text-zinc-900` (#02060C)
-- NUNCA `text-white` sobre brand-300/400 (contraste insuficiente)
+### Contrast rule with brand as background:
+- Over `brand-300` → always `text-zinc-900` or `text-primary-foreground` (#02060C)
+- Over `brand-400` → always `text-zinc-900` (#02060C)
+- NEVER `text-white` over brand-300/400 (insufficient contrast)
 
 ---
 
-## Pattern: Branded Card completa
+## Pattern: full branded card
 
 ```tsx
 // Light mode
 <div className="bg-white border border-zinc-200 rounded-xl overflow-hidden">
   <div className="h-1 bg-brand-400" />
   <div className="p-6">
-    <h3 className="text-zinc-900 font-semibold">Título</h3>
-    <p className="text-zinc-500 text-sm">Descripción secundaria</p>
+    <h3 className="text-zinc-900 font-semibold">Title</h3>
+    <p className="text-zinc-500 text-sm">Secondary description</p>
     <button className="mt-4 bg-brand-300 text-zinc-900 hover:bg-brand-400 px-4 py-2 rounded-lg transition-colors">
-      Acción
+      Action
     </button>
   </div>
 </div>
 
-// Dark mode (usando tokens semánticos para que sea automático)
+// Dark mode (using semantic tokens so it is automatic)
 <div className="bg-card border border-border rounded-xl overflow-hidden">
   <div className="h-1 bg-primary" />
   <div className="p-6">
-    <h3 className="text-foreground font-semibold">Título</h3>
-    <p className="text-muted-foreground text-sm">Descripción secundaria</p>
+    <h3 className="text-foreground font-semibold">Title</h3>
+    <p className="text-muted-foreground text-sm">Secondary description</p>
     <button className="mt-4 bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-lg transition-colors">
-      Acción
+      Action
     </button>
   </div>
 </div>
