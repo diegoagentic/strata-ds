@@ -21,6 +21,7 @@ import { BrandingView } from "./views/BrandingView";
 import { TransparencyView } from "./views/TransparencyView";
 import { GridContainersView } from "./views/GridContainersView";
 import { GovernanceView } from "./components/GovernanceView";
+import { ExamplesView } from "./views/ExamplesView";
 
 type ViewId = string;
 
@@ -43,6 +44,7 @@ const NAV: NavSection[] = [
       { id: "developer-guide", label: "Developer Guide", isNew: true },
       { id: "mcp", label: "MCP Connection", isNew: true },
       { id: "governance", label: "Governance", isNew: true },
+      { id: "examples", label: "Examples", isNew: true },
     ],
   },
   {
@@ -192,6 +194,8 @@ export default function App() {
         return <MCPView />;
       case "governance":
         return <GovernanceView />;
+      case "examples":
+        return <ExamplesView />;
       case "branding":
         return <BrandingView />;
       case "transparency":
