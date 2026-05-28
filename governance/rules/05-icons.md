@@ -1,26 +1,26 @@
-# Regla 05 — Iconos
+# Rule 05 — Icons
 
-## Librería de íconos
+## Icon library
 
-Strata DS usa **@heroicons/react** como librería principal.
+Strata DS uses **@heroicons/react** as the main library.
 
 ```tsx
 import { PlusIcon, CheckCircleIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { SparklesIcon } from '@heroicons/react/24/solid'  // solid para énfasis
+import { SparklesIcon } from '@heroicons/react/24/solid'  // solid for emphasis
 ```
 
 ---
 
-## Color de íconos por contexto
+## Icon color by context
 
-### Íconos de acción primaria (brand)
+### Primary action icons (brand)
 ```tsx
-// En contexto de CTA o feature destacada
+// In CTA or featured-feature context
 <SparklesIcon className="text-primary w-5 h-5" />
 <PlusIcon className="text-primary w-5 h-5" />
 ```
 
-### Íconos de estado
+### State icons
 ```tsx
 // Success
 <CheckCircleIcon className="text-success w-5 h-5" />
@@ -38,45 +38,45 @@ import { SparklesIcon } from '@heroicons/react/24/solid'  // solid para énfasis
 <SparklesIcon className="text-ai w-5 h-5" />
 ```
 
-### Íconos secundarios / neutros
+### Secondary / neutral icons
 ```tsx
-// Íconos de soporte, navegación, UI general
+// Support, navigation, general UI icons
 <ChevronRightIcon className="text-muted-foreground w-4 h-4" />
 <MagnifyingGlassIcon className="text-muted-foreground w-5 h-5" />
 <EllipsisHorizontalIcon className="text-muted-foreground w-5 h-5" />
 ```
 
-### Íconos con hover
+### Hover icons
 ```tsx
-// Ícono que reacciona al hover de su contenedor (usando group)
+// Icon that reacts to its container's hover (using group)
 <div className="group hover:bg-accent rounded-md p-2 transition-colors">
   <CogIcon className="text-muted-foreground group-hover:text-foreground w-5 h-5 transition-colors" />
 </div>
 
-// Ícono que se vuelve brand en hover
+// Icon that turns brand on hover
 <button className="group flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
   <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-  Ver más
+  View more
 </button>
 ```
 
 ---
 
-## Tamaños
+## Sizes
 
-| Contexto | Clase | Píxeles |
+| Context | Class | Pixels |
 |---|---|---|
-| Inline en texto (sm) | `w-3 h-3` | 12px |
-| Inline en texto (base) | `w-4 h-4` | 16px |
-| Botones, inputs | `w-5 h-5` | 20px |
-| Cards, secciones | `w-6 h-6` | 24px |
-| Ilustración / empty state | `w-8 h-8` o `w-12 h-12` | 32-48px |
+| Inline in text (sm) | `w-3 h-3` | 12px |
+| Inline in text (base) | `w-4 h-4` | 16px |
+| Buttons, inputs | `w-5 h-5` | 20px |
+| Cards, sections | `w-6 h-6` | 24px |
+| Illustration / empty state | `w-8 h-8` or `w-12 h-12` | 32-48px |
 
 ---
 
-## Contenedor de ícono (Icon container)
+## Icon container
 
-Para íconos que necesitan fondo:
+For icons that need a background:
 
 ```tsx
 // Brand container (feature highlight)
@@ -97,11 +97,11 @@ Para íconos que necesitan fondo:
 
 ---
 
-## Reglas
+## Rules
 
-1. **No usar emojis como íconos** — siempre usar heroicons
-2. **Outline vs Solid** — outline para UI general, solid para estados de énfasis o indicadores activos
-3. **aria-hidden en íconos decorativos** — `<Icon aria-hidden="true" />`
-4. **aria-label en icon buttons** — `<button aria-label="Cerrar"><XMarkIcon /></button>`
-5. **No hardcodear color hex** — siempre usar clases semánticas (`text-success`, `text-primary`, etc.)
-6. **Consistencia de tamaño en grupos** — todos los íconos de un mismo componente deben tener el mismo tamaño
+1. **Do not use emojis as icons** — always use heroicons
+2. **Outline vs Solid** — outline for general UI, solid for emphasis states or active indicators
+3. **aria-hidden on decorative icons** — `<Icon aria-hidden="true" />`
+4. **aria-label on icon buttons** — `<button aria-label="Close"><XMarkIcon /></button>`
+5. **Do not hardcode color hex** — always use semantic classes (`text-success`, `text-primary`, etc.)
+6. **Size consistency within groups** — all icons in the same component must share the same size
