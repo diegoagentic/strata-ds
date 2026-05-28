@@ -1,131 +1,131 @@
-# Strata Design System — Leyes Absolutas
+# Strata Design System — Absolute Laws
 
-Estas reglas NUNCA se violan. Son la base de todo componente, flujo y variante.
+These rules are NEVER broken. They are the foundation of every component, flow, and variant.
 
 ---
 
-## LEY 1 — Nunca hardcodear valores hex o colores raw
+## LAW 1 — Never hardcode hex values or raw colors
 
-**PROHIBIDO:**
+**FORBIDDEN:**
 ```tsx
 className="bg-[#E6F993] text-[#02060C]"
 className="text-green-500"
 className="bg-zinc-900"
 ```
 
-**CORRECTO:**
+**CORRECT:**
 ```tsx
 className="bg-primary text-primary-foreground"
 className="text-success"
 className="bg-background"
 ```
 
-**Por qué:** Los hex hardcodeados rompen el tema dark/light y no se propagan cuando los tokens cambian. Tailwind raw classes (green-500, zinc-900) ignoran el sistema semántico.
+**Why:** Hardcoded hex breaks dark/light theming and does not propagate when tokens change. Raw Tailwind classes (green-500, zinc-900) ignore the semantic system.
 
 ---
 
-## LEY 2 — brand-300 y brand-400 NUNCA son color de texto sobre fondos claros
+## LAW 2 — brand-300 and brand-400 are NEVER text color on light backgrounds
 
-**PROHIBIDO:**
+**FORBIDDEN:**
 ```tsx
-className="text-brand-300"           // contraste 1.8:1 — FALLA accesibilidad
-className="text-primary"             // en texto corrido sobre bg-white
+className="text-brand-300"           // contrast 1.8:1 — FAILS accessibility
+className="text-primary"             // on body text over bg-white
 ```
 
-**CORRECTO — brand-300/400 solo como:**
-- Fondo de botón CTA
-- Borde de indicador activo
-- Fondo de ícono destacado (pequeño área)
-- Indicador de foco (focus ring)
+**CORRECT — brand-300/400 only as:**
+- CTA button background
+- Border of active indicator
+- Highlighted icon background (small area)
+- Focus indicator (focus ring)
 
-**Por qué:** brand-300 (#E6F993 lime) sobre blanco tiene contraste 1.8:1. WCAG requiere mínimo 4.5:1 para texto. Usar como texto es inaccesible.
+**Why:** brand-300 (#E6F993 lime) over white yields contrast 1.8:1. WCAG requires a minimum of 4.5:1 for text. Using it as text is inaccessible.
 
 ---
 
-## LEY 3 — primary-foreground siempre es texto oscuro (#02060C)
+## LAW 3 — primary-foreground is always dark text (#02060C)
 
-En ambos modos (light y dark), cuando el fondo es `bg-primary` (lime):
+In both modes (light and dark), when the background is `bg-primary` (lime):
 
 ```tsx
-// SIEMPRE
+// ALWAYS
 className="bg-primary text-primary-foreground"
-// primary-foreground = #02060C en light Y dark
+// primary-foreground = #02060C in light AND dark
 ```
 
-**Nunca:**
+**Never:**
 ```tsx
-className="bg-brand-300 text-white"   // contraste falla en lime
-className="bg-primary text-foreground" // usar la variable correcta
+className="bg-brand-300 text-white"   // contrast fails on lime
+className="bg-primary text-foreground" // use the correct variable
 ```
 
 ---
 
-## LEY 4 — Tokens semánticos antes que tokens primitivos
+## LAW 4 — Semantic tokens before primitive tokens
 
-Orden de preferencia:
-1. `bg-primary` ✓ (semántico — se adapta a modo)
-2. `bg-brand-300` ✓ solo si necesitas el shade específico por diseño
-3. `bg-[#E6F993]` ✗ NUNCA
+Preference order:
+1. `bg-primary` ✓ (semantic — adapts to mode)
+2. `bg-brand-300` ✓ only if you need the specific shade by design
+3. `bg-[#E6F993]` ✗ NEVER
 
-Para estados:
+For states:
 1. `text-success` ✓
 2. `text-green-600` ✗
 3. `text-[#098400]` ✗
 
 ---
 
-## LEY 5 — Dark mode via tokens semánticos, no via clases dark:
+## LAW 5 — Dark mode via semantic tokens, not via dark: classes
 
-**PROHIBIDO:**
+**FORBIDDEN:**
 ```tsx
 className="bg-white dark:bg-zinc-900"
 className="text-zinc-900 dark:text-white"
 ```
 
-**CORRECTO:**
+**CORRECT:**
 ```tsx
-className="bg-background"    // #EBECEE light / #02060C dark — automático
-className="text-foreground"  // #02060C light / #EBECEE dark — automático
+className="bg-background"    // #EBECEE light / #02060C dark — automatic
+className="text-foreground"  // #02060C light / #EBECEE dark — automatic
 ```
 
-**Excepción válida:** El sidebar usa inversión explícita. Ver `rules/03-containers-and-cards.md`.
+**Valid exception:** The sidebar uses explicit inversion. See `rules/03-containers-and-cards.md`.
 
 ---
 
-## LEY 6 — No mezclar sistemas de color legacy y nuevo
+## LAW 6 — Do not mix legacy and new color systems
 
-El sistema tiene dos namespaces históricos. Solo usar el nuevo:
+The system has two historical namespaces. Only use the new one:
 
-| Legacy (NO usar) | Nuevo (usar) |
+| Legacy (DO NOT use) | New (use) |
 |---|---|
 | `--primary` (#27272a) | `--color-primary` (#E6F993) |
 | `--secondary` (#f4f4f5) | `--color-secondary` (#fafafa) |
 | `--background` (#ffffff) | `--color-background` (#EBECEE) |
 
-Si ves clases que producen colores inesperados (gris oscuro en lugar de lime), probablemente están usando el namespace legacy.
+If you see classes producing unexpected colors (dark gray instead of lime), they are likely using the legacy namespace.
 
 ---
 
-## LEY 7 — Todo elemento interactivo debe tener estado hover
+## LAW 7 — Every interactive element must have a hover state
 
 ```tsx
-// Mínimo requerido para cualquier elemento clickeable:
+// Minimum required for any clickable element:
 className="... hover:bg-primary/90 transition-colors"
 
-// Para cards:
+// For cards:
 className="... hover:shadow-lg hover:border-primary/50 transition-all"
 
-// Para texto/iconos:
+// For text/icons:
 className="... hover:text-primary transition-colors"
 ```
 
 ---
 
-## Resumen rápido para AI agents
+## Quick summary for AI agents
 
-Cuando generes código para Strata DS, antes de escribir cualquier className:
-1. ¿Es un color? → Usa token semántico (`bg-background`, `text-foreground`, `text-success`)
-2. ¿Es lime/brand? → Solo como fondo de acción primaria, nunca como texto
-3. ¿Tiene dark mode? → Si usas tokens semánticos, ya está cubierto automáticamente
-4. ¿Es interactivo? → Agrega hover + transition
-5. ¿Dudas del token correcto? → Consulta `tokens/token-reference.md`
+When generating code for Strata DS, before writing any className:
+1. Is it a color? → Use a semantic token (`bg-background`, `text-foreground`, `text-success`)
+2. Is it lime/brand? → Only as primary action background, never as text
+3. Does it have dark mode? → If you use semantic tokens, it is already covered automatically
+4. Is it interactive? → Add hover + transition
+5. Unsure of the right token? → Check `tokens/token-reference.md`
