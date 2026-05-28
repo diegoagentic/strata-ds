@@ -1,21 +1,21 @@
-# Regla 04 — Botones y Elementos de Acción
+# Rule 04 — Buttons and Action Elements
 
-## Variantes de botón
+## Button variants
 
-### Primary (CTA principal)
-Una por sección/vista. El único con brand lime.
+### Primary (main CTA)
+One per section/view. The only one with brand lime.
 
 ```tsx
 <button className="bg-primary text-primary-foreground 
                    hover:bg-primary/90 
                    px-4 py-2 rounded-lg 
                    transition-colors font-medium">
-  Acción Principal
+  Primary Action
 </button>
 ```
 
 ### Secondary
-Acción de apoyo junto a un primary.
+Supporting action next to a primary.
 
 ```tsx
 <button className="bg-secondary text-secondary-foreground 
@@ -23,12 +23,12 @@ Acción de apoyo junto a un primary.
                    hover:bg-muted 
                    px-4 py-2 rounded-lg 
                    transition-colors">
-  Acción Secundaria
+  Secondary Action
 </button>
 ```
 
 ### Outline
-Acción alternativa, menos prominente.
+Alternative, less prominent action.
 
 ```tsx
 <button className="border border-input bg-background text-foreground
@@ -40,7 +40,7 @@ Acción alternativa, menos prominente.
 ```
 
 ### Ghost
-Para acciones de baja prioridad o contextos densos (tablas, toolbars).
+For low-priority actions or dense contexts (tables, toolbars).
 
 ```tsx
 <button className="text-foreground 
@@ -52,46 +52,46 @@ Para acciones de baja prioridad o contextos densos (tablas, toolbars).
 ```
 
 ### Destructive
-Para acciones que eliminan o no se pueden deshacer.
+For actions that delete or cannot be undone.
 
 ```tsx
 <button className="bg-destructive text-destructive-foreground 
                    hover:bg-destructive/90 
                    px-4 py-2 rounded-lg 
                    transition-colors">
-  Eliminar
+  Delete
 </button>
 
-// Variante outline destructive
+// Outline destructive variant
 <button className="border border-destructive text-destructive bg-transparent
                    hover:bg-destructive/10 
                    px-4 py-2 rounded-lg 
                    transition-colors">
-  Eliminar
+  Delete
 </button>
 ```
 
 ### Link / Text action
-Para navegación o acciones inline en texto.
+For navigation or inline actions in text.
 
 ```tsx
 <button className="text-primary underline-offset-4 
                    hover:underline hover:text-primary/90 
                    transition-colors text-sm">
-  Ver detalles
+  View details
 </button>
 
-// Sin subrayado (navigation)
+// Without underline (navigation)
 <button className="text-muted-foreground 
                    hover:text-foreground 
                    transition-colors text-sm">
-  Cancelar
+  Cancel
 </button>
 ```
 
 ---
 
-## Estados de botón
+## Button states
 
 ### Disabled
 
@@ -101,7 +101,7 @@ Para navegación o acciones inline en texto.
   className="bg-primary text-primary-foreground 
              opacity-50 cursor-not-allowed
              px-4 py-2 rounded-lg">
-  No disponible
+  Not available
 </button>
 ```
 
@@ -113,46 +113,46 @@ Para navegación o acciones inline en texto.
   <span className="animate-spin text-primary-foreground">
     <LoadingIcon className="w-4 h-4" />
   </span>
-  Procesando...
+  Processing...
 </button>
 ```
 
-### Con ícono
+### With icon
 
 ```tsx
-// Ícono a la izquierda
+// Icon on the left
 <button className="bg-primary text-primary-foreground px-4 py-2 rounded-lg 
                    flex items-center gap-2 transition-colors hover:bg-primary/90">
   <PlusIcon className="w-4 h-4" />
-  Agregar
+  Add
 </button>
 
-// Ícono a la derecha (acción direccional)
+// Icon on the right (directional action)
 <button className="text-foreground hover:text-primary px-4 py-2 
                    flex items-center gap-2 transition-colors">
-  Ver más
+  View more
   <ChevronRightIcon className="w-4 h-4" />
 </button>
 
-// Solo ícono (icon button)
+// Icon only (icon button)
 <button className="bg-muted hover:bg-accent p-2 rounded-md transition-colors"
-        aria-label="Cerrar">
+        aria-label="Close">
   <XMarkIcon className="w-5 h-5 text-muted-foreground" />
 </button>
 ```
 
 ---
 
-## Hover states en elementos no-button
+## Hover states on non-button elements
 
-### Filas de tabla / lista
+### Table / list rows
 
 ```tsx
 <tr className="hover:bg-muted/50 transition-colors cursor-pointer">
 <div className="hover:bg-accent rounded-md transition-colors px-3 py-2">
 ```
 
-### Cards clickeables
+### Clickable cards
 
 ```tsx
 <div className="bg-card border border-border rounded-xl p-6 cursor-pointer
@@ -160,20 +160,20 @@ Para navegación o acciones inline en texto.
                 transition-all duration-200">
 ```
 
-### Links de navegación
+### Navigation links
 
 ```tsx
 <a className="text-muted-foreground hover:text-foreground transition-colors">
-// Si es elemento activo:
-<a className="text-foreground font-medium">  // sin hover — ya está activo
+// If it is the active element:
+<a className="text-foreground font-medium">  // no hover — already active
 ```
 
 ---
 
-## Reglas de composición
+## Composition rules
 
-1. **Un solo Primary por sección** — si hay dos CTAs, el menos importante va como Secondary u Outline
-2. **Destructive siempre requiere confirmación** — nunca disparar acción destructiva directo al click sin modal/alert de confirmación
-3. **Grupos de botones** — Primary a la derecha (convención de formularios y dialogs)
-4. **Tamaños** — no inventar tamaños. Usar las variantes de padding del DS: `px-3 py-1.5` (sm), `px-4 py-2` (md), `px-6 py-3` (lg)
-5. **border-radius** — `rounded-md` para sm/md, `rounded-lg` para lg, `rounded-full` solo para icon buttons circulares
+1. **Only one Primary per section** — if there are two CTAs, the less important one goes as Secondary or Outline
+2. **Destructive always requires confirmation** — never fire a destructive action directly on click without a modal/alert confirmation
+3. **Button groups** — Primary on the right (form and dialog convention)
+4. **Sizes** — do not invent sizes. Use the DS padding variants: `px-3 py-1.5` (sm), `px-4 py-2` (md), `px-6 py-3` (lg)
+5. **border-radius** — `rounded-md` for sm/md, `rounded-lg` for lg, `rounded-full` only for circular icon buttons
