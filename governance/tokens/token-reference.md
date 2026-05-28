@@ -1,85 +1,85 @@
 # Token Reference — Strata Design System
 
-Referencia rápida de todos los tokens disponibles. Fuente: `src/styles/tokens/variables.css` + `variables-dark.css`
+Quick reference of all available tokens. Source: `src/styles/tokens/variables.css` + `variables-dark.css`
 
 ---
 
-## Colores semánticos de superficie
+## Semantic surface colors
 
-| Token CSS | Tailwind class | Light | Dark | Uso |
+| CSS token | Tailwind class | Light | Dark | Usage |
 |---|---|---|---|---|
-| `--color-background` | `bg-background` | #EBECEE | #02060C | Fondo de página |
-| `--color-foreground` | `text-foreground` | #02060C | #EBECEE | Texto principal |
-| `--color-card` | `bg-card` | #fafafa | #02060C | Cards y panels |
-| `--color-card-foreground` | `text-card-foreground` | #02060C | #EBECEE | Texto en cards |
+| `--color-background` | `bg-background` | #EBECEE | #02060C | Page background |
+| `--color-foreground` | `text-foreground` | #02060C | #EBECEE | Primary text |
+| `--color-card` | `bg-card` | #fafafa | #02060C | Cards and panels |
+| `--color-card-foreground` | `text-card-foreground` | #02060C | #EBECEE | Text inside cards |
 | `--color-popover` | `bg-popover` | #fafafa | #02060C | Dropdowns, tooltips |
-| `--color-popover-foreground` | `text-popover-foreground` | #02060C | #EBECEE | Texto en popovers |
-| `--color-muted` | `bg-muted` | #fafafa | #141E2C | Secciones secundarias |
-| `--color-muted-foreground` | `text-muted-foreground` | #959DA7 | #959DA7 | Texto secundario |
-| `--color-secondary` | `bg-secondary` | #fafafa | #141E2C | Fondos alternativos |
-| `--color-secondary-foreground` | `text-secondary-foreground` | #02060C | #EBECEE | Texto sobre secondary |
+| `--color-popover-foreground` | `text-popover-foreground` | #02060C | #EBECEE | Text inside popovers |
+| `--color-muted` | `bg-muted` | #fafafa | #141E2C | Secondary sections |
+| `--color-muted-foreground` | `text-muted-foreground` | #959DA7 | #959DA7 | Secondary text |
+| `--color-secondary` | `bg-secondary` | #fafafa | #141E2C | Alternative backgrounds |
+| `--color-secondary-foreground` | `text-secondary-foreground` | #02060C | #EBECEE | Text over secondary |
 | `--color-accent` | `bg-accent` | #fafafa | #141E2C | Hover backgrounds |
-| `--color-accent-foreground` | `text-accent-foreground` | #02060C | #EBECEE | Texto en hover |
+| `--color-accent-foreground` | `text-accent-foreground` | #02060C | #EBECEE | Text on hover |
 
 ---
 
-## Colores de acción primaria (Brand)
+## Primary action colors (Brand)
 
-| Token CSS | Tailwind class | Light | Dark | Uso |
+| CSS token | Tailwind class | Light | Dark | Usage |
 |---|---|---|---|---|
-| `--color-primary` | `bg-primary` / `text-primary` | #E6F993 | #C3E433 | CTA, activos |
-| `--color-primary-foreground` | `text-primary-foreground` | #02060C | #02060C | Texto sobre primary |
+| `--color-primary` | `bg-primary` / `text-primary` | #E6F993 | #C3E433 | CTA, active items |
+| `--color-primary-foreground` | `text-primary-foreground` | #02060C | #02060C | Text over primary |
 
 ---
 
-## Bordes e inputs
+## Borders and inputs
 
-| Token CSS | Tailwind class | Light | Dark | Uso |
+| CSS token | Tailwind class | Light | Dark | Usage |
 |---|---|---|---|---|
-| `--color-border` | `border-border` | #D0D4D8 | #141E2C | Bordes generales |
-| `--color-input` | `border-input` | #D0D4D8 | #141E2C | Bordes de inputs |
-| `--color-input-background` | `bg-input` | #fafafa | — | Fondo de inputs |
+| `--color-border` | `border-border` | #D0D4D8 | #141E2C | General borders |
+| `--color-input` | `border-input` | #D0D4D8 | #141E2C | Input borders |
+| `--color-input-background` | `bg-input` | #fafafa | — | Input background |
 | `--color-ring` | `ring-ring` | #959DA7 | — | Focus ring |
 
 ---
 
-## Colores de estado
+## State colors
 
-| Token CSS | Tailwind class | Valor | Uso |
+| CSS token | Tailwind class | Value | Usage |
 |---|---|---|---|
-| `--color-destructive` | `bg-destructive` / `text-destructive` | #E52D49 | Errores, destructivo |
-| `--color-destructive-foreground` | `text-destructive-foreground` | #ffffff | Texto sobre destructive |
-| `--color-success` | `text-success` / `bg-success` | #098400 | Éxito, confirmación |
-| `--color-success-light` | `bg-success-light` | #e5f9e4 | Fondo success sutil |
-| `--color-warning` | `text-warning` / `bg-warning` | #b27d00 | Advertencias |
-| `--color-warning-light` | `bg-warning-light` | #fff5cd | Fondo warning sutil |
-| `--color-info` | `text-info` / `bg-info` | #2164d1 | Información |
-| `--color-info-light` | `bg-info-light` | #ecf4ff | Fondo info sutil |
-| `--color-error` | `text-error` / `bg-error` | #d20322 | Error (alternativo) |
-| `--color-error-light` | `bg-error-light` | #ffe4e7 | Fondo error sutil |
-| `--color-ai` | `text-ai` / `bg-ai` | #8b5cf6 | Indicadores de IA |
-| `--color-ai-light` | `bg-ai-light` | #ede9fe | Fondo AI sutil |
+| `--color-destructive` | `bg-destructive` / `text-destructive` | #E52D49 | Errors, destructive |
+| `--color-destructive-foreground` | `text-destructive-foreground` | #ffffff | Text over destructive |
+| `--color-success` | `text-success` / `bg-success` | #098400 | Success, confirmation |
+| `--color-success-light` | `bg-success-light` | #e5f9e4 | Subtle success background |
+| `--color-warning` | `text-warning` / `bg-warning` | #b27d00 | Warnings |
+| `--color-warning-light` | `bg-warning-light` | #fff5cd | Subtle warning background |
+| `--color-info` | `text-info` / `bg-info` | #2164d1 | Information |
+| `--color-info-light` | `bg-info-light` | #ecf4ff | Subtle info background |
+| `--color-error` | `text-error` / `bg-error` | #d20322 | Error (alternative) |
+| `--color-error-light` | `bg-error-light` | #ffe4e7 | Subtle error background |
+| `--color-ai` | `text-ai` / `bg-ai` | #8b5cf6 | AI indicators |
+| `--color-ai-light` | `bg-ai-light` | #ede9fe | Subtle AI background |
 
 ---
 
-## Tokens de Sidebar
+## Sidebar tokens
 
-| Token CSS | Tailwind class | Uso |
+| CSS token | Tailwind class | Usage |
 |---|---|---|
-| `--color-sidebar` | `bg-sidebar` | Fondo del sidebar |
-| `--color-sidebar-foreground` | `text-sidebar-foreground` | Texto principal sidebar |
-| `--color-sidebar-primary` | `text-sidebar-primary` | Brand activo en sidebar |
-| `--color-sidebar-accent` | `bg-sidebar-accent` | Hover background sidebar |
-| `--color-sidebar-accent-foreground` | `text-sidebar-accent-foreground` | Texto en hover sidebar |
-| `--color-sidebar-border` | `border-sidebar-border` | Borde separador sidebar |
+| `--color-sidebar` | `bg-sidebar` | Sidebar background |
+| `--color-sidebar-foreground` | `text-sidebar-foreground` | Sidebar main text |
+| `--color-sidebar-primary` | `text-sidebar-primary` | Active brand in sidebar |
+| `--color-sidebar-accent` | `bg-sidebar-accent` | Sidebar hover background |
+| `--color-sidebar-accent-foreground` | `text-sidebar-accent-foreground` | Text on sidebar hover |
+| `--color-sidebar-border` | `border-sidebar-border` | Sidebar divider border |
 
 ---
 
-## Escala Brand (primitivos)
+## Brand scale (primitives)
 
-Solo usar cuando el token semántico no alcanza.
+Only use when the semantic token is not enough.
 
-| Token | Valor |
+| Token | Value |
 |---|---|
 | `--color-brand-50` | #fdfee7 |
 | `--color-brand-100` | #f9fdc3 |
@@ -95,9 +95,9 @@ Solo usar cuando el token semántico no alcanza.
 
 ---
 
-## Tokens de Charts
+## Chart tokens
 
-| Token | Valor | Color |
+| Token | Value | Color |
 |---|---|---|
 | `--color-chart-1` | #6366f1 | Indigo |
 | `--color-chart-2` | #22c55e | Green |
@@ -107,18 +107,18 @@ Solo usar cuando el token semántico no alcanza.
 
 ---
 
-## Tipografía
+## Typography
 
-| Token | Valor | Uso |
+| Token | Value | Usage |
 |---|---|---|
-| `--font-brand` | 'PP Monument Extended' | Headings de marca, hero text |
-| `--font-sans` | Inter, system-ui | Cuerpo de texto (default) |
-| `--font-mono` | ui-monospace, SFMono | Código, datos técnicos |
+| `--font-brand` | 'PP Monument Extended' | Brand headings, hero text |
+| `--font-sans` | Inter, system-ui | Body text (default) |
+| `--font-mono` | ui-monospace, SFMono | Code, technical data |
 
 ---
 
-## Archivos fuente
+## Source files
 
-- `Strata Design System/strata-ds/src/styles/tokens/variables.css` → tokens light mode
-- `Strata Design System/strata-ds/src/styles/tokens/variables-dark.css` → tokens dark mode
-- `Strata Design System/strata-ds/src/styles/theme.css` → mapeo a Tailwind v4
+- `Strata Design System/strata-ds/src/styles/tokens/variables.css` → light mode tokens
+- `Strata Design System/strata-ds/src/styles/tokens/variables-dark.css` → dark mode tokens
+- `Strata Design System/strata-ds/src/styles/theme.css` → mapping to Tailwind v4
