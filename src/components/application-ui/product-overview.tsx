@@ -68,12 +68,12 @@ export function ProductDetails({ className, children, ...props }: ComponentProps
 
 export function ProductTitle({ className, ...props }: ComponentPropsWithoutRef<'h1'>) {
     return (
-        <h1 className={clsx(className, "text-3xl font-bold tracking-tight text-zinc-900 dark:text-white")} {...props} />
+        <h1 className={clsx(className, "text-3xl font-bold tracking-tight text-foreground")} {...props} />
     )
 }
 
 export function ProductPrice({ className, ...props }: ComponentPropsWithoutRef<'p'>) {
     return (
-        <p className={clsx(className, "text-3xl tracking-tight text-zinc-900 dark:text-white")} {...props} />
+        <p className={clsx(className, "text-3xl tracking-tight text-foreground")} {...props} />
     )
 }

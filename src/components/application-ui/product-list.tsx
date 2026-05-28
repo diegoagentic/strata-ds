@@ -54,15 +54,15 @@ export function ProductCard({
                 </a>
             </h3>
             <div className="mt-1 flex items-center justify-between">
-                <p className="text-lg font-medium text-zinc-900 dark:text-white">{product.price}</p>
+                <p className="text-lg font-medium text-foreground">{product.price}</p>
                 {product.rating && (
                     <div className="flex items-center">
                         <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
-                        <span className="ml-1 text-sm text-zinc-500">{product.rating}</span>
+                        <span className="ml-1 text-sm text-muted-foreground">{product.rating}</span>
                     </div>
                 )}
             </div>
-            {product.category && <p className="mt-1 text-sm text-zinc-500">{product.category}</p>}
+            {product.category && <p className="mt-1 text-sm text-muted-foreground">{product.category}</p>}
         </div>
     )
 }

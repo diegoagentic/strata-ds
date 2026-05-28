@@ -12,7 +12,7 @@ function Checkbox({
     <CheckboxPrimitive.Root
       data-slot="checkbox"
       className={cn(
-        "peer border bg-white dark:bg-zinc-950/30 data-[state=checked]:bg-brand-500 data-[state=checked]:text-zinc-900 dark:data-[state=checked]:bg-brand-500 dark:data-[state=checked]:text-zinc-900 data-[state=checked]:border-brand-200 dark:data-[state=checked]:border-brand-500 focus-visible:border-brand-500 dark:focus-visible:border-brand-500 focus-visible:ring-brand-500/20 dark:focus-visible:ring-brand-500/20 aria-invalid:ring-red-600/20 dark:aria-invalid:ring-red-500/20 aria-invalid:border-red-600 dark:aria-invalid:border-red-500 size-4 shrink-0 rounded-[4px] border-zinc-300 dark:border-zinc-700 shadow-xs transition-shadow outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50",
+        "peer border bg-background/30 data-[state=checked]:bg-brand-500 data-[state=checked]:text-zinc-900 dark:data-[state=checked]:bg-brand-500 dark:data-[state=checked]:text-zinc-900 data-[state=checked]:border-brand-200 dark:data-[state=checked]:border-brand-500 focus-visible:border-brand-500 dark:focus-visible:border-brand-500 focus-visible:ring-brand-500/20 dark:focus-visible:ring-brand-500/20 aria-invalid:ring-red-600/20 dark:aria-invalid:ring-red-500/20 aria-invalid:border-red-600 dark:aria-invalid:border-red-500 size-4 shrink-0 rounded-[4px] border-zinc-300 dark:border-zinc-700 shadow-xs transition-shadow outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50",
         className,
       )}
       {...props}

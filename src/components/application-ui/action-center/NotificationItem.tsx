@@ -39,7 +39,7 @@ export const PriorityBadge = ({
   const colors = {
     high: 'text-red-500 dark:text-red-400 bg-red-500/10 border-red-500/20',
     medium: 'text-orange-500 dark:text-orange-400 bg-orange-500/10 border-orange-500/20',
-    low: 'text-zinc-400 dark:text-zinc-300 bg-zinc-500/10 border-zinc-500/20',
+    low: 'text-muted-foreground dark:text-zinc-300 bg-zinc-500/10 border-zinc-500/20',
   };
 
   const labels = {
@@ -142,15 +142,15 @@ export default function NotificationItem({
             )}
           </div>
 
-          <h4 className="text-sm font-semibold text-gray-900 dark:text-white truncate">
+          <h4 className="text-sm font-semibold text-foreground truncate">
             {notification.title}
           </h4>
 
-          <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
+          <p className="mt-0.5 text-xs text-muted-foreground">
             {notification.message}
           </p>
 
-          <div className="mt-2 text-[10px] flex items-center gap-2 text-gray-400 dark:text-gray-500 font-mono">
+          <div className="mt-2 text-[10px] flex items-center gap-2 text-muted-foreground dark:text-muted-foreground font-mono">
             <span>{notification.meta}</span>
             <span>•</span>
             <span>{notification.timestamp}</span>
