@@ -2,7 +2,11 @@
 
 export * from './Navbar';
 export * from './ThemeProvider';
-export * from './theme-tokens-provider';
+// Removed: export * from './theme-tokens-provider';
+// Audit (ds-component-map F22.B): no consumer project imports ThemeTokensProvider
+// or useThemeTokens from strata-design-system. The file stays on disk for future
+// use but is no longer surfaced via the public barrel. Re-add the line if a
+// consumer needs the API.
 
 // application-ui
 export * from './application-ui/action-center';
