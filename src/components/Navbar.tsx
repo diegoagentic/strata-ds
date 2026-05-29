@@ -40,7 +40,7 @@ export default function Navbar({ onLogout, activeTab = 'Overview', onNavigateToW
     const apps: AppNavItem[] = [
         { icon: <BriefcaseIcon className="w-8 h-8" />, label: "My Work Space", color: "text-blue-600 dark:text-blue-400", bg: "bg-blue-100 dark:bg-blue-900/30", isHighlighted: true, onClick: onNavigateToWorkspace },
         { icon: <HomeIcon className="w-8 h-8" />, label: "Portal", color: "text-blue-600 dark:text-blue-400", bg: "bg-blue-50 dark:bg-blue-500/10" },
-        { icon: <UserIcon className="w-8 h-8" />, label: "CRM", color: "text-purple-600 dark:text-purple-400", bg: "bg-purple-50 dark:bg-purple-500/10" },
+        { icon: <UserIcon className="w-8 h-8" />, label: "CRM", color: "text-ai dark:text-purple-400", bg: "bg-purple-50 dark:bg-ai/10" },
         { icon: <DocumentTextIcon className="w-8 h-8" />, label: "Invoice", color: "text-green-600 dark:text-green-400", bg: "bg-green-50 dark:bg-green-500/10" },
         { icon: <CubeIcon className="w-8 h-8" />, label: "Inventory", color: "text-orange-600 dark:text-orange-400", bg: "bg-orange-50 dark:bg-orange-500/10" },
         { icon: <ChartBarIcon className="w-8 h-8" />, label: "Analytics", color: "text-pink-600 dark:text-pink-400", bg: "bg-pink-50 dark:bg-pink-500/10" },
@@ -75,7 +75,7 @@ export default function Navbar({ onLogout, activeTab = 'Overview', onNavigateToW
                 {/* Right Actions */}
                 <div className="flex items-center gap-2 pr-2">
                     <Popover className="relative">
-                        <PopoverButton className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-muted-foreground hover:text-gray-900 dark:hover:text-white transition-colors outline-none">
+                        <PopoverButton className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-muted-foreground hover:text-foreground dark:hover:text-white transition-colors outline-none">
                             <Squares2X2Icon className="w-4 h-4" />
                         </PopoverButton>
                         <Transition
@@ -99,8 +99,8 @@ export default function Navbar({ onLogout, activeTab = 'Overview', onNavigateToW
                                             <div className={`p-3 rounded-2xl ${app.bg} ${app.color} group-hover:scale-110 transition-transform shadow-sm`}>
                                                 {app.icon}
                                             </div>
-                                            <span className={`text-xs font-semibold group-hover:text-gray-900 dark:group-hover:text-white ${
-                                                app.isHighlighted ? 'text-blue-700 dark:text-blue-300' : 'text-gray-700 dark:text-gray-200'
+                                            <span className={`text-xs font-semibold group-hover:text-foreground dark:group-hover:text-white ${
+                                                app.isHighlighted ? 'text-blue-700 dark:text-blue-300' : 'text-foreground dark:text-gray-200'
                                                 }`}>{app.label}</span>
                                         </button>
                                     ))}
@@ -109,7 +109,7 @@ export default function Navbar({ onLogout, activeTab = 'Overview', onNavigateToW
                         </Transition>
                     </Popover>
 
-                    <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-muted-foreground hover:text-gray-900 dark:hover:text-white transition-colors">
+                    <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-muted-foreground hover:text-foreground dark:hover:text-white transition-colors">
                         {theme === 'dark' ? <SunIcon className="w-4 h-4" /> : <MoonIcon className="w-4 h-4" />}
                     </button>
 
@@ -119,7 +119,7 @@ export default function Navbar({ onLogout, activeTab = 'Overview', onNavigateToW
                                 JD
                             </div>
                             <div className="text-left hidden md:block">
-                                <p className="text-xs font-semibold text-gray-700 dark:text-gray-200 group-hover:text-gray-900 dark:group-hover:text-white">Jhon Doe</p>
+                                <p className="text-xs font-semibold text-foreground dark:text-gray-200 group-hover:text-foreground dark:group-hover:text-white">Jhon Doe</p>
                                 <p className="text-[10px] text-muted-foreground">Admin</p>
                             </div>
                             <ChevronDownIcon className="w-3 h-3 text-muted-foreground dark:text-muted-foreground" />

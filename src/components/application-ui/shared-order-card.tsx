@@ -153,7 +153,7 @@ export function SharedOrderCard({
                 <span
                   className={cn(
                     "inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium border shadow-sm ring-1 ring-inset",
-                    statusBadgeClass || "bg-zinc-100 text-zinc-700 ring-zinc-600/20"
+                    statusBadgeClass || "bg-zinc-100 text-muted-foreground ring-zinc-600/20"
                   )}
                 >
                   {status}
@@ -162,7 +162,7 @@ export function SharedOrderCard({
               <div className="flex items-center gap-1">
                 <button
                   type="button"
-                  className="text-xs font-bold text-zinc-800 bg-primary hover:bg-primary/90 px-3 py-1.5 rounded-md transition-shadow shadow-sm cursor-pointer"
+                  className="text-xs font-bold text-primary-foreground bg-primary hover:bg-primary/90 px-3 py-1.5 rounded-md transition-shadow shadow-sm cursor-pointer"
                   onClick={(e) => {
                     e.stopPropagation();
                     onPrimaryAction?.(e);
@@ -213,7 +213,7 @@ export function SharedOrderCard({
               <div className="flex flex-col gap-3 pt-2">
                 <button
                   type="button"
-                  className="w-full py-2.5 text-xs font-bold text-zinc-700 bg-white border border-zinc-200 rounded-lg hover:bg-zinc-50 hover:text-zinc-900 transition-colors shadow-sm cursor-pointer"
+                  className="w-full py-2.5 text-xs font-bold text-muted-foreground bg-white border border-zinc-200 rounded-lg hover:bg-muted hover:text-zinc-900 transition-colors shadow-sm cursor-pointer"
                   onClick={(e) => {
                     e.stopPropagation();
                     onSecondaryAction?.(e);
@@ -223,7 +223,7 @@ export function SharedOrderCard({
                 </button>
                 <button
                   type="button"
-                  className="w-full py-3 text-sm font-bold text-zinc-950 bg-brand-500 hover:bg-brand-300 rounded-lg shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3 text-sm font-bold text-primary-foreground bg-primary hover:bg-brand-300 rounded-lg shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 cursor-pointer"
                   onClick={(e) => {
                     e.stopPropagation();
                     onPrimaryAction?.(e);
@@ -273,7 +273,7 @@ export function SharedOrderCard({
           <div className="flex items-center gap-1">
             <button
               type="button"
-              className="p-1 rounded-full hover:bg-primary hover:text-zinc-900 dark:hover:bg-primary text-muted-foreground hover:text-zinc-900 dark:hover:text-zinc-900 transition-colors cursor-pointer"
+              className="p-1 rounded-full hover:bg-primary hover:text-primary-foreground dark:hover:bg-primary text-muted-foreground hover:text-zinc-900 dark:hover:text-primary-foreground transition-colors cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 onDocumentClick?.(e);
@@ -284,7 +284,7 @@ export function SharedOrderCard({
             </button>
             <button
               type="button"
-              className="p-1 rounded-full hover:bg-primary hover:text-zinc-900 dark:hover:bg-primary text-muted-foreground hover:text-zinc-900 dark:hover:text-zinc-900 transition-colors cursor-pointer"
+              className="p-1 rounded-full hover:bg-primary hover:text-primary-foreground dark:hover:bg-primary text-muted-foreground hover:text-zinc-900 dark:hover:text-primary-foreground transition-colors cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 onEditClick?.(e);
@@ -295,7 +295,7 @@ export function SharedOrderCard({
             </button>
             <button
               type="button"
-              className="p-1 rounded-full hover:bg-primary hover:text-zinc-900 dark:hover:bg-primary text-muted-foreground dark:hover:text-zinc-900 transition-colors cursor-pointer"
+              className="p-1 rounded-full hover:bg-primary hover:text-primary-foreground dark:hover:bg-primary text-muted-foreground dark:hover:text-primary-foreground transition-colors cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 onMoreClick?.(e);
@@ -322,7 +322,7 @@ export function SharedOrderCard({
               <span
                 className={cn(
                   'inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset',
-                  statusBadgeClass || 'bg-zinc-100 text-zinc-700'
+                  statusBadgeClass || 'bg-zinc-100 text-muted-foreground'
                 )}
               >
                 {status}

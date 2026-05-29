@@ -148,11 +148,11 @@ export function ActionPanelContent({
         .length,
       icon: MegaphoneIcon,
       colorTheme: {
-        activeBg: 'bg-purple-500/15',
-        activeText: 'text-purple-500',
+        activeBg: 'bg-ai/15',
+        activeText: 'text-ai',
         activeBorder: 'border-purple-500/20',
-        badgeBg: 'bg-purple-500/20',
-        badgeText: 'text-purple-500',
+        badgeBg: 'bg-ai/20',
+        badgeText: 'text-ai',
       },
       filter: (n) => n.type === 'announcement',
     },
@@ -290,7 +290,7 @@ export default function ActionCenter({
               'relative p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors outline-none',
               open
                 ? 'bg-black/5 dark:bg-white/10 text-foreground'
-                : 'text-muted-foreground hover:text-gray-900 dark:hover:text-white'
+                : 'text-muted-foreground hover:text-foreground dark:hover:text-white'
             )}
           >
             <BellIcon className="w-5 h-5" />

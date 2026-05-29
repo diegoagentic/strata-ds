@@ -58,7 +58,7 @@ export function Listbox({
                     }}
                 </HeadlessListboxSelectedOption>
                 <span className="pointer-events-none absolute top-2.5 right-2.5 size-4">
-                    <ChevronDown className="size-4 text-muted-foreground group-hover:text-zinc-700 dark:group-hover:text-zinc-300" />
+                    <ChevronDown className="size-4 text-muted-foreground group-hover:text-muted-foreground dark:group-hover:text-zinc-300" />
                 </span>
             </HeadlessListboxButton>
             <HeadlessListboxOptions

@@ -47,7 +47,7 @@ export function ProductCard({
                     </div>
                 )}
             </div>
-            <h3 className="mt-4 text-sm text-zinc-700 dark:text-zinc-200">
+            <h3 className="mt-4 text-sm text-muted-foreground dark:text-zinc-200">
                 <a href={product.href}>
                     <span className="absolute inset-0" />
                     {product.name}

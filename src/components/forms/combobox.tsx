@@ -54,7 +54,7 @@ export function Combobox<T>({
                         aria-label={ariaLabel}
                     />
                     <HeadlessComboboxButton className="absolute inset-y-0 right-0 flex items-center pr-2">
-                        <ChevronDown className="size-4 text-muted-foreground group-hover:text-zinc-700 dark:group-hover:text-zinc-300" />
+                        <ChevronDown className="size-4 text-muted-foreground group-hover:text-muted-foreground dark:group-hover:text-zinc-300" />
                     </HeadlessComboboxButton>
                 </div>
                 <HeadlessComboboxOptions

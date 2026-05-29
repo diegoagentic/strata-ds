@@ -53,7 +53,7 @@ function StatusBadge({ label, variant }: { label: string; variant?: string }) {
   const base = 'px-2 py-0.5 rounded-full text-xs font-medium';
   const variants: Record<string, string> = {
     Active: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
-    Inactive: 'bg-gray-100 text-gray-700',
+    Inactive: 'bg-gray-100 text-foreground',
     Archived: 'bg-yellow-100 text-yellow-700',
   };
 

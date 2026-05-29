@@ -253,7 +253,7 @@ export function ExperiencesNavbar({
                                         {
                                             title: "Sales Tools",
                                             apps: [
-                                                { icon: CalculatorIcon, label: "Quoting", color: "text-emerald-600 dark:text-emerald-400", bg: "bg-emerald-50 dark:bg-emerald-500/10" },
+                                                { icon: CalculatorIcon, label: "Quoting", color: "text-success dark:text-success", bg: "bg-emerald-50 dark:bg-success/10" },
                                                 { icon: WrenchScrewdriverIcon, label: "Configurator", color: "text-blue-600 dark:text-blue-400", bg: "bg-blue-50 dark:bg-blue-500/10" },
                                                 { icon: PhotoIcon, label: "Marketing", color: "text-pink-600 dark:text-pink-400", bg: "bg-pink-50 dark:bg-pink-500/10" },
                                             ]
@@ -261,7 +261,7 @@ export function ExperiencesNavbar({
                                         {
                                             title: "Finance",
                                             apps: [
-                                                { icon: CreditCardIcon, label: "Credit", color: "text-violet-600 dark:text-violet-400", bg: "bg-violet-50 dark:bg-violet-500/10" },
+                                                { icon: CreditCardIcon, label: "Credit", color: "text-ai dark:text-ai", bg: "bg-violet-50 dark:bg-ai/10" },
                                                 { icon: DocumentTextIcon, label: "Invoices", color: "text-amber-600 dark:text-amber-400", bg: "bg-amber-50 dark:bg-amber-500/10" },
                                                 { icon: BanknotesIcon, label: "Rebates", color: "text-teal-600 dark:text-teal-400", bg: "bg-teal-50 dark:bg-teal-500/10" },
                                             ]
@@ -322,10 +322,10 @@ export function ExperiencesNavbar({
                                         {[
                                             { icon: BriefcaseIcon, label: "My Work Space", color: "text-zinc-900", bg: "bg-brand-500", isHighlighted: true, onClick: onNavigateToWorkspace },
                                             { icon: HomeIcon, label: "Portal", color: "text-zinc-900 dark:text-brand-500", bg: "bg-brand-500/10", onClick: () => onNavigate('dashboard') },
-                                            { icon: CalculatorIcon, label: "Quoting", color: "text-emerald-600 dark:text-emerald-400", bg: "bg-emerald-50 dark:bg-emerald-500/10" },
+                                            { icon: CalculatorIcon, label: "Quoting", color: "text-success dark:text-success", bg: "bg-emerald-50 dark:bg-success/10" },
                                             { icon: WrenchScrewdriverIcon, label: "Configurator", color: "text-blue-600 dark:text-blue-400", bg: "bg-blue-50 dark:bg-blue-500/10" },
                                             { icon: PhotoIcon, label: "Marketing", color: "text-pink-600 dark:text-pink-400", bg: "bg-pink-50 dark:bg-pink-500/10" },
-                                            { icon: CreditCardIcon, label: "Credit", color: "text-violet-600 dark:text-violet-400", bg: "bg-violet-50 dark:bg-violet-500/10" },
+                                            { icon: CreditCardIcon, label: "Credit", color: "text-ai dark:text-ai", bg: "bg-violet-50 dark:bg-ai/10" },
                                             { icon: DocumentTextIcon, label: "Invoices", color: "text-amber-600 dark:text-amber-400", bg: "bg-amber-50 dark:bg-amber-500/10" },
                                             { icon: BanknotesIcon, label: "Rebates", color: "text-teal-600 dark:text-teal-400", bg: "bg-teal-50 dark:bg-teal-500/10" },
                                             { icon: BookOpenIcon, label: "Academy", color: "text-cyan-600 dark:text-cyan-400", bg: "bg-cyan-50 dark:bg-cyan-500/10" },

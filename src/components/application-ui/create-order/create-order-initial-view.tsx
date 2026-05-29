@@ -31,7 +31,7 @@ export function CreateOrderInitialView({
         <Card className="flex flex-col">
           <CardContent className="p-4 flex flex-col gap-3 flex-1">
             <div className="flex items-start justify-between gap-2">
-              <div className="flex size-20 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">
+              <div className="flex size-20 shrink-0 items-center justify-center rounded-full bg-success/20 text-success dark:text-success">
                 <ArrowUpFromLine className="size-10" />
               </div>
               <Badge variant="soft" className={`shrink-0 bg-white/10 dark:bg-black/10 rounded-xl px-2 py-1`}>
@@ -79,7 +79,7 @@ export function CreateOrderInitialView({
         <Card className="flex flex-col">
           <CardContent className="p-4 flex flex-col gap-3 flex-1">
             <div className="flex items-start justify-between gap-2">
-              <div className="flex size-20 shrink-0 items-center justify-center rounded-full bg-violet-500/20 text-violet-600 dark:text-violet-400">
+              <div className="flex size-20 shrink-0 items-center justify-center rounded-full bg-ai/20 text-ai dark:text-ai">
                 <Copy className="size-10" />
               </div>
               <Badge variant="soft" className={`shrink-0 bg-white/10 dark:bg-black/10 rounded-xl px-2 py-1`}>
@@ -105,7 +105,7 @@ export function CreateOrderInitialView({
         <Card className="flex flex-col">
           <CardContent className="p-4 flex flex-col gap-3 flex-1">
             <div className="flex items-start justify-between gap-2">
-              <div className="flex size-20 shrink-0 items-center justify-center rounded-full bg-zinc-500/20 text-muted-foreground">
+              <div className="flex size-20 shrink-0 items-center justify-center rounded-full bg-muted0/20 text-muted-foreground">
                 <Edit className="size-10" />
               </div>
               <Badge variant="soft" className={`shrink-0 bg-white/10 dark:bg-black/10 rounded-xl px-2 py-1`}>

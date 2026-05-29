@@ -39,7 +39,7 @@ export const PriorityBadge = ({
   const colors = {
     high: 'text-red-500 dark:text-red-400 bg-red-500/10 border-red-500/20',
     medium: 'text-orange-500 dark:text-orange-400 bg-orange-500/10 border-orange-500/20',
-    low: 'text-muted-foreground dark:text-zinc-300 bg-zinc-500/10 border-zinc-500/20',
+    low: 'text-muted-foreground dark:text-zinc-300 bg-muted0/10 border-zinc-500/20',
   };
 
   const labels = {
@@ -164,7 +164,7 @@ export default function NotificationItem({
               'flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all shadow-sm',
               action.primary
                 ? 'bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm'
-                : 'bg-gray-100 dark:bg-white/10 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-white/20'
+                : 'bg-gray-100 dark:bg-white/10 text-foreground dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-white/20'
             )}
             onClick={() => handleActionClick(actionKey)}
           >

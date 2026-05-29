@@ -98,7 +98,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     if (label) {
       return (
         <>
-          <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-zinc-300">
+          <label className="mb-1 block text-sm font-medium text-foreground dark:text-zinc-300">
             {label}
           </label>
           {inputElement}

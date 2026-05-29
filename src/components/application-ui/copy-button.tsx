@@ -143,7 +143,7 @@ export function CopyButton({ formats, defaultFormat = 0, size = 'md' }: CopyButt
               <button
                 key={index}
                 onClick={() => handleCopy(index)}
-                className="w-full px-4 py-2.5 text-left hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+                className="w-full px-4 py-2.5 text-left hover:bg-muted dark:hover:bg-zinc-800 transition-colors"
               >
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-sm font-semibold text-foreground">

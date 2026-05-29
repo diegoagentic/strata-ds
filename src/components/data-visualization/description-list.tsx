@@ -23,7 +23,7 @@ export function DescriptionDetails({ className, ...props }: ComponentPropsWithou
     return (
         <dd
             {...props}
-            className={clsx(className, 'mt-1 text-sm leading-6 text-zinc-700 dark:text-muted-foreground sm:col-span-2 sm:mt-0')}
+            className={clsx(className, 'mt-1 text-sm leading-6 text-muted-foreground dark:text-muted-foreground sm:col-span-2 sm:mt-0')}
         />
     )
 }
