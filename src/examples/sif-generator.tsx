@@ -39,6 +39,10 @@ import {
   DataListCardGrid,
 } from '@/components/application-ui/data-list-card';
 import {
+  EditableLineTable,
+  type EditableLineColumn,
+} from '@/components/application-ui/editable-line-table';
+import {
   StrataTopBar,
   TenantChip,
   ModePill,
@@ -76,6 +80,53 @@ interface DemoDoc {
   date: string;
   lineItems: number;
 }
+
+interface DemoLine {
+  id: string;
+  sku: string;
+  description: string;
+  tag: string;
+  qty: number;
+  listPrice: number;
+  netPrice: number;
+  extended: number;
+}
+
+const SEED_LINES: DemoLine[] = [
+  {
+    id: 'l-1',
+    sku: 'FXT-3072-29-L',
+    description: 'Model: Fixed Table, Dining Height, Top Mount',
+    tag: 'T-3 LOUNGE 203',
+    qty: 1,
+    listPrice: 0,
+    netPrice: 1611.9,
+    extended: 1611.9,
+  },
+  {
+    id: 'l-2',
+    sku: 'M3CMBB-DLT-1',
+    description: 'Model: M3 pedestal table counter height',
+    tag: 'T-4 LOUNGE 203',
+    qty: 2,
+    listPrice: 0,
+    netPrice: 1103.85,
+    extended: 2207.7,
+  },
+  {
+    id: 'l-3',
+    sku: 'Freight',
+    description: 'Freight Charges (Not subject to discount)',
+    tag: '',
+    qty: 1,
+    listPrice: 0,
+    netPrice: 339.52,
+    extended: 339.52,
+  },
+];
+
+const money = (n: number) =>
+  `$${n.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
 const DOCS: DemoDoc[] = [
   {
@@ -177,6 +228,111 @@ export default function SifGeneratorExample() {
   const [uploadFiles, setUploadFiles] = useState<File[]>([]);
   const [reviewDoc, setReviewDoc] = useState<DemoDoc | null>(null);
   const [reviewTab, setReviewTab] = useState<'header' | 'lines'>('header');
+  const [lines, setLines] = useState<DemoLine[]>(SEED_LINES);
+
+  const patchLine = (row: DemoLine, patch: Partial<DemoLine>) => {
+    setLines((prev) =>
+      prev.map((l) => {
+        if (l.id !== row.id) return l;
+        const next = { ...l, ...patch };
+        next.extended =
+          Math.round((next.netPrice || 0) * (next.qty || 0) * 100) / 100;
+        return next;
+      }),
+    );
+  };
+
+  const lineColumns: EditableLineColumn<DemoLine>[] = [
+    {
+      key: 'sku',
+      header: 'SKU',
+      width: 'min-w-[140px]',
+      cell: (l) => <span className="font-mono text-xs">{l.sku}</span>,
+      onCommit: (row, value) => patchLine(row, { sku: value }),
+    },
+    {
+      key: 'description',
+      header: 'Description',
+      width: 'min-w-[260px]',
+      cell: (l) => <span className="truncate block">{l.description}</span>,
+      onCommit: (row, value) => patchLine(row, { description: value }),
+    },
+    {
+      key: 'tag',
+      header: 'Tag',
+      width: 'min-w-[80px]',
+      cell: (l) =>
+        l.tag ? (
+          <Badge variant="soft" color="zinc">
+            {l.tag}
+          </Badge>
+        ) : (
+          <span className="text-muted-foreground">(no tags)</span>
+        ),
+      onCommit: (row, value) => patchLine(row, { tag: value }),
+    },
+    {
+      key: 'qty',
+      header: 'Qty',
+      align: 'right',
+      inputType: 'number',
+      width: 'min-w-[60px]',
+      cell: (l) => <span className="tabular-nums">{l.qty}</span>,
+      onCommit: (row, value) => patchLine(row, { qty: Number(value) || 0 }),
+      getEditValue: (row) => String(row.qty),
+    },
+    {
+      key: 'listPrice',
+      header: 'List Price',
+      align: 'right',
+      inputType: 'number',
+      width: 'min-w-[90px]',
+      cell: (l) => <span className="tabular-nums">{money(l.listPrice)}</span>,
+      onCommit: (row, value) => patchLine(row, { listPrice: Number(value) || 0 }),
+      getEditValue: (row) => String(row.listPrice),
+    },
+    {
+      key: 'netPrice',
+      header: 'Net Price',
+      align: 'right',
+      inputType: 'number',
+      width: 'min-w-[90px]',
+      cell: (l) => <span className="tabular-nums">{money(l.netPrice)}</span>,
+      onCommit: (row, value) => patchLine(row, { netPrice: Number(value) || 0 }),
+      getEditValue: (row) => String(row.netPrice),
+    },
+    {
+      key: 'extended',
+      header: 'Extended',
+      align: 'right',
+      width: 'min-w-[100px]',
+      cell: (l) => (
+        <span className="tabular-nums font-medium">{money(l.extended)}</span>
+      ),
+    },
+  ];
+
+  const sumQty = lines.reduce((a, l) => a + (l.qty || 0), 0);
+  const sumListPrice = lines.reduce((a, l) => a + (l.listPrice || 0), 0);
+  const sumNetPrice = lines.reduce((a, l) => a + (l.netPrice || 0), 0);
+  const sumExtended = lines.reduce((a, l) => a + (l.extended || 0), 0);
+
+  const addLine = () =>
+    setLines((prev) => [
+      ...prev,
+      {
+        id: `l-new-${prev.length + 1}`,
+        sku: '',
+        description: '',
+        tag: '',
+        qty: 0,
+        listPrice: 0,
+        netPrice: 0,
+        extended: 0,
+      },
+    ]);
+  const removeLine = (row: DemoLine) =>
+    setLines((prev) => prev.filter((l) => l.id !== row.id));
 
   const visible = useMemo(
     () =>
@@ -420,7 +576,7 @@ export default function SifGeneratorExample() {
         }
         tabs={[
           { key: 'header', label: 'Header Fields' },
-          { key: 'lines', label: 'Line Items', count: reviewDoc?.lineItems ?? 0 },
+          { key: 'lines', label: 'Line Items', count: lines.length },
         ]}
         activeTab={reviewTab}
         onTabChange={setReviewTab}
@@ -448,11 +604,41 @@ export default function SifGeneratorExample() {
             </FieldSection>
           </div>
         ) : (
-          <div className="p-6 text-sm text-muted-foreground">
-            Line items table would render here. Use the EditableLineTable
-            primitive (F26.B candidate) for the full canonical layout with
-            add row, drag handles, totals row, and per-row edit/delete
-            actions.
+          <div className="p-6">
+            <EditableLineTable<DemoLine>
+              rows={lines}
+              columns={lineColumns}
+              getRowKey={(l) => l.id}
+              onAdd={addLine}
+              addLabel="Add Line Item"
+              onRemove={removeLine}
+              showDragHandle
+              emptyState="No line items."
+              footer={
+                <tr>
+                  <td className="w-8 px-2 py-3" />
+                  <td
+                    colSpan={3}
+                    className="px-3 py-3 text-right text-sm font-bold text-foreground"
+                  >
+                    Totals:
+                  </td>
+                  <td className="px-3 py-3 text-right text-sm font-bold text-foreground tabular-nums">
+                    {sumQty}
+                  </td>
+                  <td className="px-3 py-3 text-right text-sm font-bold text-foreground tabular-nums">
+                    {money(sumListPrice)}
+                  </td>
+                  <td className="px-3 py-3 text-right text-sm font-bold text-foreground tabular-nums">
+                    {money(sumNetPrice)}
+                  </td>
+                  <td className="px-3 py-3 text-right text-sm font-bold text-foreground tabular-nums">
+                    {money(sumExtended)}
+                  </td>
+                  <td className="w-8 px-2 py-3" />
+                </tr>
+              }
+            />
           </div>
         )}
       </DocumentReviewModal>

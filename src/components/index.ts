@@ -33,6 +33,7 @@ export * from './application-ui/filter-pills';
 export * from './application-ui/data-list-toolbar';
 export * from './application-ui/data-list-table';
 export * from './application-ui/data-list-card';
+export * from './application-ui/editable-line-table';
 export * from './application-ui/view-toggle';
 export * from './application-ui/strata-top-bar';
 export * from './application-ui/heading';
