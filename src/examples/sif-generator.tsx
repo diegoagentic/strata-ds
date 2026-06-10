@@ -31,6 +31,14 @@ import {
 } from '@/components/application-ui/data-list-toolbar';
 import { ViewToggle } from '@/components/application-ui/view-toggle';
 import {
+  DataListTable,
+  type ColumnDef,
+} from '@/components/application-ui/data-list-table';
+import {
+  DataListCard,
+  DataListCardGrid,
+} from '@/components/application-ui/data-list-card';
+import {
   StrataTopBar,
   TenantChip,
   ModePill,
@@ -105,6 +113,59 @@ const DOCS: DemoDoc[] = [
     status: 'Pending',
     date: 'May 18, 2026',
     lineItems: 1,
+  },
+];
+
+const DOC_COLUMNS: ColumnDef<DemoDoc>[] = [
+  {
+    key: 'document',
+    header: 'Document',
+    cell: (d) => (
+      <div className="flex items-center gap-2">
+        <FileText className="h-4 w-4 text-muted-foreground" />
+        <div>
+          <div className="font-medium text-foreground">{d.ref}</div>
+          <div className="text-xs text-muted-foreground">
+            {d.lineItems} line items
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    key: 'vendor',
+    header: 'Vendor',
+    cell: (d) => (
+      <div>
+        <div className="text-foreground">{d.vendor}</div>
+        <Badge variant="soft" color="zinc" className="mt-1">
+          {d.type}
+        </Badge>
+      </div>
+    ),
+  },
+  {
+    key: 'status',
+    header: 'Status',
+    cell: (d) => (
+      <Badge
+        variant="soft"
+        color={
+          d.status === 'Reviewed'
+            ? 'green'
+            : d.status === 'Ready to Review'
+              ? 'blue'
+              : 'amber'
+        }
+      >
+        {d.status}
+      </Badge>
+    ),
+  },
+  {
+    key: 'date',
+    header: 'Date',
+    cell: (d) => <span className="text-muted-foreground">{d.date}</span>,
   },
 ];
 
@@ -233,47 +294,55 @@ export default function SifGeneratorExample() {
           }
         />
 
-        {/* Table */}
-        <div className="overflow-hidden rounded-xl border border-border">
-          <table className="w-full text-sm">
-            <thead className="bg-muted/40">
-              <tr className="text-left text-[10px] uppercase tracking-wider text-muted-foreground">
-                <th className="px-4 py-2.5 font-semibold">Document</th>
-                <th className="px-4 py-2.5 font-semibold">Vendor</th>
-                <th className="px-4 py-2.5 font-semibold">Status</th>
-                <th className="px-4 py-2.5 font-semibold">Date</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {visible.map((d) => (
-                <tr
-                  key={d.id}
-                  onClick={() => {
-                    setReviewDoc(d);
-                    setReviewTab('header');
-                  }}
-                  className="cursor-pointer transition-colors hover:bg-muted/30"
-                >
-                  <td className="px-4 py-3">
-                    <div className="flex items-center gap-2">
-                      <FileText className="h-4 w-4 text-muted-foreground" />
-                      <div>
-                        <div className="font-medium text-foreground">{d.ref}</div>
-                        <div className="text-xs text-muted-foreground">
-                          {d.lineItems} line items
+        {/* List view (DataListTable) OR Grid view (DataListCardGrid) */}
+        {viewMode === 'list' ? (
+          <DataListTable<DemoDoc>
+            rows={visible}
+            getRowKey={(d) => d.id}
+            onRowClick={(d) => {
+              setReviewDoc(d);
+              setReviewTab('header');
+            }}
+            emptyState="No documents match the current filters."
+            columns={DOC_COLUMNS}
+          />
+        ) : (
+          <DataListCardGrid>
+            {visible.map((d) => (
+              <DataListCard
+                key={d.id}
+                onClick={() => {
+                  setReviewDoc(d);
+                  setReviewTab('header');
+                }}
+                header={
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <FileText className="h-4 w-4 text-muted-foreground shrink-0" />
+                      <div className="min-w-0">
+                        <div className="font-semibold text-foreground truncate">
+                          {d.vendor}
+                        </div>
+                        <div className="text-xs text-muted-foreground font-mono truncate">
+                          {d.ref}
                         </div>
                       </div>
                     </div>
-                  </td>
-                  <td className="px-4 py-3">
-                    <div>
-                      <div className="text-foreground">{d.vendor}</div>
-                      <Badge variant="soft" color="zinc" className="mt-1">
-                        {d.type}
-                      </Badge>
-                    </div>
-                  </td>
-                  <td className="px-4 py-3">
+                    <span
+                      className="h-7 w-7 shrink-0 rounded-full bg-ai text-primary-foreground text-[10px] font-bold flex items-center justify-center"
+                      title="Assignee"
+                    >
+                      DZ
+                    </span>
+                  </div>
+                }
+                rows={[
+                  { label: 'Filename', value: d.ref },
+                  { label: 'Line Items', value: `${d.lineItems} item${d.lineItems === 1 ? '' : 's'}` },
+                ]}
+                footer={
+                  <>
+                    <span className="text-xs text-muted-foreground">{d.date}</span>
                     <Badge
                       variant="soft"
                       color={
@@ -286,13 +355,12 @@ export default function SifGeneratorExample() {
                     >
                       {d.status}
                     </Badge>
-                  </td>
-                  <td className="px-4 py-3 text-muted-foreground">{d.date}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                  </>
+                }
+              />
+            ))}
+          </DataListCardGrid>
+        )}
       </div>
 
       {/* Upload Modal */}
