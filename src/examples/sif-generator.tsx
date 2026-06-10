@@ -18,8 +18,23 @@ import {
   ExternalLink,
   Settings,
   Search,
+  List,
+  LayoutGrid,
+  ScanText,
+  Bell,
+  Moon,
+  Box,
 } from 'lucide-react';
 import { FilterPills } from '@/components/application-ui/filter-pills';
+import {
+  DataListToolbar,
+} from '@/components/application-ui/data-list-toolbar';
+import { ViewToggle } from '@/components/application-ui/view-toggle';
+import {
+  StrataTopBar,
+  TenantChip,
+  ModePill,
+} from '@/components/application-ui/strata-top-bar';
 import {
   FileUploadModal,
   type FileUploadStep,
@@ -96,6 +111,7 @@ const DOCS: DemoDoc[] = [
 export default function SifGeneratorExample() {
   const [filter, setFilter] = useState<StatusKey>('all');
   const [search, setSearch] = useState('');
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
   const [uploadStep, setUploadStep] = useState<FileUploadStep | null>(null);
   const [uploadFiles, setUploadFiles] = useState<File[]>([]);
   const [reviewDoc, setReviewDoc] = useState<DemoDoc | null>(null);
@@ -113,14 +129,60 @@ export default function SifGeneratorExample() {
 
   return (
     <div className="space-y-4 p-6">
-      <header className="space-y-1">
+      {/* StrataTopBar — branded application top bar */}
+      <StrataTopBar
+        leading={
+          <>
+            <span className="h-9 w-9 rounded-full bg-foreground text-background flex items-center justify-center">
+              <Box className="h-5 w-5" aria-hidden="true" />
+            </span>
+            <TenantChip label="TENANT" name="SPECIAL T" />
+          </>
+        }
+        center={<ModePill icon={ScanText} label="OCR" active />}
+        trailing={
+          <>
+            <button
+              type="button"
+              aria-label="Toggle theme"
+              className="h-9 w-9 inline-flex items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+            >
+              <Moon className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              aria-label="Notifications"
+              className="h-9 w-9 inline-flex items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+            >
+              <Bell className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              className="inline-flex items-center gap-2 h-9 pl-1 pr-3 rounded-full text-sm font-medium hover:bg-muted transition-colors"
+            >
+              <span className="h-7 w-7 rounded-full bg-ai text-primary-foreground text-xs font-bold flex items-center justify-center">
+                DZ
+              </span>
+              <span className="leading-tight text-left">
+                <span className="block text-sm font-semibold text-foreground">
+                  Diego Zuluaga
+                </span>
+                <span className="block text-[10px] text-muted-foreground">Expert</span>
+              </span>
+            </button>
+          </>
+        }
+      />
+
+      <header className="space-y-1 pt-2">
         <p className="text-xs font-mono text-muted-foreground">
           SIF Generator · OCR Tracking
         </p>
         <h1 className="font-brand text-xl text-foreground">SIF Generator</h1>
         <p className="text-sm text-muted-foreground">
-          Composed pattern — FilterPills + FileUploadModal + DocumentReviewModal.
-          Pattern source: inbound-outbound/src/QuoteConverter.tsx.
+          Composed pattern — StrataTopBar + FilterPills + DataListToolbar +
+          ViewToggle + FileUploadModal + DocumentReviewModal. Source:
+          inbound-outbound/src/QuoteConverter.tsx.
         </p>
       </header>
 
@@ -133,29 +195,43 @@ export default function SifGeneratorExample() {
           ariaLabel="Document status filter"
         />
 
-        {/* Toolbar */}
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="relative max-w-md flex-1">
-            <Search className="pointer-events-none absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              value={search}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setSearch(e.target.value)
-              }
-              placeholder="Search documents..."
-              className="pl-8"
+        {/* Toolbar (search + view toggle + actions) */}
+        <DataListToolbar
+          search={
+            <div className="relative">
+              <Search className="pointer-events-none absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                value={search}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSearch(e.target.value)
+                }
+                placeholder="Search documents..."
+                className="pl-8"
+              />
+            </div>
+          }
+          viewToggle={
+            <ViewToggle
+              value={viewMode}
+              onChange={setViewMode}
+              options={[
+                { value: 'list', icon: List, label: 'List view' },
+                { value: 'grid', icon: LayoutGrid, label: 'Grid view' },
+              ]}
             />
-          </div>
-          <Button
-            onClick={() => {
-              setUploadFiles([]);
-              setUploadStep('select');
-            }}
-            className="ml-auto gap-2"
-          >
-            <Upload className="h-4 w-4" /> Upload Document
-          </Button>
-        </div>
+          }
+          actions={
+            <Button
+              onClick={() => {
+                setUploadFiles([]);
+                setUploadStep('select');
+              }}
+              className="gap-2"
+            >
+              <Upload className="h-4 w-4" /> Upload Document
+            </Button>
+          }
+        />
 
         {/* Table */}
         <div className="overflow-hidden rounded-xl border border-border">
