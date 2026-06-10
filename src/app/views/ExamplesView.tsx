@@ -11,6 +11,7 @@ import {
   TransactionsListWithFiltersExample,
   DashboardKpiGridExample,
   AckReconciliationModalExample,
+  SifGeneratorExample,
 } from '@/examples';
 
 interface ExampleEntry {
@@ -49,6 +50,24 @@ const EXAMPLES: ExampleEntry[] = [
     combines: ['Dialog', 'Button', 'Table', 'Input', 'Badge'],
     source: 'UI-Dealer/src/components/AckReconciliationModal.tsx',
     Component: AckReconciliationModalExample,
+  },
+  {
+    id: 'sif-generator',
+    title: 'SIF Generator (Quote Converter)',
+    description:
+      'Full document-processing view: status filter pills, search toolbar, document table, multi-step upload modal, and document review modal with field sections. Promoted from inbound-outbound F26.A primitives.',
+    combines: [
+      'FilterPills',
+      'FileUploadModal',
+      'DocumentReviewModal',
+      'FieldSection',
+      'ConfidenceIndicator',
+      'Badge',
+      'Input',
+      'Button',
+    ],
+    source: 'inbound-outbound/src/QuoteConverter.tsx',
+    Component: SifGeneratorExample,
   },
 ];
 

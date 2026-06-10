@@ -122,6 +122,7 @@ export * from './overlays/drawer';
 export * from './overlays/dropdown-menu';
 export * from './overlays/feedback-toast';
 export * from './overlays/file-upload-modal';
+export * from './overlays/document-review-modal';
 export * from './overlays/popover';
 export * from './overlays/resizable';
 export * from './overlays/scroll-area';
