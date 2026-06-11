@@ -5,7 +5,25 @@ import {
   FileText, Filter, Globe, Grid2x2, Heart, Home, Inbox, Info, List as ListIcon,
   MoreHorizontal, Package, Pencil, Plus, RotateCw, Search, Settings, Share, ShoppingBag,
   Sparkles, Star, Trash, TriangleAlert, Truck, Upload, Users,
+  ExternalLink,
 } from "lucide-react";
+
+// ── Strata Components (F26) ──────────────────────────────────────────────
+import { FilterPills } from "@/components/application-ui/filter-pills";
+import { ViewToggle } from "@/components/application-ui/view-toggle";
+import { DataListToolbar } from "@/components/application-ui/data-list-toolbar";
+import { StrataTopBar, TenantChip } from "@/components/application-ui/strata-top-bar";
+import { DataListTable, type ColumnDef } from "@/components/application-ui/data-list-table";
+import { DataListCard, DataListCardGrid } from "@/components/application-ui/data-list-card";
+import { FileUploadModal } from "@/components/overlays/file-upload-modal";
+import { EditableLineTable, type EditableLineColumn } from "@/components/application-ui/editable-line-table";
+import {
+  DocumentReviewModal,
+  FieldSection,
+  FieldValueRow,
+  ConfidenceIndicator,
+} from "@/components/overlays/document-review-modal";
+import { SplitPaneReviewModal } from "@/components/overlays/split-pane-review-modal";
 
 import { Button } from "@/components/application-ui/button";
 import { Badge } from "@/components/application-ui/badge";
@@ -2408,6 +2426,472 @@ export const COMPONENT_PREVIEWS: Record<string, React.FC> = {
       </section>
     </div>
   ),
+
+  // ── Strata Components (F26) ────────────────────────────────────────────
+
+  "filter-pills": () => {
+    const [active, setActive] = useState<"all" | "pending" | "reviewed" | "archived">("all");
+    return (
+      <div className="space-y-6 w-full max-w-2xl">
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Status filter with counts</p>
+          <FilterPills
+            options={[
+              { key: "all", label: "All", count: 24 },
+              { key: "pending", label: "Pending", count: 8 },
+              { key: "reviewed", label: "Reviewed", count: 12 },
+              { key: "archived", label: "Archived", count: 4 },
+            ]}
+            activeKey={active}
+            onChange={setActive}
+            ariaLabel="Filter documents by status"
+          />
+        </section>
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Without counts</p>
+          <FilterPills
+            options={[
+              { key: "all", label: "All" },
+              { key: "pending", label: "Pending" },
+              { key: "reviewed", label: "Reviewed" },
+              { key: "archived", label: "Archived" },
+            ]}
+            activeKey={active}
+            onChange={setActive}
+            ariaLabel="Filter without counts"
+          />
+        </section>
+      </div>
+    );
+  },
+
+  "view-toggle": () => {
+    const [view, setView] = useState<"list" | "grid">("list");
+    return (
+      <div className="space-y-6 w-full max-w-md">
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Default (md)</p>
+          <ViewToggle
+            options={[
+              { value: "list", icon: ListIcon, label: "List view" },
+              { value: "grid", icon: Grid2x2, label: "Grid view" },
+            ]}
+            value={view}
+            onChange={setView}
+          />
+        </section>
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Small</p>
+          <ViewToggle
+            size="sm"
+            options={[
+              { value: "list", icon: ListIcon, label: "List view" },
+              { value: "grid", icon: Grid2x2, label: "Grid view" },
+            ]}
+            value={view}
+            onChange={setView}
+          />
+        </section>
+        <p className="text-xs text-muted-foreground">Active: <code className="font-mono">{view}</code></p>
+      </div>
+    );
+  },
+
+  "data-list-toolbar": () => {
+    const [view, setView] = useState<"list" | "grid">("list");
+    return (
+      <div className="w-full max-w-3xl">
+        <DataListToolbar
+          search={
+            <div className="relative w-full">
+              <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input className="pl-8" placeholder="Search documents…" />
+            </div>
+          }
+          filters={
+            <Button variant="outline" size="sm">
+              <Filter className="size-4 mr-2" /> Filter
+            </Button>
+          }
+          viewToggle={
+            <ViewToggle
+              size="sm"
+              options={[
+                { value: "list", icon: ListIcon, label: "List" },
+                { value: "grid", icon: Grid2x2, label: "Grid" },
+              ]}
+              value={view}
+              onChange={setView}
+            />
+          }
+          actions={
+            <Button size="sm">
+              <Plus className="size-4 mr-2" /> Add document
+            </Button>
+          }
+        />
+      </div>
+    );
+  },
+
+  "strata-top-bar": () => (
+    <div className="w-full">
+      <StrataTopBar
+        leading={
+          <div className="flex items-center gap-3">
+            <TenantChip name="Leland Furniture" />
+            <div>
+              <div className="text-sm font-semibold text-foreground">Documents</div>
+              <div className="text-xs text-muted-foreground">SIF Generator · Quote Converter</div>
+            </div>
+          </div>
+        }
+        center={
+          <div className="relative w-full max-w-md">
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input className="pl-8" placeholder="Search…" />
+          </div>
+        }
+        trailing={
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="icon" aria-label="Notifications">
+              <Bell className="size-4" />
+            </Button>
+            <Avatar className="h-8 w-8">
+              <AvatarFallback>DZ</AvatarFallback>
+            </Avatar>
+          </div>
+        }
+      />
+    </div>
+  ),
+
+  "data-list-table": () => {
+    interface DocRow {
+      id: string;
+      name: string;
+      vendor: string;
+      status: "Pending" | "Reviewed" | "Archived";
+      total: string;
+    }
+    const rows: DocRow[] = [
+      { id: "D-001", name: "SO2604102 · Leland", vendor: "Leland Furniture", status: "Reviewed", total: "$4,159.12" },
+      { id: "D-002", name: "QT-1025", vendor: "NorthPoint", status: "Pending", total: "$8,910.50" },
+      { id: "D-003", name: "RFQ-2026-001", vendor: "NorthPoint", status: "Pending", total: "—" },
+      { id: "D-004", name: "Ack-4458", vendor: "Continua IL", status: "Archived", total: "$2,205.00" },
+    ];
+    const badgeStatus: Record<DocRow["status"], "pending" | "completed" | "archived"> = {
+      Pending: "pending",
+      Reviewed: "completed",
+      Archived: "archived",
+    };
+    const columns: ColumnDef<DocRow>[] = [
+      { key: "name", header: "Document", cell: (r) => <span className="font-medium text-foreground">{r.name}</span> },
+      { key: "vendor", header: "Vendor", cell: (r) => r.vendor },
+      {
+        key: "status",
+        header: "Status",
+        cell: (r) => <StatusBadge status={badgeStatus[r.status]}>{r.status}</StatusBadge>,
+      },
+      { key: "total", header: "Total", align: "right", cell: (r) => <span className="tabular-nums">{r.total}</span> },
+    ];
+    return (
+      <div className="w-full max-w-3xl">
+        <DataListTable rows={rows} columns={columns} getRowKey={(r) => r.id} />
+      </div>
+    );
+  },
+
+  "data-list-card": () => (
+    <div className="w-full max-w-md">
+      <DataListCard
+        header={
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="text-sm font-bold text-foreground">SO2604102</div>
+              <div className="text-xs text-muted-foreground">Leland Furniture</div>
+            </div>
+            <StatusBadge status="completed">Reviewed</StatusBadge>
+          </div>
+        }
+        rows={[
+          { label: "Quote date", value: "Mar 28, 2025" },
+          { label: "Linked PO", value: "4522-7162" },
+          { label: "Discount", value: "60.8% avg" },
+          { label: "Total", value: <span className="tabular-nums font-semibold">$4,159.12</span> },
+        ]}
+        footer={
+          <Button variant="outline" size="sm" className="w-full">
+            <ExternalLink className="size-3.5 mr-2" /> Open document
+          </Button>
+        }
+      />
+    </div>
+  ),
+
+  "data-list-card-grid": () => (
+    <DataListCardGrid>
+      {[
+        { id: "D-001", name: "SO2604102", vendor: "Leland", status: "Reviewed", badgeStatus: "completed" as const },
+        { id: "D-002", name: "QT-1025", vendor: "NorthPoint", status: "Pending", badgeStatus: "pending" as const },
+        { id: "D-003", name: "RFQ-2026-001", vendor: "NorthPoint", status: "Pending", badgeStatus: "pending" as const },
+        { id: "D-004", name: "Ack-4458", vendor: "Continua IL", status: "Archived", badgeStatus: "archived" as const },
+      ].map((d) => (
+        <DataListCard
+          key={d.id}
+          header={
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-sm font-bold text-foreground">{d.name}</div>
+                <div className="text-xs text-muted-foreground">{d.vendor}</div>
+              </div>
+              <StatusBadge status={d.badgeStatus}>{d.status}</StatusBadge>
+            </div>
+          }
+          rows={[
+            { label: "ID", value: <code className="font-mono text-xs">{d.id}</code> },
+          ]}
+        />
+      ))}
+    </DataListCardGrid>
+  ),
+
+  "file-upload-modal": () => {
+    const [open, setOpen] = useState(false);
+    const [files, setFiles] = useState<File[]>([]);
+    return (
+      <div className="space-y-4">
+        <Button onClick={() => setOpen(true)}>
+          <Upload className="size-4 mr-2" /> Open upload modal
+        </Button>
+        <p className="text-xs text-muted-foreground">
+          Step-aware modal: select → review → uploading → complete. Drag & drop, file list, validation.
+        </p>
+        <FileUploadModal
+          open={open}
+          step="select"
+          files={files}
+          accept=".pdf,.png,.jpg"
+          multiple
+          selectTitle="Upload documents"
+          selectSubtitle="Drag and drop or browse — PDF, PNG, JPG"
+          itemNoun="document"
+          onClose={() => { setOpen(false); setFiles([]); }}
+          onAddFiles={(fs) => setFiles((prev) => [...prev, ...fs])}
+          onRemoveFile={(i) => setFiles((prev) => prev.filter((_, idx) => idx !== i))}
+          onStartUpload={() => setOpen(false)}
+          onFinish={() => { setOpen(false); setFiles([]); }}
+        />
+      </div>
+    );
+  },
+
+  "editable-line-table": () => {
+    interface Line { id: string; sku: string; description: string; qty: number; unitPrice: number }
+    const [rows, setRows] = useState<Line[]>([
+      { id: "l1", sku: "T-RCR306029HLG2", description: "TBL, REC, 30Dx60Wx29H", qty: 4, unitPrice: 479.18 },
+      { id: "l2", sku: "F-SSC346030C", description: "LB LOUNGE 2 SEAT 34\"H", qty: 2, unitPrice: 2031.12 },
+      { id: "l3", sku: "P-PN60HBF", description: "PANEL 60Hx48W FABRIC BOTH", qty: 10, unitPrice: 338.96 },
+    ]);
+    const total = rows.reduce((acc, r) => acc + r.qty * r.unitPrice, 0);
+    const cols: EditableLineColumn<Line>[] = [
+      {
+        key: "sku", header: "SKU",
+        cell: (r) => <code className="font-mono text-xs">{r.sku}</code>,
+        getEditValue: (r) => r.sku,
+        onCommit: (r, v) => setRows((prev) => prev.map((x) => x.id === r.id ? { ...x, sku: v } : x)),
+      },
+      {
+        key: "description", header: "Description",
+        cell: (r) => r.description,
+        getEditValue: (r) => r.description,
+        onCommit: (r, v) => setRows((prev) => prev.map((x) => x.id === r.id ? { ...x, description: v } : x)),
+      },
+      {
+        key: "qty", header: "Qty", align: "right", inputType: "number",
+        cell: (r) => <span className="tabular-nums">{r.qty}</span>,
+        getEditValue: (r) => String(r.qty),
+        onCommit: (r, v) => setRows((prev) => prev.map((x) => x.id === r.id ? { ...x, qty: Number(v) || 0 } : x)),
+      },
+      {
+        key: "unitPrice", header: "Unit price", align: "right", inputType: "number",
+        cell: (r) => <span className="tabular-nums">${r.unitPrice.toFixed(2)}</span>,
+        getEditValue: (r) => String(r.unitPrice),
+        onCommit: (r, v) => setRows((prev) => prev.map((x) => x.id === r.id ? { ...x, unitPrice: Number(v) || 0 } : x)),
+      },
+      {
+        key: "extended", header: "Extended", align: "right",
+        cell: (r) => <span className="tabular-nums font-semibold">${(r.qty * r.unitPrice).toFixed(2)}</span>,
+      },
+    ];
+    return (
+      <div className="w-full max-w-3xl">
+        <p className="text-xs text-muted-foreground mb-3">Click any cell to edit. Enter / blur commits, Esc cancels.</p>
+        <EditableLineTable
+          title="Line items"
+          rows={rows}
+          columns={cols}
+          getRowKey={(r) => r.id}
+          onAdd={() => setRows((prev) => [...prev, { id: `l${prev.length + 1}`, sku: "", description: "", qty: 1, unitPrice: 0 }])}
+          onRemove={(r) => setRows((prev) => prev.filter((x) => x.id !== r.id))}
+          footer={
+            <tr>
+              <td className="px-3 py-2 text-xs text-muted-foreground" colSpan={4}>Total</td>
+              <td className="px-3 py-2 text-right text-sm font-bold tabular-nums">${total.toFixed(2)}</td>
+              <td />
+            </tr>
+          }
+        />
+      </div>
+    );
+  },
+
+  "document-review-modal": () => {
+    const [open, setOpen] = useState(false);
+    const [tab, setTab] = useState<"fields" | "lines">("fields");
+    return (
+      <div className="space-y-4">
+        <Button onClick={() => setOpen(true)}>
+          <FileText className="size-4 mr-2" /> Open review modal
+        </Button>
+        <p className="text-xs text-muted-foreground">
+          Header + slotted tabs + body + footer with ConfidenceIndicator. Pairs with FieldSection + FieldValueRow.
+        </p>
+        <DocumentReviewModal
+          open={open}
+          onClose={() => setOpen(false)}
+          title="SO2604102 · Leland Furniture"
+          subtitle="Quote · Mar 28, 2025 · $4,159.12"
+          status={<StatusBadge status="pending">Pending review</StatusBadge>}
+          tabs={[
+            { key: "fields", label: "Fields", count: 12 },
+            { key: "lines", label: "Line items", count: 6 },
+          ]}
+          activeTab={tab}
+          onTabChange={setTab}
+          footer={
+            <>
+              <ConfidenceIndicator value={87} />
+              <div className="flex gap-2">
+                <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
+                <Button onClick={() => setOpen(false)}>Save & approve</Button>
+              </div>
+            </>
+          }
+        >
+          <div className="p-6">
+            {tab === "fields" ? (
+              <FieldSection icon={<Package className="size-4" />} label="Quote info">
+                <FieldValueRow field="Quote number" value="SO2604102" />
+                <FieldValueRow field="Quote date" value="Mar 28, 2025" />
+                <FieldValueRow field="Linked PO" value="4522-7162" />
+                <FieldValueRow field="Sales rep" value="" placeholder="— missing —" />
+              </FieldSection>
+            ) : (
+              <p className="text-sm text-muted-foreground">Line items tab body…</p>
+            )}
+          </div>
+        </DocumentReviewModal>
+      </div>
+    );
+  },
+
+  "field-section": () => (
+    <div className="w-full max-w-md">
+      <FieldSection icon={<Package className="size-4" />} label="Vendor">
+        <FieldValueRow field="Dealer" value="Leland Furniture" />
+        <FieldValueRow field="Ship-to" value="Continua IL Warehouse" />
+        <FieldValueRow field="Contact" value="orders@leland.com" />
+      </FieldSection>
+    </div>
+  ),
+
+  "field-value-row": () => (
+    <div className="w-full max-w-md rounded-xl border border-border bg-card">
+      <FieldValueRow field="Quote number" value="SO2604102" />
+      <FieldValueRow field="Quote date" value="Mar 28, 2025" />
+      <FieldValueRow
+        field="Status"
+        value={<StatusBadge status="completed">Reviewed</StatusBadge>}
+      />
+      <FieldValueRow field="Sales rep" value="" placeholder="— missing —" />
+    </div>
+  ),
+
+  "confidence-indicator": () => (
+    <div className="space-y-4">
+      <section>
+        <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Three tones by value</p>
+        <div className="flex items-center gap-6">
+          <ConfidenceIndicator value={95} />
+          <ConfidenceIndicator value={72} />
+          <ConfidenceIndicator value={41} />
+        </div>
+      </section>
+      <p className="text-xs text-muted-foreground">
+        ≥ 80 → success · ≥ 60 → warning · &lt; 60 → destructive.
+      </p>
+    </div>
+  ),
+
+  "split-pane-review-modal": () => {
+    const [open, setOpen] = useState(false);
+    return (
+      <div className="space-y-4">
+        <Button onClick={() => setOpen(true)}>
+          <Sparkles className="size-4 mr-2" /> Open split-pane review
+        </Button>
+        <p className="text-xs text-muted-foreground">
+          Sidebar-aware shell with 3/5 + 2/5 split-pane, AI banner row, stepper slot in the header.
+        </p>
+        <SplitPaneReviewModal
+          open={open}
+          onClose={() => setOpen(false)}
+          title="Document Review — DOE-2847"
+          subtitle="NYC Dept. of Education · Quote Q-2026-0089"
+          headerCenter={
+            <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
+              <span>Extract</span>
+              <span>·</span>
+              <span className="text-foreground font-semibold">Quote</span>
+              <span>·</span>
+              <span>Validate</span>
+              <span>·</span>
+              <span>Approve</span>
+            </div>
+          }
+          aiBanner={
+            <>
+              <span className="font-bold">Strata AI</span> · 1 price correction · $9,255.24 Day-1 GP
+            </>
+          }
+          leftPane={
+            <div className="flex h-full flex-col bg-muted/30 p-6">
+              <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">
+                Document preview
+              </p>
+              <div className="flex-1 rounded-lg border border-border bg-card flex items-center justify-center text-sm text-muted-foreground">
+                PDF / image viewer goes here
+              </div>
+            </div>
+          }
+          rightPane={
+            <div className="p-6 space-y-4">
+              <FieldSection icon={<Package className="size-4" />} label="Quote info">
+                <FieldValueRow field="Quote number" value="Q-2026-0089" />
+                <FieldValueRow field="Date" value="Jun 10, 2026" />
+              </FieldSection>
+            </div>
+          }
+          footer={
+            <Button onClick={() => setOpen(false)} className="w-full">
+              Approve & continue
+            </Button>
+          }
+        />
+      </div>
+    );
+  },
 };
 
 export function getPreviewComponent(id: string): React.FC | null {

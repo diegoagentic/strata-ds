@@ -1311,6 +1311,276 @@ const componentsMap: Record<string, ComponentSpec> = {
     ],
     example: `<TooltipProvider>\n  <Tooltip>\n    <TooltipTrigger asChild><Button variant="icon"><Trash /></Button></TooltipTrigger>\n    <TooltipContent>Delete item</TooltipContent>\n  </Tooltip>\n</TooltipProvider>`,
   },
+
+  // ── Strata Components (F26 promoted from inbound-outbound/UI-Dealer) ──────
+
+  "strata-top-bar": {
+    id: "strata-top-bar",
+    name: "StrataTopBar",
+    import: `import { StrataTopBar } from "strata-design-system"`,
+    category: "Strata Components",
+    description: "Top app bar for data-list views — title, breadcrumb, search slot, and action row. Anchors the typical operational page (transactions, documents, orders).",
+    tokens: {
+      "bg-card": "Bar background",
+      "border-border": "Bottom divider",
+      "text-foreground": "Title",
+      "text-muted-foreground": "Breadcrumb / meta",
+    },
+    whenToUse: [
+      "Page header for any data-list view (transactions, documents, orders)",
+      "When you need a consistent title + breadcrumb + actions row across operational screens",
+    ],
+    antiPatterns: COMMON_ANTI_PATTERNS,
+  },
+
+  "data-list-toolbar": {
+    id: "data-list-toolbar",
+    name: "DataListToolbar",
+    import: `import { DataListToolbar } from "strata-design-system"`,
+    category: "Strata Components",
+    description: "Search input + filter slot + view toggle + bulk actions row sitting above a data list. Pairs with DataListTable / DataListCardGrid.",
+    tokens: {
+      "bg-card": "Toolbar surface",
+      "border-border": "Border + dividers",
+      "text-foreground": "Search input text",
+      "text-muted-foreground": "Placeholder + icon",
+    },
+    whenToUse: [
+      "Toolbar above any DataListTable or DataListCardGrid",
+      "When you need search + filter + view-toggle in a single consistent row",
+    ],
+    antiPatterns: COMMON_ANTI_PATTERNS,
+  },
+
+  "view-toggle": {
+    id: "view-toggle",
+    name: "ViewToggle",
+    import: `import { ViewToggle } from "strata-design-system"`,
+    category: "Strata Components",
+    description: "Two-button group for switching between list and grid (or any two view modes). Replaces ad-hoc ToggleGroup wirings.",
+    tokens: {
+      "bg-muted": "Inactive button background",
+      "bg-foreground": "Active button background",
+      "text-background": "Active label",
+      "text-muted-foreground": "Inactive label",
+    },
+    whenToUse: [
+      "Toggle between list and grid views of the same dataset",
+      "Toggle between two equivalent presentations (compact / detailed)",
+    ],
+    antiPatterns: [
+      ...COMMON_ANTI_PATTERNS,
+      "Do not use for 3+ options — use ToggleGroup instead",
+    ],
+  },
+
+  "filter-pills": {
+    id: "filter-pills",
+    name: "FilterPills",
+    import: `import { FilterPills } from "strata-design-system"`,
+    category: "Strata Components",
+    description: "Status filter pill row with count badges. The canonical filter affordance for data-list views (e.g. All · Pending · Reviewed · Archived).",
+    tokens: {
+      "bg-primary": "Active pill background",
+      "bg-muted": "Inactive pill background",
+      "text-primary-foreground": "Active label",
+      "text-muted-foreground": "Inactive label",
+    },
+    whenToUse: [
+      "Filter a list by mutually-exclusive status",
+      "Show counts per status inline above a list",
+    ],
+    antiPatterns: COMMON_ANTI_PATTERNS,
+  },
+
+  "data-list-table": {
+    id: "data-list-table",
+    name: "DataListTable",
+    import: `import { DataListTable } from "strata-design-system"`,
+    category: "Strata Components",
+    description: "Opinionated table for data-list views — typed column config, row selection, status pills, empty state. Removes the repetitive boilerplate of building Table+TableRow+TableCell by hand.",
+    tokens: {
+      "bg-card": "Table surface",
+      "border-border": "Row dividers",
+      "text-foreground": "Cell content",
+      "bg-muted/30": "Hover row",
+    },
+    whenToUse: [
+      "Any list of records with consistent columns (transactions, documents, orders)",
+      "When you need typed columns + row selection + empty state in one component",
+    ],
+    antiPatterns: COMMON_ANTI_PATTERNS,
+  },
+
+  "data-list-card": {
+    id: "data-list-card",
+    name: "DataListCard",
+    import: `import { DataListCard } from "strata-design-system"`,
+    category: "Strata Components",
+    description: "Single card unit for grid view of data lists. Title, meta, status badge, optional thumbnail. Designed to pair with DataListCardGrid.",
+    tokens: {
+      "bg-card": "Card surface",
+      "border-border": "Card border",
+      "text-foreground": "Title",
+      "text-muted-foreground": "Meta",
+    },
+    whenToUse: [
+      "Card view of a single record in a data list",
+      "Inside a DataListCardGrid as the repeating unit",
+    ],
+    antiPatterns: COMMON_ANTI_PATTERNS,
+  },
+
+  "data-list-card-grid": {
+    id: "data-list-card-grid",
+    name: "DataListCardGrid",
+    import: `import { DataListCardGrid } from "strata-design-system"`,
+    category: "Strata Components",
+    description: "Responsive grid wrapper for DataListCard instances. Handles column count, gap, and empty state. The card-view counterpart to DataListTable.",
+    tokens: {
+      "gap-4": "Grid gap",
+      "bg-background": "Grid container",
+    },
+    whenToUse: [
+      "When ViewToggle switches the view from list to grid",
+      "Any collection of DataListCard items that should reflow responsively",
+    ],
+    antiPatterns: COMMON_ANTI_PATTERNS,
+  },
+
+  "file-upload-modal": {
+    id: "file-upload-modal",
+    name: "FileUploadModal",
+    import: `import { FileUploadModal } from "strata-design-system"`,
+    category: "Strata Components",
+    description: "4-step upload modal (select → review → uploading → complete) with drag-and-drop, file list, and per-step CTA. Centralises the duplicated upload UX across QuoteConverter / AcknowledgementUpload / ManualUpload.",
+    tokens: {
+      "bg-card": "Modal surface",
+      "border-border": "Modal border",
+      "bg-muted/30": "Dropzone background",
+      "text-success": "Complete state",
+    },
+    props: ["open", "onClose", "step", "files", "onFilesChange", "onUploadStart", "title", "subtitle"],
+    whenToUse: [
+      "Any flow that ingests one or more files and previews them before commit",
+      "When users upload documents, quotes, acknowledgements, etc.",
+    ],
+    antiPatterns: COMMON_ANTI_PATTERNS,
+  },
+
+  "editable-line-table": {
+    id: "editable-line-table",
+    name: "EditableLineTable",
+    import: `import { EditableLineTable, type EditableLineColumn } from "strata-design-system"`,
+    category: "Strata Components",
+    description: "Generic line-items grid with click-to-edit cells, typed column config, add/remove row, optional drag handle, and footer slot. Replaces hand-rolled <table> + <input> grids in quote/order/line-item flows.",
+    tokens: {
+      "bg-card": "Grid surface",
+      "border-border": "Cell borders",
+      "ring-primary/30": "Editing cell focus ring",
+    },
+    props: ["rows", "columns", "getRowKey", "onAdd", "onRemove", "editingCell", "onEditingCellChange", "footer"],
+    whenToUse: [
+      "Quote / SIF / order line-item editor",
+      "Any tabular data where individual cells need inline edit",
+    ],
+    antiPatterns: COMMON_ANTI_PATTERNS,
+  },
+
+  "document-review-modal": {
+    id: "document-review-modal",
+    name: "DocumentReviewModal",
+    import: `import { DocumentReviewModal } from "strata-design-system"`,
+    category: "Strata Components",
+    description: "Large-format review canvas for extracted document data — sparkle header, underline tabs with count badges, slotted body, footer with confidence indicator. Replaces 3000+ LOC of duplicate modal shells across BFI / Officeworks / QuoteConverter.",
+    tokens: {
+      "bg-card": "Modal surface",
+      "border-border": "Modal border + tab strip",
+      "border-success": "Active tab underline",
+      "bg-success/15": "Active tab count badge background",
+    },
+    props: ["open", "onClose", "title", "subtitle", "headerActions", "status", "tabs", "activeTab", "onTabChange", "tabBarActions", "footer"],
+    whenToUse: [
+      "Review extracted fields from an ingested document (quote, PO, ack, SIF)",
+      "Any data-review canvas that needs tabs + slotted body + footer",
+    ],
+    antiPatterns: COMMON_ANTI_PATTERNS,
+  },
+
+  "field-section": {
+    id: "field-section",
+    name: "FieldSection",
+    import: `import { FieldSection } from "strata-design-system"`,
+    category: "Strata Components",
+    description: "Header + body container that groups related FieldValueRow entries inside a DocumentReviewModal. Title with optional icon, body with bordered rows.",
+    tokens: {
+      "bg-card": "Section surface",
+      "border-border": "Section border",
+      "bg-muted/40": "Section header background",
+      "text-muted-foreground": "Header label",
+    },
+    whenToUse: [
+      "Group related extracted fields inside a DocumentReviewModal body",
+      "Any field grouping that needs a labelled header + bordered body",
+    ],
+    antiPatterns: COMMON_ANTI_PATTERNS,
+  },
+
+  "field-value-row": {
+    id: "field-value-row",
+    name: "FieldValueRow",
+    import: `import { FieldValueRow } from "strata-design-system"`,
+    category: "Strata Components",
+    description: "Two-column label / value row, with optional placeholder when the value is missing. Designed as the repeating unit inside a FieldSection.",
+    tokens: {
+      "border-border": "Row divider",
+      "text-foreground": "Value text",
+      "text-muted-foreground": "Label + placeholder",
+    },
+    whenToUse: [
+      "Render an extracted field inside a FieldSection (label · value)",
+      "Read-only field display in review canvases",
+    ],
+    antiPatterns: COMMON_ANTI_PATTERNS,
+  },
+
+  "confidence-indicator": {
+    id: "confidence-indicator",
+    name: "ConfidenceIndicator",
+    import: `import { ConfidenceIndicator } from "strata-design-system"`,
+    category: "Strata Components",
+    description: "Small numeric badge that tones a confidence score with success / warning / destructive based on the value (≥80 / ≥60 / else). Used in the footer of DocumentReviewModal.",
+    tokens: {
+      "text-success": "value ≥ 80",
+      "text-warning": "value ≥ 60 and < 80",
+      "text-destructive": "value < 60",
+    },
+    whenToUse: [
+      "Surface OCR / extraction confidence next to a CTA",
+      "Any percentage-based confidence read where the tone should reflect quality",
+    ],
+    antiPatterns: COMMON_ANTI_PATTERNS,
+  },
+
+  "split-pane-review-modal": {
+    id: "split-pane-review-modal",
+    name: "SplitPaneReviewModal",
+    import: `import { SplitPaneReviewModal } from "strata-design-system"`,
+    category: "Strata Components",
+    description: "Sidebar-aware workflow review modal — 3/5 + 2/5 split-pane body, AI banner row, stepper slot in the header. Captures the BFI / Officeworks shell that the standard DocumentReviewModal cannot host.",
+    tokens: {
+      "bg-card": "Modal surface",
+      "bg-ai/10": "Header sparkle background",
+      "bg-ai/5": "AI banner row",
+      "border-ai/20": "AI banner divider",
+    },
+    props: ["open", "onClose", "title", "subtitle", "headerCenter", "aiBanner", "leftPane", "rightPane", "fullContent", "footer", "sidebarOffsetClass"],
+    whenToUse: [
+      "Workflow review modal where a doc viewer (left) needs to sit alongside a contextual panel (right)",
+      "When the modal must offset around a fixed app sidebar",
+    ],
+    antiPatterns: COMMON_ANTI_PATTERNS,
+  },
 };
 
 export function getComponentSpec(id: string): ComponentSpec | undefined {
