@@ -71,23 +71,56 @@ Scans `~/.claude/projects/` for past Claude Code sessions in Strata-related proj
 
 ## MCP server
 
-Started by `npm run server` (HTTP on `:3001`) or `npm run server:dev` (watched). The server reads everything in this folder via the `GOVERNANCE_PATH` env var or by walking up from its own location.
+Started by `npm run server` (HTTP on `:3001`) or `npm run server:dev` (watched).
 
-Tools exposed:
+### Source resolution (F38.2)
+
+The server reads governance via a 4-step source layer:
+
+1. `STRATA_LOCAL_ROOT` env var — explicit override (used when developing locally)
+2. GitHub tarball fetched via `gh` CLI, cached at `~/.cache/strata-ds-mcp/<sha>/` (10 min TTL on the SHA lookup)
+3. Most-recent cached SHA when offline / `gh` is missing
+4. Bundled `governance/` shipped next to the binary
+
+No env vars or tokens required — the `gh` CLI uses the user's existing session. Everything fetched is attributed to that user (so `report_error` opens issues correctly).
+
+### Tools exposed (15 total)
 
 | Tool | Returns |
 |------|---------|
+| `get_session_briefing()` | Compact start-of-session briefing (laws + rule headlines + workflow). Call this first. |
+| `plan_ui({description})` | Recommended DS components + rules for a UI description |
 | `get_laws()` | LAWS.md |
 | `get_rules({category})` | 17 rule categories (rules/01-16 + code-usage) |
 | `get_tokens()` | tokens/token-reference.md |
+| `get_foundations({section?})` | tokens by section |
 | `get_anti_patterns()` | anti-patterns/common-errors.md |
 | `search_governance({query})` | full-text search across the folder |
 | `get_overview()` | LAWS + tokens + anti-patterns + h2 headings of every rule |
-| `validate_component_against_rules({code, filename?})` | per-violation report against 22 lint checks |
-| `plan_ui({description})` | recommended DS components + rules to consult |
 | `get_component({id})` | component spec |
-| `get_foundations({section?})` | tokens by section |
+| `list_components()` | grouped catalog of every DS component with canonical import |
+| `check_version({searchRoot?})` | installed-vs-latest DS version comparison |
+| `install_skill({target, projectRoot?})` | install the `planning-strata-ui` Agent Skill |
+| `validate_component_against_rules({code, filename?})` | per-violation report against 22 lint checks |
 | `report_error({description, context?})` | log a DS gap |
+
+### Comparison with the storybook MCP (PR #20)
+
+The `AvantoDev/front-react-strata-storybook` repo ships a sibling MCP server in PR #20. Both consume the SAME `governance/` markdown source (this folder), so the rule content is in lockstep.
+
+| | This repo (`@diegoagentic/strata-ds`) | Storybook (`@avantodev/strata-design-system`) |
+|---|---|---|
+| Transport | stdio + HTTP `:3001` | stdio only |
+| Source | gh-tarball + cache + bundled (F38.2) | gh-tarball + cache + bundled |
+| Lint tool | ✅ `validate_component_against_rules` (22 checks) | — |
+| Session briefing | ✅ `get_session_briefing` | ✅ `get_session_briefing` |
+| Version check | ✅ `check_version` | ✅ `check_version` |
+| Component catalog | ✅ `list_components` | ✅ `list_components` |
+| Agent Skill | ✅ `install_skill` (planning-strata-ui) | ✅ `install_skill` (planning-strata-ui) |
+| Component spec | ✅ `get_component` | ✅ `get_component` |
+| Error reporting | `report_error` (logs only) | `report_error` (opens GitHub issue) |
+
+Either MCP can be consumed by the same Strata project. The dev team's MCP is the recommended choice when consuming Strata from the published storybook; this MCP is the canonical reference + linter for the DS itself.
 
 ## Editing rules
 
