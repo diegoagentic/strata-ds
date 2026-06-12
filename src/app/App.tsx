@@ -16,6 +16,7 @@ import { MCPView } from "./views/MCPView";
 import { DeveloperGuideView } from "./views/DeveloperGuideView";
 import { ComponentsMapView } from "./views/ComponentsMapView";
 import { ComponentDetailView } from "./views/ComponentDetailView";
+import { RuleSectionView } from "./views/RuleSectionView";
 import { FoundationsView } from "./views/FoundationsView";
 import { BrandingView } from "./views/BrandingView";
 import { TransparencyView } from "./views/TransparencyView";
@@ -243,6 +244,9 @@ export default function App() {
         }
         if (currentView.startsWith("recipe-")) {
           return <RecipeDetailView id={currentView.replace("recipe-", "")} />;
+        }
+        if (currentView.startsWith("rule-")) {
+          return <RuleSectionView id={currentView.replace("rule-", "")} />;
         }
         // Legacy alias: deep-links to "examples" land on the first recipe
         if (currentView === "examples") {
