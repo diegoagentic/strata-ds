@@ -11,7 +11,7 @@ export function OverviewView() {
           The single source of truth for the Strata product surface
         </h1>
         <p className="text-lg text-muted-foreground max-w-2xl">
-          95 production components, 17 governance rules, and an MCP server that delivers
+          95 production components, 17 UI Laws, and an MCP server that delivers
           the design system directly into Cursor, Claude Code, GitHub Copilot, and other
           AI development tools.
         </p>
@@ -20,7 +20,7 @@ export function OverviewView() {
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard icon={ComponentIcon} label="Components" value="95" hint="React + TypeScript" />
         <StatCard icon={Layers} label="Foundations" value="8" hint="colors · typography · spacing · borders · shadows · branding · transparency · grid" />
-        <StatCard icon={Palette} label="Governance Rules" value="8" hint="17 documented anti-patterns" />
+        <StatCard icon={Palette} label="UI Laws" value="8" hint="17 documented anti-patterns" />
         <StatCard icon={Sparkles} label="MCP Tools" value="10" hint="Available to AI tools via stdio + HTTP" />
       </section>
 

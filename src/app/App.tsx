@@ -44,7 +44,7 @@ const NAV: NavSection[] = [
       { id: "overview", label: "Overview" },
       { id: "developer-guide", label: "Developer Guide", isNew: true },
       { id: "mcp", label: "MCP Connection", isNew: true },
-      { id: "governance", label: "Governance", isNew: true },
+      { id: "governance", label: "UI Laws", isNew: true },
     ],
   },
   {

@@ -44,7 +44,7 @@ export function GovernanceView() {
         <p className="text-xs font-semibold uppercase tracking-wider text-status-ai">
           DS Manager · Read-only · 19 sections · {sections.length} files
         </p>
-        <h1 className="font-brand text-4xl font-bold text-foreground">Governance</h1>
+        <h1 className="font-brand text-4xl font-bold text-foreground">UI Laws</h1>
         <p className="text-lg text-muted-foreground max-w-3xl">
           Source of truth for the Design System — laws, rules, tokens, anti-patterns,
           composition and state patterns, voice, accessibility, data display.

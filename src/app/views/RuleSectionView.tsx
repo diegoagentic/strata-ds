@@ -43,7 +43,7 @@ export function RuleSectionView({ id }: { id: string }) {
               window.dispatchEvent(new CustomEvent('strata:navigate', { detail: 'governance' }));
             }}
           >
-            ← Open the full Governance page
+            ← Open the full UI Laws page
           </a>
         </p>
       </div>
