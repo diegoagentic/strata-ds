@@ -613,7 +613,7 @@ footer.guide-footer {
       <div class="page-header">
         <div>
           <h1>Strata DS — Rules Guide</h1>
-          <div class="subtitle">Generated 2026-06-12T15:33:06.873Z · 10 rule files · 9 overview blocks + 46 sub-rule examples · 207 CSS tokens</div>
+          <div class="subtitle">Generated 2026-06-12T15:36:52.340Z · 10 rule files · 9 overview blocks + 67 sub-rule examples · 207 CSS tokens</div>
         </div>
         <button id="theme-toggle" class="theme-toggle" type="button">Toggle theme</button>
       </div>
@@ -2376,6 +2376,28 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
   
       <h2 id="button-variants">Button variants</h2>
 <h3 id="primary-main-cta">Primary (main CTA)</h3>
+
+<aside class="ve-block" data-key="primary-main-cta">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Button · Primary</span>
+  </header>
+  <p class="ve-block-explanation">The Primary variant carries the highest emphasis in any view. Brand background, dark text, no border. Use it for the single most important action — Save, Approve, Submit.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Primary CTA</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary">Save changes</button></div>
+          <div class="ec-code">variant="default" / bg-primary text-primary-foreground</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Button&gt;Save changes&lt;/Button&gt;
+// or
+&lt;button className=&quot;bg-primary text-primary-foreground hover:bg-primary/90
+                   rounded-md px-4 h-10 font-semibold transition-colors&quot;&gt;
+  Save changes
+&lt;/button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> One primary CTA per view. If you need two equally-important actions, rethink the design — usually one is actually secondary.</p>
+</aside>
 <p>One per section/view. The only one with brand lime.</p>
 <pre><code class="language-tsx">&lt;button className=&quot;bg-primary text-primary-foreground 
                    hover:bg-primary/90 
@@ -2385,6 +2407,31 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
 &lt;/button&gt;
 </code></pre>
 <h3 id="secondary">Secondary</h3>
+
+<aside class="ve-block" data-key="secondary">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Button · Secondary</span>
+  </header>
+  <p class="ve-block-explanation">Secondary buttons sit beside the primary CTA for related-but-not-primary actions (Cancel, Save as draft). Filled background <code>bg-card</code> + visible border so they read as a button, not a link.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Secondary</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-secondary">Save as draft</button></div>
+          <div class="ec-code">variant="secondary"</div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">In hierarchy</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-secondary">Save as draft</button>
+            <button class="demo-btn demo-btn-primary">Publish</button>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Button variant=&quot;secondary&quot;&gt;Save as draft&lt;/Button&gt;
+&lt;Button&gt;Publish&lt;/Button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Use Secondary for parallel actions that share weight with the primary. Use Outline for actions that should read as less prominent than Secondary.</p>
+</aside>
 <p>Supporting action next to a primary.</p>
 <pre><code class="language-tsx">&lt;button className=&quot;bg-secondary text-secondary-foreground 
                    border border-border
@@ -2395,6 +2442,34 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
 &lt;/button&gt;
 </code></pre>
 <h3 id="outline">Outline</h3>
+
+<aside class="ve-block" data-key="outline">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Button · Outline</span>
+  </header>
+  <p class="ve-block-explanation">Outline buttons have a transparent background and a border. Lowest emphasis among "still looks like a button" variants. Common for Cancel, Back, secondary toolbars.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Outline</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-outline">Cancel</button>
+            <button class="demo-btn demo-btn-outline"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export</button>
+          </div>
+          <div class="ec-code">variant="outline"</div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Cancel + Primary pair</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-outline">Cancel</button>
+            <button class="demo-btn demo-btn-primary">Save</button>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Button variant=&quot;outline&quot;&gt;Cancel&lt;/Button&gt;
+&lt;Button&gt;Save&lt;/Button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Default to Outline for Cancel + Back actions. For toolbar buttons (Export, Filter, Sort), Outline reads as a button without competing with the primary.</p>
+</aside>
 <p>Alternative, less prominent action.</p>
 <pre><code class="language-tsx">&lt;button className=&quot;border border-input bg-background text-foreground
                    hover:bg-accent hover:text-accent-foreground 
@@ -2404,6 +2479,28 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
 &lt;/button&gt;
 </code></pre>
 <h3 id="ghost">Ghost</h3>
+
+<aside class="ve-block" data-key="ghost">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Button · Ghost</span>
+  </header>
+  <p class="ve-block-explanation">Ghost buttons are transparent with no border — they only become visible on hover. Use them in dense lists, table actions, kebab menus, navigation links where buttons would create noise.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Ghost · hover to reveal</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-ghost" style="transition:background 0.15s;" onmouseover="this.style.background='var(--muted)'" onmouseout="this.style.background='transparent'">Edit</button>
+            <button class="demo-btn demo-btn-ghost" style="transition:background 0.15s;" onmouseover="this.style.background='var(--muted)'" onmouseout="this.style.background='transparent'">Duplicate</button>
+            <button class="demo-btn demo-btn-ghost" style="transition:background 0.15s;" onmouseover="this.style.background='var(--muted)'" onmouseout="this.style.background='transparent'">Archive</button>
+          </div>
+          <div class="ec-code">variant="ghost" + hover:bg-muted</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Button variant=&quot;ghost&quot;&gt;Edit&lt;/Button&gt;
+&lt;Button variant=&quot;ghost&quot;&gt;&lt;Trash className=&quot;size-4&quot; /&gt;&lt;/Button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Reach for Ghost when the action is contextual to a row, card, or menu — anywhere a fully visible button would compete with content.</p>
+</aside>
 <p>For low-priority actions or dense contexts (tables, toolbars).</p>
 <pre><code class="language-tsx">&lt;button className=&quot;text-foreground 
                    hover:bg-accent hover:text-accent-foreground 
@@ -2413,6 +2510,34 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
 &lt;/button&gt;
 </code></pre>
 <h3 id="destructive">Destructive</h3>
+
+<aside class="ve-block" data-key="destructive">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Button · Destructive</span>
+  </header>
+  <p class="ve-block-explanation">Destructive buttons signal an action that cannot be undone (Delete, Reject, Discard). Use sparingly — every red button trains users to expect harm.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Destructive</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-destructive">Delete project</button></div>
+          <div class="ec-code">variant="destructive"</div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">In a confirm dialog</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-outline">Cancel</button>
+            <button class="demo-btn demo-btn-destructive">Yes, delete</button>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Button variant=&quot;destructive&quot;&gt;Delete project&lt;/Button&gt;
+
+// In a confirm dialog:
+&lt;Button variant=&quot;outline&quot;&gt;Cancel&lt;/Button&gt;
+&lt;Button variant=&quot;destructive&quot;&gt;Yes, delete&lt;/Button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Pair every Destructive action with an Outline Cancel. Never put Destructive as the primary CTA of a top-level page — only inside confirm dialogs or row-level actions.</p>
+</aside>
 <p>For actions that delete or cannot be undone.</p>
 <pre><code class="language-tsx">&lt;button className=&quot;bg-destructive text-destructive-foreground 
                    hover:bg-destructive/90 
@@ -2430,6 +2555,30 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
 &lt;/button&gt;
 </code></pre>
 <h3 id="link-text-action">Link / Text action</h3>
+
+<aside class="ve-block" data-key="link-text-action">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Button · Link</span>
+  </header>
+  <p class="ve-block-explanation">Link variant looks like underlined inline text but acts as a button. Use in body copy, inside table cells, or where a button outline would feel wrong.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Link button</span>
+          <div class="ec-body" style="display:block;">
+            <p style="margin:0;font-size:13px;color:var(--fg);">3 line items need review. <button class="demo-btn demo-btn-link">Open review queue</button></p>
+          </div>
+          <div class="ec-code">variant="link"</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;p&gt;
+  3 line items need review.{' '}
+  &lt;Button variant=&quot;link&quot; onClick={openReviewQueue}&gt;
+    Open review queue
+  &lt;/Button&gt;
+&lt;/p&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Pick Link when the action is part of a sentence. Otherwise use Ghost or Outline.</p>
+</aside>
 <p>For navigation or inline actions in text.</p>
 <pre><code class="language-tsx">&lt;button className=&quot;text-primary underline-offset-4 
                    hover:underline hover:text-primary/90 
@@ -2447,6 +2596,28 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
 <hr>
 <h2 id="button-states">Button states</h2>
 <h3 id="disabled">Disabled</h3>
+
+<aside class="ve-block" data-key="disabled">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Button · Disabled</span>
+  </header>
+  <p class="ve-block-explanation">Disabled buttons cannot be clicked. Reduce opacity, change cursor to <code>not-allowed</code>, remove hover effects. Always tell the user WHY the button is disabled (tooltip, helper text).</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Disabled primary</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-disabled" disabled>Save</button></div>
+          <div class="ec-code">disabled + opacity-70</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Button disabled&gt;Save&lt;/Button&gt;
+
+// With reason:
+&lt;Tooltip content=&quot;Fix the 3 errors above first&quot;&gt;
+  &lt;Button disabled&gt;Save&lt;/Button&gt;
+&lt;/Tooltip&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Never disable a button without explaining why. Pair every disabled CTA with a tooltip, an inline message, or visible error indicators.</p>
+</aside>
 <pre><code class="language-tsx">&lt;button 
   disabled
   className=&quot;bg-primary text-primary-foreground 
@@ -2456,6 +2627,29 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
 &lt;/button&gt;
 </code></pre>
 <h3 id="loading">Loading</h3>
+
+<aside class="ve-block" data-key="loading">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Button · Loading</span>
+  </header>
+  <p class="ve-block-explanation">During async work, replace the button label with a spinner + "Working…" text. Disable the button while loading so users cannot double-fire.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Loading state</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary" disabled style="opacity:0.85;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 0.8s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+            Working…
+          </button></div>
+          <div class="ec-code">loading={true} + disabled</div>
+        </div>
+      </div>
+      <style>@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }</style></div>
+  <pre class="ve-block-code"><code>&lt;Button loading={isSaving} disabled={isSaving}&gt;
+  {isSaving ? 'Working…' : 'Save'}
+&lt;/Button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Always disable while loading to prevent double-submit. Spinner color = <code>currentColor</code> so it inherits the button text color.</p>
+</aside>
 <pre><code class="language-tsx">&lt;button className=&quot;bg-primary text-primary-foreground px-4 py-2 rounded-lg 
                    flex items-center gap-2&quot;&gt;
   &lt;span className=&quot;animate-spin text-primary-foreground&quot;&gt;
@@ -2465,6 +2659,39 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
 &lt;/button&gt;
 </code></pre>
 <h3 id="with-icon">With icon</h3>
+
+<aside class="ve-block" data-key="with-icon">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Button · With icon</span>
+  </header>
+  <p class="ve-block-explanation">Icon-prefixed buttons clarify intent. Icon size 14-16px (h-3.5 / h-4), gap of 6-8px. The icon should NEVER be larger than the text x-height.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Icon + label</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-primary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export</button>
+            <button class="demo-btn demo-btn-outline"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Approve</button>
+            <button class="demo-btn demo-btn-ghost"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Report</button>
+          </div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Icon-only (with aria-label)</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-outline" aria-label="Settings" style="padding:7px 9px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Button&gt;
+  &lt;Download className=&quot;size-4&quot; /&gt;
+  Export
+&lt;/Button&gt;
+
+&lt;Button variant=&quot;outline&quot; aria-label=&quot;Settings&quot;&gt;
+  &lt;Settings className=&quot;size-4&quot; /&gt;
+&lt;/Button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> For icon-only buttons, always add <code>aria-label</code>. The icon size should match the text size: <code>size-4</code> for default buttons, <code>size-3.5</code> for sm.</p>
+</aside>
 <pre><code class="language-tsx">// Icon on the left
 &lt;button className=&quot;bg-primary text-primary-foreground px-4 py-2 rounded-lg 
                    flex items-center gap-2 transition-colors hover:bg-primary/90&quot;&gt;
@@ -2488,21 +2715,141 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
 <hr>
 <h2 id="hover-states-on-non-button-elements">Hover states on non-button elements</h2>
 <h3 id="table-list-rows">Table / list rows</h3>
+
+<aside class="ve-block" data-key="table-list-rows">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Hover · table rows</span>
+  </header>
+  <p class="ve-block-explanation">Table rows that are clickable get a subtle hover tint <code>hover:bg-muted/40</code>. The cursor changes to pointer. The full row becomes the click target.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Hoverable row</span>
+          <div class="ec-body" style="display:block;">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+              <div style="padding:10px 12px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;color:var(--muted-fg);text-transform:uppercase;letter-spacing:0.04em;">Quotes</div>
+              <div style="padding:10px 12px;font-size:13px;color:var(--fg);cursor:pointer;transition:background 0.12s;border-bottom:1px solid var(--border);" onmouseover="this.style.background='color-mix(in srgb, var(--muted) 40%, transparent)'" onmouseout="this.style.background='transparent'">SO2604102 — Leland Furniture · $4,159</div>
+              <div style="padding:10px 12px;font-size:13px;color:var(--fg);cursor:pointer;transition:background 0.12s;" onmouseover="this.style.background='color-mix(in srgb, var(--muted) 40%, transparent)'" onmouseout="this.style.background='transparent'">QT-1042 — NorthPoint · $8,910</div>
+            </div>
+          </div>
+          <div class="ec-code">hover:bg-muted/40 cursor-pointer transition-colors</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;TableRow
+  onClick={() =&gt; openDetail(row)}
+  className=&quot;hover:bg-muted/40 cursor-pointer transition-colors&quot;
+&gt;
+  ...
+&lt;/TableRow&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Always pair a clickable row with <code>cursor-pointer</code> + the hover tint + a transition. Without all three the row reads as static.</p>
+</aside>
 <pre><code class="language-tsx">&lt;tr className=&quot;hover:bg-muted/50 transition-colors cursor-pointer&quot;&gt;
 &lt;div className=&quot;hover:bg-accent rounded-md transition-colors px-3 py-2&quot;&gt;
 </code></pre>
 <h3 id="clickable-cards">Clickable cards</h3>
+
+<aside class="ve-block" data-key="clickable-cards">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Hover · cards</span>
+  </header>
+  <p class="ve-block-explanation">Clickable cards lift one shadow level on hover, with a subtle 1px translateY. The whole card becomes the click target — never put an "Open" button inside a clickable card (that creates two click affordances).</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Clickable card · hover lifts</span>
+          <div class="ec-body" style="display:block;">
+            <div class="mock-card" style="transition:all 0.15s;cursor:pointer;" onmouseover="this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.10)';this.style.transform='translateY(-1px)';" onmouseout="this.style.boxShadow='0 1px 2px rgba(0,0,0,0.05)';this.style.transform='translateY(0)';">
+              <div class="mc-header">
+                <div><div class="mc-title">Quote QT-1042</div><div class="mc-sub">NorthPoint</div></div>
+                <span class="status-pill status-warning">Review</span>
+              </div>
+            </div>
+          </div>
+          <div class="ec-code">hover:shadow-md hover:-translate-y-px transition-all</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Card
+  onClick={() =&gt; openDetail(item)}
+  className=&quot;cursor-pointer hover:shadow-md hover:-translate-y-px
+             transition-all duration-150&quot;
+&gt;
+  ...
+&lt;/Card&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> No interactive children inside a clickable card. If a row needs both "open" and "delete", make the card non-clickable and add explicit buttons.</p>
+</aside>
 <pre><code class="language-tsx">&lt;div className=&quot;bg-card border border-border rounded-xl p-6 cursor-pointer
                 hover:shadow-lg hover:border-primary/50 
                 transition-all duration-200&quot;&gt;
 </code></pre>
 <h3 id="navigation-links">Navigation links</h3>
+
+<aside class="ve-block" data-key="navigation-links">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Hover · nav links</span>
+  </header>
+  <p class="ve-block-explanation">Navigation links use color hover, not background hover. <code>text-muted-foreground hover:text-foreground</code> is the canonical pair for sidebar items and tabs.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Nav links</span>
+          <div class="ec-body" style="display:block;">
+            <nav style="display:flex;flex-direction:column;gap:4px;">
+              <a href="#" style="font-size:13px;padding:6px 10px;border-radius:4px;color:var(--muted-fg);text-decoration:none;transition:color 0.12s;" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted-fg)'">Overview</a>
+              <a href="#" style="font-size:13px;padding:6px 10px;border-radius:4px;color:var(--fg);background:var(--muted);text-decoration:none;font-weight:600;">Components <span style="font-size:10px;color:var(--muted-fg);">(active)</span></a>
+              <a href="#" style="font-size:13px;padding:6px 10px;border-radius:4px;color:var(--muted-fg);text-decoration:none;transition:color 0.12s;" onmouseover="this.style.color='var(--fg)'" onmouseout="this.style.color='var(--muted-fg)'">Tokens</a>
+            </nav>
+          </div>
+          <div class="ec-code">text-muted-foreground hover:text-foreground</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Link
+  className=&quot;text-muted-foreground hover:text-foreground transition-colors&quot;
+  href=&quot;/components&quot;
+&gt;
+  Components
+&lt;/Link&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Add the active state as a separate token: <code>bg-muted text-foreground font-semibold</code>. Never rely on the hover state alone to mark active.</p>
+</aside>
 <pre><code class="language-tsx">&lt;a className=&quot;text-muted-foreground hover:text-foreground transition-colors&quot;&gt;
 // If it is the active element:
 &lt;a className=&quot;text-foreground font-medium&quot;&gt;  // no hover — already active
 </code></pre>
 <hr>
 <h2 id="composition-rules">Composition rules</h2>
+
+<aside class="ve-block" data-key="composition-rules">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Button composition</span>
+  </header>
+  <p class="ve-block-explanation">When grouping buttons: one primary, demoted secondaries (outline / ghost), destructive isolated on the left or in a confirm dialog. Right-align primary in a horizontal row.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Standard dialog footer</span>
+          <div class="ec-body" style="justify-content:flex-end;">
+            <button class="demo-btn demo-btn-outline">Cancel</button>
+            <button class="demo-btn demo-btn-primary">Save</button>
+          </div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">With destructive on the left</span>
+          <div class="ec-body" style="justify-content:space-between;">
+            <button class="demo-btn demo-btn-destructive">Delete</button>
+            <div style="display:flex;gap:8px;">
+              <button class="demo-btn demo-btn-outline">Cancel</button>
+              <button class="demo-btn demo-btn-primary">Save</button>
+            </div>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;DialogFooter&gt;
+  &lt;Button variant=&quot;destructive&quot;&gt;Delete&lt;/Button&gt;
+  &lt;Spacer /&gt;
+  &lt;Button variant=&quot;outline&quot;&gt;Cancel&lt;/Button&gt;
+  &lt;Button&gt;Save&lt;/Button&gt;
+&lt;/DialogFooter&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Primary goes to the right (the "happy path" lands under the user's thumb / mouse). Destructive isolates to the left so it is not accidentally clicked.</p>
+</aside>
 <ol>
 <li><strong>Only one Primary per section</strong> — if there are two CTAs, the less important one goes as Secondary or Outline</li>
 <li><strong>Destructive always requires confirmation</strong> — never fire a destructive action directly on click without a modal/alert confirmation</li>
@@ -2554,6 +2901,30 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
     </div>
   
       <h2 id="icon-library">Icon library</h2>
+
+<aside class="ve-block" data-key="icon-library">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Icon library</span>
+  </header>
+  <p class="ve-block-explanation">Strata standardizes on <strong>Lucide</strong> for application icons and <strong>Heroicons</strong> in select legacy areas. Never mix multiple icon libraries in the same view — the stroke widths and visual weights differ.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Lucide-style icons</span>
+          <div class="ec-body" style="flex-wrap:wrap;">
+            <span class="icon-pair"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Check</span>
+            <span class="icon-pair"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Alert</span>
+            <span class="icon-pair"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> Info</span>
+            <span class="icon-pair"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Download</span>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>import { Check, AlertTriangle, Info, Download } from 'lucide-react';
+
+&lt;Check className=&quot;size-4 text-success&quot; /&gt;
+&lt;AlertTriangle className=&quot;size-4 text-warning&quot; /&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> For new screens use <code>lucide-react</code> exclusively. If you must mix, isolate one library per surface — never two libraries side by side.</p>
+</aside>
 <p>Strata DS uses <strong>@heroicons/react</strong> as the main library.</p>
 <pre><code class="language-tsx">import { PlusIcon, CheckCircleIcon, XMarkIcon } from &#39;@heroicons/react/24/outline&#39;
 import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for emphasis
@@ -2561,11 +2932,57 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 <hr>
 <h2 id="icon-color-by-context">Icon color by context</h2>
 <h3 id="primary-action-icons-brand">Primary action icons (brand)</h3>
+
+<aside class="ve-block" data-key="primary-action-icons-brand">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Icon · brand action</span>
+  </header>
+  <p class="ve-block-explanation">For the highest-emphasis icon action (Generate, Export, Submit), use the brand color as a container background with dark icon foreground.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Brand icon container</span>
+          <div class="ec-body">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;background:var(--primary);color:var(--primary-fg);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+            <span style="font-size:13px;color:var(--fg);font-weight:600;">Export report</span>
+          </div>
+          <div class="ec-code">bg-primary text-primary-foreground</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;button className=&quot;bg-primary text-primary-foreground rounded-lg p-2&quot;&gt;
+  &lt;Download className=&quot;size-4&quot; /&gt;
+&lt;/button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Reserve this treatment for one icon per view. The icon is the visual anchor, not decoration.</p>
+</aside>
 <pre><code class="language-tsx">// In CTA or featured-feature context
 &lt;SparklesIcon className=&quot;text-primary w-5 h-5&quot; /&gt;
 &lt;PlusIcon className=&quot;text-primary w-5 h-5&quot; /&gt;
 </code></pre>
 <h3 id="state-icons">State icons</h3>
+
+<aside class="ve-block" data-key="state-icons">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Icon · state</span>
+  </header>
+  <p class="ve-block-explanation">State icons inherit the state token color via <code>currentColor</code>. Check + success, AlertTriangle + warning/destructive, Info + info.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">State-toned icons</span>
+          <div class="ec-body" style="flex-wrap:wrap;">
+            <span class="icon-pair icon-tone-success"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> text-success</span>
+            <span class="icon-pair icon-tone-warning"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> text-warning</span>
+            <span class="icon-pair icon-tone-destructive"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> text-destructive</span>
+            <span class="icon-pair"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> text-info</span>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Check className=&quot;size-4 text-success&quot; /&gt;
+&lt;AlertTriangle className=&quot;size-4 text-warning&quot; /&gt;
+&lt;AlertTriangle className=&quot;size-4 text-destructive&quot; /&gt;
+&lt;Info className=&quot;size-4 text-info&quot; /&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> The SVG inherits color from <code>currentColor</code> — set the color on the className, never on the SVG <code>stroke</code> attribute.</p>
+</aside>
 <pre><code class="language-tsx">// Success
 &lt;CheckCircleIcon className=&quot;text-success w-5 h-5&quot; /&gt;
 
@@ -2582,12 +2999,58 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 &lt;SparklesIcon className=&quot;text-ai w-5 h-5&quot; /&gt;
 </code></pre>
 <h3 id="secondary-neutral-icons">Secondary / neutral icons</h3>
+
+<aside class="ve-block" data-key="secondary-neutral-icons">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Icon · neutral</span>
+  </header>
+  <p class="ve-block-explanation">Decorative or secondary icons (search, settings, kebab menus, chevrons) use <code>text-muted-foreground</code>. They sit in the visual background until interacted with.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Neutral icons</span>
+          <div class="ec-body" style="flex-wrap:wrap;">
+            <span class="icon-pair icon-tone-muted"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> text-muted-foreground</span>
+            <span class="icon-pair icon-tone-muted"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> text-muted-foreground</span>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Search className=&quot;size-4 text-muted-foreground&quot; /&gt;
+&lt;Settings className=&quot;size-4 text-muted-foreground&quot; /&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Default to <code>text-muted-foreground</code> for any decorative icon. Only escalate to <code>text-foreground</code> when the icon is part of a clickable affordance.</p>
+</aside>
 <pre><code class="language-tsx">// Support, navigation, general UI icons
 &lt;ChevronRightIcon className=&quot;text-muted-foreground w-4 h-4&quot; /&gt;
 &lt;MagnifyingGlassIcon className=&quot;text-muted-foreground w-5 h-5&quot; /&gt;
 &lt;EllipsisHorizontalIcon className=&quot;text-muted-foreground w-5 h-5&quot; /&gt;
 </code></pre>
 <h3 id="hover-icons">Hover icons</h3>
+
+<aside class="ve-block" data-key="hover-icons">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Icon · hover</span>
+  </header>
+  <p class="ve-block-explanation">On hover, secondary icons brighten from <code>text-muted-foreground</code> to <code>text-foreground</code>. The transition signals "you can interact with me".</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Hover icon</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-ghost" style="padding:6px;" aria-label="Settings" onmouseover="this.style.background='var(--muted)';this.querySelector('svg').style.color='var(--fg)'" onmouseout="this.style.background='transparent';this.querySelector('svg').style.color='var(--muted-fg)'">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted-fg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:color 0.12s;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </button>
+          </div>
+          <div class="ec-code">text-muted-foreground hover:text-foreground</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;button
+  className=&quot;text-muted-foreground hover:text-foreground transition-colors p-2&quot;
+  aria-label=&quot;Settings&quot;
+&gt;
+  &lt;Settings className=&quot;size-4&quot; /&gt;
+&lt;/button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Always add <code>transition-colors</code> so the brightening is a smooth animation, not a jump.</p>
+</aside>
 <pre><code class="language-tsx">// Icon that reacts to its container&#39;s hover (using group)
 &lt;div className=&quot;group hover:bg-accent rounded-md p-2 transition-colors&quot;&gt;
   &lt;CogIcon className=&quot;text-muted-foreground group-hover:text-foreground w-5 h-5 transition-colors&quot; /&gt;
@@ -2601,6 +3064,32 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 </code></pre>
 <hr>
 <h2 id="sizes">Sizes</h2>
+
+<aside class="ve-block" data-key="sizes">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Icon · sizes</span>
+  </header>
+  <p class="ve-block-explanation">Strata uses 4 canonical icon sizes: <strong>12px</strong> (inline meta), <strong>14px</strong> (dense lists), <strong>16px</strong> (default), <strong>20px</strong> (buttons), <strong>24px</strong> (headings).</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">5 sizes</span>
+          <div class="ec-body" style="flex-wrap:wrap;align-items:center;">
+            <span class="icon-pair"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> 12 · h-3</span>
+            <span class="icon-pair"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> 14 · h-3.5</span>
+            <span class="icon-pair"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> 16 · h-4</span>
+            <span class="icon-pair"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> 20 · h-5</span>
+            <span class="icon-pair"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> 24 · h-6</span>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Check className=&quot;size-3&quot; /&gt;     {/* 12px */}
+&lt;Check className=&quot;size-3.5&quot; /&gt;   {/* 14px */}
+&lt;Check className=&quot;size-4&quot; /&gt;     {/* 16px — default */}
+&lt;Check className=&quot;size-5&quot; /&gt;     {/* 20px */}
+&lt;Check className=&quot;size-6&quot; /&gt;     {/* 24px */}</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Default to <code>size-4</code>. Step up to <code>size-5</code> for buttons; step down to <code>size-3.5</code> for table cells. Anything beyond 24px is decorative, not iconographic.</p>
+</aside>
 <table>
 <thead>
 <tr>
@@ -2637,6 +3126,41 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 </tbody></table>
 <hr>
 <h2 id="icon-container">Icon container</h2>
+
+<aside class="ve-block" data-key="icon-container">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Icon container</span>
+  </header>
+  <p class="ve-block-explanation">For prominent icon actions, wrap the icon in a container with background + padding. The container reads as the "action button", the icon as its label.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Brand</span>
+          <div class="ec-body">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;background:var(--primary);color:var(--primary-fg);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+          </div>
+          <div class="ec-code">bg-primary p-2 rounded-lg</div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Soft tint</span>
+          <div class="ec-body">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;background:color-mix(in srgb, var(--primary) 15%, transparent);color:var(--fg);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+          </div>
+          <div class="ec-code">bg-primary/15 p-2 rounded-lg</div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Neutral</span>
+          <div class="ec-body">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;background:var(--muted);color:var(--muted-fg);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+          </div>
+          <div class="ec-code">bg-muted p-2 rounded-lg</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;button className=&quot;bg-primary text-primary-foreground p-2 rounded-lg&quot;&gt;
+  &lt;Download className=&quot;size-4&quot; /&gt;
+&lt;/button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Container size 36×36px for primary actions, 28×28px for secondary. Match border-radius to the surrounding component (8px for cards, full for pills).</p>
+</aside>
 <p>For icons that need a background:</p>
 <pre><code class="language-tsx">// Brand container (feature highlight)
 &lt;div className=&quot;bg-primary/15 rounded-lg p-2 w-fit&quot;&gt;
@@ -2655,6 +3179,37 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 </code></pre>
 <hr>
 <h2 id="rules">Rules</h2>
+
+<aside class="ve-block" data-key="rules">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Icon · rules</span>
+  </header>
+  <p class="ve-block-explanation">Three rules: (1) icon color via className, never via SVG stroke attribute; (2) <code>aria-hidden="true"</code> when the icon is decorative AND has a text label; (3) <code>aria-label</code> when the icon stands alone as a button.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Hardcoded stroke + no aria</span>
+          <div class="ec-body"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+          <div class="ec-code">&lt;svg stroke="#22c55e" /&gt;</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ className + aria</span>
+          <div class="ec-body"><span class="icon-tone-success" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> <span style="color:var(--success);font-weight:600;font-size:13px;">Saved</span></div>
+          <div class="ec-code">aria-hidden + text-success</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// Decorative icon next to text:
+&lt;span className=&quot;inline-flex items-center gap-1&quot;&gt;
+  &lt;Check className=&quot;size-4 text-success&quot; aria-hidden=&quot;true&quot; /&gt;
+  Saved
+&lt;/span&gt;
+
+// Icon-only button:
+&lt;button aria-label=&quot;Delete row&quot;&gt;
+  &lt;Trash className=&quot;size-4&quot; /&gt;
+&lt;/button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Audit every <code>&lt;svg&gt;</code> for hardcoded colors. Audit every icon-only button for <code>aria-label</code>. The MCP <code>get_anti_patterns</code> tool flags both.</p>
+</aside>
 <ol>
 <li><strong>Do not use emojis as icons</strong> — always use heroicons</li>
 <li><strong>Outline vs Solid</strong> — outline for general UI, solid for emphasis states or active indicators</li>
