@@ -1,0 +1,92 @@
+#
+# publish-rules-guide.yml — Build the Strata DS rules guide and deploy it
+# to GitHub Pages whenever the governance folder changes.
+#
+# Setup (one-time, by a repo admin):
+#   1. Repo Settings → Pages → "Source": GitHub Actions
+#   2. Optional: Repo Settings → Pages → "Custom domain" if you want
+#      something like rules.strata-ds.dev
+#
+# Triggers:
+#   - Push to main when governance/, scripts/, or this workflow change
+#   - Manual run via the Actions tab (workflow_dispatch) from any branch
+#
+# Output:
+#   The latest governance/rules-guide.html is served at:
+#     https://<org>.github.io/<repo>/   (default Pages URL)
+#
+
+name: Publish rules guide to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'governance/**'
+      - '.github/workflows/publish-rules-guide.yml'
+      - 'package.json'
+      - 'package-lock.json'
+  workflow_dispatch:
+
+# Allow only one concurrent publish — cancel in-progress runs.
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+# Permissions needed for actions/deploy-pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit --no-fund
+
+      - name: Build rules guide
+        run: npm run build:guide
+
+      - name: Assemble Pages site
+        run: |
+          mkdir -p _site
+          cp governance/rules-guide.html _site/index.html
+          # Keep the original filename available too so old links still work
+          cp governance/rules-guide.html _site/rules-guide.html
+          # Add a tiny 404 page so missing paths land somewhere sensible
+          cat > _site/404.html << 'EOF'
+          <!doctype html>
+          <html><head><meta charset="utf-8"><title>Not found · Strata DS</title>
+          <meta http-equiv="refresh" content="3;url=./">
+          <style>body{font-family:system-ui,sans-serif;max-width:480px;margin:80px auto;padding:24px;color:#02060C}h1{font-size:24px;margin:0 0 12px}a{color:#02060C}</style>
+          </head><body><h1>Page not found</h1>
+          <p>Heading to the <a href="./">Strata DS rules guide</a> in 3 seconds…</p>
+          </body></html>
+          EOF
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
