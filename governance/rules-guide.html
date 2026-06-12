@@ -672,7 +672,7 @@ pre:hover .copy-btn { opacity: 1; }
       <div class="page-header">
         <div>
           <h1>Strata DS — Rules Guide</h1>
-          <div class="subtitle">Generated 2026-06-12T17:26:41.473Z · 20 rule files · 9 overview blocks + 111 sub-rule examples · 207 CSS tokens</div>
+          <div class="subtitle">Generated 2026-06-12T18:23:16.146Z · 20 rule files · 9 overview blocks + 111 sub-rule examples · 207 CSS tokens</div>
         </div>
         <button id="theme-toggle" class="theme-toggle" type="button">Toggle theme</button>
       </div>
@@ -6756,6 +6756,43 @@ Unauthorized model swap — Series 2 → Amia
   ...
 &lt;/ModalContent&gt;
 </code></pre>
+<hr>
+<h2 id="reference-layout-target-shape-for-a-dense-decision-modal">Reference layout — target shape for a dense decision modal</h2>
+<p>Apply the rules in this file and the resulting modal should approximate this skeleton. The original review of the smart-comparator discrepancy modal used exactly this shape to recover ~30% of the visible space.</p>
+<pre><code>┌──────────────────────────────────────────────────────────────────────────────┐
+│  Compare linked documents     [Critical]   62% match                       × │
+│  PO-1027 ⇄ ACK-7839 · Steelcase · Run #1                  [View PO] [View ACK]│
+├──────────────────────────────────────────────────────────────────────────────┤
+│  [Action Required (3)]  Fields (6)  Line Items (3)              [Export ▾]   │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  3 discrepancies · 0 resolved · Highest: High · AI recommends: Reject report │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  ┌─ HIGH · Line 1 · Product ─────────────────────────────────────────────┐  │
+│  │ PO: Series 2          ACK: Amia          AI: Reject · 98% confidence  │  │
+│  │ Unauthorized model swap — Series 2 → Amia          [View reasoning]   │  │
+│  │                                                    [Override ▾]       │  │
+│  └───────────────────────────────────────────────────────────────────────┘  │
+│  ┌─ HIGH · Line 1 · Qty ─────────────────────────────────────────────────┐  │
+│  │ PO: 12                ACK: 3             AI: Reject · 94% confidence  │  │
+│  └───────────────────────────────────────────────────────────────────────┘  │
+│  ┌─ MEDIUM · Estimated Ship Date ────────────────────────────────────────┐  │
+│  │ PO: Apr 15            ACK: Apr 22        AI: Flag · 71% confidence    │  │
+│  └───────────────────────────────────────────────────────────────────────┘  │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  Routing: Mandatory Review · 35% confidence    [Accept] [Review] [Reject]    │
+└──────────────────────────────────────────────────────────────────────────────┘
+</code></pre>
+<p><strong>What this shape encodes:</strong></p>
+<ol>
+<li><strong>Compact 2-row header</strong> — no metadata cards, no helper paragraph, no fragment counter spread across separate rows.</li>
+<li><strong>Tabs adjacent to body</strong> — no extra &quot;showing N of M&quot; row between tab strip and content.</li>
+<li><strong>Single-line executive summary</strong> — count · resolved · severity · AI recommendation in one row.</li>
+<li><strong>Comparison rows in columns</strong> — each discrepancy reads PO ⇄ ACK ⇄ AI in a single horizontal scan instead of three stacked sections.</li>
+<li><strong>Verdict above the fold; reasoning behind a link</strong> — the user sees the decision first, opens the reasoning only if they want to challenge it.</li>
+<li><strong>Per-row actions demoted to <code>Override ▾</code></strong> — no triple <code>Accept · Flag · Reject</code> row competing with the footer.</li>
+<li><strong>Compact footer with routing context</strong> — three small buttons + the routing meta in one line. No full-width button stack.</li>
+</ol>
+<p>A modal that follows this shape lets the reviewer see 3-4 discrepancies plus the action footer without scrolling, and lets them make a confident decision in under 5 seconds.</p>
 <hr>
 <h2 id="anti-patterns">Anti-patterns</h2>
 <table>

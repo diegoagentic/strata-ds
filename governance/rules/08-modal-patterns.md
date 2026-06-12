@@ -380,6 +380,49 @@ The user should always see at least: full header · executive summary · 2-3 lis
 
 ---
 
+## Reference layout — target shape for a dense decision modal
+
+Apply the rules in this file and the resulting modal should approximate this skeleton. The original review of the smart-comparator discrepancy modal used exactly this shape to recover ~30% of the visible space.
+
+```
+┌──────────────────────────────────────────────────────────────────────────────┐
+│  Compare linked documents     [Critical]   62% match                       × │
+│  PO-1027 ⇄ ACK-7839 · Steelcase · Run #1                  [View PO] [View ACK]│
+├──────────────────────────────────────────────────────────────────────────────┤
+│  [Action Required (3)]  Fields (6)  Line Items (3)              [Export ▾]   │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  3 discrepancies · 0 resolved · Highest: High · AI recommends: Reject report │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  ┌─ HIGH · Line 1 · Product ─────────────────────────────────────────────┐  │
+│  │ PO: Series 2          ACK: Amia          AI: Reject · 98% confidence  │  │
+│  │ Unauthorized model swap — Series 2 → Amia          [View reasoning]   │  │
+│  │                                                    [Override ▾]       │  │
+│  └───────────────────────────────────────────────────────────────────────┘  │
+│  ┌─ HIGH · Line 1 · Qty ─────────────────────────────────────────────────┐  │
+│  │ PO: 12                ACK: 3             AI: Reject · 94% confidence  │  │
+│  └───────────────────────────────────────────────────────────────────────┘  │
+│  ┌─ MEDIUM · Estimated Ship Date ────────────────────────────────────────┐  │
+│  │ PO: Apr 15            ACK: Apr 22        AI: Flag · 71% confidence    │  │
+│  └───────────────────────────────────────────────────────────────────────┘  │
+├──────────────────────────────────────────────────────────────────────────────┤
+│  Routing: Mandatory Review · 35% confidence    [Accept] [Review] [Reject]    │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+**What this shape encodes:**
+
+1. **Compact 2-row header** — no metadata cards, no helper paragraph, no fragment counter spread across separate rows.
+2. **Tabs adjacent to body** — no extra "showing N of M" row between tab strip and content.
+3. **Single-line executive summary** — count · resolved · severity · AI recommendation in one row.
+4. **Comparison rows in columns** — each discrepancy reads PO ⇄ ACK ⇄ AI in a single horizontal scan instead of three stacked sections.
+5. **Verdict above the fold; reasoning behind a link** — the user sees the decision first, opens the reasoning only if they want to challenge it.
+6. **Per-row actions demoted to `Override ▾`** — no triple `Accept · Flag · Reject` row competing with the footer.
+7. **Compact footer with routing context** — three small buttons + the routing meta in one line. No full-width button stack.
+
+A modal that follows this shape lets the reviewer see 3-4 discrepancies plus the action footer without scrolling, and lets them make a confident decision in under 5 seconds.
+
+---
+
 ## Anti-patterns
 
 | ❌ | ✅ |
