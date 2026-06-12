@@ -23,6 +23,8 @@ import { readFileSync, writeFileSync, statSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
+import { slugify } from './build-guide-shared.mjs';
+import { EXAMPLES_BY_HEADING } from './examples-data.mjs';
 
 // ── Paths ──────────────────────────────────────────────────────────────
 
@@ -476,10 +478,50 @@ function read(rel) {
 
 const MD_OPTIONS = { gfm: true, headerIds: false, mangle: false };
 
-function renderMarkdown(md) {
+// ── marked renderer override — inject example block after each heading ──
+
+let activeSectionExamples = {};
+
+marked.use({
+  renderer: {
+    heading({ tokens, depth }) {
+      const text = this.parser.parseInline(tokens);
+      const raw = tokens.map((t) => t.text || t.raw || '').join('').trim();
+      const slug = slugify(raw);
+      const example = activeSectionExamples[slug];
+      const headingHtml = `<h${depth} id="${slug}">${text}</h${depth}>\n`;
+      return headingHtml + (example ? renderExampleBlock(example, slug) : '');
+    },
+  },
+});
+
+function renderExampleBlock(example, slug) {
+  const { eyebrow, explanation, visual, code, howto } = example;
+  return `
+<aside class="ve-block" data-key="${slug}">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example${eyebrow ? ` · ${eyebrow}` : ''}</span>
+  </header>
+  ${explanation ? `<p class="ve-block-explanation">${explanation}</p>` : ''}
+  ${visual ? `<div class="ve-block-visual">${visual}</div>` : ''}
+  ${code ? `<pre class="ve-block-code"><code>${escapeHtml(code)}</code></pre>` : ''}
+  ${howto ? `<p class="ve-block-howto"><strong>How to use:</strong> ${howto}</p>` : ''}
+</aside>
+`;
+}
+
+function renderMarkdown(md, sectionId) {
   // Strip the top-level `# title` (we render our own <h2> per section)
   const withoutTitle = md.replace(/^#\s+[^\n]+\n+/, '');
-  return marked.parse(withoutTitle, MD_OPTIONS);
+  // Bind the example map for THIS section before parsing — the marked
+  // renderer reads `activeSectionExamples` via closure.
+  const previous = activeSectionExamples;
+  activeSectionExamples = EXAMPLES_BY_HEADING[sectionId] ?? {};
+  try {
+    return marked.parse(withoutTitle, MD_OPTIONS);
+  } finally {
+    activeSectionExamples = previous;
+  }
 }
 
 /**
@@ -1081,6 +1123,94 @@ footer.guide-footer {
 .elev-lg { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.10), 0 4px 6px -4px rgba(0,0,0,0.06); }
 .elev-xl { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.12), 0 8px 10px -6px rgba(0,0,0,0.06); }
 
+/* ── Per-sub-rule example block ────────────────────────────────────── */
+
+.ve-block {
+  margin: 18px 0 26px;
+  padding: 18px 20px;
+  background: color-mix(in srgb, var(--muted) 38%, transparent);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.ve-block-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ve-block-eyebrow {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--fg);
+  background: var(--primary);
+  color: var(--primary-fg);
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+.ve-block-explanation {
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0;
+  color: var(--fg);
+  max-width: 760px;
+}
+.ve-block-explanation code,
+.ve-block-howto code {
+  background: var(--card);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+.ve-block-visual {
+  margin: 0;
+}
+.ve-block-visual > .example-row { margin: 0; }
+.ve-block-code {
+  margin: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+.ve-block-code code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  white-space: pre;
+}
+.ve-block-howto {
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 10px 14px;
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  border-radius: 6px;
+  color: var(--fg);
+  max-width: 760px;
+}
+.ve-block-howto strong {
+  color: var(--fg);
+  font-weight: 700;
+}
+
+@media print {
+  .ve-block {
+    page-break-inside: avoid;
+    border-left-width: 1px;
+    background: transparent;
+  }
+}
+
 /* Mock card composition */
 .mock-card {
   background: var(--card);
@@ -1151,10 +1281,15 @@ function build() {
   console.log('─'.repeat(50));
 
   // 1. Load markdown sources
+  let totalSubExamples = 0;
   const sectionsHtml = SECTIONS.map((s) => {
     const md = read(s.file);
-    const body = renderMarkdown(md);
-    console.log(`  · ${s.file.padEnd(48)} ${md.split('\n').length} lines`);
+    const body = renderMarkdown(md, s.id);
+    const sectionExamples = EXAMPLES_BY_HEADING[s.id] ?? {};
+    const count = Object.keys(sectionExamples).length;
+    totalSubExamples += count;
+    const tag = count > 0 ? ` · ${count} sub-examples` : '';
+    console.log(`  · ${s.file.padEnd(48)} ${md.split('\n').length} lines${tag}`);
     return {
       id: s.id,
       title: s.title,
@@ -1162,6 +1297,7 @@ function build() {
       html: body,
     };
   });
+  console.log(`  · total sub-rule examples injected: ${totalSubExamples}`);
 
   // 2. Load + parse token CSS
   const lightCss = read(TOKENS_LIGHT);
@@ -1228,7 +1364,7 @@ ${navLinks}
       <div class="page-header">
         <div>
           <h1>Strata DS — Rules Guide</h1>
-          <div class="subtitle">Generated ${generatedAt} · ${SECTIONS.length} rule files · ${Object.keys(EXAMPLES).length} sections with live visual examples · ${lightTokens.size} CSS tokens</div>
+          <div class="subtitle">Generated ${generatedAt} · ${SECTIONS.length} rule files · ${Object.keys(EXAMPLES).length} overview blocks + ${totalSubExamples} sub-rule examples · ${lightTokens.size} CSS tokens</div>
         </div>
         <button id="theme-toggle" class="theme-toggle" type="button">Toggle theme</button>
       </div>

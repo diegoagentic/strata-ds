@@ -478,6 +478,94 @@ footer.guide-footer {
 .elev-lg { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.10), 0 4px 6px -4px rgba(0,0,0,0.06); }
 .elev-xl { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.12), 0 8px 10px -6px rgba(0,0,0,0.06); }
 
+/* ── Per-sub-rule example block ────────────────────────────────────── */
+
+.ve-block {
+  margin: 18px 0 26px;
+  padding: 18px 20px;
+  background: color-mix(in srgb, var(--muted) 38%, transparent);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.ve-block-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ve-block-eyebrow {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--fg);
+  background: var(--primary);
+  color: var(--primary-fg);
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+.ve-block-explanation {
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0;
+  color: var(--fg);
+  max-width: 760px;
+}
+.ve-block-explanation code,
+.ve-block-howto code {
+  background: var(--card);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+.ve-block-visual {
+  margin: 0;
+}
+.ve-block-visual > .example-row { margin: 0; }
+.ve-block-code {
+  margin: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+.ve-block-code code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  white-space: pre;
+}
+.ve-block-howto {
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 10px 14px;
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  border-radius: 6px;
+  color: var(--fg);
+  max-width: 760px;
+}
+.ve-block-howto strong {
+  color: var(--fg);
+  font-weight: 700;
+}
+
+@media print {
+  .ve-block {
+    page-break-inside: avoid;
+    border-left-width: 1px;
+    background: transparent;
+  }
+}
+
 /* Mock card composition */
 .mock-card {
   background: var(--card);
@@ -525,7 +613,7 @@ footer.guide-footer {
       <div class="page-header">
         <div>
           <h1>Strata DS — Rules Guide</h1>
-          <div class="subtitle">Generated 2026-06-12T14:50:51.523Z · 10 rule files · 9 sections with live visual examples · 207 CSS tokens</div>
+          <div class="subtitle">Generated 2026-06-12T15:23:08.214Z · 10 rule files · 9 overview blocks + 17 sub-rule examples · 207 CSS tokens</div>
         </div>
         <button id="theme-toggle" class="theme-toggle" type="button">Toggle theme</button>
       </div>
@@ -582,7 +670,29 @@ footer.guide-footer {
   
       <p>These rules are NEVER broken. They are the foundation of every component, flow, and variant.</p>
 <hr>
-<h2>LAW 1 — Never hardcode hex values or raw colors</h2>
+<h2 id="law-1-never-hardcode-hex-values-or-raw-colors">LAW 1 — Never hardcode hex values or raw colors</h2>
+
+<aside class="ve-block" data-key="law-1-never-hardcode-hex-values-or-raw-colors">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · LAW 1</span>
+  </header>
+  <p class="ve-block-explanation">Hardcoded hex breaks dark mode adaptation and ignores the semantic token system. When the design system updates a token (for example, primary changes from lime to teal), every hex inlined in the codebase must be hunted down. Semantic tokens propagate the change automatically.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Hardcoded hex</span>
+          <div class="ec-body"><button class="demo-btn" style="background:#E6F993;color:#02060C;">Save</button></div>
+          <div class="ec-code">bg-[#E6F993] text-[#02060C]</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Semantic token</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary">Save</button></div>
+          <div class="ec-code">bg-primary text-primary-foreground</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Button className=&quot;bg-primary text-primary-foreground&quot;&gt;Save&lt;/Button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Replace every <code>bg-[#...]</code> or <code>text-zinc-...</code> with the equivalent semantic token. When unsure of the right token, scroll to the <strong>CSS tokens (live)</strong> section below or call <code>get_tokens</code> via the strata-ds MCP server.</p>
+</aside>
 <p><strong>FORBIDDEN:</strong></p>
 <pre><code class="language-tsx">className=&quot;bg-[#E6F993] text-[#02060C]&quot;
 className=&quot;text-green-500&quot;
@@ -595,7 +705,34 @@ className=&quot;bg-background&quot;
 </code></pre>
 <p><strong>Why:</strong> Hardcoded hex breaks dark/light theming and does not propagate when tokens change. Raw Tailwind classes (green-500, zinc-900) ignore the semantic system.</p>
 <hr>
-<h2>LAW 2 — brand-300 and brand-400 are NEVER text color on light backgrounds</h2>
+<h2 id="law-2-brand-300-and-brand-400-are-never-text-color-on-light-backgrounds">LAW 2 — brand-300 and brand-400 are NEVER text color on light backgrounds</h2>
+
+<aside class="ve-block" data-key="law-2-brand-300-and-brand-400-are-never-text-color-on-light-backgrounds">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · LAW 2</span>
+  </header>
+  <p class="ve-block-explanation">The Strata lime brand (brand-300/400) has a contrast ratio under 2:1 against white — it fails WCAG AA for text. Brand colors carry signal, not content.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Brand as text on light bg</span>
+          <div class="ec-body"><span style="background:#fff;color:#dff463;padding:6px 12px;border-radius:4px;font-weight:700;">Welcome to Strata</span></div>
+          <div class="ec-code">text-brand-300 on bg-white</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Brand as CTA + neutral text</span>
+          <div class="ec-body">
+            <span style="color:var(--fg);font-weight:700;">Welcome to Strata</span>
+            <button class="demo-btn demo-btn-primary">Sign in</button>
+          </div>
+          <div class="ec-code">text-foreground + bg-primary CTA</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// Brand as background or accent only:
+className=&quot;bg-primary text-primary-foreground&quot;  // CTA
+className=&quot;ring-2 ring-primary/40&quot;             // focus ring</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> If brand-300/400 ever appears as <code>text-...</code>, replace with <code>text-foreground</code> and convey the brand via a nearby pill, badge, or border.</p>
+</aside>
 <p><strong>FORBIDDEN:</strong></p>
 <pre><code class="language-tsx">className=&quot;text-brand-300&quot;           // contrast 1.8:1 — FAILS accessibility
 className=&quot;text-primary&quot;             // on body text over bg-white
@@ -609,7 +746,35 @@ className=&quot;text-primary&quot;             // on body text over bg-white
 </ul>
 <p><strong>Why:</strong> brand-300 (#E6F993 lime) over white yields contrast 1.8:1. WCAG requires a minimum of 4.5:1 for text. Using it as text is inaccessible.</p>
 <hr>
-<h2>LAW 3 — primary-foreground is always dark text (#02060C)</h2>
+<h2 id="law-3-primary-foreground-is-always-dark-text-02060c">LAW 3 — primary-foreground is always dark text (#02060C)</h2>
+
+<aside class="ve-block" data-key="law-3-primary-foreground-is-always-dark-text-02060c">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · LAW 3</span>
+  </header>
+  <p class="ve-block-explanation">Because the brand <code>primary</code> is a light lime tone in BOTH light and dark mode, <code>primary-foreground</code> must remain dark in both. Inverting it for dark mode (white-on-lime) destroys contrast.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Light mode</span>
+          <div class="ec-body" style="background:#EBECEE;padding:14px;border-radius:6px;">
+            <button class="demo-btn" style="background:#E6F993;color:#02060C;">Save changes</button>
+          </div>
+          <div class="ec-code">text stays #02060C</div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Dark mode</span>
+          <div class="ec-body" style="background:#02060C;padding:14px;border-radius:6px;">
+            <button class="demo-btn" style="background:#E6F993;color:#02060C;">Save changes</button>
+          </div>
+          <div class="ec-code">text stays #02060C</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// Both variables.css AND variables-dark.css set:
+// --color-primary-foreground: #02060C;
+&lt;Button className=&quot;bg-primary text-primary-foreground&quot;&gt;Save&lt;/Button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Never override <code>--color-primary-foreground</code> for dark mode. If a primary CTA looks washed out in dark, the brand background tone is wrong, not the text.</p>
+</aside>
 <p>In both modes (light and dark), when the background is <code>bg-primary</code> (lime):</p>
 <pre><code class="language-tsx">// ALWAYS
 className=&quot;bg-primary text-primary-foreground&quot;
@@ -620,7 +785,33 @@ className=&quot;bg-primary text-primary-foreground&quot;
 className=&quot;bg-primary text-foreground&quot; // use the correct variable
 </code></pre>
 <hr>
-<h2>LAW 4 — Semantic tokens before primitive tokens</h2>
+<h2 id="law-4-semantic-tokens-before-primitive-tokens">LAW 4 — Semantic tokens before primitive tokens</h2>
+
+<aside class="ve-block" data-key="law-4-semantic-tokens-before-primitive-tokens">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · LAW 4</span>
+  </header>
+  <p class="ve-block-explanation">Semantic tokens (<code>bg-card</code>, <code>text-foreground</code>, <code>bg-success</code>) carry intent; primitive tokens (<code>bg-brand-500</code>, <code>bg-zinc-900</code>) carry only a value. Components consume semantic tokens so the DS can re-skin without code changes.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Raw primitive</span>
+          <div class="ec-body"><button class="demo-btn" style="background:#E6F993;color:#02060C;">Approve</button></div>
+          <div class="ec-code">bg-brand-500 text-zinc-900</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Semantic equivalent</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary">Approve</button></div>
+          <div class="ec-code">bg-primary text-primary-foreground</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// ❌ raw primitive
+className=&quot;bg-brand-500 text-zinc-900&quot;
+
+// ✓ semantic
+className=&quot;bg-primary text-primary-foreground&quot;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Reserve primitive tokens for the foundation files (<code>variables.css</code>, <code>theme.css</code>) and the brand-scale displays. Everywhere else, use semantic.</p>
+</aside>
 <p>Preference order:</p>
 <ol>
 <li><code>bg-primary</code> ✓ (semantic — adapts to mode)</li>
@@ -634,7 +825,37 @@ className=&quot;bg-primary text-foreground&quot; // use the correct variable
 <li><code>text-[#098400]</code> ✗</li>
 </ol>
 <hr>
-<h2>LAW 5 — Dark mode via semantic tokens, not via dark: classes</h2>
+<h2 id="law-5-dark-mode-via-semantic-tokens-not-via-dark-classes">LAW 5 — Dark mode via semantic tokens, not via dark: classes</h2>
+
+<aside class="ve-block" data-key="law-5-dark-mode-via-semantic-tokens-not-via-dark-classes">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · LAW 5</span>
+  </header>
+  <p class="ve-block-explanation">Adding <code>dark:bg-zinc-900 dark:text-white</code> to every component creates a maintenance burden and skips the token system. Semantic tokens already provide their own light + dark values, so a single class works for both.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Manual dark: cascade</span>
+          <div class="ec-body" style="display:block;">
+            <div style="background:var(--card);padding:10px 14px;border-radius:6px;font-size:13px;color:var(--fg);">Same rendering, twice the classes</div>
+          </div>
+          <div class="ec-code">bg-white text-zinc-900 dark:bg-zinc-900 dark:text-white</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Tokens adapt automatically</span>
+          <div class="ec-body" style="display:block;">
+            <div style="background:var(--card);padding:10px 14px;border-radius:6px;font-size:13px;color:var(--fg);">Toggle theme — same code path</div>
+          </div>
+          <div class="ec-code">bg-card text-foreground</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// ❌ manual dark: cascades
+className=&quot;bg-white text-zinc-900 dark:bg-zinc-900 dark:text-white&quot;
+
+// ✓ tokens adapt automatically
+className=&quot;bg-card text-foreground&quot;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Search the codebase for <code>dark:</code> modifiers — each occurrence is a candidate to replace with the equivalent semantic token.</p>
+</aside>
 <p><strong>FORBIDDEN:</strong></p>
 <pre><code class="language-tsx">className=&quot;bg-white dark:bg-zinc-900&quot;
 className=&quot;text-zinc-900 dark:text-white&quot;
@@ -645,7 +866,31 @@ className=&quot;text-foreground&quot;  // #02060C light / #EBECEE dark — autom
 </code></pre>
 <p><strong>Valid exception:</strong> The sidebar uses explicit inversion. See <code>rules/03-containers-and-cards.md</code>.</p>
 <hr>
-<h2>LAW 6 — Do not mix legacy and new color systems</h2>
+<h2 id="law-6-do-not-mix-legacy-and-new-color-systems">LAW 6 — Do not mix legacy and new color systems</h2>
+
+<aside class="ve-block" data-key="law-6-do-not-mix-legacy-and-new-color-systems">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · LAW 6</span>
+  </header>
+  <p class="ve-block-explanation">The legacy <code>--primary: #27272a</code> (shadcn gray) and the new <code>--color-primary: #E6F993</code> (lime) coexist at the CSS-variable level. Using both in the same component creates inconsistent rendering depending on import order.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Legacy shadcn primary leaks in</span>
+          <div class="ec-body"><button class="demo-btn" style="background:#27272a;color:#fff;">Save (legacy)</button></div>
+          <div class="ec-code">--primary: #27272a (shadcn)</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Strata system only</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary">Save (Strata)</button></div>
+          <div class="ec-code">--color-primary: #E6F993</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// In your app entry — import ONLY the Strata canonical:
+import './styles/tokens/variables.css'
+// Never re-import a shadcn or radix legacy vars file after this.</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Audit every entry point for legacy CSS imports. If <code>bg-primary</code> renders gray instead of lime, something legacy is loaded after the Strata CSS.</p>
+</aside>
 <p>The system has two historical namespaces. Only use the new one:</p>
 <table>
 <thead>
@@ -669,7 +914,33 @@ className=&quot;text-foreground&quot;  // #02060C light / #EBECEE dark — autom
 </tbody></table>
 <p>If you see classes producing unexpected colors (dark gray instead of lime), they are likely using the legacy namespace.</p>
 <hr>
-<h2>LAW 7 — Every interactive element must have a hover state</h2>
+<h2 id="law-7-every-interactive-element-must-have-a-hover-state">LAW 7 — Every interactive element must have a hover state</h2>
+
+<aside class="ve-block" data-key="law-7-every-interactive-element-must-have-a-hover-state">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · LAW 7</span>
+  </header>
+  <p class="ve-block-explanation">Hoverable elements without a visible hover state read as static text. Even subtle transitions (background tint, opacity drop) provide essential feedback.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ No hover, no transition</span>
+          <div class="ec-body"><button class="demo-btn" style="background:transparent;color:var(--fg);">Open details</button></div>
+          <div class="ec-code">text-foreground (no hover utility)</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Hover + transition</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-ghost" style="transition:background 0.15s;" onmouseover="this.style.background='var(--muted)'" onmouseout="this.style.background='transparent'">Open details</button>
+          </div>
+          <div class="ec-code">hover:bg-muted transition-colors</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;button className=&quot;text-foreground hover:bg-muted px-3 py-1.5 rounded-md transition-colors&quot;&gt;
+  Open details
+&lt;/button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Apply <code>transition-colors</code> + at least one <code>hover:</code> modifier to every button, link, card-as-button, and table row that responds to clicks.</p>
+</aside>
 <pre><code class="language-tsx">// Minimum required for any clickable element:
 className=&quot;... hover:bg-primary/90 transition-colors&quot;
 
@@ -680,7 +951,7 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
 className=&quot;... hover:text-primary transition-colors&quot;
 </code></pre>
 <hr>
-<h2>Quick summary for AI agents</h2>
+<h2 id="quick-summary-for-ai-agents">Quick summary for AI agents</h2>
 <p>When generating code for Strata DS, before writing any className:</p>
 <ol>
 <li>Is it a color? → Use a semantic token (<code>bg-background</code>, <code>text-foreground</code>, <code>text-success</code>)</li>
@@ -742,7 +1013,7 @@ className=&quot;... hover:text-primary transition-colors&quot;
       </div>
     </div>
   
-      <h2>Layer system</h2>
+      <h2 id="layer-system">Layer system</h2>
 <p>The DS has 3 layers of tokens. Always use the most semantic one available.</p>
 <pre><code>Layer 3 — Semantic (PREFERRED)
   bg-primary, text-foreground, bg-card, text-muted-foreground
@@ -754,8 +1025,8 @@ Layer 1 — Neutral primitive (only for internal construction of DS components)
   bg-zinc-950, text-zinc-400
 </code></pre>
 <hr>
-<h2>Available semantic tokens</h2>
-<h3>Surface backgrounds</h3>
+<h2 id="available-semantic-tokens">Available semantic tokens</h2>
+<h3 id="surface-backgrounds">Surface backgrounds</h3>
 <table>
 <thead>
 <tr>
@@ -802,7 +1073,7 @@ Layer 1 — Neutral primitive (only for internal construction of DS components)
 <td>Dropdowns, tooltips, popovers</td>
 </tr>
 </tbody></table>
-<h3>Text colors</h3>
+<h3 id="text-colors">Text colors</h3>
 <table>
 <thead>
 <tr>
@@ -837,7 +1108,7 @@ Layer 1 — Neutral primitive (only for internal construction of DS components)
 <td>Text over primary (lime) background</td>
 </tr>
 </tbody></table>
-<h3>Primary action colors</h3>
+<h3 id="primary-action-colors">Primary action colors</h3>
 <table>
 <thead>
 <tr>
@@ -860,7 +1131,7 @@ Layer 1 — Neutral primitive (only for internal construction of DS components)
 <td>Highlighted icons, active links</td>
 </tr>
 </tbody></table>
-<h3>Borders and inputs</h3>
+<h3 id="borders-and-inputs">Borders and inputs</h3>
 <table>
 <thead>
 <tr>
@@ -895,7 +1166,7 @@ Layer 1 — Neutral primitive (only for internal construction of DS components)
 <td>Focus ring</td>
 </tr>
 </tbody></table>
-<h3>Semantic states</h3>
+<h3 id="semantic-states">Semantic states</h3>
 <table>
 <thead>
 <tr>
@@ -931,7 +1202,7 @@ Layer 1 — Neutral primitive (only for internal construction of DS components)
 </tr>
 </tbody></table>
 <hr>
-<h2>Opacity pattern for soft states</h2>
+<h2 id="opacity-pattern-for-soft-states">Opacity pattern for soft states</h2>
 <p>For subtle state backgrounds, use opacity utilities:</p>
 <pre><code class="language-tsx">// Subtle success state
 className=&quot;bg-success/5 border border-success/40 text-success&quot;
@@ -949,7 +1220,7 @@ className=&quot;bg-info/5 border border-info/40 text-info&quot;
 className=&quot;bg-ai/10 text-ai&quot;
 </code></pre>
 <hr>
-<h2>Charts rule</h2>
+<h2 id="charts-rule">Charts rule</h2>
 <p>For charts use the chart tokens, not arbitrary colors:</p>
 <pre><code class="language-tsx">// Correct
 stroke=&quot;var(--color-chart-1)&quot;   // indigo
@@ -963,7 +1234,7 @@ fill=&quot;var(--color-chart-2)&quot;     // green
 // --color-chart-5: #818cf8 (light indigo)
 </code></pre>
 <hr>
-<h2>State light variants (subtle background)</h2>
+<h2 id="state-light-variants-subtle-background">State light variants (subtle background)</h2>
 <p>For notification, banner, or subtle badge backgrounds, pre-calculated <code>*-light</code> variants exist. Use them instead of <code>bg-success/10</code> when the design needs a specific pastel tone.</p>
 <table>
 <thead>
@@ -1017,7 +1288,7 @@ fill=&quot;var(--color-chart-2)&quot;     // green
 </code></pre>
 <p><strong>Rule:</strong> For subtle backgrounds, prefer <code>*-light</code> over <code>*-token/10</code> when the result must be a solid pastel color. The <code>/N</code> syntax gives more control for overlays on any surface, but <code>-light</code> guarantees the same color regardless of background.</p>
 <hr>
-<h2>Surface hierarchy</h2>
+<h2 id="surface-hierarchy">Surface hierarchy</h2>
 <p>Each level has its assigned background. Do not swap them — see <code>governance/rules/03-containers-and-cards.md</code> for full detail.</p>
 <pre><code>Level 0 — Root layout         → bg-background  (#EBECEE light / #02060C dark)
 Level 1 — Cards and Panels    → bg-card        (#fafafa light / #02060C dark)
@@ -1075,11 +1346,11 @@ Sidebar — Inversion           → bg-sidebar     (zinc-950 light / white dark)
       </div>
     </div>
   
-      <h2>The brand color is a SIGNAL, not a base color</h2>
+      <h2 id="the-brand-color-is-a-signal-not-a-base-color">The brand color is a SIGNAL, not a base color</h2>
 <p>Brand (lime #E6F993 / #C3E433) exists to draw attention to <strong>a specific action or state</strong>. It is not a general fill color.</p>
 <hr>
-<h2>Where to USE brand</h2>
-<h3>1. Primary action button (CTA)</h3>
+<h2 id="where-to-use-brand">Where to USE brand</h2>
+<h3 id="1-primary-action-button-cta">1. Primary action button (CTA)</h3>
 <pre><code class="language-tsx">// Light mode
 &lt;button className=&quot;bg-brand-300 text-zinc-900 hover:bg-brand-400 transition-colors&quot;&gt;
   Primary Action
@@ -1095,7 +1366,7 @@ Sidebar — Inversion           → bg-sidebar     (zinc-950 light / white dark)
   Primary Action
 &lt;/button&gt;
 </code></pre>
-<h3>2. Active / selected element indicator</h3>
+<h3 id="2-active-selected-element-indicator">2. Active / selected element indicator</h3>
 <pre><code class="language-tsx">// Active nav item
 &lt;NavItem className=&quot;border-l-2 border-primary text-foreground bg-primary/10&quot;&gt;
   Dashboard
@@ -1106,24 +1377,24 @@ Sidebar — Inversion           → bg-sidebar     (zinc-950 light / white dark)
   Transactions
 &lt;/Tab&gt;
 </code></pre>
-<h3>3. Decorative accent on branded cards</h3>
+<h3 id="3-decorative-accent-on-branded-cards">3. Decorative accent on branded cards</h3>
 <pre><code class="language-tsx">// Top border of featured card
 &lt;Card className=&quot;bg-card border border-border&quot;&gt;
   &lt;div className=&quot;h-1 bg-brand-400 rounded-t-lg&quot; /&gt;
   {/* content */}
 &lt;/Card&gt;
 </code></pre>
-<h3>4. Action icon container background</h3>
+<h3 id="4-action-icon-container-background">4. Action icon container background</h3>
 <pre><code class="language-tsx">// Icon in primary action context
 &lt;div className=&quot;bg-primary/15 rounded-lg p-2&quot;&gt;
   &lt;SparklesIcon className=&quot;text-primary w-5 h-5&quot; /&gt;
 &lt;/div&gt;
 </code></pre>
-<h3>5. Focus ring / focus indicator</h3>
+<h3 id="5-focus-ring-focus-indicator">5. Focus ring / focus indicator</h3>
 <pre><code class="language-tsx">&lt;input className=&quot;focus:ring-2 focus:ring-primary focus:ring-offset-2&quot; /&gt;
 </code></pre>
 <hr>
-<h2>Where NOT to use brand</h2>
+<h2 id="where-not-to-use-brand">Where NOT to use brand</h2>
 <table>
 <thead>
 <tr>
@@ -1157,7 +1428,7 @@ Sidebar — Inversion           → bg-sidebar     (zinc-950 light / white dark)
 </tr>
 </tbody></table>
 <hr>
-<h2>Full brand scale</h2>
+<h2 id="full-brand-scale">Full brand scale</h2>
 <pre><code>brand-50:  #fdfee7  — almost white, very subtle
 brand-100: #f9fdc3  — very light tint
 brand-200: #f4fb89  — light tint
@@ -1170,14 +1441,14 @@ brand-800: #5c6f0f  — dark text over brand
 brand-900: #4a5810  — very dark
 brand-950: #233502  — almost black brand
 </code></pre>
-<h3>Contrast rule with brand as background:</h3>
+<h3 id="contrast-rule-with-brand-as-background">Contrast rule with brand as background:</h3>
 <ul>
 <li>Over <code>brand-300</code> → always <code>text-zinc-900</code> or <code>text-primary-foreground</code> (#02060C)</li>
 <li>Over <code>brand-400</code> → always <code>text-zinc-900</code> (#02060C)</li>
 <li>NEVER <code>text-white</code> over brand-300/400 (insufficient contrast)</li>
 </ul>
 <hr>
-<h2>Pattern: full branded card</h2>
+<h2 id="pattern-full-branded-card">Pattern: full branded card</h2>
 <pre><code class="language-tsx">// Light mode
 &lt;div className=&quot;bg-white border border-zinc-200 rounded-xl overflow-hidden&quot;&gt;
   &lt;div className=&quot;h-1 bg-brand-400&quot; /&gt;
@@ -1246,7 +1517,7 @@ brand-950: #233502  — almost black brand
       </div>
     </div>
   
-      <h2>Background hierarchy</h2>
+      <h2 id="background-hierarchy">Background hierarchy</h2>
 <p>Each UI level has its assigned background. Do not swap them between levels.</p>
 <pre><code>Level 0 — Root layout
   bg-background (#EBECEE light / #02060C dark)
@@ -1261,7 +1532,7 @@ Special level — Sidebar
   bg-sidebar (see sidebar section below)
 </code></pre>
 <hr>
-<h2>Level 0 — Root layout and pages</h2>
+<h2 id="level-0-root-layout-and-pages">Level 0 — Root layout and pages</h2>
 <pre><code class="language-tsx">// Page background
 &lt;main className=&quot;bg-background min-h-screen&quot;&gt;
 
@@ -1269,7 +1540,7 @@ Special level — Sidebar
 &lt;div className=&quot;bg-background p-6&quot;&gt;
 </code></pre>
 <hr>
-<h2>Level 1 — Cards and Panels</h2>
+<h2 id="level-1-cards-and-panels">Level 1 — Cards and Panels</h2>
 <pre><code class="language-tsx">// Standard card
 &lt;div className=&quot;bg-card border border-border rounded-xl p-6&quot;&gt;
   &lt;h3 className=&quot;text-foreground font-semibold&quot;&gt;Title&lt;/h3&gt;
@@ -1288,7 +1559,7 @@ Special level — Sidebar
 &lt;div className=&quot;bg-popover border border-border rounded-lg shadow-md&quot;&gt;
 </code></pre>
 <hr>
-<h2>Level 2 — Inner sections</h2>
+<h2 id="level-2-inner-sections">Level 2 — Inner sections</h2>
 <pre><code class="language-tsx">// Sub-section inside a card
 &lt;div className=&quot;bg-muted rounded-lg p-4&quot;&gt;
 
@@ -1306,7 +1577,7 @@ Special level — Sidebar
 &lt;/div&gt;
 </code></pre>
 <hr>
-<h2>Sidebar — Theme inversion</h2>
+<h2 id="sidebar-theme-inversion">Sidebar — Theme inversion</h2>
 <p>The sidebar ALWAYS uses inverted colors relative to the app mode. This is intentional design behavior.</p>
 <pre><code>App in Light → Dark sidebar (zinc-950)
 App in Dark  → Light sidebar (white / zinc-50)
@@ -1333,7 +1604,7 @@ App in Dark  → Light sidebar (white / zinc-50)
 <li><code>--color-sidebar-border</code> → divider border</li>
 </ul>
 <hr>
-<h2>Status sections</h2>
+<h2 id="status-sections">Status sections</h2>
 <p>When a card or section represents a specific state:</p>
 <pre><code class="language-tsx">// Success section
 &lt;div className=&quot;bg-success/5 border border-success/40 rounded-lg p-4&quot;&gt;
@@ -1369,7 +1640,7 @@ App in Dark  → Light sidebar (white / zinc-50)
 &lt;/div&gt;
 </code></pre>
 <hr>
-<h2>Elevation / Shadows</h2>
+<h2 id="elevation-shadows">Elevation / Shadows</h2>
 <p>Shadows indicate elevation — use them consistently:</p>
 <pre><code class="language-tsx">// Level 0 — no shadow (integrated with the background)
 className=&quot;bg-card border border-border&quot;
@@ -1450,8 +1721,8 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
       </div>
     </div>
   
-      <h2>Button variants</h2>
-<h3>Primary (main CTA)</h3>
+      <h2 id="button-variants">Button variants</h2>
+<h3 id="primary-main-cta">Primary (main CTA)</h3>
 <p>One per section/view. The only one with brand lime.</p>
 <pre><code class="language-tsx">&lt;button className=&quot;bg-primary text-primary-foreground 
                    hover:bg-primary/90 
@@ -1460,7 +1731,7 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
   Primary Action
 &lt;/button&gt;
 </code></pre>
-<h3>Secondary</h3>
+<h3 id="secondary">Secondary</h3>
 <p>Supporting action next to a primary.</p>
 <pre><code class="language-tsx">&lt;button className=&quot;bg-secondary text-secondary-foreground 
                    border border-border
@@ -1470,7 +1741,7 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
   Secondary Action
 &lt;/button&gt;
 </code></pre>
-<h3>Outline</h3>
+<h3 id="outline">Outline</h3>
 <p>Alternative, less prominent action.</p>
 <pre><code class="language-tsx">&lt;button className=&quot;border border-input bg-background text-foreground
                    hover:bg-accent hover:text-accent-foreground 
@@ -1479,7 +1750,7 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
   Outline
 &lt;/button&gt;
 </code></pre>
-<h3>Ghost</h3>
+<h3 id="ghost">Ghost</h3>
 <p>For low-priority actions or dense contexts (tables, toolbars).</p>
 <pre><code class="language-tsx">&lt;button className=&quot;text-foreground 
                    hover:bg-accent hover:text-accent-foreground 
@@ -1488,7 +1759,7 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
   Ghost
 &lt;/button&gt;
 </code></pre>
-<h3>Destructive</h3>
+<h3 id="destructive">Destructive</h3>
 <p>For actions that delete or cannot be undone.</p>
 <pre><code class="language-tsx">&lt;button className=&quot;bg-destructive text-destructive-foreground 
                    hover:bg-destructive/90 
@@ -1505,7 +1776,7 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
   Delete
 &lt;/button&gt;
 </code></pre>
-<h3>Link / Text action</h3>
+<h3 id="link-text-action">Link / Text action</h3>
 <p>For navigation or inline actions in text.</p>
 <pre><code class="language-tsx">&lt;button className=&quot;text-primary underline-offset-4 
                    hover:underline hover:text-primary/90 
@@ -1521,8 +1792,8 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
 &lt;/button&gt;
 </code></pre>
 <hr>
-<h2>Button states</h2>
-<h3>Disabled</h3>
+<h2 id="button-states">Button states</h2>
+<h3 id="disabled">Disabled</h3>
 <pre><code class="language-tsx">&lt;button 
   disabled
   className=&quot;bg-primary text-primary-foreground 
@@ -1531,7 +1802,7 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
   Not available
 &lt;/button&gt;
 </code></pre>
-<h3>Loading</h3>
+<h3 id="loading">Loading</h3>
 <pre><code class="language-tsx">&lt;button className=&quot;bg-primary text-primary-foreground px-4 py-2 rounded-lg 
                    flex items-center gap-2&quot;&gt;
   &lt;span className=&quot;animate-spin text-primary-foreground&quot;&gt;
@@ -1540,7 +1811,7 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
   Processing...
 &lt;/button&gt;
 </code></pre>
-<h3>With icon</h3>
+<h3 id="with-icon">With icon</h3>
 <pre><code class="language-tsx">// Icon on the left
 &lt;button className=&quot;bg-primary text-primary-foreground px-4 py-2 rounded-lg 
                    flex items-center gap-2 transition-colors hover:bg-primary/90&quot;&gt;
@@ -1562,23 +1833,23 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
 &lt;/button&gt;
 </code></pre>
 <hr>
-<h2>Hover states on non-button elements</h2>
-<h3>Table / list rows</h3>
+<h2 id="hover-states-on-non-button-elements">Hover states on non-button elements</h2>
+<h3 id="table-list-rows">Table / list rows</h3>
 <pre><code class="language-tsx">&lt;tr className=&quot;hover:bg-muted/50 transition-colors cursor-pointer&quot;&gt;
 &lt;div className=&quot;hover:bg-accent rounded-md transition-colors px-3 py-2&quot;&gt;
 </code></pre>
-<h3>Clickable cards</h3>
+<h3 id="clickable-cards">Clickable cards</h3>
 <pre><code class="language-tsx">&lt;div className=&quot;bg-card border border-border rounded-xl p-6 cursor-pointer
                 hover:shadow-lg hover:border-primary/50 
                 transition-all duration-200&quot;&gt;
 </code></pre>
-<h3>Navigation links</h3>
+<h3 id="navigation-links">Navigation links</h3>
 <pre><code class="language-tsx">&lt;a className=&quot;text-muted-foreground hover:text-foreground transition-colors&quot;&gt;
 // If it is the active element:
 &lt;a className=&quot;text-foreground font-medium&quot;&gt;  // no hover — already active
 </code></pre>
 <hr>
-<h2>Composition rules</h2>
+<h2 id="composition-rules">Composition rules</h2>
 <ol>
 <li><strong>Only one Primary per section</strong> — if there are two CTAs, the less important one goes as Secondary or Outline</li>
 <li><strong>Destructive always requires confirmation</strong> — never fire a destructive action directly on click without a modal/alert confirmation</li>
@@ -1629,19 +1900,19 @@ className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
       </div>
     </div>
   
-      <h2>Icon library</h2>
+      <h2 id="icon-library">Icon library</h2>
 <p>Strata DS uses <strong>@heroicons/react</strong> as the main library.</p>
 <pre><code class="language-tsx">import { PlusIcon, CheckCircleIcon, XMarkIcon } from &#39;@heroicons/react/24/outline&#39;
 import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for emphasis
 </code></pre>
 <hr>
-<h2>Icon color by context</h2>
-<h3>Primary action icons (brand)</h3>
+<h2 id="icon-color-by-context">Icon color by context</h2>
+<h3 id="primary-action-icons-brand">Primary action icons (brand)</h3>
 <pre><code class="language-tsx">// In CTA or featured-feature context
 &lt;SparklesIcon className=&quot;text-primary w-5 h-5&quot; /&gt;
 &lt;PlusIcon className=&quot;text-primary w-5 h-5&quot; /&gt;
 </code></pre>
-<h3>State icons</h3>
+<h3 id="state-icons">State icons</h3>
 <pre><code class="language-tsx">// Success
 &lt;CheckCircleIcon className=&quot;text-success w-5 h-5&quot; /&gt;
 
@@ -1657,13 +1928,13 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 // AI / Magic
 &lt;SparklesIcon className=&quot;text-ai w-5 h-5&quot; /&gt;
 </code></pre>
-<h3>Secondary / neutral icons</h3>
+<h3 id="secondary-neutral-icons">Secondary / neutral icons</h3>
 <pre><code class="language-tsx">// Support, navigation, general UI icons
 &lt;ChevronRightIcon className=&quot;text-muted-foreground w-4 h-4&quot; /&gt;
 &lt;MagnifyingGlassIcon className=&quot;text-muted-foreground w-5 h-5&quot; /&gt;
 &lt;EllipsisHorizontalIcon className=&quot;text-muted-foreground w-5 h-5&quot; /&gt;
 </code></pre>
-<h3>Hover icons</h3>
+<h3 id="hover-icons">Hover icons</h3>
 <pre><code class="language-tsx">// Icon that reacts to its container&#39;s hover (using group)
 &lt;div className=&quot;group hover:bg-accent rounded-md p-2 transition-colors&quot;&gt;
   &lt;CogIcon className=&quot;text-muted-foreground group-hover:text-foreground w-5 h-5 transition-colors&quot; /&gt;
@@ -1676,7 +1947,7 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 &lt;/button&gt;
 </code></pre>
 <hr>
-<h2>Sizes</h2>
+<h2 id="sizes">Sizes</h2>
 <table>
 <thead>
 <tr>
@@ -1712,7 +1983,7 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 </tr>
 </tbody></table>
 <hr>
-<h2>Icon container</h2>
+<h2 id="icon-container">Icon container</h2>
 <p>For icons that need a background:</p>
 <pre><code class="language-tsx">// Brand container (feature highlight)
 &lt;div className=&quot;bg-primary/15 rounded-lg p-2 w-fit&quot;&gt;
@@ -1730,7 +2001,7 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 &lt;/div&gt;
 </code></pre>
 <hr>
-<h2>Rules</h2>
+<h2 id="rules">Rules</h2>
 <ol>
 <li><strong>Do not use emojis as icons</strong> — always use heroicons</li>
 <li><strong>Outline vs Solid</strong> — outline for general UI, solid for emphasis states or active indicators</li>
@@ -1766,7 +2037,7 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
       </div>
     </div>
   
-      <h2>Font families</h2>
+      <h2 id="font-families">Font families</h2>
 <p>The DS uses 3 font families. Each one has a specific role — do not swap them.</p>
 <table>
 <thead>
@@ -1807,7 +2078,7 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 </code></pre>
 <p><strong>Rule:</strong> Do not mix PP Monument in body text. It is designed for short headings and numbers — it loses legibility in long blocks.</p>
 <hr>
-<h2>Size scale</h2>
+<h2 id="size-scale">Size scale</h2>
 <table>
 <thead>
 <tr>
@@ -1884,7 +2155,7 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 </tbody></table>
 <p><strong>Rule:</strong> For brand headings (with <code>font-brand</code>), prefer sizes from <code>text-3xl</code> and up.</p>
 <hr>
-<h2>Weights</h2>
+<h2 id="weights">Weights</h2>
 <table>
 <thead>
 <tr>
@@ -1941,7 +2212,7 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 </tbody></table>
 <p><strong>Rule:</strong> Body always uses <code>font-normal</code> (default). To create hierarchy, use size + color + spacing before bold.</p>
 <hr>
-<h2>Line-height</h2>
+<h2 id="line-height">Line-height</h2>
 <table>
 <thead>
 <tr>
@@ -1982,7 +2253,7 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 </tr>
 </tbody></table>
 <hr>
-<h2>Letter-spacing</h2>
+<h2 id="letter-spacing">Letter-spacing</h2>
 <table>
 <thead>
 <tr>
@@ -2028,14 +2299,14 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 &lt;/span&gt;
 </code></pre>
 <hr>
-<h2>Canonical patterns</h2>
-<h3>Heading + description</h3>
+<h2 id="canonical-patterns">Canonical patterns</h2>
+<h3 id="heading-description">Heading + description</h3>
 <pre><code class="language-tsx">&lt;header className=&quot;space-y-1&quot;&gt;
   &lt;h1 className=&quot;font-brand text-3xl text-foreground&quot;&gt;Dashboard&lt;/h1&gt;
   &lt;p className=&quot;text-sm text-muted-foreground&quot;&gt;Summary of the last week&lt;/p&gt;
 &lt;/header&gt;
 </code></pre>
-<h3>KPI with large number</h3>
+<h3 id="kpi-with-large-number">KPI with large number</h3>
 <pre><code class="language-tsx">&lt;div className=&quot;space-y-1&quot;&gt;
   &lt;span className=&quot;text-xs uppercase tracking-wider text-muted-foreground&quot;&gt;
     Orders this week
@@ -2043,19 +2314,19 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
   &lt;div className=&quot;font-brand text-4xl tracking-tight text-foreground&quot;&gt;128&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
-<h3>Form label</h3>
+<h3 id="form-label">Form label</h3>
 <pre><code class="language-tsx">&lt;label className=&quot;block text-sm font-medium text-foreground&quot;&gt;
   Email
   &lt;Input className=&quot;mt-1&quot; /&gt;
 &lt;/label&gt;
 </code></pre>
-<h3>File path / inline code</h3>
+<h3 id="file-path-inline-code">File path / inline code</h3>
 <pre><code class="language-tsx">&lt;code className=&quot;font-mono text-[10px] text-muted-foreground&quot;&gt;
   src/components/button.tsx:42
 &lt;/code&gt;
 </code></pre>
 <hr>
-<h2>Anti-patterns</h2>
+<h2 id="anti-patterns">Anti-patterns</h2>
 <table>
 <thead>
 <tr>
@@ -2086,7 +2357,7 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 </tr>
 </tbody></table>
 <hr>
-<h2>Source files</h2>
+<h2 id="source-files">Source files</h2>
 <ul>
 <li>Variables: <code>src/styles/tokens/variables.css</code> (lines with <code>--fontFamily-</code>, <code>--fontSize-</code>, <code>--fontWeight-</code>, <code>--lineHeight-</code>, <code>--letterSpacing-</code>)</li>
 <li>Theme mapping: <code>src/styles/theme.css</code></li>
@@ -2116,7 +2387,7 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
       </div>
     </div>
   
-      <h2>Elevation levels</h2>
+      <h2 id="elevation-levels">Elevation levels</h2>
 <p>Shadows indicate visual surface hierarchy. Do not combine them arbitrarily — each level has a purpose.</p>
 <table>
 <thead>
@@ -2185,7 +2456,7 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 &lt;/div&gt;
 </code></pre>
 <hr>
-<h2>Available tokens</h2>
+<h2 id="available-tokens">Available tokens</h2>
 <table>
 <thead>
 <tr>
@@ -2236,7 +2507,7 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 </tr>
 </tbody></table>
 <hr>
-<h2>Rules</h2>
+<h2 id="rules">Rules</h2>
 <ol>
 <li><strong>Do not skip levels</strong>: if a panel is at Level 1, its child elements cannot be Level 3. The level drops or stays — never jumps dramatically.</li>
 <li><strong>Do not combine shadow + heavy border</strong>: if it has <code>shadow-md</code> or more, the border can be subtle (<code>border-border</code>) or absent. Heavy shadow + thick border duplicates the signal.</li>
@@ -2245,7 +2516,7 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 <li><strong>Do not hardcode inline <code>box-shadow</code></strong>: always use Tailwind classes to guarantee consistency.</li>
 </ol>
 <hr>
-<h2>Anti-patterns</h2>
+<h2 id="anti-patterns">Anti-patterns</h2>
 <table>
 <thead>
 <tr>
@@ -2276,7 +2547,7 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 </tr>
 </tbody></table>
 <hr>
-<h2>Pattern: complete interactive card</h2>
+<h2 id="pattern-complete-interactive-card">Pattern: complete interactive card</h2>
 <pre><code class="language-tsx">&lt;button className=&quot;
   bg-card border border-border rounded-xl p-6
   shadow-sm
@@ -2290,7 +2561,7 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 &lt;/button&gt;
 </code></pre>
 <hr>
-<h2>Source files</h2>
+<h2 id="source-files">Source files</h2>
 <ul>
 <li>Variables: <code>src/styles/tokens/variables.css</code> (lines with <code>--shadow-</code>)</li>
 <li>See also: <code>governance/rules/03-containers-and-cards.md</code> for how to combine shadows with surface hierarchy.</li>
@@ -2369,7 +2640,33 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
   
       <p>These errors have been observed repeatedly across the projects. Each one has its correction.</p>
 <hr>
-<h2>ERROR 01 — Hardcoded state colors</h2>
+<h2 id="error-01-hardcoded-state-colors">ERROR 01 — Hardcoded state colors</h2>
+
+<aside class="ve-block" data-key="error-01-hardcoded-state-colors">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · ERROR 01</span>
+  </header>
+  <p class="ve-block-explanation">Tailwind's named color palette (<code>green</code>, <code>red</code>, <code>blue</code>) ignores both the brand and dark mode adaptations. Use semantic state tokens so the same component renders correctly in any theme.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Raw Tailwind state color</span>
+          <div class="ec-body"><span style="color:#22c55e;font-weight:700;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Saved!</span></div>
+          <div class="ec-code">text-green-500</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Semantic state token</span>
+          <div class="ec-body"><span class="icon-pair icon-tone-success" style="background:transparent;padding:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> <span style="color:var(--success);font-weight:700;">Saved!</span></span></div>
+          <div class="ec-code">text-success</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// ❌
+&lt;span className=&quot;text-green-500&quot;&gt;Saved!&lt;/span&gt;
+
+// ✓
+&lt;span className=&quot;text-success&quot;&gt;Saved!&lt;/span&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Mapping: <code>green/yellow/red</code> → <code>success/warning/destructive</code>. <code>blue</code> → <code>info</code>. Done.</p>
+</aside>
 <p><strong>Observed in:</strong> UI-Dealer, Smart Comparator, MBI Builder</p>
 <pre><code class="language-tsx">// ❌ WRONG — using raw Tailwind classes for states
 className=&quot;text-green-500 dark:text-green-400&quot;
@@ -2385,7 +2682,33 @@ className=&quot;text-info&quot;
 </code></pre>
 <p><strong>Why it fails:</strong> Raw colors (green-500, red-500) do not adapt to the theme system and may have inadequate contrast in dark mode. They are not synced with the DS tokens.</p>
 <hr>
-<h2>ERROR 02 — Hardcoded container backgrounds</h2>
+<h2 id="error-02-hardcoded-container-backgrounds">ERROR 02 — Hardcoded container backgrounds</h2>
+
+<aside class="ve-block" data-key="error-02-hardcoded-container-backgrounds">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · ERROR 02</span>
+  </header>
+  <p class="ve-block-explanation"><code>bg-white</code> and <code>bg-zinc-900</code> only render correctly in one theme. The semantic equivalents (<code>bg-background</code>, <code>bg-card</code>, <code>bg-muted</code>) adapt automatically.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Hardcoded surface</span>
+          <div class="ec-body" style="display:block;"><div style="background:#fff;color:#000;border:1px solid #e5e7eb;padding:10px 12px;border-radius:6px;font-size:13px;">Stays white in dark mode</div></div>
+          <div class="ec-code">bg-white</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Adaptive surface</span>
+          <div class="ec-body" style="display:block;"><div style="background:var(--card);color:var(--fg);border:1px solid var(--border);padding:10px 12px;border-radius:6px;font-size:13px;">Adapts via theme toggle</div></div>
+          <div class="ec-code">bg-card</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// ❌
+&lt;div className=&quot;bg-white&quot;&gt; ... &lt;/div&gt;
+
+// ✓
+&lt;div className=&quot;bg-card&quot;&gt; ... &lt;/div&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Map every <code>bg-white</code> to <code>bg-background</code> (root) or <code>bg-card</code> (panel). Map every <code>bg-zinc-900/950</code> to <code>bg-background</code> or <code>bg-card</code> per its role.</p>
+</aside>
 <p><strong>Observed in:</strong> all projects</p>
 <pre><code class="language-tsx">// ❌ WRONG
 className=&quot;bg-white&quot;              // Does not adapt to dark mode
@@ -2400,7 +2723,30 @@ className=&quot;bg-muted&quot;              // Secondary sections
 </code></pre>
 <p><strong>Why it fails:</strong> <code>bg-white</code> in dark mode becomes white on a dark background — completely broken. The <code>bg-background</code> token already handles both modes.</p>
 <hr>
-<h2>ERROR 03 — Mixing legacy and new color systems</h2>
+<h2 id="error-03-mixing-legacy-and-new-color-systems">ERROR 03 — Mixing legacy and new color systems</h2>
+
+<aside class="ve-block" data-key="error-03-mixing-legacy-and-new-color-systems">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · ERROR 03</span>
+  </header>
+  <p class="ve-block-explanation">Strata defines two <code>--primary</code> variables: legacy shadcn gray (<code>#27272a</code>) and the new lime brand (<code>#E6F993</code>). Both resolve as <code>bg-primary</code> depending on which CSS loads last.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Legacy resolves to gray</span>
+          <div class="ec-body"><button class="demo-btn" style="background:#27272a;color:#fff;">CTA</button></div>
+          <div class="ec-code">legacy shadcn after Strata vars</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Strata canonical wins</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary">CTA</button></div>
+          <div class="ec-code">only variables.css imported</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// Entry point — Strata variables.css must be the LAST color import.
+import './styles/tokens/variables.css'</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Audit every entry point. If <code>bg-primary</code> renders gray instead of lime, a legacy shadcn or radix vars file is loaded after the Strata CSS.</p>
+</aside>
 <p><strong>Observed in:</strong> all projects (inherited from migration)</p>
 <pre><code class="language-tsx">// ❌ WRONG — using the legacy namespace
 className=&quot;text-primary&quot;          // May resolve to #27272a (gray) instead of #E6F993 (lime)
@@ -2418,7 +2764,34 @@ className=&quot;text-primary&quot;          // May resolve to #27272a (gray) ins
 </code></pre>
 <p><strong>Action:</strong> If a component shows unexpected colors, check in DevTools what value <code>--primary</code> vs <code>--color-primary</code> resolves to.</p>
 <hr>
-<h2>ERROR 04 — brand-300 as text</h2>
+<h2 id="error-04-brand-300-as-text">ERROR 04 — brand-300 as text</h2>
+
+<aside class="ve-block" data-key="error-04-brand-300-as-text">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · ERROR 04</span>
+  </header>
+  <p class="ve-block-explanation">Brand-300/400 has a contrast ratio below WCAG AA when used as text on light surfaces. It is allowed as background, border, or accent — never as the foreground of body copy or links.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Brand as text</span>
+          <div class="ec-body" style="display:block;"><p style="color:#dff463;background:#fff;padding:8px 12px;border-radius:4px;margin:0;font-size:14px;">Body text in brand-300</p></div>
+          <div class="ec-code">text-brand-300</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Brand as adjacent badge</span>
+          <div class="ec-body" style="display:flex;gap:8px;align-items:center;"><span style="color:var(--fg);font-weight:600;font-size:14px;">Featured product</span><span class="status-pill" style="background:var(--primary);color:var(--primary-fg);">Brand</span></div>
+          <div class="ec-code">text-foreground + Badge variant="brand"</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// ❌ &lt;h2 className=&quot;text-brand-300&quot;&gt;Welcome&lt;/h2&gt;
+// ✓
+&lt;h2 className=&quot;text-foreground&quot;&gt;
+  Welcome
+  &lt;Badge variant=&quot;brand&quot;&gt;Featured&lt;/Badge&gt;
+&lt;/h2&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> When brand needs to appear in text, use it as a background pill, a border, or a sibling Badge — never as the text color itself.</p>
+</aside>
 <p><strong>Observed in:</strong> demos, new components in prototype flows</p>
 <pre><code class="language-tsx">// ❌ WRONG — lime as text color
 className=&quot;text-brand-300&quot;        // 1.8:1 contrast over white — FAILS WCAG
@@ -2429,7 +2802,33 @@ className=&quot;bg-primary text-primary-foreground&quot;  // lime background, da
 className=&quot;bg-brand-300 text-zinc-900&quot;          // explicit
 </code></pre>
 <hr>
-<h2>ERROR 05 — Dark mode with dark: classes instead of semantic tokens</h2>
+<h2 id="error-05-dark-mode-with-dark-classes-instead-of-semantic-tokens">ERROR 05 — Dark mode with dark: classes instead of semantic tokens</h2>
+
+<aside class="ve-block" data-key="error-05-dark-mode-with-dark-classes-instead-of-semantic-tokens">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · ERROR 05</span>
+  </header>
+  <p class="ve-block-explanation">Same as LAW 5: chained <code>dark:bg-zinc-900 dark:text-white</code> defeats the purpose of the token system. Semantic tokens already adapt.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Verbose dark: cascade</span>
+          <div class="ec-body" style="display:block;"><div style="background:var(--card);padding:10px;border-radius:4px;font-size:13px;color:var(--fg);">Same render, 4 classes</div></div>
+          <div class="ec-code">bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-white</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Semantic tokens, 2 classes</span>
+          <div class="ec-body" style="display:block;"><div style="background:var(--card);padding:10px;border-radius:4px;font-size:13px;color:var(--fg);">Same render, 2 classes</div></div>
+          <div class="ec-code">bg-card text-foreground</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// ❌
+className=&quot;bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-white&quot;
+
+// ✓
+className=&quot;bg-card text-foreground&quot;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Grep your codebase for <code>dark:bg-</code> and <code>dark:text-</code>. Each match is a refactor candidate.</p>
+</aside>
 <p><strong>Observed in:</strong> UI-Dealer src/components/, Smart Comparator</p>
 <pre><code class="language-tsx">// ❌ WRONG — manual per-component dark mode
 className=&quot;text-zinc-900 dark:text-white&quot;
@@ -2443,7 +2842,31 @@ className=&quot;border-border&quot;
 </code></pre>
 <p><strong>Why it fails:</strong> Every component that uses manual <code>dark:</code> creates a fragile dependency that breaks when token values change. It also doubles the code to maintain.</p>
 <hr>
-<h2>ERROR 06 — Missing hover state on interactive elements</h2>
+<h2 id="error-06-missing-hover-state-on-interactive-elements">ERROR 06 — Missing hover state on interactive elements</h2>
+
+<aside class="ve-block" data-key="error-06-missing-hover-state-on-interactive-elements">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · ERROR 06</span>
+  </header>
+  <p class="ve-block-explanation">An interactive element with no hover state reads as decorative text. Buttons, links, table rows, and clickable cards all need a hover.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Flat button, no feedback</span>
+          <div class="ec-body"><button class="demo-btn" style="background:var(--card);color:var(--fg);border:1px solid var(--border);">Open</button></div>
+          <div class="ec-code">No hover, no transition</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Hover + transition</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-secondary" style="transition:background 0.15s;" onmouseover="this.style.background='var(--muted)'" onmouseout="this.style.background='var(--card)'">Open</button></div>
+          <div class="ec-code">hover:bg-muted transition-colors</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;button className=&quot;text-foreground hover:bg-muted transition-colors px-3 py-1.5 rounded-md&quot;&gt;
+  Open
+&lt;/button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Add <code>transition-colors</code> + a hover utility to every clickable. Table rows: <code>hover:bg-muted/40</code>. Cards: <code>hover:shadow-md</code>. Buttons: <code>hover:bg-...</code>.</p>
+</aside>
 <p><strong>Observed in:</strong> components in new flows, proof-of-concept</p>
 <pre><code class="language-tsx">// ❌ WRONG — clickable element with no visual feedback
 &lt;div className=&quot;bg-card border border-border rounded-xl p-6 cursor-pointer&quot;&gt;
@@ -2460,7 +2883,33 @@ className=&quot;border-border&quot;
 </code></pre>
 <p><strong>Why it fails:</strong> Without a hover state, the user does not know the element is interactive. It is a basic usability problem and it breaks the visual consistency of the DS.</p>
 <hr>
-<h2>ERROR 07 — Using container opacity instead of color opacity utility</h2>
+<h2 id="error-07-using-container-opacity-instead-of-color-opacity-utility">ERROR 07 — Using container opacity instead of color opacity utility</h2>
+
+<aside class="ve-block" data-key="error-07-using-container-opacity-instead-of-color-opacity-utility">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · ERROR 07</span>
+  </header>
+  <p class="ve-block-explanation"><code>opacity-50</code> fades the entire container including text and borders. The color opacity syntax <code>bg-primary/10</code> only fades the background, keeping text readable.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Container opacity</span>
+          <div class="ec-body" style="display:block;"><div style="background:var(--primary);opacity:0.10;padding:12px 14px;border-radius:6px;color:var(--fg);font-weight:600;">Text is also faded</div></div>
+          <div class="ec-code">bg-primary opacity-10</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Color opacity</span>
+          <div class="ec-body" style="display:block;"><div style="background:color-mix(in srgb, var(--primary) 12%, transparent);padding:12px 14px;border-radius:6px;color:var(--fg);font-weight:600;">Text stays crisp</div></div>
+          <div class="ec-code">bg-primary/10</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// ❌
+&lt;div className=&quot;bg-primary opacity-10&quot;&gt; Faded text &lt;/div&gt;
+
+// ✓
+&lt;div className=&quot;bg-primary/10&quot;&gt; Crisp text &lt;/div&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> For subtle tinted backgrounds always use the <code>bg-token/N</code> syntax (N is typically 5–20). Never reach for <code>opacity-*</code> on the container.</p>
+</aside>
 <p><strong>Observed in:</strong> several projects</p>
 <pre><code class="language-tsx">// ❌ WRONG — opacity on container affects ALL children including text
 &lt;div className=&quot;bg-primary opacity-10&quot;&gt;
@@ -2473,7 +2922,33 @@ className=&quot;border-border&quot;
 &lt;/div&gt;
 </code></pre>
 <hr>
-<h2>ERROR 08 — Not using sidebar tokens for the sidebar</h2>
+<h2 id="error-08-not-using-sidebar-tokens-for-the-sidebar">ERROR 08 — Not using sidebar tokens for the sidebar</h2>
+
+<aside class="ve-block" data-key="error-08-not-using-sidebar-tokens-for-the-sidebar">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · ERROR 08</span>
+  </header>
+  <p class="ve-block-explanation">Sidebar surfaces invert relative to the app body. Strata exposes <code>bg-sidebar</code>, <code>text-sidebar-foreground</code>, etc. Hardcoding <code>bg-zinc-950 text-white</code> skips the abstraction.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Hardcoded zinc sidebar</span>
+          <div class="ec-body" style="display:block;"><div style="background:#0a0a0a;color:#fff;padding:10px 14px;border-radius:6px;font-size:13px;font-weight:600;">bg-zinc-950 text-white</div></div>
+          <div class="ec-code">bg-zinc-950 text-white</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Semantic sidebar tokens</span>
+          <div class="ec-body" style="display:block;"><div style="background:var(--fg);color:var(--bg);padding:10px 14px;border-radius:6px;font-size:13px;font-weight:600;">bg-sidebar text-sidebar-foreground</div></div>
+          <div class="ec-code">bg-sidebar text-sidebar-foreground</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// ❌
+&lt;aside className=&quot;bg-zinc-950 text-white&quot;&gt; ... &lt;/aside&gt;
+
+// ✓
+&lt;aside className=&quot;bg-sidebar text-sidebar-foreground&quot;&gt; ... &lt;/aside&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Replace every sidebar's hardcoded dark palette with <code>bg-sidebar</code>, <code>text-sidebar-foreground</code>, <code>bg-sidebar-accent</code>. The tokens already handle light/dark inversion.</p>
+</aside>
 <p><strong>Observed in:</strong> DemoSidebar.tsx and variants</p>
 <pre><code class="language-tsx">// ❌ WRONG — hardcoding sidebar colors
 className=&quot;bg-zinc-950 text-white&quot;
@@ -2484,7 +2959,43 @@ className=&quot;bg-sidebar text-sidebar-foreground&quot;
 // The sidebar-* tokens already handle theme inversion automatically
 </code></pre>
 <hr>
-<h2>ERROR 09 — Multiple primary CTAs in the same view</h2>
+<h2 id="error-09-multiple-primary-ctas-in-the-same-view">ERROR 09 — Multiple primary CTAs in the same view</h2>
+
+<aside class="ve-block" data-key="error-09-multiple-primary-ctas-in-the-same-view">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · ERROR 09</span>
+  </header>
+  <p class="ve-block-explanation">When two or more buttons in the same view use <code>bg-primary</code>, the user cannot tell which is the recommended path. Action hierarchy collapses.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Three primary CTAs compete</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-primary">Skip</button>
+            <button class="demo-btn demo-btn-primary">Reject</button>
+            <button class="demo-btn demo-btn-primary">Approve</button>
+          </div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ One primary, rest demoted</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-ghost">Skip</button>
+            <button class="demo-btn demo-btn-destructive">Reject</button>
+            <button class="demo-btn demo-btn-primary">Approve</button>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// ❌ All three compete
+&lt;Button&gt;Skip&lt;/Button&gt;
+&lt;Button&gt;Reject&lt;/Button&gt;
+&lt;Button&gt;Approve&lt;/Button&gt;
+
+// ✓ Demote non-primary actions
+&lt;Button variant=&quot;ghost&quot;&gt;Skip&lt;/Button&gt;
+&lt;Button variant=&quot;destructive&quot;&gt;Reject&lt;/Button&gt;
+&lt;Button&gt;Approve&lt;/Button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> One primary CTA per view (or per dialog). Demote everything else to <code>outline</code>, <code>ghost</code>, or <code>destructive</code>.</p>
+</aside>
 <p><strong>Observed in:</strong> demo flows with multiple actions</p>
 <pre><code class="language-tsx">// ❌ WRONG — three primary buttons competing for attention
 &lt;button className=&quot;bg-primary ...&quot;&gt;Save&lt;/button&gt;
@@ -2497,7 +3008,32 @@ className=&quot;bg-sidebar text-sidebar-foreground&quot;
 &lt;button className=&quot;text-muted-foreground hover:text-foreground ...&quot;&gt;Export&lt;/button&gt;  // Ghost
 </code></pre>
 <hr>
-<h2>ERROR 10 — Creating local CSS variables that duplicate DS tokens</h2>
+<h2 id="error-10-creating-local-css-variables-that-duplicate-ds-tokens">ERROR 10 — Creating local CSS variables that duplicate DS tokens</h2>
+
+<aside class="ve-block" data-key="error-10-creating-local-css-variables-that-duplicate-ds-tokens">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · ERROR 10</span>
+  </header>
+  <p class="ve-block-explanation">Defining <code>--my-card-bg</code> or <code>--feature-text-color</code> inside a component re-implements what Strata tokens already cover. These local vars drift when the DS changes.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Local CSS var duplication</span>
+          <div class="ec-body" style="display:block;"><pre style="background:var(--muted);padding:8px;border-radius:4px;font-size:11px;margin:0;">:root { --feature-bg: #fafafa; }<br>.feature { background: var(--feature-bg); }</pre></div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Direct semantic token use</span>
+          <div class="ec-body" style="display:block;"><pre style="background:var(--muted);padding:8px;border-radius:4px;font-size:11px;margin:0;">&lt;div className="bg-card"&gt;...&lt;/div&gt;</pre></div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// ❌ component.css
+:root { --feature-bg: #fafafa; --feature-text: #02060C; }
+.feature { background: var(--feature-bg); color: var(--feature-text); }
+
+// ✓ component.tsx
+&lt;div className=&quot;bg-card text-foreground&quot;&gt;...&lt;/div&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Audit your CSS files for <code>--local-*</code> declarations. Replace with semantic equivalents. If nothing matches, propose a new token to the DS rather than fork.</p>
+</aside>
 <p><strong>Observed in:</strong> components in specific projects</p>
 <pre><code class="language-tsx">// ❌ WRONG — in the component CSS
 .my-component {
@@ -2520,7 +3056,7 @@ className=&quot;bg-sidebar text-sidebar-foreground&quot;
       
       <p>Quick reference of all available tokens. Source: <code>src/styles/tokens/variables.css</code> + <code>variables-dark.css</code></p>
 <hr>
-<h2>Semantic surface colors</h2>
+<h2 id="semantic-surface-colors">Semantic surface colors</h2>
 <table>
 <thead>
 <tr>
@@ -2617,7 +3153,7 @@ className=&quot;bg-sidebar text-sidebar-foreground&quot;
 </tr>
 </tbody></table>
 <hr>
-<h2>Primary action colors (Brand)</h2>
+<h2 id="primary-action-colors-brand">Primary action colors (Brand)</h2>
 <table>
 <thead>
 <tr>
@@ -2644,7 +3180,7 @@ className=&quot;bg-sidebar text-sidebar-foreground&quot;
 </tr>
 </tbody></table>
 <hr>
-<h2>Borders and inputs</h2>
+<h2 id="borders-and-inputs">Borders and inputs</h2>
 <table>
 <thead>
 <tr>
@@ -2685,7 +3221,7 @@ className=&quot;bg-sidebar text-sidebar-foreground&quot;
 </tr>
 </tbody></table>
 <hr>
-<h2>State colors</h2>
+<h2 id="state-colors">State colors</h2>
 <table>
 <thead>
 <tr>
@@ -2769,7 +3305,7 @@ className=&quot;bg-sidebar text-sidebar-foreground&quot;
 </tr>
 </tbody></table>
 <hr>
-<h2>Sidebar tokens</h2>
+<h2 id="sidebar-tokens">Sidebar tokens</h2>
 <table>
 <thead>
 <tr>
@@ -2810,7 +3346,7 @@ className=&quot;bg-sidebar text-sidebar-foreground&quot;
 </tr>
 </tbody></table>
 <hr>
-<h2>Brand scale (primitives)</h2>
+<h2 id="brand-scale-primitives">Brand scale (primitives)</h2>
 <p>Only use when the semantic token is not enough.</p>
 <table>
 <thead>
@@ -2865,7 +3401,7 @@ className=&quot;bg-sidebar text-sidebar-foreground&quot;
 </tr>
 </tbody></table>
 <hr>
-<h2>Chart tokens</h2>
+<h2 id="chart-tokens">Chart tokens</h2>
 <table>
 <thead>
 <tr>
@@ -2901,7 +3437,7 @@ className=&quot;bg-sidebar text-sidebar-foreground&quot;
 </tr>
 </tbody></table>
 <hr>
-<h2>Typography</h2>
+<h2 id="typography">Typography</h2>
 <table>
 <thead>
 <tr>
@@ -2927,7 +3463,7 @@ className=&quot;bg-sidebar text-sidebar-foreground&quot;
 </tr>
 </tbody></table>
 <hr>
-<h2>Source files</h2>
+<h2 id="source-files">Source files</h2>
 <ul>
 <li><code>Strata Design System/strata-ds/src/styles/tokens/variables.css</code> → light mode tokens</li>
 <li><code>Strata Design System/strata-ds/src/styles/tokens/variables-dark.css</code> → dark mode tokens</li>
