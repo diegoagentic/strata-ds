@@ -476,13 +476,486 @@ className="bg-card text-foreground"`,
   },
 };
 
+// ── Stage 2: rules/01-color-tokens + rules/02-brand-colors ──────────────
+
+const COLOR_TOKENS = {
+  'layer-system': {
+    eyebrow: 'Layers',
+    explanation:
+      'Strata tokens flow in two layers: <strong>primitives</strong> (raw color values like <code>#E6F993</code>) and <strong>semantics</strong> (intent-based like <code>bg-primary</code>). Components consume only semantics so the primitive layer can change without touching component code.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Primitive layer</span>
+          <div class="ec-body" style="display:block;">
+            <div class="brand-row" style="grid-template-columns:repeat(3,1fr);">
+              <div class="brand-cell" style="background:#E6F993;color:#02060C;">brand-400</div>
+              <div class="brand-cell" style="background:#02060C;color:#fff;">zinc-950</div>
+              <div class="brand-cell" style="background:#E52D49;color:#fff;">red-500</div>
+            </div>
+          </div>
+          <div class="ec-code">variables.css raw values</div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Semantic layer (consumer-facing)</span>
+          <div class="ec-body" style="flex-wrap:wrap;">
+            <button class="demo-btn demo-btn-primary">primary</button>
+            <span class="status-pill status-destructive">destructive</span>
+            <span class="status-pill status-info">info</span>
+          </div>
+          <div class="ec-code">bg-primary · bg-destructive · bg-info</div>
+        </div>
+      </div>`,
+    code: `// ❌ Components reach into primitives
+className="bg-brand-400 text-zinc-950"
+
+// ✓ Components consume semantics
+className="bg-primary text-primary-foreground"`,
+    howto:
+      'Treat the primitive layer as private to the DS. App code touches only semantic tokens. The <code>get_tokens</code> MCP tool surfaces the semantic catalog.',
+  },
+
+  'surface-backgrounds': {
+    eyebrow: 'Surfaces',
+    explanation:
+      'Three surface tokens cover most layouts: <code>bg-background</code> (page root), <code>bg-card</code> (panels and cards), <code>bg-muted</code> (inner sections, hover states). Each adapts automatically to dark mode.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Hierarchy (toggle theme)</span>
+          <div class="ec-body" style="display:block;">
+            <div class="surface-demo">
+              <span class="sd-label">bg-background</span>
+              <div class="sd-card">
+                <span class="sd-label">bg-card</span>
+                <div class="sd-muted"><span class="sd-label">bg-muted</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `<div className="bg-background">      {/* page root */}
+  <div className="bg-card">           {/* panel / card */}
+    <div className="bg-muted">        {/* inner section / hover */}
+      ...
+    </div>
+  </div>
+</div>`,
+    howto:
+      'Reach for <code>bg-background</code> on root layouts, <code>bg-card</code> on every elevated surface, and <code>bg-muted</code> for hover, sub-panels, or footnote regions.',
+  },
+
+  'text-colors': {
+    eyebrow: 'Text',
+    explanation:
+      'Two text tokens cover most cases: <code>text-foreground</code> (primary copy) and <code>text-muted-foreground</code> (meta, captions, helper text). Use the muted variant for anything that is supportive rather than primary content.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Two tones</span>
+          <div class="ec-body" style="display:block;">
+            <div style="font-size:15px;color:var(--fg);font-weight:600;">SO2604102 · Leland Furniture</div>
+            <div style="font-size:12px;color:var(--muted-fg);margin-top:2px;">Quote · Mar 28, 2025 · $4,159.12</div>
+          </div>
+          <div class="ec-code">text-foreground + text-muted-foreground</div>
+        </div>
+      </div>`,
+    code: `<div>
+  <div className="text-foreground font-semibold">SO2604102</div>
+  <div className="text-muted-foreground text-xs">Mar 28, 2025</div>
+</div>`,
+    howto:
+      'Treat <code>text-muted-foreground</code> as the default for any text below 14px or for secondary labels. Body copy and headings stay on <code>text-foreground</code>.',
+  },
+
+  'primary-action-colors': {
+    eyebrow: 'Primary',
+    explanation:
+      '<code>bg-primary</code> + <code>text-primary-foreground</code> is the canonical CTA pair. Both light and dark variants use the same dark text (#02060C) over the lime background.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">CTA pair</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary">Approve &amp; continue</button></div>
+          <div class="ec-code">bg-primary text-primary-foreground</div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Focus ring uses same primary</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-outline" style="box-shadow:0 0 0 3px color-mix(in srgb, var(--primary) 40%, transparent);">Focused input</button></div>
+          <div class="ec-code">ring-2 ring-primary/40</div>
+        </div>
+      </div>`,
+    code: `<Button className="bg-primary text-primary-foreground">Save</Button>
+<Input className="focus:ring-2 focus:ring-primary/40" />`,
+    howto:
+      'One primary per view. Use the same primary token for focus rings, active tab underlines, and selected states.',
+  },
+
+  'borders-and-inputs': {
+    eyebrow: 'Borders',
+    explanation:
+      '<code>border-border</code> is the default divider and outline. <code>border-input</code> is used specifically for form field borders so input theming can be tweaked independently. Use <code>bg-input-background</code> for input fills.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Divider</span>
+          <div class="ec-body" style="display:block;">
+            <div style="padding:8px 12px;font-size:13px;color:var(--fg);">Item A</div>
+            <div style="border-top:1px solid var(--border);padding:8px 12px;font-size:13px;color:var(--fg);">Item B</div>
+          </div>
+          <div class="ec-code">border-border</div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Input field</span>
+          <div class="ec-body" style="display:block;">
+            <div style="background:var(--card);border:1px solid var(--border);padding:8px 12px;border-radius:6px;font-size:13px;color:var(--muted-fg);">Search documents…</div>
+          </div>
+          <div class="ec-code">bg-input-background border-input</div>
+        </div>
+      </div>`,
+    code: `<hr className="border-border" />
+<input className="bg-input-background border border-input rounded-md px-3 py-2" />`,
+    howto:
+      'Default to <code>border-border</code>. Reach for <code>border-input</code> only when targeting form-control outlines so the rest of the UI does not move when input theming changes.',
+  },
+
+  'semantic-states': {
+    eyebrow: 'States',
+    explanation:
+      'Four state tokens cover the canonical feedback palette: <code>success</code>, <code>warning</code>, <code>destructive</code>, <code>info</code>. Pair text + background variants for pills, or use just <code>text-*</code> for inline copy.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Pills</span>
+          <div class="ec-body" style="flex-wrap:wrap;">
+            <span class="status-pill status-success">${ICON.check} Active</span>
+            <span class="status-pill status-warning">${ICON.alert} Pending</span>
+            <span class="status-pill status-destructive">${ICON.alert} Error</span>
+            <span class="status-pill status-info">${ICON.info} Info</span>
+          </div>
+        </div>
+      </div>`,
+    code: `<Badge variant="success">Active</Badge>
+<span className="text-warning">Heads up — partial coverage</span>
+<span className="text-destructive">Cannot delete the root record</span>`,
+    howto:
+      'Map every "is it ok / warning / problem / info" state to one of these four. Avoid introducing new ones unless the DS gets a 5th canonical state.',
+  },
+
+  'opacity-pattern-for-soft-states': {
+    eyebrow: 'Soft tints',
+    explanation:
+      'For subtle backgrounds use the <code>bg-token/N</code> syntax (color opacity), never <code>opacity-*</code> on the container — opacity on the container fades the text too.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ opacity on container</span>
+          <div class="ec-body" style="display:block;"><div style="background:var(--success);opacity:0.10;padding:10px;border-radius:6px;color:var(--fg);">Text barely visible</div></div>
+          <div class="ec-code">bg-success opacity-10</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ color opacity (token slash N)</span>
+          <div class="ec-body" style="display:block;"><div style="background:color-mix(in srgb, var(--success) 12%, transparent);padding:10px;border-radius:6px;color:var(--fg);">Text stays crisp</div></div>
+          <div class="ec-code">bg-success/10</div>
+        </div>
+      </div>`,
+    code: `// Soft success banner
+<div className="bg-success/10 text-success border border-success/20 rounded-md p-3">
+  Operation complete
+</div>`,
+    howto:
+      'Tints between 5 and 20 read as subtle ("/5", "/10", "/15", "/20"). For hover states a +5 from base is enough.',
+  },
+
+  'charts-rule': {
+    eyebrow: 'Charts',
+    explanation:
+      'Chart series have their own dedicated palette (<code>chart-1</code> through <code>chart-5</code>) tuned for distinguishability under both themes. Never use brand or state tokens to color a chart series.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Series palette</span>
+          <div class="ec-body" style="flex-wrap:wrap;">
+            <span class="status-pill" style="background:#6366f1;color:#fff;">chart-1</span>
+            <span class="status-pill" style="background:#22c55e;color:#fff;">chart-2</span>
+            <span class="status-pill" style="background:#E52D49;color:#fff;">chart-3</span>
+            <span class="status-pill" style="background:#f59e0b;color:#fff;">chart-4</span>
+            <span class="status-pill" style="background:#a855f7;color:#fff;">chart-5</span>
+          </div>
+        </div>
+      </div>`,
+    code: `<Bar dataKey="revenue" fill="var(--color-chart-1)" />
+<Bar dataKey="cost"    fill="var(--color-chart-2)" />`,
+    howto:
+      'Reach for <code>var(--color-chart-1)</code>..<code>chart-5</code> in any recharts/visx series. Out of values? Rotate, do not invent.',
+  },
+
+  'state-light-variants-subtle-background': {
+    eyebrow: 'Light states',
+    explanation:
+      'Each state token has a sibling soft variant (<code>success-light</code>, <code>warning-light</code>, etc.) that is already at the right subtle opacity for backgrounds. Use them when you need a pre-defined tint instead of computing one with the slash syntax.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Light variants</span>
+          <div class="ec-body" style="flex-wrap:wrap;">
+            <span class="status-pill status-success">success-light</span>
+            <span class="status-pill status-warning">warning-light</span>
+            <span class="status-pill status-destructive">destructive-light</span>
+            <span class="status-pill status-info">info-light</span>
+          </div>
+        </div>
+      </div>`,
+    code: `<div className="bg-success-light text-success px-3 py-2 rounded-md">
+  All good
+</div>`,
+    howto:
+      'Prefer light variants over <code>bg-success/10</code> when the DS exposes one — they are pre-tuned across light and dark themes.',
+  },
+};
+
+const BRAND_COLORS = {
+  'the-brand-color-is-a-signal-not-a-base-color': {
+    eyebrow: 'Brand as signal',
+    explanation:
+      'The lime brand-300/400 attracts attention; it is the visual signature of Strata. Using it everywhere collapses its signaling power. Use it as the focal point, never as the surface.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Brand as surface</span>
+          <div class="ec-body" style="display:block;"><div style="background:var(--primary);padding:14px 16px;border-radius:8px;"><span style="color:var(--primary-fg);font-weight:600;">Entire panel screams brand</span></div></div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Brand as accent</span>
+          <div class="ec-body" style="display:block;"><div style="background:var(--card);border:1px solid var(--border);padding:14px 16px;border-radius:8px;"><span style="color:var(--fg);font-weight:600;">Project · </span><span class="status-pill" style="background:var(--primary);color:var(--primary-fg);">Active</span></div></div>
+        </div>
+      </div>`,
+    code: `// Anchor the brand on ONE element per view:
+<Badge variant="brand">Active</Badge>     // or
+<Button>Approve</Button>                  // primary CTA`,
+    howto:
+      'One brand-tinted element per view (CTA, active state, focus ring, or selected indicator). Everything else lives on neutral tokens.',
+  },
+
+  '1-primary-action-button-cta': {
+    eyebrow: 'Brand · 1 CTA',
+    explanation:
+      'The most common use of brand: the single primary CTA in any view. <code>bg-primary text-primary-foreground</code> is the canonical pair.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">CTA</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary">Approve &amp; continue</button></div>
+          <div class="ec-code">bg-primary text-primary-foreground</div>
+        </div>
+      </div>`,
+    code: `<Button>Approve &amp; continue</Button>
+// or
+<button className="bg-primary text-primary-foreground rounded-md px-4 py-2">
+  Approve &amp; continue
+</button>`,
+    howto:
+      'One per view. If you need two prominent actions, demote the secondary one to <code>variant="outline"</code>.',
+  },
+
+  '2-active-selected-element-indicator': {
+    eyebrow: 'Brand · 2 active',
+    explanation:
+      'Brand marks the active item in a tab, a navigation list, or a filter row. Use it as a background OR a left border, never both at once.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Active tab — background</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-primary">Overview</button>
+            <button class="demo-btn demo-btn-ghost">Members</button>
+            <button class="demo-btn demo-btn-ghost">Settings</button>
+          </div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Active nav — left border</span>
+          <div class="ec-body" style="display:block;">
+            <div style="border-left:3px solid var(--primary);padding:6px 12px;background:color-mix(in srgb, var(--primary) 8%, transparent);">
+              <span style="color:var(--fg);font-weight:600;font-size:13px;">Overview</span>
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `// Pill-style active state
+<button className={isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}>
+  {label}
+</button>`,
+    howto:
+      'Pick one indicator pattern per surface (background OR border) and stick to it. Mixing both in the same nav reads as noise.',
+  },
+
+  '3-decorative-accent-on-branded-cards': {
+    eyebrow: 'Brand · 3 accent',
+    explanation:
+      'A thin brand border, an underline, or a corner ribbon can mark a "featured" card without taking it over visually.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Featured card</span>
+          <div class="ec-body" style="display:block;">
+            <div class="mock-card" style="border-color:var(--primary);max-width:none;">
+              <div class="mc-header">
+                <div><div class="mc-title">Strata Pro</div><div class="mc-sub">Featured plan</div></div>
+                <span class="status-pill" style="background:var(--primary);color:var(--primary-fg);">Featured</span>
+              </div>
+              <div class="mc-row"><span class="mc-label">Seats</span><span class="mc-value">25</span></div>
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `<div className="bg-card border-2 border-primary rounded-xl p-4">
+  ...
+  <Badge variant="brand">Featured</Badge>
+</div>`,
+    howto:
+      'Reserve this for genuinely featured items (1-2 per page). Overusing the brand border defeats its purpose.',
+  },
+
+  '4-action-icon-container-background': {
+    eyebrow: 'Brand · 4 icon bg',
+    explanation:
+      'A small square or circle behind an action icon is a great place for brand: tiny enough that contrast is not an issue, prominent enough to read as the focal action.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Icon container</span>
+          <div class="ec-body">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;background:var(--primary);color:var(--primary-fg);">${ICON.download}</span>
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;background:color-mix(in srgb, var(--primary) 20%, transparent);color:var(--fg);">${ICON.download}</span>
+          </div>
+          <div class="ec-code">bg-primary text-primary-foreground · bg-primary/20</div>
+        </div>
+      </div>`,
+    code: `<button className="bg-primary text-primary-foreground rounded-lg p-2">
+  <Download className="size-4" />
+</button>`,
+    howto:
+      'Pick this for the single highest-emphasis icon action (e.g. "Export", "Generate"). For secondary icon buttons stick with <code>bg-muted</code>.',
+  },
+
+  '5-focus-ring-focus-indicator': {
+    eyebrow: 'Brand · 5 focus',
+    explanation:
+      'The focus ring is the most universal use of brand — every focusable element gets a brand-tinted outline. <code>ring-primary/40</code> at width 2 is the canonical setting.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Focused input</span>
+          <div class="ec-body" style="display:block;">
+            <input type="text" placeholder="Focus me" style="background:var(--card);border:1px solid var(--border);padding:8px 12px;border-radius:6px;font-size:13px;color:var(--fg);outline:none;box-shadow:0 0 0 3px color-mix(in srgb, var(--primary) 40%, transparent);width:100%;max-width:240px;font-family:inherit;" />
+          </div>
+          <div class="ec-code">focus:ring-2 focus:ring-primary/40</div>
+        </div>
+      </div>`,
+    code: `<Input className="focus:outline-none focus:ring-2 focus:ring-primary/40" />`,
+    howto:
+      'Add the focus ring at the component level (Input, Button, Tab). Never rely on the browser default focus outline.',
+  },
+
+  'where-not-to-use-brand': {
+    eyebrow: 'Brand · forbidden',
+    explanation:
+      'Brand is wrong as: body text color, large surface fill, error/destructive state, every state pill in a list, or background of the entire view.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Body text in brand</span>
+          <div class="ec-body" style="display:block;"><p style="color:var(--primary);margin:0;font-size:14px;font-weight:600;">Welcome to your dashboard</p></div>
+          <div class="ec-code">text-primary on body</div>
+        </div>
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Brand-everywhere panel</span>
+          <div class="ec-body" style="display:block;"><div style="background:var(--primary);padding:14px 16px;border-radius:8px;"><div style="color:var(--primary-fg);">Entire panel screams brand · loses signal</div></div></div>
+        </div>
+      </div>`,
+    code: `// ❌ Body text in brand
+<p className="text-primary">Welcome</p>
+
+// ❌ Brand as huge panel
+<section className="bg-primary p-12">...</section>`,
+    howto:
+      'If you find brand used as a surface or text style, refactor toward <code>bg-card</code> + a brand accent (badge, border, focus ring).',
+  },
+
+  'full-brand-scale': {
+    eyebrow: 'Brand scale',
+    explanation:
+      'The full brand ramp is exposed as primitive tokens (<code>brand-50</code>..<code>brand-950</code>) for foundation work — never used in app code, but useful for token references and design exploration.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Ramp · 50 → 950</span>
+          <div class="ec-body" style="display:block;">
+            <div class="brand-row">
+              ${[50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950].map((n) => {
+                const shades = {
+                  50: '#fafee5', 100: '#f4fbc4', 200: '#ebf99a',
+                  300: '#dff463', 400: '#E6F993', 500: '#c0e032',
+                  600: '#9fbb1f', 700: '#7e911b', 800: '#65741c',
+                  900: '#56631e', 950: '#2e370a',
+                };
+                return `<div class="brand-cell" style="background:${shades[n]};color:#02060C;">${n}</div>`;
+              }).join('')}
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `/* App code should NOT use these directly.
+   Use bg-primary / ring-primary / text-primary-foreground instead. */`,
+    howto:
+      'The brand scale is private to the foundation files. Documenting it here is for designers and DS maintainers only.',
+  },
+
+  'pattern-full-branded-card': {
+    eyebrow: 'Brand · pattern',
+    explanation:
+      'A composed pattern that combines all the brand uses: brand border, brand badge, primary CTA, and brand-tinted icon container. Use sparingly (1-2 per page max).',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Composed featured card</span>
+          <div class="ec-body" style="display:block;">
+            <div class="mock-card" style="border-color:var(--primary);max-width:none;">
+              <div class="mc-header">
+                <div style="display:flex;gap:10px;align-items:center;">
+                  <span style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:var(--primary);color:var(--primary-fg);">${ICON.download}</span>
+                  <div><div class="mc-title">Annual report 2026</div><div class="mc-sub">Featured download</div></div>
+                </div>
+                <span class="status-pill" style="background:var(--primary);color:var(--primary-fg);">New</span>
+              </div>
+              <div class="mc-row"><span class="mc-label">Pages</span><span class="mc-value">48</span></div>
+              <div class="mc-row"><span class="mc-label">Updated</span><span class="mc-value">Jun 1, 2026</span></div>
+              <div style="display:flex;justify-content:flex-end;margin-top:10px;"><button class="demo-btn demo-btn-primary">Download report</button></div>
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `<Card className="border-2 border-primary">
+  <CardHeader>
+    <IconContainer className="bg-primary text-primary-foreground"><Download /></IconContainer>
+    <Badge variant="brand">New</Badge>
+  </CardHeader>
+  ...
+  <Button>Download report</Button>
+</Card>`,
+    howto:
+      'Use this pattern for the genuinely hero card on a page. Two on the same page collapses the signal.',
+  },
+};
+
 // ── Export ──────────────────────────────────────────────────────────────
 
 export const EXAMPLES_BY_HEADING = {
   laws: LAWS,
   'anti-patterns': ANTI,
-  // Stages 2-5 will populate the remaining 8 section ids:
-  //   'rules-color-tokens', 'rules-brand-colors',
+  'rules-color-tokens': COLOR_TOKENS,
+  'rules-brand-colors': BRAND_COLORS,
+  // Stages 3-5 will populate the remaining 6 section ids:
   //   'rules-containers', 'rules-buttons',
   //   'rules-icons', 'rules-typography',
   //   'rules-elevation', 'token-reference'

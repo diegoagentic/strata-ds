@@ -613,7 +613,7 @@ footer.guide-footer {
       <div class="page-header">
         <div>
           <h1>Strata DS — Rules Guide</h1>
-          <div class="subtitle">Generated 2026-06-12T15:23:08.214Z · 10 rule files · 9 overview blocks + 17 sub-rule examples · 207 CSS tokens</div>
+          <div class="subtitle">Generated 2026-06-12T15:29:26.678Z · 10 rule files · 9 overview blocks + 35 sub-rule examples · 207 CSS tokens</div>
         </div>
         <button id="theme-toggle" class="theme-toggle" type="button">Toggle theme</button>
       </div>
@@ -1014,6 +1014,42 @@ className=&quot;... hover:text-primary transition-colors&quot;
     </div>
   
       <h2 id="layer-system">Layer system</h2>
+
+<aside class="ve-block" data-key="layer-system">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Layers</span>
+  </header>
+  <p class="ve-block-explanation">Strata tokens flow in two layers: <strong>primitives</strong> (raw color values like <code>#E6F993</code>) and <strong>semantics</strong> (intent-based like <code>bg-primary</code>). Components consume only semantics so the primitive layer can change without touching component code.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Primitive layer</span>
+          <div class="ec-body" style="display:block;">
+            <div class="brand-row" style="grid-template-columns:repeat(3,1fr);">
+              <div class="brand-cell" style="background:#E6F993;color:#02060C;">brand-400</div>
+              <div class="brand-cell" style="background:#02060C;color:#fff;">zinc-950</div>
+              <div class="brand-cell" style="background:#E52D49;color:#fff;">red-500</div>
+            </div>
+          </div>
+          <div class="ec-code">variables.css raw values</div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Semantic layer (consumer-facing)</span>
+          <div class="ec-body" style="flex-wrap:wrap;">
+            <button class="demo-btn demo-btn-primary">primary</button>
+            <span class="status-pill status-destructive">destructive</span>
+            <span class="status-pill status-info">info</span>
+          </div>
+          <div class="ec-code">bg-primary · bg-destructive · bg-info</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// ❌ Components reach into primitives
+className=&quot;bg-brand-400 text-zinc-950&quot;
+
+// ✓ Components consume semantics
+className=&quot;bg-primary text-primary-foreground&quot;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Treat the primitive layer as private to the DS. App code touches only semantic tokens. The <code>get_tokens</code> MCP tool surfaces the semantic catalog.</p>
+</aside>
 <p>The DS has 3 layers of tokens. Always use the most semantic one available.</p>
 <pre><code>Layer 3 — Semantic (PREFERRED)
   bg-primary, text-foreground, bg-card, text-muted-foreground
@@ -1027,6 +1063,36 @@ Layer 1 — Neutral primitive (only for internal construction of DS components)
 <hr>
 <h2 id="available-semantic-tokens">Available semantic tokens</h2>
 <h3 id="surface-backgrounds">Surface backgrounds</h3>
+
+<aside class="ve-block" data-key="surface-backgrounds">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Surfaces</span>
+  </header>
+  <p class="ve-block-explanation">Three surface tokens cover most layouts: <code>bg-background</code> (page root), <code>bg-card</code> (panels and cards), <code>bg-muted</code> (inner sections, hover states). Each adapts automatically to dark mode.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Hierarchy (toggle theme)</span>
+          <div class="ec-body" style="display:block;">
+            <div class="surface-demo">
+              <span class="sd-label">bg-background</span>
+              <div class="sd-card">
+                <span class="sd-label">bg-card</span>
+                <div class="sd-muted"><span class="sd-label">bg-muted</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;div className=&quot;bg-background&quot;&gt;      {/* page root */}
+  &lt;div className=&quot;bg-card&quot;&gt;           {/* panel / card */}
+    &lt;div className=&quot;bg-muted&quot;&gt;        {/* inner section / hover */}
+      ...
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Reach for <code>bg-background</code> on root layouts, <code>bg-card</code> on every elevated surface, and <code>bg-muted</code> for hover, sub-panels, or footnote regions.</p>
+</aside>
 <table>
 <thead>
 <tr>
@@ -1074,6 +1140,29 @@ Layer 1 — Neutral primitive (only for internal construction of DS components)
 </tr>
 </tbody></table>
 <h3 id="text-colors">Text colors</h3>
+
+<aside class="ve-block" data-key="text-colors">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Text</span>
+  </header>
+  <p class="ve-block-explanation">Two text tokens cover most cases: <code>text-foreground</code> (primary copy) and <code>text-muted-foreground</code> (meta, captions, helper text). Use the muted variant for anything that is supportive rather than primary content.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Two tones</span>
+          <div class="ec-body" style="display:block;">
+            <div style="font-size:15px;color:var(--fg);font-weight:600;">SO2604102 · Leland Furniture</div>
+            <div style="font-size:12px;color:var(--muted-fg);margin-top:2px;">Quote · Mar 28, 2025 · $4,159.12</div>
+          </div>
+          <div class="ec-code">text-foreground + text-muted-foreground</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;div&gt;
+  &lt;div className=&quot;text-foreground font-semibold&quot;&gt;SO2604102&lt;/div&gt;
+  &lt;div className=&quot;text-muted-foreground text-xs&quot;&gt;Mar 28, 2025&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Treat <code>text-muted-foreground</code> as the default for any text below 14px or for secondary labels. Body copy and headings stay on <code>text-foreground</code>.</p>
+</aside>
 <table>
 <thead>
 <tr>
@@ -1109,6 +1198,29 @@ Layer 1 — Neutral primitive (only for internal construction of DS components)
 </tr>
 </tbody></table>
 <h3 id="primary-action-colors">Primary action colors</h3>
+
+<aside class="ve-block" data-key="primary-action-colors">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Primary</span>
+  </header>
+  <p class="ve-block-explanation"><code>bg-primary</code> + <code>text-primary-foreground</code> is the canonical CTA pair. Both light and dark variants use the same dark text (#02060C) over the lime background.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">CTA pair</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary">Approve &amp; continue</button></div>
+          <div class="ec-code">bg-primary text-primary-foreground</div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Focus ring uses same primary</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-outline" style="box-shadow:0 0 0 3px color-mix(in srgb, var(--primary) 40%, transparent);">Focused input</button></div>
+          <div class="ec-code">ring-2 ring-primary/40</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Button className=&quot;bg-primary text-primary-foreground&quot;&gt;Save&lt;/Button&gt;
+&lt;Input className=&quot;focus:ring-2 focus:ring-primary/40&quot; /&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> One primary per view. Use the same primary token for focus rings, active tab underlines, and selected states.</p>
+</aside>
 <table>
 <thead>
 <tr>
@@ -1132,6 +1244,34 @@ Layer 1 — Neutral primitive (only for internal construction of DS components)
 </tr>
 </tbody></table>
 <h3 id="borders-and-inputs">Borders and inputs</h3>
+
+<aside class="ve-block" data-key="borders-and-inputs">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Borders</span>
+  </header>
+  <p class="ve-block-explanation"><code>border-border</code> is the default divider and outline. <code>border-input</code> is used specifically for form field borders so input theming can be tweaked independently. Use <code>bg-input-background</code> for input fills.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Divider</span>
+          <div class="ec-body" style="display:block;">
+            <div style="padding:8px 12px;font-size:13px;color:var(--fg);">Item A</div>
+            <div style="border-top:1px solid var(--border);padding:8px 12px;font-size:13px;color:var(--fg);">Item B</div>
+          </div>
+          <div class="ec-code">border-border</div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Input field</span>
+          <div class="ec-body" style="display:block;">
+            <div style="background:var(--card);border:1px solid var(--border);padding:8px 12px;border-radius:6px;font-size:13px;color:var(--muted-fg);">Search documents…</div>
+          </div>
+          <div class="ec-code">bg-input-background border-input</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;hr className=&quot;border-border&quot; /&gt;
+&lt;input className=&quot;bg-input-background border border-input rounded-md px-3 py-2&quot; /&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Default to <code>border-border</code>. Reach for <code>border-input</code> only when targeting form-control outlines so the rest of the UI does not move when input theming changes.</p>
+</aside>
 <table>
 <thead>
 <tr>
@@ -1167,6 +1307,29 @@ Layer 1 — Neutral primitive (only for internal construction of DS components)
 </tr>
 </tbody></table>
 <h3 id="semantic-states">Semantic states</h3>
+
+<aside class="ve-block" data-key="semantic-states">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · States</span>
+  </header>
+  <p class="ve-block-explanation">Four state tokens cover the canonical feedback palette: <code>success</code>, <code>warning</code>, <code>destructive</code>, <code>info</code>. Pair text + background variants for pills, or use just <code>text-*</code> for inline copy.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Pills</span>
+          <div class="ec-body" style="flex-wrap:wrap;">
+            <span class="status-pill status-success"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Active</span>
+            <span class="status-pill status-warning"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Pending</span>
+            <span class="status-pill status-destructive"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Error</span>
+            <span class="status-pill status-info"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> Info</span>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Badge variant=&quot;success&quot;&gt;Active&lt;/Badge&gt;
+&lt;span className=&quot;text-warning&quot;&gt;Heads up — partial coverage&lt;/span&gt;
+&lt;span className=&quot;text-destructive&quot;&gt;Cannot delete the root record&lt;/span&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Map every "is it ok / warning / problem / info" state to one of these four. Avoid introducing new ones unless the DS gets a 5th canonical state.</p>
+</aside>
 <table>
 <thead>
 <tr>
@@ -1203,6 +1366,31 @@ Layer 1 — Neutral primitive (only for internal construction of DS components)
 </tbody></table>
 <hr>
 <h2 id="opacity-pattern-for-soft-states">Opacity pattern for soft states</h2>
+
+<aside class="ve-block" data-key="opacity-pattern-for-soft-states">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Soft tints</span>
+  </header>
+  <p class="ve-block-explanation">For subtle backgrounds use the <code>bg-token/N</code> syntax (color opacity), never <code>opacity-*</code> on the container — opacity on the container fades the text too.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ opacity on container</span>
+          <div class="ec-body" style="display:block;"><div style="background:var(--success);opacity:0.10;padding:10px;border-radius:6px;color:var(--fg);">Text barely visible</div></div>
+          <div class="ec-code">bg-success opacity-10</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ color opacity (token slash N)</span>
+          <div class="ec-body" style="display:block;"><div style="background:color-mix(in srgb, var(--success) 12%, transparent);padding:10px;border-radius:6px;color:var(--fg);">Text stays crisp</div></div>
+          <div class="ec-code">bg-success/10</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// Soft success banner
+&lt;div className=&quot;bg-success/10 text-success border border-success/20 rounded-md p-3&quot;&gt;
+  Operation complete
+&lt;/div&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Tints between 5 and 20 read as subtle ("/5", "/10", "/15", "/20"). For hover states a +5 from base is enough.</p>
+</aside>
 <p>For subtle state backgrounds, use opacity utilities:</p>
 <pre><code class="language-tsx">// Subtle success state
 className=&quot;bg-success/5 border border-success/40 text-success&quot;
@@ -1221,6 +1409,29 @@ className=&quot;bg-ai/10 text-ai&quot;
 </code></pre>
 <hr>
 <h2 id="charts-rule">Charts rule</h2>
+
+<aside class="ve-block" data-key="charts-rule">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Charts</span>
+  </header>
+  <p class="ve-block-explanation">Chart series have their own dedicated palette (<code>chart-1</code> through <code>chart-5</code>) tuned for distinguishability under both themes. Never use brand or state tokens to color a chart series.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Series palette</span>
+          <div class="ec-body" style="flex-wrap:wrap;">
+            <span class="status-pill" style="background:#6366f1;color:#fff;">chart-1</span>
+            <span class="status-pill" style="background:#22c55e;color:#fff;">chart-2</span>
+            <span class="status-pill" style="background:#E52D49;color:#fff;">chart-3</span>
+            <span class="status-pill" style="background:#f59e0b;color:#fff;">chart-4</span>
+            <span class="status-pill" style="background:#a855f7;color:#fff;">chart-5</span>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Bar dataKey=&quot;revenue&quot; fill=&quot;var(--color-chart-1)&quot; /&gt;
+&lt;Bar dataKey=&quot;cost&quot;    fill=&quot;var(--color-chart-2)&quot; /&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Reach for <code>var(--color-chart-1)</code>..<code>chart-5</code> in any recharts/visx series. Out of values? Rotate, do not invent.</p>
+</aside>
 <p>For charts use the chart tokens, not arbitrary colors:</p>
 <pre><code class="language-tsx">// Correct
 stroke=&quot;var(--color-chart-1)&quot;   // indigo
@@ -1235,6 +1446,29 @@ fill=&quot;var(--color-chart-2)&quot;     // green
 </code></pre>
 <hr>
 <h2 id="state-light-variants-subtle-background">State light variants (subtle background)</h2>
+
+<aside class="ve-block" data-key="state-light-variants-subtle-background">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Light states</span>
+  </header>
+  <p class="ve-block-explanation">Each state token has a sibling soft variant (<code>success-light</code>, <code>warning-light</code>, etc.) that is already at the right subtle opacity for backgrounds. Use them when you need a pre-defined tint instead of computing one with the slash syntax.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Light variants</span>
+          <div class="ec-body" style="flex-wrap:wrap;">
+            <span class="status-pill status-success">success-light</span>
+            <span class="status-pill status-warning">warning-light</span>
+            <span class="status-pill status-destructive">destructive-light</span>
+            <span class="status-pill status-info">info-light</span>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;div className=&quot;bg-success-light text-success px-3 py-2 rounded-md&quot;&gt;
+  All good
+&lt;/div&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Prefer light variants over <code>bg-success/10</code> when the DS exposes one — they are pre-tuned across light and dark themes.</p>
+</aside>
 <p>For notification, banner, or subtle badge backgrounds, pre-calculated <code>*-light</code> variants exist. Use them instead of <code>bg-success/10</code> when the design needs a specific pastel tone.</p>
 <table>
 <thead>
@@ -1347,10 +1581,53 @@ Sidebar — Inversion           → bg-sidebar     (zinc-950 light / white dark)
     </div>
   
       <h2 id="the-brand-color-is-a-signal-not-a-base-color">The brand color is a SIGNAL, not a base color</h2>
+
+<aside class="ve-block" data-key="the-brand-color-is-a-signal-not-a-base-color">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Brand as signal</span>
+  </header>
+  <p class="ve-block-explanation">The lime brand-300/400 attracts attention; it is the visual signature of Strata. Using it everywhere collapses its signaling power. Use it as the focal point, never as the surface.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Brand as surface</span>
+          <div class="ec-body" style="display:block;"><div style="background:var(--primary);padding:14px 16px;border-radius:8px;"><span style="color:var(--primary-fg);font-weight:600;">Entire panel screams brand</span></div></div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Brand as accent</span>
+          <div class="ec-body" style="display:block;"><div style="background:var(--card);border:1px solid var(--border);padding:14px 16px;border-radius:8px;"><span style="color:var(--fg);font-weight:600;">Project · </span><span class="status-pill" style="background:var(--primary);color:var(--primary-fg);">Active</span></div></div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// Anchor the brand on ONE element per view:
+&lt;Badge variant=&quot;brand&quot;&gt;Active&lt;/Badge&gt;     // or
+&lt;Button&gt;Approve&lt;/Button&gt;                  // primary CTA</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> One brand-tinted element per view (CTA, active state, focus ring, or selected indicator). Everything else lives on neutral tokens.</p>
+</aside>
 <p>Brand (lime #E6F993 / #C3E433) exists to draw attention to <strong>a specific action or state</strong>. It is not a general fill color.</p>
 <hr>
 <h2 id="where-to-use-brand">Where to USE brand</h2>
 <h3 id="1-primary-action-button-cta">1. Primary action button (CTA)</h3>
+
+<aside class="ve-block" data-key="1-primary-action-button-cta">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Brand · 1 CTA</span>
+  </header>
+  <p class="ve-block-explanation">The most common use of brand: the single primary CTA in any view. <code>bg-primary text-primary-foreground</code> is the canonical pair.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">CTA</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary">Approve &amp; continue</button></div>
+          <div class="ec-code">bg-primary text-primary-foreground</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Button&gt;Approve &amp;amp; continue&lt;/Button&gt;
+// or
+&lt;button className=&quot;bg-primary text-primary-foreground rounded-md px-4 py-2&quot;&gt;
+  Approve &amp;amp; continue
+&lt;/button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> One per view. If you need two prominent actions, demote the secondary one to <code>variant="outline"</code>.</p>
+</aside>
 <pre><code class="language-tsx">// Light mode
 &lt;button className=&quot;bg-brand-300 text-zinc-900 hover:bg-brand-400 transition-colors&quot;&gt;
   Primary Action
@@ -1367,6 +1644,37 @@ Sidebar — Inversion           → bg-sidebar     (zinc-950 light / white dark)
 &lt;/button&gt;
 </code></pre>
 <h3 id="2-active-selected-element-indicator">2. Active / selected element indicator</h3>
+
+<aside class="ve-block" data-key="2-active-selected-element-indicator">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Brand · 2 active</span>
+  </header>
+  <p class="ve-block-explanation">Brand marks the active item in a tab, a navigation list, or a filter row. Use it as a background OR a left border, never both at once.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Active tab — background</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-primary">Overview</button>
+            <button class="demo-btn demo-btn-ghost">Members</button>
+            <button class="demo-btn demo-btn-ghost">Settings</button>
+          </div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Active nav — left border</span>
+          <div class="ec-body" style="display:block;">
+            <div style="border-left:3px solid var(--primary);padding:6px 12px;background:color-mix(in srgb, var(--primary) 8%, transparent);">
+              <span style="color:var(--fg);font-weight:600;font-size:13px;">Overview</span>
+            </div>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// Pill-style active state
+&lt;button className={isActive ? 'bg-primary text-primary-foreground' : 'text-muted-foreground'}&gt;
+  {label}
+&lt;/button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Pick one indicator pattern per surface (background OR border) and stick to it. Mixing both in the same nav reads as noise.</p>
+</aside>
 <pre><code class="language-tsx">// Active nav item
 &lt;NavItem className=&quot;border-l-2 border-primary text-foreground bg-primary/10&quot;&gt;
   Dashboard
@@ -1378,6 +1686,33 @@ Sidebar — Inversion           → bg-sidebar     (zinc-950 light / white dark)
 &lt;/Tab&gt;
 </code></pre>
 <h3 id="3-decorative-accent-on-branded-cards">3. Decorative accent on branded cards</h3>
+
+<aside class="ve-block" data-key="3-decorative-accent-on-branded-cards">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Brand · 3 accent</span>
+  </header>
+  <p class="ve-block-explanation">A thin brand border, an underline, or a corner ribbon can mark a "featured" card without taking it over visually.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Featured card</span>
+          <div class="ec-body" style="display:block;">
+            <div class="mock-card" style="border-color:var(--primary);max-width:none;">
+              <div class="mc-header">
+                <div><div class="mc-title">Strata Pro</div><div class="mc-sub">Featured plan</div></div>
+                <span class="status-pill" style="background:var(--primary);color:var(--primary-fg);">Featured</span>
+              </div>
+              <div class="mc-row"><span class="mc-label">Seats</span><span class="mc-value">25</span></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;div className=&quot;bg-card border-2 border-primary rounded-xl p-4&quot;&gt;
+  ...
+  &lt;Badge variant=&quot;brand&quot;&gt;Featured&lt;/Badge&gt;
+&lt;/div&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Reserve this for genuinely featured items (1-2 per page). Overusing the brand border defeats its purpose.</p>
+</aside>
 <pre><code class="language-tsx">// Top border of featured card
 &lt;Card className=&quot;bg-card border border-border&quot;&gt;
   &lt;div className=&quot;h-1 bg-brand-400 rounded-t-lg&quot; /&gt;
@@ -1385,16 +1720,82 @@ Sidebar — Inversion           → bg-sidebar     (zinc-950 light / white dark)
 &lt;/Card&gt;
 </code></pre>
 <h3 id="4-action-icon-container-background">4. Action icon container background</h3>
+
+<aside class="ve-block" data-key="4-action-icon-container-background">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Brand · 4 icon bg</span>
+  </header>
+  <p class="ve-block-explanation">A small square or circle behind an action icon is a great place for brand: tiny enough that contrast is not an issue, prominent enough to read as the focal action.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Icon container</span>
+          <div class="ec-body">
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;background:var(--primary);color:var(--primary-fg);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+            <span style="display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;background:color-mix(in srgb, var(--primary) 20%, transparent);color:var(--fg);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+          </div>
+          <div class="ec-code">bg-primary text-primary-foreground · bg-primary/20</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;button className=&quot;bg-primary text-primary-foreground rounded-lg p-2&quot;&gt;
+  &lt;Download className=&quot;size-4&quot; /&gt;
+&lt;/button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Pick this for the single highest-emphasis icon action (e.g. "Export", "Generate"). For secondary icon buttons stick with <code>bg-muted</code>.</p>
+</aside>
 <pre><code class="language-tsx">// Icon in primary action context
 &lt;div className=&quot;bg-primary/15 rounded-lg p-2&quot;&gt;
   &lt;SparklesIcon className=&quot;text-primary w-5 h-5&quot; /&gt;
 &lt;/div&gt;
 </code></pre>
 <h3 id="5-focus-ring-focus-indicator">5. Focus ring / focus indicator</h3>
+
+<aside class="ve-block" data-key="5-focus-ring-focus-indicator">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Brand · 5 focus</span>
+  </header>
+  <p class="ve-block-explanation">The focus ring is the most universal use of brand — every focusable element gets a brand-tinted outline. <code>ring-primary/40</code> at width 2 is the canonical setting.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Focused input</span>
+          <div class="ec-body" style="display:block;">
+            <input type="text" placeholder="Focus me" style="background:var(--card);border:1px solid var(--border);padding:8px 12px;border-radius:6px;font-size:13px;color:var(--fg);outline:none;box-shadow:0 0 0 3px color-mix(in srgb, var(--primary) 40%, transparent);width:100%;max-width:240px;font-family:inherit;" />
+          </div>
+          <div class="ec-code">focus:ring-2 focus:ring-primary/40</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Input className=&quot;focus:outline-none focus:ring-2 focus:ring-primary/40&quot; /&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Add the focus ring at the component level (Input, Button, Tab). Never rely on the browser default focus outline.</p>
+</aside>
 <pre><code class="language-tsx">&lt;input className=&quot;focus:ring-2 focus:ring-primary focus:ring-offset-2&quot; /&gt;
 </code></pre>
 <hr>
 <h2 id="where-not-to-use-brand">Where NOT to use brand</h2>
+
+<aside class="ve-block" data-key="where-not-to-use-brand">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Brand · forbidden</span>
+  </header>
+  <p class="ve-block-explanation">Brand is wrong as: body text color, large surface fill, error/destructive state, every state pill in a list, or background of the entire view.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Body text in brand</span>
+          <div class="ec-body" style="display:block;"><p style="color:var(--primary);margin:0;font-size:14px;font-weight:600;">Welcome to your dashboard</p></div>
+          <div class="ec-code">text-primary on body</div>
+        </div>
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Brand-everywhere panel</span>
+          <div class="ec-body" style="display:block;"><div style="background:var(--primary);padding:14px 16px;border-radius:8px;"><div style="color:var(--primary-fg);">Entire panel screams brand · loses signal</div></div></div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// ❌ Body text in brand
+&lt;p className=&quot;text-primary&quot;&gt;Welcome&lt;/p&gt;
+
+// ❌ Brand as huge panel
+&lt;section className=&quot;bg-primary p-12&quot;&gt;...&lt;/section&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> If you find brand used as a surface or text style, refactor toward <code>bg-card</code> + a brand accent (badge, border, focus ring).</p>
+</aside>
 <table>
 <thead>
 <tr>
@@ -1429,6 +1830,27 @@ Sidebar — Inversion           → bg-sidebar     (zinc-950 light / white dark)
 </tbody></table>
 <hr>
 <h2 id="full-brand-scale">Full brand scale</h2>
+
+<aside class="ve-block" data-key="full-brand-scale">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Brand scale</span>
+  </header>
+  <p class="ve-block-explanation">The full brand ramp is exposed as primitive tokens (<code>brand-50</code>..<code>brand-950</code>) for foundation work — never used in app code, but useful for token references and design exploration.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Ramp · 50 → 950</span>
+          <div class="ec-body" style="display:block;">
+            <div class="brand-row">
+              <div class="brand-cell" style="background:#fafee5;color:#02060C;">50</div><div class="brand-cell" style="background:#f4fbc4;color:#02060C;">100</div><div class="brand-cell" style="background:#ebf99a;color:#02060C;">200</div><div class="brand-cell" style="background:#dff463;color:#02060C;">300</div><div class="brand-cell" style="background:#E6F993;color:#02060C;">400</div><div class="brand-cell" style="background:#c0e032;color:#02060C;">500</div><div class="brand-cell" style="background:#9fbb1f;color:#02060C;">600</div><div class="brand-cell" style="background:#7e911b;color:#02060C;">700</div><div class="brand-cell" style="background:#65741c;color:#02060C;">800</div><div class="brand-cell" style="background:#56631e;color:#02060C;">900</div><div class="brand-cell" style="background:#2e370a;color:#02060C;">950</div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>/* App code should NOT use these directly.
+   Use bg-primary / ring-primary / text-primary-foreground instead. */</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> The brand scale is private to the foundation files. Documenting it here is for designers and DS maintainers only.</p>
+</aside>
 <pre><code>brand-50:  #fdfee7  — almost white, very subtle
 brand-100: #f9fdc3  — very light tint
 brand-200: #f4fb89  — light tint
@@ -1449,6 +1871,42 @@ brand-950: #233502  — almost black brand
 </ul>
 <hr>
 <h2 id="pattern-full-branded-card">Pattern: full branded card</h2>
+
+<aside class="ve-block" data-key="pattern-full-branded-card">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Brand · pattern</span>
+  </header>
+  <p class="ve-block-explanation">A composed pattern that combines all the brand uses: brand border, brand badge, primary CTA, and brand-tinted icon container. Use sparingly (1-2 per page max).</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Composed featured card</span>
+          <div class="ec-body" style="display:block;">
+            <div class="mock-card" style="border-color:var(--primary);max-width:none;">
+              <div class="mc-header">
+                <div style="display:flex;gap:10px;align-items:center;">
+                  <span style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;background:var(--primary);color:var(--primary-fg);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+                  <div><div class="mc-title">Annual report 2026</div><div class="mc-sub">Featured download</div></div>
+                </div>
+                <span class="status-pill" style="background:var(--primary);color:var(--primary-fg);">New</span>
+              </div>
+              <div class="mc-row"><span class="mc-label">Pages</span><span class="mc-value">48</span></div>
+              <div class="mc-row"><span class="mc-label">Updated</span><span class="mc-value">Jun 1, 2026</span></div>
+              <div style="display:flex;justify-content:flex-end;margin-top:10px;"><button class="demo-btn demo-btn-primary">Download report</button></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Card className=&quot;border-2 border-primary&quot;&gt;
+  &lt;CardHeader&gt;
+    &lt;IconContainer className=&quot;bg-primary text-primary-foreground&quot;&gt;&lt;Download /&gt;&lt;/IconContainer&gt;
+    &lt;Badge variant=&quot;brand&quot;&gt;New&lt;/Badge&gt;
+  &lt;/CardHeader&gt;
+  ...
+  &lt;Button&gt;Download report&lt;/Button&gt;
+&lt;/Card&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Use this pattern for the genuinely hero card on a page. Two on the same page collapses the signal.</p>
+</aside>
 <pre><code class="language-tsx">// Light mode
 &lt;div className=&quot;bg-white border border-zinc-200 rounded-xl overflow-hidden&quot;&gt;
   &lt;div className=&quot;h-1 bg-brand-400&quot; /&gt;
