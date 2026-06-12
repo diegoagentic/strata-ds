@@ -3,13 +3,26 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { z } from 'zod';
 import * as fs from 'fs';
 import * as path from 'path';
+import { validateCode, formatValidation } from './validator.js';
+import { getGovernancePath } from './lib/source.js';
+import { checkVersion, formatVersionReport } from './lib/version.js';
+import { listComponents, formatComponentList } from './lib/components.js';
+import { installSkill, formatInstallResult } from './lib/skills.js';
 
-const GOVERNANCE_PATH = path.resolve(__dirname, '../../../governance');
+// Dev ergonomics: if no override is set, use the sibling governance/ folder
+// so stdio devs don't need to set STRATA_LOCAL_ROOT explicitly.
+if (!process.env.STRATA_LOCAL_ROOT) {
+  const devSibling = path.resolve(__dirname, '../../../governance');
+  if (fs.existsSync(path.join(devSibling, 'LAWS.md'))) {
+    process.env.STRATA_LOCAL_ROOT = devSibling;
+  }
+}
 
 function readGovernanceFile(relativePath: string): string {
-  const filePath = path.join(GOVERNANCE_PATH, relativePath);
+  const root = getGovernancePath();
+  const filePath = path.join(root, relativePath);
   if (!fs.existsSync(filePath)) {
-    return `File not found: ${relativePath}`;
+    return `File not found: ${relativePath} (looked in ${filePath})`;
   }
   return fs.readFileSync(filePath, 'utf-8');
 }
@@ -40,7 +53,7 @@ function searchGovernance(query: string): string {
     }
   }
 
-  searchDir(GOVERNANCE_PATH);
+  searchDir(getGovernancePath());
   return results.length > 0
     ? `Found in ${results.length} file(s):\n\n${results.join('\n\n')}`
     : `No results found for: "${query}"`;
@@ -70,6 +83,18 @@ server.tool(
       'containers-and-cards',
       'buttons-and-actions',
       'icons',
+      'typography',
+      'elevation',
+      'code-usage',
+      'modal-patterns',
+      'layout-density',
+      'spacing-rhythm',
+      'responsive-behavior',
+      'empty-states',
+      'loading-states',
+      'microcopy-tone',
+      'accessibility-focus',
+      'data-display',
     ]).describe('The rule category to retrieve'),
   },
   async ({ category }) => {
@@ -79,6 +104,18 @@ server.tool(
       'containers-and-cards': 'rules/03-containers-and-cards.md',
       'buttons-and-actions': 'rules/04-buttons-and-actions.md',
       'icons': 'rules/05-icons.md',
+      'typography': 'rules/06-typography.md',
+      'elevation': 'rules/07-elevation.md',
+      'code-usage': 'code-usage.md',
+      'modal-patterns': 'rules/08-modal-patterns.md',
+      'layout-density': 'rules/09-layout-density.md',
+      'spacing-rhythm': 'rules/10-spacing-rhythm.md',
+      'responsive-behavior': 'rules/11-responsive-behavior.md',
+      'empty-states': 'rules/12-empty-states.md',
+      'loading-states': 'rules/13-loading-states.md',
+      'microcopy-tone': 'rules/14-microcopy-tone.md',
+      'accessibility-focus': 'rules/15-accessibility-focus.md',
+      'data-display': 'rules/16-data-display.md',
     };
     return {
       content: [{ type: 'text', text: readGovernanceFile(fileMap[category]) }],
@@ -133,6 +170,97 @@ server.tool(
       antiPatterns,
     ].join('\n');
     return { content: [{ type: 'text', text: combined }] };
+  }
+);
+
+server.tool(
+  'get_session_briefing',
+  'Compact briefing for the start of a session: laws + rule category headlines + workflow. Call before generating any UI.',
+  {},
+  async () => {
+    const laws = readGovernanceFile('LAWS.md');
+    const RULE_FILES: Array<[string, string]> = [
+      ['color-tokens', 'rules/01-color-tokens.md'],
+      ['brand-colors', 'rules/02-brand-colors.md'],
+      ['containers-and-cards', 'rules/03-containers-and-cards.md'],
+      ['buttons-and-actions', 'rules/04-buttons-and-actions.md'],
+      ['icons', 'rules/05-icons.md'],
+      ['typography', 'rules/06-typography.md'],
+      ['elevation', 'rules/07-elevation.md'],
+      ['code-usage', 'code-usage.md'],
+      ['modal-patterns', 'rules/08-modal-patterns.md'],
+      ['layout-density', 'rules/09-layout-density.md'],
+      ['spacing-rhythm', 'rules/10-spacing-rhythm.md'],
+      ['responsive-behavior', 'rules/11-responsive-behavior.md'],
+      ['empty-states', 'rules/12-empty-states.md'],
+      ['loading-states', 'rules/13-loading-states.md'],
+      ['microcopy-tone', 'rules/14-microcopy-tone.md'],
+      ['accessibility-focus', 'rules/15-accessibility-focus.md'],
+      ['data-display', 'rules/16-data-display.md'],
+    ];
+    const briefing = RULE_FILES.map(([slug, file]) => {
+      const md = readGovernanceFile(file);
+      const heading = (md.split('\n').find((l) => /^#\s+/.test(l)) ?? '').replace(/^#\s+/, '');
+      return `- **${slug}** — ${heading}`;
+    }).join('\n');
+    const text = [
+      '# Strata DS — Session briefing',
+      '', '## Absolute laws', laws,
+      '', '## Rule categories (17 total)', briefing,
+      '', '## Mandatory workflow',
+      '1. Read the laws above.',
+      '2. plan_ui({description}) before generating UI.',
+      '3. get_rules({category}) for specifics.',
+      '4. get_tokens() for exact values.',
+      '5. validate_component_against_rules({code}) before committing.',
+    ].join('\n');
+    return { content: [{ type: 'text', text }] };
+  }
+);
+
+server.tool(
+  'check_version',
+  'Compare installed Strata DS version to the latest GitHub release.',
+  { searchRoot: z.string().optional() },
+  async ({ searchRoot }) => {
+    const report = checkVersion(searchRoot);
+    return { content: [{ type: 'text', text: formatVersionReport(report) }] };
+  }
+);
+
+server.tool(
+  'list_components',
+  'Grouped catalog of every DS component, with the canonical import string.',
+  {},
+  async () => {
+    const entries = listComponents();
+    return { content: [{ type: 'text', text: formatComponentList(entries) }] };
+  }
+);
+
+server.tool(
+  'install_skill',
+  'Install the planning-strata-ui Agent Skill to user or project scope.',
+  {
+    target: z.enum(['user', 'project']),
+    projectRoot: z.string().optional(),
+  },
+  async ({ target, projectRoot }) => {
+    const r = installSkill(target, projectRoot);
+    return { content: [{ type: 'text', text: formatInstallResult(r) }] };
+  }
+);
+
+server.tool(
+  'validate_component_against_rules',
+  'Lint a TSX / JSX / CSS snippet against the Strata DS rules. Returns per-violation: rule reference (LAW-N or rules/0X), severity, the offending match, a suggested fix. Use this before committing any component code generated by AI or hand-written.',
+  {
+    code: z.string().describe('The TSX, JSX, or CSS snippet to validate.'),
+    filename: z.string().optional().describe('Optional filename for reporting context.'),
+  },
+  async ({ code, filename }) => {
+    const result = validateCode(code, filename);
+    return { content: [{ type: 'text', text: formatValidation(result) }] };
   }
 );
 

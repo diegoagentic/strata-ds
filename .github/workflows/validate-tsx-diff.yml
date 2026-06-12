@@ -1,0 +1,103 @@
+#
+# validate-tsx-diff.yml — Run the Strata DS validator on every TSX/JSX file
+# changed in a PR. Blocks merge if any 'error' severity violations are found.
+#
+# Same lint engine (src/mcp-server/validator.ts) as the MCP tool, so an
+# agent calling `validate_component_against_rules` and a human running this
+# workflow get the same report.
+#
+
+name: Validate TSX diff against DS rules
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/components/**'
+      - 'src/app/**'
+      - 'src/mcp-server/validator.ts'
+      - 'governance/**/*.md'
+      - '.github/workflows/validate-tsx-diff.yml'
+      - 'scripts/lint-tsx-diff.mjs'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (full history for the diff)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --prefer-offline --no-audit --no-fund
+
+      - name: Determine diff base
+        id: base
+        run: |
+          if [ -n "${{ github.event.pull_request.base.ref }}" ]; then
+            echo "ref=origin/${{ github.event.pull_request.base.ref }}" >> $GITHUB_OUTPUT
+          else
+            echo "ref=origin/main" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run TSX diff lint
+        id: lint
+        run: |
+          set -o pipefail
+          node scripts/lint-tsx-diff.mjs --base ${{ steps.base.outputs.ref }} | tee lint-report.md
+        continue-on-error: true
+
+      - name: Post comment on PR
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let body;
+            try {
+              body = fs.readFileSync('lint-report.md', 'utf8');
+            } catch {
+              body = '_Lint report not found._';
+            }
+            // Trim if very long (GitHub limits comments to 65536 chars)
+            if (body.length > 60000) body = body.slice(0, 60000) + '\n\n_(truncated)_';
+            const wrapped = `### Strata DS — TSX diff lint\n\n<details><summary>Click to expand</summary>\n\n${body}\n\n</details>`;
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const prior = comments.find(c => c.user.type === 'Bot' && c.body.startsWith('### Strata DS — TSX diff lint'));
+            if (prior) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: prior.id,
+                body: wrapped,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: wrapped,
+              });
+            }
+
+      - name: Fail if any errors
+        if: steps.lint.outcome != 'success'
+        run: |
+          echo "::error::DS rule violations (error severity) found in changed TSX/JSX. See the report above."
+          exit 1

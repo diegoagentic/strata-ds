@@ -1,0 +1,426 @@
+/*
+ * governance.css — Port of the rules-guide.html visual primitives
+ * (ve-block, demo-btn, surface-demo, status-pill, etc.) into the DS app.
+ *
+ * Everything is scoped under `.governance-scope` so it never leaks to the
+ * rest of the app. The local CSS vars (`--bg`, `--fg`, etc.) are aliased
+ * to the DS app's semantic color tokens so dark mode + theming Just Work.
+ *
+ * Source: governance/build-guide.mjs::buildStyle() (the inline CSS of the
+ * standalone HTML guide). When that file changes, update the port here.
+ */
+
+.governance-scope {
+  --bg: var(--color-background);
+  --fg: var(--color-foreground);
+  --card: var(--color-card);
+  --muted: var(--color-muted);
+  --muted-fg: var(--color-muted-foreground);
+  --border: var(--color-border);
+  --primary: var(--color-primary);
+  --primary-fg: var(--color-primary-foreground);
+  --destructive: var(--color-destructive);
+  --success: var(--color-success, #10B981);
+  --warning: var(--color-warning, #F59E0B);
+}
+
+/* ── Per-sub-rule example block ────────────────────────────────────── */
+
+.governance-scope .ve-block {
+  margin: 18px 0 26px;
+  padding: 18px 20px;
+  background: color-mix(in srgb, var(--muted) 38%, transparent);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--primary);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.governance-scope .ve-block-head { display: flex; align-items: center; gap: 10px; }
+.governance-scope .ve-block-eyebrow {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--primary);
+  color: var(--primary-fg);
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+.governance-scope .ve-block-explanation {
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0;
+  color: var(--fg);
+  max-width: 760px;
+}
+.governance-scope .ve-block-explanation code,
+.governance-scope .ve-block-howto code {
+  background: var(--card);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.governance-scope .ve-block-visual { margin: 0; }
+.governance-scope .ve-block-visual > .example-row { margin: 0; }
+.governance-scope .ve-block-code {
+  margin: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+.governance-scope .ve-block-code code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  white-space: pre;
+}
+.governance-scope .ve-block-howto {
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 10px 14px;
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  border-radius: 6px;
+  color: var(--fg);
+  max-width: 760px;
+}
+.governance-scope .ve-block-howto strong {
+  color: var(--fg);
+  font-weight: 700;
+}
+
+/* ── Visual examples (top-of-section + inline rows) ────────────────── */
+
+.governance-scope .visual-examples {
+  background: color-mix(in srgb, var(--muted) 50%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin: 16px 0 28px;
+}
+.governance-scope .visual-examples > .ve-label {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted-fg);
+  margin-bottom: 14px;
+}
+.governance-scope .example-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.governance-scope .example-row:last-child { margin-bottom: 0; }
+.governance-scope .example-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.governance-scope .example-card.is-bad { border-color: color-mix(in srgb, var(--destructive) 50%, var(--border)); }
+.governance-scope .example-card.is-good { border-color: color-mix(in srgb, var(--success) 50%, var(--border)); }
+.governance-scope .example-card .ec-tag {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-fg);
+}
+.governance-scope .example-card.is-bad .ec-tag { color: var(--destructive); }
+.governance-scope .example-card.is-good .ec-tag { color: var(--success); }
+.governance-scope .example-card .ec-body { padding: 8px 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.governance-scope .example-card .ec-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+  background: color-mix(in srgb, var(--muted) 60%, transparent);
+  padding: 6px 8px;
+  border-radius: 4px;
+  color: var(--muted-fg);
+  word-break: break-all;
+}
+
+/* ── Demo buttons ──────────────────────────────────────────────────── */
+
+.governance-scope .demo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: inherit;
+  line-height: 1.2;
+}
+.governance-scope .demo-btn-primary { background: var(--primary); color: var(--primary-fg); }
+.governance-scope .demo-btn-secondary { background: var(--card); color: var(--fg); border-color: var(--border); }
+.governance-scope .demo-btn-outline { background: transparent; color: var(--fg); border-color: var(--border); }
+.governance-scope .demo-btn-ghost { background: transparent; color: var(--fg); }
+.governance-scope .demo-btn-destructive { background: var(--destructive); color: #fff; }
+.governance-scope .demo-btn-link {
+  background: transparent;
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding-left: 0;
+  padding-right: 0;
+}
+.governance-scope .demo-btn-disabled {
+  background: var(--muted);
+  color: var(--muted-fg);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* ── Surface hierarchy demo ───────────────────────────────────────── */
+
+.governance-scope .surface-demo {
+  background: var(--bg);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 18px;
+}
+.governance-scope .surface-demo .sd-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px;
+  margin-top: 10px;
+}
+.governance-scope .surface-demo .sd-muted {
+  background: var(--muted);
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 10px;
+}
+.governance-scope .surface-demo .sd-label {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: color-mix(in srgb, var(--fg) 8%, transparent);
+  padding: 2px 7px;
+  border-radius: 3px;
+  color: var(--muted-fg);
+}
+
+/* ── Sidebar inversion demo ───────────────────────────────────────── */
+
+.governance-scope .sidebar-demo {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  min-height: 140px;
+}
+.governance-scope .sidebar-demo .sd-side {
+  background: var(--fg);
+  color: var(--bg);
+  padding: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.governance-scope .sidebar-demo .sd-side .sd-item {
+  padding: 4px 8px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--bg) 12%, transparent);
+}
+.governance-scope .sidebar-demo .sd-side .sd-item.active { background: var(--primary); color: var(--primary-fg); }
+.governance-scope .sidebar-demo .sd-main {
+  background: var(--bg);
+  padding: 14px;
+  font-size: 12px;
+  color: var(--muted-fg);
+}
+
+/* ── Status pills ─────────────────────────────────────────────────── */
+
+.governance-scope .status-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.governance-scope .status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.governance-scope .status-pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.governance-scope .status-success { color: var(--success); background: color-mix(in srgb, var(--success) 12%, transparent); }
+.governance-scope .status-warning { color: var(--warning); background: color-mix(in srgb, var(--warning) 14%, transparent); }
+.governance-scope .status-destructive { color: var(--destructive); background: color-mix(in srgb, var(--destructive) 12%, transparent); }
+.governance-scope .status-info { color: var(--fg); background: var(--muted); }
+
+/* ── Brand scale ───────────────────────────────────────────────────── */
+
+.governance-scope .brand-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(64px, 1fr)); gap: 6px; }
+.governance-scope .brand-cell {
+  border-radius: 6px;
+  padding: 10px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+  font-family: ui-monospace, monospace;
+}
+
+/* ── Typography scale ──────────────────────────────────────────────── */
+
+.governance-scope .type-scale { display: flex; flex-direction: column; gap: 8px; }
+.governance-scope .type-row { display: flex; align-items: baseline; gap: 14px; }
+.governance-scope .type-row .t-tag {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  color: var(--muted-fg);
+  min-width: 54px;
+  flex-shrink: 0;
+}
+.governance-scope .type-h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+.governance-scope .type-h2 { font-size: 24px; font-weight: 700; line-height: 1.2; }
+.governance-scope .type-h3 { font-size: 18px; font-weight: 600; }
+.governance-scope .type-h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-fg); }
+.governance-scope .type-body { font-size: 15px; }
+.governance-scope .type-small { font-size: 12px; color: var(--muted-fg); }
+
+/* ── Icons demo ────────────────────────────────────────────────────── */
+
+.governance-scope .icon-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+.governance-scope .icon-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--muted);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--muted-fg);
+}
+.governance-scope .icon-pair svg { color: var(--fg); }
+.governance-scope .icon-tone-success svg { color: var(--success); }
+.governance-scope .icon-tone-warning svg { color: var(--warning); }
+.governance-scope .icon-tone-destructive svg { color: var(--destructive); }
+.governance-scope .icon-tone-muted svg { color: var(--muted-fg); }
+
+/* ── Elevation cards ───────────────────────────────────────────────── */
+
+.governance-scope .elev-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; padding: 8px; }
+.governance-scope .elev-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 14px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted-fg);
+}
+.governance-scope .elev-sm { box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+.governance-scope .elev-md { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.10), 0 2px 4px -2px rgba(0,0,0,0.06); }
+.governance-scope .elev-lg { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.10), 0 4px 6px -4px rgba(0,0,0,0.06); }
+.governance-scope .elev-xl { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.12), 0 8px 10px -6px rgba(0,0,0,0.06); }
+
+/* ── Mock card composition ─────────────────────────────────────────── */
+
+.governance-scope .mock-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  max-width: 340px;
+}
+.governance-scope .mock-card .mc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.governance-scope .mock-card .mc-title { font-size: 14px; font-weight: 700; color: var(--fg); }
+.governance-scope .mock-card .mc-sub { font-size: 11px; color: var(--muted-fg); }
+.governance-scope .mock-card .mc-row { display: flex; justify-content: space-between; padding: 6px 0; border-top: 1px solid var(--border); font-size: 12px; }
+.governance-scope .mock-card .mc-row:first-of-type { border-top: none; }
+.governance-scope .mock-card .mc-row .mc-label { color: var(--muted-fg); }
+.governance-scope .mock-card .mc-row .mc-value { color: var(--fg); font-weight: 600; }
+
+/* ── Token table ───────────────────────────────────────────────────── */
+
+.governance-scope .token-table { width: 100%; font-size: 13px; border-collapse: collapse; }
+.governance-scope .token-table th,
+.governance-scope .token-table td { padding: 8px 12px; text-align: left; }
+.governance-scope .token-name { width: 36%; }
+.governance-scope .token-value { width: 32%; white-space: nowrap; }
+.governance-scope .swatch {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+/* ── Copy-code button (per <pre>) ─────────────────────────────────── */
+
+.governance-scope pre { position: relative; padding-right: 64px !important; }
+.governance-scope .copy-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--card);
+  color: var(--muted-fg);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.15s ease, color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1;
+}
+.governance-scope pre:hover .copy-btn { opacity: 1; }
+.governance-scope .copy-btn:focus-visible { opacity: 1; outline: 2px solid var(--primary); outline-offset: 1px; }
+.governance-scope .copy-btn:hover { color: var(--fg); background: var(--muted); }
+.governance-scope .copy-btn.is-copied {
+  color: var(--success);
+  border-color: color-mix(in srgb, var(--success) 50%, var(--border));
+  opacity: 1;
+}
+.governance-scope .copy-btn.is-error {
+  color: var(--destructive);
+  border-color: color-mix(in srgb, var(--destructive) 50%, var(--border));
+  opacity: 1;
+}
+.governance-scope .copy-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
+@media print { .governance-scope .copy-btn { display: none !important; } }
+
+/* ── Sidebar nav + section anchor ─────────────────────────────────── */
+
+.governance-scope section.guide-section {
+  scroll-margin-top: 24px;
+  padding-top: 8px;
+}
+.governance-scope section.guide-section + section.guide-section {
+  margin-top: 32px;
+}
