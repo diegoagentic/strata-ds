@@ -74,6 +74,33 @@ function shouldLint(filePath) {
   return true;
 }
 
+/**
+ * Files that are foundational palette providers — they map a semantic prop
+ * (color="success" / variant="solid color=zinc") to specific raw Tailwind
+ * classes. By design, this is the ONE layer where raw colors / dark:
+ * cascades are legitimate. Lint output for these files lists palette
+ * decisions, not violations.
+ *
+ * Updates require a deliberate refactor (e.g. promoting a new semantic
+ * token). Do not add to this list to silence lint output on a new
+ * component — fix the component to use semantic tokens instead.
+ */
+const PALETTE_PROVIDERS = [
+  /\/components\/application-ui\/badge\.tsx$/,
+  /\/components\/application-ui\/kpi-card\.tsx$/,
+  /\/components\/application-ui\/status-badge\.tsx$/,
+  /\/components\/application-ui\/info-banner\.tsx$/,
+  /\/components\/application-ui\/banner\.tsx$/,
+  /\/components\/application-ui\/priority-badge\.tsx$/,
+  /\/components\/application-ui\/tracking\.tsx$/,
+  /\/components\/overlays\/alert\.tsx$/,
+];
+
+function isPaletteProvider(filePath) {
+  const norm = filePath.replace(/\\/g, '/');
+  return PALETTE_PROVIDERS.some((rx) => rx.test(norm));
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   if (args.help) { help(); return; }
@@ -87,12 +114,17 @@ async function main() {
   let totalErrors = 0;
   let totalWarnings = 0;
   let totalInfos = 0;
+  let exemptCount = 0;
   const reports = [];
 
   for (const f of files) {
     const absPath = resolve(REPO_ROOT, f);
     if (!existsSync(absPath)) {
       console.warn(`(skipping missing) ${f}`);
+      continue;
+    }
+    if (isPaletteProvider(f)) {
+      exemptCount++;
       continue;
     }
     const code = readFileSync(absPath, 'utf8');
@@ -107,9 +139,10 @@ async function main() {
 
   console.log(`# Strata DS — TSX diff lint`);
   console.log('');
-  console.log(`Files scanned: ${files.length}`);
-  console.log(`Files with violations: ${reports.length}`);
-  console.log(`Totals: ${totalErrors} error(s) · ${totalWarnings} warning(s) · ${totalInfos} info(s)`);
+  console.log(`Files scanned:           ${files.length}`);
+  console.log(`Files exempt (palette providers): ${exemptCount}`);
+  console.log(`Files with violations:   ${reports.length}`);
+  console.log(`Totals:                  ${totalErrors} error(s) · ${totalWarnings} warning(s) · ${totalInfos} info(s)`);
   console.log('');
 
   for (const r of reports) {

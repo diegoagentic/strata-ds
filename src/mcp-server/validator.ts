@@ -78,7 +78,9 @@ const CHECKS: Check[] = [
     id: 'brand-text',
     rule: 'LAW 2 · rules/02-brand-colors',
     severity: 'error',
-    pattern: /\btext-(?:brand-[34]00|primary)\b/g,
+    // Match text-brand-300 / text-brand-400 / text-primary
+    // but NOT text-primary-foreground (the dark text ON primary, which is correct).
+    pattern: /\btext-(?:brand-[34]00|primary)(?![-\w])/g,
     message: 'brand-300/400 (or text-primary) as text fails WCAG contrast.',
     suggestion: 'Use text-foreground for body. Use brand as background, badge, or focus ring.',
   },
