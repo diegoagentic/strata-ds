@@ -34,6 +34,7 @@
     "server": "npx tsx src/mcp-server/mcp-http.ts",
     "server:dev": "npx tsx --watch src/mcp-server/mcp-http.ts",
     "build:guide": "node governance/build-guide.mjs",
+    "lint:tsx-diff": "npx tsx scripts/lint-tsx-diff.mjs",
     "validate:tokens": "node scripts/validate-tokens.mjs",
     "build:tokens": "node scripts/validate-tokens.mjs && node build-tokens.mjs",
     "build:lib": "npm run build:tokens && vite build --config vite.config.lib.ts",
