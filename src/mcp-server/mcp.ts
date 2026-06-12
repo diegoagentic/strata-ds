@@ -4,13 +4,22 @@ import { z } from 'zod';
 import * as fs from 'fs';
 import * as path from 'path';
 import { validateCode, formatValidation } from './validator.js';
+import { getGovernancePath } from './lib/source.js';
 
-const GOVERNANCE_PATH = path.resolve(__dirname, '../../../governance');
+// Dev ergonomics: if no override is set, use the sibling governance/ folder
+// so stdio devs don't need to set STRATA_LOCAL_ROOT explicitly.
+if (!process.env.STRATA_LOCAL_ROOT) {
+  const devSibling = path.resolve(__dirname, '../../../governance');
+  if (fs.existsSync(path.join(devSibling, 'LAWS.md'))) {
+    process.env.STRATA_LOCAL_ROOT = devSibling;
+  }
+}
 
 function readGovernanceFile(relativePath: string): string {
-  const filePath = path.join(GOVERNANCE_PATH, relativePath);
+  const root = getGovernancePath();
+  const filePath = path.join(root, relativePath);
   if (!fs.existsSync(filePath)) {
-    return `File not found: ${relativePath}`;
+    return `File not found: ${relativePath} (looked in ${filePath})`;
   }
   return fs.readFileSync(filePath, 'utf-8');
 }
@@ -41,7 +50,7 @@ function searchGovernance(query: string): string {
     }
   }
 
-  searchDir(GOVERNANCE_PATH);
+  searchDir(getGovernancePath());
   return results.length > 0
     ? `Found in ${results.length} file(s):\n\n${results.join('\n\n')}`
     : `No results found for: "${query}"`;

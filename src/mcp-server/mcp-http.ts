@@ -6,15 +6,34 @@ import * as path from 'path';
 import * as http from 'http';
 import * as url from 'url';
 import { validateCode, formatValidation } from './validator.js';
+import { getGovernancePath } from './lib/source.js';
 
-// Resolve governance path: env var → sibling `governance/` folder at project root
+// Resolve governance path: F38.2 source layer (env override → gh tarball
+// cache → bundled fallback). Backward-compat: GOVERNANCE_PATH env var still
+// works (set as STRATA_LOCAL_ROOT first if present).
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const GOVERNANCE_PATH = process.env.GOVERNANCE_PATH
-  || path.resolve(__dirname, '../../governance');
+if (process.env.GOVERNANCE_PATH && !process.env.STRATA_LOCAL_ROOT) {
+  process.env.STRATA_LOCAL_ROOT = process.env.GOVERNANCE_PATH;
+}
+// Last-resort: point STRATA_LOCAL_ROOT at the dev sibling governance/
+// folder when nothing else is set (preserves existing dev ergonomics).
+if (!process.env.STRATA_LOCAL_ROOT) {
+  const devSibling = path.resolve(__dirname, '../../governance');
+  if (fs.existsSync(path.join(devSibling, 'LAWS.md'))) {
+    process.env.STRATA_LOCAL_ROOT = devSibling;
+  }
+}
+
+function getGovernanceRoot(): string {
+  return getGovernancePath();
+}
+
+const GOVERNANCE_PATH = getGovernanceRoot(); // resolved once; further calls use the cache.
 
 function readGovernanceFile(relativePath: string): string {
-  const filePath = path.join(GOVERNANCE_PATH, relativePath);
+  const root = getGovernanceRoot();
+  const filePath = path.join(root, relativePath);
   if (!fs.existsSync(filePath)) return `File not found: ${relativePath} (looked in ${filePath})`;
   return fs.readFileSync(filePath, 'utf-8');
 }
@@ -22,6 +41,7 @@ function readGovernanceFile(relativePath: string): string {
 function searchGovernance(query: string): string {
   const results: string[] = [];
   const queryLower = query.toLowerCase();
+  const SEARCH_ROOT = getGovernanceRoot();
 
   function searchDir(dir: string, prefix = '') {
     if (!fs.existsSync(dir)) return;
@@ -43,7 +63,7 @@ function searchGovernance(query: string): string {
     }
   }
 
-  searchDir(GOVERNANCE_PATH);
+  searchDir(SEARCH_ROOT);
   return results.length > 0
     ? `Found in ${results.length} file(s):\n\n${results.join('\n\n')}`
     : `No results for: "${query}"`;
