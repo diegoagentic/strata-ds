@@ -48,6 +48,426 @@ const SECTIONS = [
 const TOKENS_LIGHT = 'src/styles/tokens/variables.css';
 const TOKENS_DARK  = 'src/styles/tokens/variables-dark.css';
 
+// ── Visual examples per section ────────────────────────────────────────
+// Each entry is HTML injected after the section's <h2> heading. The chrome
+// for these examples is defined in buildStyle() and respects the active
+// theme via CSS variables.
+
+const ICON = {
+  check: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+  alert: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+  info: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+  download: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
+  iconSized: (size) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`,
+};
+
+const EXAMPLES = {
+  laws: `
+    <div class="visual-examples">
+      <span class="ve-label">Visual examples · LAWS in action</span>
+
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ LAW 1 — hardcoded hex</span>
+          <div class="ec-body"><button class="demo-btn" style="background:#E6F993;color:#02060C;">Save</button></div>
+          <div class="ec-code">className="bg-[#E6F993] text-[#02060C]"</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ LAW 1 — semantic token</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary">Save</button></div>
+          <div class="ec-code">className="bg-primary text-primary-foreground"</div>
+        </div>
+      </div>
+
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ LAW 2 — brand as text on light bg</span>
+          <div class="ec-body"><span style="color:var(--primary);font-weight:700;font-size:14px;">Welcome to Strata</span></div>
+          <div class="ec-code">className="text-brand-300"  // contrast 1.8:1, fails WCAG</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ LAW 2 — brand only as CTA / signal</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-primary">Sign in</button>
+            <span class="status-pill status-success">${ICON.check} Active</span>
+          </div>
+          <div class="ec-code">bg-primary, bg-success/15, ring-primary</div>
+        </div>
+      </div>
+
+      <div class="example-row">
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ LAW 5 — dark mode via tokens (no manual <code>dark:</code>)</span>
+          <div class="ec-body">
+            <div class="surface-demo" style="padding:12px;">
+              <span class="sd-label">bg-background</span>
+              <div class="sd-card"><span class="sd-label">bg-card text-foreground</span></div>
+            </div>
+          </div>
+          <div class="ec-code">Toggle theme (top-right) to confirm the same classes adapt</div>
+        </div>
+      </div>
+    </div>
+  `,
+
+  'rules-color-tokens': `
+    <div class="visual-examples">
+      <span class="ve-label">Visual examples · Surface hierarchy &amp; status colors</span>
+
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Surface hierarchy — bg → card → muted</span>
+          <div class="ec-body" style="display:block;">
+            <div class="surface-demo">
+              <span class="sd-label">Level 0 · bg-background</span>
+              <div class="sd-card">
+                <span class="sd-label">Level 1 · bg-card</span>
+                <div class="sd-muted"><span class="sd-label">Level 2 · bg-muted</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Sidebar inversion (light app → dark side, vice versa)</span>
+          <div class="ec-body" style="display:block;">
+            <div class="sidebar-demo">
+              <div class="sd-side">
+                <span class="sd-item active">Overview</span>
+                <span class="sd-item">Components</span>
+                <span class="sd-item">Tokens</span>
+              </div>
+              <div class="sd-main">bg-sidebar text-sidebar-foreground</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">State colors — semantic tokens</span>
+          <div class="ec-body" style="display:block;">
+            <div class="status-row">
+              <span class="status-pill status-success">${ICON.check} Active</span>
+              <span class="status-pill status-warning">${ICON.alert} Pending</span>
+              <span class="status-pill status-destructive">${ICON.alert} Error</span>
+              <span class="status-pill status-info">${ICON.info} Info</span>
+            </div>
+          </div>
+          <div class="ec-code">text-success, bg-success/15, text-warning, text-destructive</div>
+        </div>
+      </div>
+    </div>
+  `,
+
+  'rules-brand-colors': `
+    <div class="visual-examples">
+      <span class="ve-label">Visual examples · Brand color usage</span>
+
+      <div class="example-row">
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Brand as CTA — high-emphasis action</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary">Approve &amp; continue</button></div>
+          <div class="ec-code">bg-primary text-primary-foreground</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Brand as focus / active state</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-outline" style="box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 40%, transparent);">Focused input</button>
+          </div>
+          <div class="ec-code">ring-2 ring-primary/40</div>
+        </div>
+      </div>
+
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Brand scale — primitive ramp (use sparingly)</span>
+          <div class="ec-body" style="display:block;">
+            <div class="brand-row">
+              ${[50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950].map((n) => {
+                // approximate lime ramp; the actual values live in variables.css
+                const shades = {
+                  50: '#fafee5', 100: '#f4fbc4', 200: '#ebf99a',
+                  300: '#dff463', 400: '#E6F993', 500: '#c0e032',
+                  600: '#9fbb1f', 700: '#7e911b', 800: '#65741c',
+                  900: '#56631e', 950: '#2e370a',
+                };
+                const bg = shades[n];
+                const fg = n >= 500 ? '#02060C' : '#02060C';
+                return `<div class="brand-cell" style="background:${bg};color:${fg};">${n}</div>`;
+              }).join('')}
+            </div>
+          </div>
+          <div class="ec-code">brand-50 → brand-950 (use semantic primary in app code)</div>
+        </div>
+      </div>
+
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Brand-300/400 as text on light bg</span>
+          <div class="ec-body"><p style="color:#dff463; background:#fff; padding:8px 12px; border-radius:4px; margin:0; font-size:14px;">Body text in brand-300</p></div>
+          <div class="ec-code">text-brand-300 on bg-white — contrast fails</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Brand as panel bg + dark text</span>
+          <div class="ec-body"><div style="background:var(--primary); color:var(--primary-fg); padding:10px 14px; border-radius:6px; font-weight:600; font-size:14px;">Highlighted panel</div></div>
+          <div class="ec-code">bg-primary text-primary-foreground</div>
+        </div>
+      </div>
+    </div>
+  `,
+
+  'rules-containers': `
+    <div class="visual-examples">
+      <span class="ve-label">Visual examples · Containers &amp; cards</span>
+
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Real card composition</span>
+          <div class="ec-body" style="display:block;">
+            <div class="mock-card">
+              <div class="mc-header">
+                <div>
+                  <div class="mc-title">SO2604102</div>
+                  <div class="mc-sub">Leland Furniture</div>
+                </div>
+                <span class="status-pill status-success">${ICON.check} Reviewed</span>
+              </div>
+              <div class="mc-row"><span class="mc-label">Date</span><span class="mc-value">Mar 28, 2025</span></div>
+              <div class="mc-row"><span class="mc-label">Discount</span><span class="mc-value">60.8% avg</span></div>
+              <div class="mc-row"><span class="mc-label">Total</span><span class="mc-value">$4,159.12</span></div>
+            </div>
+          </div>
+          <div class="ec-code">bg-card border border-border rounded-xl + shadow-sm</div>
+        </div>
+
+        <div class="example-card">
+          <span class="ec-tag">Nested surfaces inside a card</span>
+          <div class="ec-body" style="display:block;">
+            <div class="surface-demo" style="padding:16px;">
+              <div class="sd-card">
+                <span class="sd-label">Card body</span>
+                <div class="sd-muted"><span class="sd-label">Sub-panel</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="ec-code">bg-background &gt; bg-card &gt; bg-muted</div>
+        </div>
+      </div>
+    </div>
+  `,
+
+  'rules-buttons': `
+    <div class="visual-examples">
+      <span class="ve-label">Visual examples · Button variants &amp; states</span>
+
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Variants</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-primary">Default</button>
+            <button class="demo-btn demo-btn-secondary">Secondary</button>
+            <button class="demo-btn demo-btn-outline">Outline</button>
+            <button class="demo-btn demo-btn-ghost">Ghost</button>
+            <button class="demo-btn demo-btn-destructive">Destructive</button>
+            <button class="demo-btn demo-btn-link">Link</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">States</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-primary">Default</button>
+            <button class="demo-btn demo-btn-primary" style="filter: brightness(0.9);">Hover</button>
+            <button class="demo-btn demo-btn-primary" style="box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 40%, transparent);">Focus</button>
+            <button class="demo-btn demo-btn-disabled" disabled>Disabled</button>
+            <button class="demo-btn demo-btn-primary">${ICON.download} With icon</button>
+          </div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Action hierarchy in a row</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-outline">Cancel</button>
+            <button class="demo-btn demo-btn-primary">Save changes</button>
+          </div>
+          <div class="ec-code">Single primary CTA; outline for secondary actions</div>
+        </div>
+      </div>
+
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Two primary CTAs competing</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-primary">Approve</button>
+            <button class="demo-btn demo-btn-primary">Reject</button>
+          </div>
+          <div class="ec-code">Demote one to outline or destructive</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Primary + outline + destructive</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-destructive">Reject</button>
+            <button class="demo-btn demo-btn-outline">Skip</button>
+            <button class="demo-btn demo-btn-primary">Approve</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+
+  'rules-icons': `
+    <div class="visual-examples">
+      <span class="ve-label">Visual examples · Icon sizes &amp; tones</span>
+
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Sizes — 12 · 14 · 16 · 20 · 24 px</span>
+          <div class="ec-body" style="align-items:center;">
+            <span class="icon-pair">${ICON.iconSized(12)} 12 (inline)</span>
+            <span class="icon-pair">${ICON.iconSized(14)} 14 (dense)</span>
+            <span class="icon-pair">${ICON.iconSized(16)} 16 (default)</span>
+            <span class="icon-pair">${ICON.iconSized(20)} 20 (button)</span>
+            <span class="icon-pair">${ICON.iconSized(24)} 24 (heading)</span>
+          </div>
+          <div class="ec-code">h-3, h-3.5, h-4, h-5, h-6 (lucide / heroicons)</div>
+        </div>
+      </div>
+
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Tone — driven by semantic color</span>
+          <div class="ec-body">
+            <span class="icon-pair icon-tone-success">${ICON.check} text-success</span>
+            <span class="icon-pair icon-tone-warning">${ICON.alert} text-warning</span>
+            <span class="icon-pair icon-tone-destructive">${ICON.alert} text-destructive</span>
+            <span class="icon-pair icon-tone-muted">${ICON.info} text-muted-foreground</span>
+          </div>
+        </div>
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Hardcoded color on the SVG</span>
+          <div class="ec-body">
+            <span class="icon-pair" style="color:#22c55e;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> stroke="#22c55e"</span>
+          </div>
+          <div class="ec-code">Use className="text-success" — SVG inherits via currentColor</div>
+        </div>
+      </div>
+    </div>
+  `,
+
+  'rules-typography': `
+    <div class="visual-examples">
+      <span class="ve-label">Visual examples · Type scale</span>
+
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Hierarchy</span>
+          <div class="ec-body" style="display:block;">
+            <div class="type-scale">
+              <div class="type-row"><span class="t-tag">h1 / 32</span><span class="type-h1">Display heading</span></div>
+              <div class="type-row"><span class="t-tag">h2 / 24</span><span class="type-h2">Section heading</span></div>
+              <div class="type-row"><span class="t-tag">h3 / 18</span><span class="type-h3">Subsection</span></div>
+              <div class="type-row"><span class="t-tag">eyebrow</span><span class="type-h4">Eyebrow label</span></div>
+              <div class="type-row"><span class="t-tag">body / 15</span><span class="type-body">Body copy is the canonical text. Use this for paragraph content.</span></div>
+              <div class="type-row"><span class="t-tag">small / 12</span><span class="type-small">Helper / meta text</span></div>
+              <div class="type-row"><span class="t-tag">mono</span><code>const sample = "monospace inline"</code></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+
+  'rules-elevation': `
+    <div class="visual-examples">
+      <span class="ve-label">Visual examples · Elevation levels</span>
+
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Shadows — sm · md · lg · xl</span>
+          <div class="ec-body" style="display:block;">
+            <div class="elev-row">
+              <div class="elev-card elev-sm">shadow-sm</div>
+              <div class="elev-card elev-md">shadow-md</div>
+              <div class="elev-card elev-lg">shadow-lg</div>
+              <div class="elev-card elev-xl">shadow-xl</div>
+            </div>
+          </div>
+          <div class="ec-code">shadow-sm inputs · shadow-md cards · shadow-lg dialogs · shadow-xl overlays</div>
+        </div>
+      </div>
+    </div>
+  `,
+
+  'anti-patterns': `
+    <div class="visual-examples">
+      <span class="ve-label">Visual examples · Anti-pattern pairs</span>
+
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ ERROR 01 — raw Tailwind state color</span>
+          <div class="ec-body"><span style="color:#22c55e; font-weight:600;">Saved!</span></div>
+          <div class="ec-code">text-green-500</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Semantic state token</span>
+          <div class="ec-body"><span style="color:var(--success); font-weight:600;">Saved!</span></div>
+          <div class="ec-code">text-success</div>
+        </div>
+      </div>
+
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ ERROR 02 — bg-white / bg-zinc-900</span>
+          <div class="ec-body">
+            <div style="background:#fff; color:#000; border:1px solid #e5e7eb; padding:10px 12px; border-radius:6px; font-size:13px;">Hardcoded surface</div>
+          </div>
+          <div class="ec-code">bg-white / bg-zinc-900</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Semantic surface token</span>
+          <div class="ec-body">
+            <div style="background:var(--card); color:var(--fg); border:1px solid var(--border); padding:10px 12px; border-radius:6px; font-size:13px;">Adaptive surface</div>
+          </div>
+          <div class="ec-code">bg-card / bg-background / bg-muted</div>
+        </div>
+      </div>
+
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ ERROR 06 — clickable without hover</span>
+          <div class="ec-body"><button class="demo-btn" style="background:var(--card); color:var(--fg); border:1px solid var(--border);">No transition</button></div>
+          <div class="ec-code">No hover:, no transition-colors</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Hover + transition</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-secondary" onmouseover="this.style.background='var(--muted)'" onmouseout="this.style.background='var(--card)'" style="transition:background 0.15s;">Hover me</button></div>
+          <div class="ec-code">hover:bg-muted transition-colors</div>
+        </div>
+      </div>
+
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ ERROR 09 — multiple primary CTAs</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-primary">Approve</button>
+            <button class="demo-btn demo-btn-primary">Reject</button>
+            <button class="demo-btn demo-btn-primary">Skip</button>
+          </div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ One primary, rest demoted</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-ghost">Skip</button>
+            <button class="demo-btn demo-btn-outline">Reject</button>
+            <button class="demo-btn demo-btn-primary">Approve</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+};
+
 // ── Helpers ────────────────────────────────────────────────────────────
 
 function read(rel) {
@@ -424,6 +844,259 @@ footer.guide-footer {
   aside.sidebar { position: static; height: auto; }
   main.content { padding: 24px 20px 60px; }
 }
+
+/* ── Visual examples ───────────────────────────────────────────────── */
+
+.visual-examples {
+  background: color-mix(in srgb, var(--muted) 50%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin: 16px 0 28px;
+}
+.visual-examples > .ve-label {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted-fg);
+  margin-bottom: 14px;
+}
+.example-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.example-row:last-child { margin-bottom: 0; }
+.example-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  background: var(--card);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.example-card.is-bad { border-color: color-mix(in srgb, var(--destructive) 50%, var(--border)); }
+.example-card.is-good { border-color: color-mix(in srgb, var(--success) 50%, var(--border)); }
+.example-card .ec-tag {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted-fg);
+}
+.example-card.is-bad .ec-tag { color: var(--destructive); }
+.example-card.is-good .ec-tag { color: var(--success); }
+.example-card .ec-body { padding: 8px 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.example-card .ec-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+  background: color-mix(in srgb, var(--muted) 60%, transparent);
+  padding: 6px 8px;
+  border-radius: 4px;
+  color: var(--muted-fg);
+  word-break: break-all;
+}
+
+/* Demo buttons */
+.demo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: inherit;
+  line-height: 1.2;
+}
+.demo-btn-primary { background: var(--primary); color: var(--primary-fg); }
+.demo-btn-secondary { background: var(--card); color: var(--fg); border-color: var(--border); }
+.demo-btn-outline { background: transparent; color: var(--fg); border-color: var(--border); }
+.demo-btn-ghost { background: transparent; color: var(--fg); }
+.demo-btn-destructive { background: var(--destructive); color: #fff; }
+.demo-btn-link {
+  background: transparent;
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding-left: 0;
+  padding-right: 0;
+}
+.demo-btn-disabled {
+  background: var(--muted);
+  color: var(--muted-fg);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Surface hierarchy */
+.surface-demo {
+  background: var(--bg);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 18px;
+}
+.surface-demo .sd-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 14px;
+  margin-top: 10px;
+}
+.surface-demo .sd-muted {
+  background: var(--muted);
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 10px;
+}
+.surface-demo .sd-label {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: color-mix(in srgb, var(--fg) 8%, transparent);
+  padding: 2px 7px;
+  border-radius: 3px;
+  color: var(--muted-fg);
+}
+
+/* Sidebar inversion demo */
+.sidebar-demo {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  min-height: 140px;
+}
+.sidebar-demo .sd-side {
+  background: var(--fg);
+  color: var(--bg);
+  padding: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.sidebar-demo .sd-side .sd-item {
+  padding: 4px 8px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--bg) 12%, transparent);
+}
+.sidebar-demo .sd-side .sd-item.active { background: var(--primary); color: var(--primary-fg); }
+.sidebar-demo .sd-main {
+  background: var(--bg);
+  padding: 14px;
+  font-size: 12px;
+  color: var(--muted-fg);
+}
+
+/* Status colors */
+.status-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.status-pill::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.status-success { color: var(--success); background: color-mix(in srgb, var(--success) 12%, transparent); }
+.status-warning { color: var(--warning); background: color-mix(in srgb, var(--warning) 14%, transparent); }
+.status-destructive { color: var(--destructive); background: color-mix(in srgb, var(--destructive) 12%, transparent); }
+.status-info { color: var(--fg); background: var(--muted); }
+
+/* Brand swatches */
+.brand-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(64px, 1fr)); gap: 6px; }
+.brand-cell {
+  border-radius: 6px;
+  padding: 10px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+  font-family: ui-monospace, monospace;
+}
+
+/* Typography scale */
+.type-scale { display: flex; flex-direction: column; gap: 8px; }
+.type-row { display: flex; align-items: baseline; gap: 14px; }
+.type-row .t-tag {
+  font-family: ui-monospace, monospace;
+  font-size: 10px;
+  color: var(--muted-fg);
+  min-width: 54px;
+  flex-shrink: 0;
+}
+.type-h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+.type-h2 { font-size: 24px; font-weight: 700; line-height: 1.2; }
+.type-h3 { font-size: 18px; font-weight: 600; }
+.type-h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-fg); }
+.type-body { font-size: 15px; }
+.type-small { font-size: 12px; color: var(--muted-fg); }
+
+/* Icons demo */
+.icon-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+.icon-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--muted);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--muted-fg);
+}
+.icon-pair svg { color: var(--fg); }
+.icon-tone-success svg { color: var(--success); }
+.icon-tone-warning svg { color: var(--warning); }
+.icon-tone-destructive svg { color: var(--destructive); }
+.icon-tone-muted svg { color: var(--muted-fg); }
+
+/* Elevation cards */
+.elev-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 14px; padding: 8px; }
+.elev-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 14px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted-fg);
+}
+.elev-sm { box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+.elev-md { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.10), 0 2px 4px -2px rgba(0,0,0,0.06); }
+.elev-lg { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.10), 0 4px 6px -4px rgba(0,0,0,0.06); }
+.elev-xl { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.12), 0 8px 10px -6px rgba(0,0,0,0.06); }
+
+/* Mock card composition */
+.mock-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  max-width: 340px;
+}
+.mock-card .mc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.mock-card .mc-title { font-size: 14px; font-weight: 700; color: var(--fg); }
+.mock-card .mc-sub { font-size: 11px; color: var(--muted-fg); }
+.mock-card .mc-row { display: flex; justify-content: space-between; padding: 6px 0; border-top: 1px solid var(--border); font-size: 12px; }
+.mock-card .mc-row:first-of-type { border-top: none; }
+.mock-card .mc-row .mc-label { color: var(--muted-fg); }
+.mock-card .mc-row .mc-value { color: var(--fg); font-weight: 600; }
 `;
 }
 
@@ -510,13 +1183,15 @@ function build() {
   ].join('\n');
 
   const sectionsBlocks = sectionsHtml
-    .map(
-      (s) => `
+    .map((s) => {
+      const examples = EXAMPLES[s.id] ?? '';
+      return `
     <section id="${s.id}" class="guide-section">
       <h2>${s.title}</h2>
+      ${examples}
       ${s.html}
-    </section>`,
-    )
+    </section>`;
+    })
     .join('\n');
 
   const cssTokensBlock = `
@@ -553,7 +1228,7 @@ ${navLinks}
       <div class="page-header">
         <div>
           <h1>Strata DS — Rules Guide</h1>
-          <div class="subtitle">Generated ${generatedAt} · ${SECTIONS.length} rule files · ${lightTokens.size} CSS tokens</div>
+          <div class="subtitle">Generated ${generatedAt} · ${SECTIONS.length} rule files · ${Object.keys(EXAMPLES).length} sections with live visual examples · ${lightTokens.size} CSS tokens</div>
         </div>
         <button id="theme-toggle" class="theme-toggle" type="button">Toggle theme</button>
       </div>
