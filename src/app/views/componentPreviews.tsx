@@ -24,6 +24,14 @@ import {
   ConfidenceIndicator,
 } from "@/components/overlays/document-review-modal";
 import { SplitPaneReviewModal } from "@/components/overlays/split-pane-review-modal";
+import { FunnelStepper } from "@/components/application-ui/funnel-stepper";
+import { KanbanFunnel } from "@/components/application-ui/kanban-funnel";
+import {
+  DiscrepancyRow,
+  DiscrepancyComparisonBlock,
+  type DiscrepancyDecision,
+} from "@/components/application-ui/discrepancy-row";
+import { BulkActionBar } from "@/components/application-ui/bulk-action-bar";
 
 import { Button } from "@/components/application-ui/button";
 import { Badge } from "@/components/application-ui/badge";
@@ -2833,6 +2841,194 @@ export const COMPONENT_PREVIEWS: Record<string, React.FC> = {
       </p>
     </div>
   ),
+
+  // ── F28: funnel + transactions + OCR ───────────────────────────────────
+
+  "funnel-stepper": () => {
+    const STEPS = [
+      { key: "intake", label: "Intake" },
+      { key: "quote", label: "Quote" },
+      { key: "po-labor", label: "PO & Labor" },
+      { key: "cpr", label: "CPR" },
+      { key: "fee", label: "Fee Verify" },
+    ];
+    const [active, setActive] = useState("quote");
+    return (
+      <div className="space-y-6 w-full">
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Default (sm)</p>
+          <FunnelStepper steps={STEPS} activeKey={active} />
+        </section>
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Medium</p>
+          <FunnelStepper steps={STEPS} activeKey={active} size="md" />
+        </section>
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Try each stage</p>
+          <div className="flex flex-wrap gap-1">
+            {STEPS.map((s) => (
+              <button
+                key={s.key}
+                type="button"
+                onClick={() => setActive(s.key)}
+                className={
+                  active === s.key
+                    ? "rounded-md px-3 py-1 text-xs font-medium bg-primary text-primary-foreground"
+                    : "rounded-md px-3 py-1 text-xs text-muted-foreground hover:bg-muted"
+                }
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
+        </section>
+      </div>
+    );
+  },
+
+  "kanban-funnel": () => {
+    interface ProjectCard { code: string; client: string; value: string }
+    const COLUMNS: { id: string; label: string; cards: ProjectCard[] }[] = [
+      { id: "intake", label: "Intake", cards: [{ code: "BFI-2210", client: "BFI Group · NJ", value: "$48k" }] },
+      { id: "design", label: "Design", cards: [
+        { code: "MANATT", client: "Manatt Phelps · DC", value: "$61k" },
+        { code: "BFI-2208", client: "BFI Group · NJ", value: "$22k" },
+      ] },
+      { id: "spec-check", label: "Spec Check", cards: [] },
+      { id: "submission", label: "Submission", cards: [{ code: "ACS-1042", client: "ACS · NJ", value: "$130k" }] },
+      { id: "ack", label: "Ack Review", cards: [] },
+    ];
+    return (
+      <KanbanFunnel<ProjectCard>
+        title="Spec Check & Design · Pipeline"
+        subtitle="Felicia Miano-Poles · EVP Design & PM · ~30 designers"
+        columns={COLUMNS}
+        activeColumnId="design"
+        renderCard={(c) => (
+          <div className="rounded-2xl border border-border bg-card p-3 space-y-2 shadow-sm">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-bold text-foreground">{c.code}</span>
+              <span className="text-[10px] tabular-nums text-muted-foreground">{c.value}</span>
+            </div>
+            <p className="text-[11px] text-muted-foreground truncate">{c.client}</p>
+          </div>
+        )}
+        getCardKey={(c) => c.code}
+      />
+    );
+  },
+
+  "discrepancy-row": () => {
+    interface Row { id: string; field: string; severity: "low" | "medium" | "high"; before: string; after: string }
+    const rows: Row[] = [
+      { id: "d1", field: "Line 1 · Qty (Task Chair)", severity: "high", before: "12", after: "8" },
+      { id: "d2", field: "Line 3 · Finish (Lounge)", severity: "medium", before: "Loft Gray", after: "Charcoal" },
+      { id: "d3", field: "Estimated Ship Date", severity: "low", before: "Apr 15", after: "Apr 22" },
+    ];
+    const [decisions, setDecisions] = useState<Record<string, DiscrepancyDecision | null>>({});
+    return (
+      <div className="space-y-2 w-full max-w-3xl">
+        {rows.map((r) => (
+          <DiscrepancyRow
+            key={r.id}
+            fieldLabel={r.field}
+            severity={r.severity}
+            beforeValue={r.before}
+            afterValue={r.after}
+            decision={decisions[r.id] ?? null}
+            onDecide={(d) => setDecisions((prev) => ({ ...prev, [r.id]: d }))}
+            comparisonBlockProps={{
+              beforeLabel: "Purchase Order",
+              afterLabel: "Acknowledgement",
+              fieldType: r.field.split("·")[1]?.trim() ?? r.field,
+              aiConfidence: 92,
+              aiAnalysis: "Vendor short-shipped 4 units. Confirm with sales rep before approving the lower quantity.",
+            }}
+          />
+        ))}
+        <button
+          type="button"
+          onClick={() => setDecisions({})}
+          className="text-xs text-muted-foreground hover:text-foreground underline"
+        >
+          Reset all decisions
+        </button>
+      </div>
+    );
+  },
+
+  "discrepancy-comparison-block": () => (
+    <div className="w-full max-w-3xl">
+      <DiscrepancyComparisonBlock
+        beforeLabel="Purchase Order"
+        afterLabel="Acknowledgement"
+        fieldType="Quantity"
+        beforeValue="12 ea"
+        afterValue="8 ea"
+        aiConfidence={92}
+        supportingEvidence={
+          <span>
+            Source: <code className="font-mono">ACK-4458 · line 12</code>
+          </span>
+        }
+        aiAnalysis="Vendor short-shipped 4 units due to lead-time slip. Confirm with sales rep — accepting locks the lower quantity into the SIF."
+      />
+    </div>
+  ),
+
+  "bulk-action-bar": () => {
+    const [selected, setSelected] = useState(3);
+    return (
+      <div className="space-y-6 w-full max-w-2xl">
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Inline (selectedCount = {selected})</p>
+          <BulkActionBar
+            selectedCount={selected}
+            itemNoun="document"
+            onClearSelection={() => setSelected(0)}
+            actions={
+              <>
+                <Button variant="outline" size="sm">
+                  <Download className="size-3.5 mr-1.5" /> Export
+                </Button>
+                <Button variant="outline" size="sm">
+                  <Inbox className="size-3.5 mr-1.5" /> Archive
+                </Button>
+                <Button variant="destructive" size="sm">
+                  <Trash className="size-3.5 mr-1.5" /> Delete
+                </Button>
+              </>
+            }
+          />
+        </section>
+        <section>
+          <p className="text-xs font-semibold uppercase text-muted-foreground mb-2">Floating variant (always visible)</p>
+          <BulkActionBar
+            className="!relative !left-auto !bottom-auto !translate-x-0"
+            floating
+            selectedCount={5}
+            itemNoun="row"
+            onClearSelection={() => {}}
+            hideWhenEmpty={false}
+            actions={
+              <>
+                <Button variant="outline" size="sm">Export</Button>
+                <Button size="sm">Approve</Button>
+              </>
+            }
+          />
+        </section>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={() => setSelected((s) => s + 1)}>
+            +1 selected
+          </Button>
+          <Button variant="outline" size="sm" onClick={() => setSelected(0)}>
+            Clear
+          </Button>
+        </div>
+      </div>
+    );
+  },
 
   "split-pane-review-modal": () => {
     const [open, setOpen] = useState(false);

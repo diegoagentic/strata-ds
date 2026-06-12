@@ -70,6 +70,10 @@ const NAV: NavSection[] = [
       { id: "data-list-table", label: "DataListTable", isNew: true },
       { id: "data-list-card", label: "DataListCard", isNew: true },
       { id: "data-list-card-grid", label: "DataListCardGrid", isNew: true },
+      { id: "bulk-action-bar", label: "BulkActionBar", isNew: true },
+      // Funnel / pipeline
+      { id: "funnel-stepper", label: "FunnelStepper", isNew: true },
+      { id: "kanban-funnel", label: "KanbanFunnel", isNew: true },
       // Upload + line items
       { id: "file-upload-modal", label: "FileUploadModal", isNew: true },
       { id: "editable-line-table", label: "EditableLineTable", isNew: true },
@@ -79,6 +83,9 @@ const NAV: NavSection[] = [
       { id: "field-value-row", label: "FieldValueRow", isNew: true },
       { id: "confidence-indicator", label: "ConfidenceIndicator", isNew: true },
       { id: "split-pane-review-modal", label: "SplitPaneReviewModal", isNew: true },
+      // OCR / comparison
+      { id: "discrepancy-row", label: "DiscrepancyRow", isNew: true },
+      { id: "discrepancy-comparison-block", label: "DiscrepancyComparisonBlock", isNew: true },
     ],
   },
   {
@@ -257,7 +264,7 @@ export default function App() {
             </div>
             <div>
               <div className="font-bold text-foreground">Strata DS</div>
-              <div className="text-xs text-muted-foreground">v1.0 · 107 components</div>
+              <div className="text-xs text-muted-foreground">v1.0 · 112 components</div>
             </div>
           </div>
         </SidebarHeader>

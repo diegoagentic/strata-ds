@@ -1581,6 +1581,109 @@ const componentsMap: Record<string, ComponentSpec> = {
     ],
     antiPatterns: COMMON_ANTI_PATTERNS,
   },
+
+  // ── F28: funnel + transactions + OCR ────────────────────────────────────
+
+  "funnel-stepper": {
+    id: "funnel-stepper",
+    name: "FunnelStepper",
+    import: `import { FunnelStepper } from "strata-design-system"`,
+    category: "Strata Components",
+    description: "Compact horizontal pipeline stepper with chevron separators — active stage highlighted, past stages with success checkmark, future stages muted. Promoted from the BFI / Officeworks workflow modal header.",
+    tokens: {
+      "bg-primary": "Active step background",
+      "bg-muted/60": "Past step background",
+      "bg-muted/30": "Future step background",
+      "text-success": "Checkmark on past steps",
+    },
+    props: ["steps", "activeKey", "size"],
+    whenToUse: [
+      "Header of a workflow review modal showing a discrete pipeline (Intake → Quote → CPR → Fee)",
+      "Any small horizontal stepper where past stages should read as completed",
+    ],
+    antiPatterns: COMMON_ANTI_PATTERNS,
+  },
+
+  "kanban-funnel": {
+    id: "kanban-funnel",
+    name: "KanbanFunnel",
+    import: `import { KanbanFunnel } from "strata-design-system"`,
+    category: "Strata Components",
+    description: "Board-style pipeline view with N columns + cards per stage. Header + optional footer (capacity panel, summary block). Captures the OfficeworksFunnel shape so consumers only own the card render.",
+    tokens: {
+      "bg-card": "Board surface",
+      "border-border": "Board + column dividers",
+      "bg-muted": "Card-count pill background",
+      "border-dashed": "Empty-column state border",
+    },
+    props: ["title", "subtitle", "columns", "activeColumnId", "renderCard", "footer", "gridClassName"],
+    whenToUse: [
+      "Page-level pipeline view (intake → design → spec → submission → ack)",
+      "Any kanban-style flow where each column maps to a workflow stage",
+    ],
+    antiPatterns: COMMON_ANTI_PATTERNS,
+  },
+
+  "discrepancy-row": {
+    id: "discrepancy-row",
+    name: "DiscrepancyRow",
+    import: `import { DiscrepancyRow } from "strata-design-system"`,
+    category: "Strata Components",
+    description: "Collapsible row carrying a severity badge, the field label, and a compact before → after preview. Expands to a 3-column comparison block + decision pills (Accept / Reject / Flag). The canonical OCR / document-comparison row.",
+    tokens: {
+      "bg-success/10": "Accepted decision pill",
+      "bg-destructive/15": "Rejected decision + high severity",
+      "bg-warning/15": "Medium severity",
+      "bg-info/15": "Flagged decision",
+    },
+    props: ["fieldLabel", "severity", "beforeValue", "afterValue", "decision", "onDecide", "comparison", "comparisonBlockProps", "open", "defaultOpen", "onOpenChange"],
+    whenToUse: [
+      "Display a single field discrepancy between two documents (PO vs ACK, Quote vs Order)",
+      "Any reviewer flow where a field needs accept / reject / flag triage",
+    ],
+    antiPatterns: COMMON_ANTI_PATTERNS,
+  },
+
+  "discrepancy-comparison-block": {
+    id: "discrepancy-comparison-block",
+    name: "DiscrepancyComparisonBlock",
+    import: `import { DiscrepancyComparisonBlock } from "strata-design-system"`,
+    category: "Strata Components",
+    description: "3-column comparison body — Before (muted, struck through) · After (destructive tint) · AI Analysis (sparkles + confidence + supporting evidence). Used by DiscrepancyRow but exported standalone for SplitPaneReviewModal layouts.",
+    tokens: {
+      "bg-muted/20": "Before column",
+      "bg-destructive/5": "After column",
+      "bg-muted/40": "AI analysis column",
+      "text-destructive": "After value",
+    },
+    props: ["beforeLabel", "beforeValue", "afterLabel", "afterValue", "fieldType", "aiAnalysis", "aiConfidence", "supportingEvidence"],
+    whenToUse: [
+      "Inline side-by-side comparison outside a DiscrepancyRow (e.g. in a SplitPaneReviewModal right pane)",
+      "Any value-mismatch presentation with an AI commentary column",
+    ],
+    antiPatterns: COMMON_ANTI_PATTERNS,
+  },
+
+  "bulk-action-bar": {
+    id: "bulk-action-bar",
+    name: "BulkActionBar",
+    import: `import { BulkActionBar } from "strata-design-system"`,
+    category: "Strata Components",
+    description: "Action bar that appears when one or more list rows are selected — data-driven pluralisation, clear-selection X, slotted actions. Replaces inline duplicates across Transactions / Inventory / Orders.",
+    tokens: {
+      "bg-card": "Default bar background",
+      "bg-foreground text-background": "Floating variant (dark bottom bar)",
+      "border-border": "Bar border",
+      "shadow-sm": "Inline elevation",
+      "shadow-2xl": "Floating elevation",
+    },
+    props: ["selectedCount", "itemNoun", "itemNounPlural", "summary", "actions", "onClearSelection", "floating", "hideWhenEmpty"],
+    whenToUse: [
+      "Above or below a multi-select list when at least one row is selected",
+      "Any bulk-action affordance that should auto-hide when selection is empty",
+    ],
+    antiPatterns: COMMON_ANTI_PATTERNS,
+  },
 };
 
 export function getComponentSpec(id: string): ComponentSpec | undefined {
