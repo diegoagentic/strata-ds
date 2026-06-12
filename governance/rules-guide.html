@@ -566,6 +566,55 @@ footer.guide-footer {
   }
 }
 
+/* ── Copy-code button (injected on every <pre>) ───────────────────── */
+
+pre {
+  position: relative;
+  padding-right: 64px;
+}
+.copy-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--card);
+  color: var(--muted-fg);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.15s ease, color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1;
+}
+pre:hover .copy-btn { opacity: 1; }
+.copy-btn:focus-visible { opacity: 1; outline: 2px solid var(--primary); outline-offset: 1px; }
+.copy-btn:hover {
+  color: var(--fg);
+  background: var(--muted);
+}
+.copy-btn.is-copied {
+  color: var(--success);
+  border-color: color-mix(in srgb, var(--success) 50%, var(--border));
+  opacity: 1;
+}
+.copy-btn.is-error {
+  color: var(--destructive);
+  border-color: color-mix(in srgb, var(--destructive) 50%, var(--border));
+  opacity: 1;
+}
+.copy-btn svg {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+@media print { .copy-btn { display: none !important; } }
+
 /* Mock card composition */
 .mock-card {
   background: var(--card);
@@ -614,7 +663,7 @@ footer.guide-footer {
       <div class="page-header">
         <div>
           <h1>Strata DS — Rules Guide</h1>
-          <div class="subtitle">Generated 2026-06-12T16:30:36.421Z · 11 rule files · 9 overview blocks + 97 sub-rule examples · 207 CSS tokens</div>
+          <div class="subtitle">Generated 2026-06-12T16:36:39.851Z · 11 rule files · 9 overview blocks + 97 sub-rule examples · 207 CSS tokens</div>
         </div>
         <button id="theme-toggle" class="theme-toggle" type="button">Toggle theme</button>
       </div>
@@ -6355,6 +6404,75 @@ font-mono  → ui-monospace stack     → code, tokens, numerals</code></pre>
     });
     btn.textContent = html.classList.contains('dark') ? 'Light mode' : 'Dark mode';
   }
+
+  // Copy-code buttons — inject into every <pre><code> block
+  var COPY_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+  var CHECK_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+  function setupCopyButtons() {
+    document.querySelectorAll('pre').forEach(function (pre) {
+      if (pre.querySelector(':scope > .copy-btn')) return;
+      var code = pre.querySelector(':scope > code');
+      var text = (code ? code.textContent : pre.textContent) || '';
+      if (!text.trim()) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.setAttribute('aria-label', 'Copy code to clipboard');
+      btn.innerHTML = COPY_SVG + '<span>Copy</span>';
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var payload = (code ? code.textContent : pre.textContent) || '';
+        var done = function () {
+          btn.classList.remove('is-error');
+          btn.classList.add('is-copied');
+          btn.innerHTML = CHECK_SVG + '<span>Copied</span>';
+          setTimeout(function () {
+            btn.classList.remove('is-copied');
+            btn.innerHTML = COPY_SVG + '<span>Copy</span>';
+          }, 1600);
+        };
+        var fail = function () {
+          btn.classList.add('is-error');
+          btn.innerHTML = '<span>Failed</span>';
+          setTimeout(function () {
+            btn.classList.remove('is-error');
+            btn.innerHTML = COPY_SVG + '<span>Copy</span>';
+          }, 1600);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(payload).then(done).catch(function () {
+            // Fallback for browsers that block clipboard on file://
+            try {
+              var ta = document.createElement('textarea');
+              ta.value = payload;
+              ta.style.position = 'fixed';
+              ta.style.opacity = '0';
+              document.body.appendChild(ta);
+              ta.select();
+              document.execCommand('copy');
+              document.body.removeChild(ta);
+              done();
+            } catch (_) { fail(); }
+          });
+        } else {
+          try {
+            var ta = document.createElement('textarea');
+            ta.value = payload;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            done();
+          } catch (_) { fail(); }
+        }
+      });
+      pre.appendChild(btn);
+    });
+  }
+  setupCopyButtons();
 
   // Scroll-spy
   var sections = Array.prototype.slice.call(document.querySelectorAll('section.guide-section'));
