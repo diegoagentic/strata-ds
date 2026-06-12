@@ -948,6 +948,311 @@ const BRAND_COLORS = {
   },
 };
 
+// ── Stage 3: rules/03-containers-and-cards + rules/07-elevation ─────────
+
+const CONTAINERS = {
+  'background-hierarchy': {
+    eyebrow: 'Hierarchy',
+    explanation:
+      'Strata uses three nesting levels of surface tokens — <strong>0 background</strong> (root), <strong>1 card</strong> (panel), <strong>2 muted</strong> (inner section). Each level steps the eye one degree of depth in both light and dark mode.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Nested levels</span>
+          <div class="ec-body" style="display:block;">
+            <div class="surface-demo">
+              <span class="sd-label">Level 0 · bg-background</span>
+              <div class="sd-card">
+                <span class="sd-label">Level 1 · bg-card</span>
+                <div class="sd-muted"><span class="sd-label">Level 2 · bg-muted</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `<main className="bg-background">          {/* Level 0 */}
+  <Card className="bg-card">              {/* Level 1 */}
+    <section className="bg-muted">        {/* Level 2 */}
+      ...
+    </section>
+  </Card>
+</main>`,
+    howto:
+      'Match the nesting depth of your DOM to the level of token: page > card > inner section. Never skip a level (do not put <code>bg-muted</code> directly on <code>bg-background</code>).',
+  },
+
+  'level-0-root-layout-and-pages': {
+    eyebrow: 'Level 0',
+    explanation:
+      'The page root sits on <code>bg-background</code>. This is the only surface that should ever be the deepest tone — every other panel needs at least one step up.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Root page</span>
+          <div class="ec-body" style="display:block;">
+            <div style="background:var(--bg);padding:20px;border-radius:8px;border:1px dashed var(--border);">
+              <p style="color:var(--fg);font-weight:600;margin:0;">Root layout — bg-background</p>
+              <p style="color:var(--muted-fg);font-size:12px;margin:6px 0 0;">All other surfaces step up from here.</p>
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `<body className="bg-background text-foreground min-h-screen">
+  <Layout>...</Layout>
+</body>`,
+    howto:
+      'Apply <code>bg-background</code> at the body or <code>&lt;Layout&gt;</code> level once. Never re-apply it deeper in the tree.',
+  },
+
+  'level-1-cards-and-panels': {
+    eyebrow: 'Level 1',
+    explanation:
+      'Panels, cards, modals, sidebars-as-secondary all sit on <code>bg-card</code>. They float one step above the background and carry the standard border + small shadow.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Card panel</span>
+          <div class="ec-body" style="display:block;">
+            <div class="mock-card">
+              <div class="mc-header">
+                <div><div class="mc-title">Quote summary</div><div class="mc-sub">SO2604102</div></div>
+                <span class="status-pill status-success">${ICON.check} Ready</span>
+              </div>
+              <div class="mc-row"><span class="mc-label">Total</span><span class="mc-value">$4,159.12</span></div>
+            </div>
+          </div>
+          <div class="ec-code">bg-card border border-border rounded-xl shadow-sm</div>
+        </div>
+      </div>`,
+    code: `<Card className="bg-card border border-border rounded-xl shadow-sm p-6">
+  <CardHeader>...</CardHeader>
+  <CardContent>...</CardContent>
+</Card>`,
+    howto:
+      'Anything that reads as "a thing on the page" — a record, a panel, a tooltip body — sits on <code>bg-card</code>. Pair with <code>border-border</code> + <code>shadow-sm</code>.',
+  },
+
+  'level-2-inner-sections': {
+    eyebrow: 'Level 2',
+    explanation:
+      '<code>bg-muted</code> is the inner step — sub-panels inside a card, hover backgrounds for rows, footnote regions, code blocks. The contrast with <code>bg-card</code> is subtle but unmistakable.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Inner section</span>
+          <div class="ec-body" style="display:block;">
+            <div style="background:var(--card);border:1px solid var(--border);padding:14px;border-radius:8px;">
+              <div style="color:var(--fg);font-weight:600;font-size:13px;margin-bottom:8px;">Quote</div>
+              <div style="background:var(--muted);padding:10px 12px;border-radius:6px;font-size:12px;color:var(--muted-fg);">bg-muted — sub-panel inside the card</div>
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `<Card>
+  <CardContent>
+    <h3>Quote</h3>
+    <div className="bg-muted rounded-md p-3">
+      Inner section
+    </div>
+  </CardContent>
+</Card>`,
+    howto:
+      'Use <code>bg-muted</code> for: hover row backgrounds, code blocks, helper-text regions, sub-headers inside cards, footnote panels.',
+  },
+
+  'sidebar-theme-inversion': {
+    eyebrow: 'Sidebar invert',
+    explanation:
+      'Sidebars use a separate token family that inverts the theme: in light app the sidebar is dark, in dark app the sidebar is light. Use <code>bg-sidebar</code>, <code>text-sidebar-foreground</code>, <code>bg-sidebar-accent</code>.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Inverted sidebar</span>
+          <div class="ec-body" style="display:block;">
+            <div class="sidebar-demo" style="min-height:120px;">
+              <div class="sd-side">
+                <span class="sd-item active">Overview</span>
+                <span class="sd-item">Components</span>
+                <span class="sd-item">Tokens</span>
+              </div>
+              <div class="sd-main">Main content stays on bg-background</div>
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `<aside className="bg-sidebar text-sidebar-foreground">
+  <nav>
+    <a className="hover:bg-sidebar-accent">Overview</a>
+  </nav>
+</aside>
+<main className="bg-background text-foreground">
+  ...
+</main>`,
+    howto:
+      'Always use the sidebar token family for the chrome that wraps your app. Never hardcode <code>bg-zinc-950</code> there.',
+  },
+
+  'status-sections': {
+    eyebrow: 'Status sections',
+    explanation:
+      'A status section is a full-width banner or callout (info, warning, success, error). Use the state token + the corresponding light variant for the background.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Info banner</span>
+          <div class="ec-body" style="display:block;">
+            <div style="background:color-mix(in srgb, var(--fg) 6%, transparent);border:1px solid var(--border);border-left:3px solid var(--fg);padding:10px 14px;border-radius:6px;display:flex;gap:10px;align-items:flex-start;">
+              <span style="color:var(--fg);">${ICON.info}</span>
+              <span style="font-size:13px;color:var(--fg);">Heads-up — the receiving warehouse is closed Mar 18.</span>
+            </div>
+          </div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Destructive banner</span>
+          <div class="ec-body" style="display:block;">
+            <div style="background:color-mix(in srgb, var(--destructive) 12%, transparent);border:1px solid color-mix(in srgb, var(--destructive) 30%, transparent);border-left:3px solid var(--destructive);padding:10px 14px;border-radius:6px;display:flex;gap:10px;align-items:flex-start;color:var(--destructive);">
+              <span>${ICON.alert}</span>
+              <span style="font-size:13px;color:var(--fg);">3 line items are missing required attributes.</span>
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `<Alert variant="info">Heads-up — the receiving warehouse is closed Mar 18.</Alert>
+<Alert variant="destructive">3 line items are missing required attributes.</Alert>`,
+    howto:
+      'Pick one variant per banner. The DS Alert component handles the icon + border + bg pairing for you.',
+  },
+
+  'elevation-shadows': {
+    eyebrow: 'Containers · shadows',
+    explanation:
+      'Shadows reinforce the level hierarchy: Level 0 has no shadow, Level 1 (cards) has <code>shadow-sm</code>, modals/dialogs use <code>shadow-lg</code>. The shadow conveys depth without changing the color.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Shadow per level</span>
+          <div class="ec-body" style="display:block;">
+            <div class="elev-row" style="grid-template-columns:repeat(3,1fr);padding:0;">
+              <div class="elev-card">no shadow<br><span style="font-size:9px;color:var(--muted-fg);">Level 0</span></div>
+              <div class="elev-card elev-sm">shadow-sm<br><span style="font-size:9px;color:var(--muted-fg);">Level 1 cards</span></div>
+              <div class="elev-card elev-lg">shadow-lg<br><span style="font-size:9px;color:var(--muted-fg);">Level 1+ modals</span></div>
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `<Card className="shadow-sm">...</Card>
+<Dialog className="shadow-lg">...</Dialog>`,
+    howto:
+      'Cards default to <code>shadow-sm</code>. Anything that floats over the page (popover, modal, command menu) uses <code>shadow-lg</code> or <code>shadow-xl</code>.',
+  },
+};
+
+const ELEVATION = {
+  'elevation-levels': {
+    eyebrow: 'Elevation',
+    explanation:
+      'Strata defines 4 shadow tokens that map to physical "lifting" amounts: <code>shadow-sm</code> (inputs, list items), <code>shadow-md</code> (cards, dropdowns), <code>shadow-lg</code> (modals, dialogs), <code>shadow-xl</code> (overlays, command palettes).',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">4 levels</span>
+          <div class="ec-body" style="display:block;">
+            <div class="elev-row">
+              <div class="elev-card elev-sm">shadow-sm</div>
+              <div class="elev-card elev-md">shadow-md</div>
+              <div class="elev-card elev-lg">shadow-lg</div>
+              <div class="elev-card elev-xl">shadow-xl</div>
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `<Input className="shadow-sm" />              // form field
+<Card className="shadow-md hover:shadow-lg" />  // card with hover lift
+<Dialog className="shadow-lg" />                // modal
+<CommandMenu className="shadow-xl" />           // overlay`,
+    howto:
+      'Pick the elevation that matches the "floating distance" of the surface. Inputs barely lift; modals lift a lot; ambient overlays lift the most.',
+  },
+
+  'rules': {
+    eyebrow: 'Elevation · rules',
+    explanation:
+      'Three rules govern elevation: (1) never stack the same elevation on itself, (2) hover increments by one level, (3) inactive states drop one level. This keeps the visual stack honest.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Hover increment</span>
+          <div class="ec-body" style="display:block;">
+            <div class="elev-card elev-sm" style="transition:box-shadow 0.15s;cursor:pointer;font-size:11px;" onmouseover="this.style.boxShadow='0 4px 6px -1px rgba(0,0,0,0.10), 0 2px 4px -2px rgba(0,0,0,0.06)'" onmouseout="this.style.boxShadow='0 1px 2px rgba(0,0,0,0.06)'">Hover me · sm → md</div>
+          </div>
+          <div class="ec-code">shadow-sm hover:shadow-md transition-shadow</div>
+        </div>
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Same elevation stacked</span>
+          <div class="ec-body" style="display:block;"><div style="background:var(--card);padding:12px;border-radius:6px;box-shadow:0 4px 6px -1px rgba(0,0,0,0.10);"><div style="background:var(--card);padding:8px;border-radius:4px;box-shadow:0 4px 6px -1px rgba(0,0,0,0.10);">Same shadow as parent</div></div></div>
+        </div>
+      </div>`,
+    code: `// ✓ Hover lifts one level
+<Card className="shadow-sm hover:shadow-md transition-shadow">
+
+// ❌ Nested same shadow — visually flat
+<Card className="shadow-md"><Card className="shadow-md">...</Card></Card>`,
+    howto:
+      'Always add <code>transition-shadow</code> to hover-elevated components so the lift reads as motion, not a jump.',
+  },
+
+  'anti-patterns': {
+    eyebrow: 'Elevation · anti',
+    explanation:
+      'Two common mistakes: hardcoding <code>box-shadow: 0 4px 8px rgba(0,0,0,0.1)</code> instead of using a token, and stacking <code>shadow-lg</code> on every surface so nothing stands out.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Hardcoded shadow values</span>
+          <div class="ec-body"><div style="background:var(--card);padding:14px;border-radius:8px;box-shadow:0 8px 16px rgba(0,0,0,0.18);font-size:12px;color:var(--fg);">custom shadow string</div></div>
+          <div class="ec-code">style={{ boxShadow: '0 8px 16px rgba(0,0,0,0.18)' }}</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Token-defined shadow</span>
+          <div class="ec-body"><div class="elev-card elev-md" style="font-size:12px;">shadow-md</div></div>
+          <div class="ec-code">className="shadow-md"</div>
+        </div>
+      </div>`,
+    code: `// ❌ <div style={{ boxShadow: '0 8px 16px rgba(0,0,0,0.18)' }}>
+// ✓ <div className="shadow-md">`,
+    howto:
+      'If you find yourself writing inline <code>boxShadow</code>, stop — there is a token for that.',
+  },
+
+  'pattern-complete-interactive-card': {
+    eyebrow: 'Elevation · pattern',
+    explanation:
+      'A canonical interactive card uses three tokens working together: <code>bg-card</code> + <code>border-border</code> + <code>shadow-sm</code> at rest, lifting to <code>shadow-md</code> on hover with a transition.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Interactive card pattern</span>
+          <div class="ec-body" style="display:block;">
+            <div class="mock-card" style="transition:box-shadow 0.15s, transform 0.15s;cursor:pointer;" onmouseover="this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.10), 0 4px 6px -4px rgba(0,0,0,0.06)';this.style.transform='translateY(-1px)';" onmouseout="this.style.boxShadow='0 1px 2px rgba(0,0,0,0.05)';this.style.transform='translateY(0)';">
+              <div class="mc-header">
+                <div><div class="mc-title">Quote QT-1042</div><div class="mc-sub">Hover to lift</div></div>
+                <span class="status-pill status-warning">${ICON.alert} Review</span>
+              </div>
+              <div class="mc-row"><span class="mc-label">Net</span><span class="mc-value">$22,108</span></div>
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `<Card className="bg-card border border-border rounded-xl shadow-sm
+                 hover:shadow-md hover:-translate-y-px
+                 transition-all duration-150 cursor-pointer">
+  ...
+</Card>`,
+    howto:
+      'Pair the shadow lift with a 1px vertical translate for a tactile feel. Always add <code>transition-all</code> with a short duration (150ms) so the motion reads natural.',
+  },
+};
+
 // ── Export ──────────────────────────────────────────────────────────────
 
 export const EXAMPLES_BY_HEADING = {
@@ -955,8 +1260,9 @@ export const EXAMPLES_BY_HEADING = {
   'anti-patterns': ANTI,
   'rules-color-tokens': COLOR_TOKENS,
   'rules-brand-colors': BRAND_COLORS,
-  // Stages 3-5 will populate the remaining 6 section ids:
-  //   'rules-containers', 'rules-buttons',
-  //   'rules-icons', 'rules-typography',
-  //   'rules-elevation', 'token-reference'
+  'rules-containers': CONTAINERS,
+  'rules-elevation': ELEVATION,
+  // Stages 4-5 will populate the remaining 4 section ids:
+  //   'rules-buttons', 'rules-icons',
+  //   'rules-typography', 'token-reference'
 };

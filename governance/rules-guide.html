@@ -613,7 +613,7 @@ footer.guide-footer {
       <div class="page-header">
         <div>
           <h1>Strata DS — Rules Guide</h1>
-          <div class="subtitle">Generated 2026-06-12T15:29:26.678Z · 10 rule files · 9 overview blocks + 35 sub-rule examples · 207 CSS tokens</div>
+          <div class="subtitle">Generated 2026-06-12T15:33:06.873Z · 10 rule files · 9 overview blocks + 46 sub-rule examples · 207 CSS tokens</div>
         </div>
         <button id="theme-toggle" class="theme-toggle" type="button">Toggle theme</button>
       </div>
@@ -1976,6 +1976,36 @@ brand-950: #233502  — almost black brand
     </div>
   
       <h2 id="background-hierarchy">Background hierarchy</h2>
+
+<aside class="ve-block" data-key="background-hierarchy">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Hierarchy</span>
+  </header>
+  <p class="ve-block-explanation">Strata uses three nesting levels of surface tokens — <strong>0 background</strong> (root), <strong>1 card</strong> (panel), <strong>2 muted</strong> (inner section). Each level steps the eye one degree of depth in both light and dark mode.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Nested levels</span>
+          <div class="ec-body" style="display:block;">
+            <div class="surface-demo">
+              <span class="sd-label">Level 0 · bg-background</span>
+              <div class="sd-card">
+                <span class="sd-label">Level 1 · bg-card</span>
+                <div class="sd-muted"><span class="sd-label">Level 2 · bg-muted</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;main className=&quot;bg-background&quot;&gt;          {/* Level 0 */}
+  &lt;Card className=&quot;bg-card&quot;&gt;              {/* Level 1 */}
+    &lt;section className=&quot;bg-muted&quot;&gt;        {/* Level 2 */}
+      ...
+    &lt;/section&gt;
+  &lt;/Card&gt;
+&lt;/main&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Match the nesting depth of your DOM to the level of token: page > card > inner section. Never skip a level (do not put <code>bg-muted</code> directly on <code>bg-background</code>).</p>
+</aside>
 <p>Each UI level has its assigned background. Do not swap them between levels.</p>
 <pre><code>Level 0 — Root layout
   bg-background (#EBECEE light / #02060C dark)
@@ -1991,6 +2021,29 @@ Special level — Sidebar
 </code></pre>
 <hr>
 <h2 id="level-0-root-layout-and-pages">Level 0 — Root layout and pages</h2>
+
+<aside class="ve-block" data-key="level-0-root-layout-and-pages">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Level 0</span>
+  </header>
+  <p class="ve-block-explanation">The page root sits on <code>bg-background</code>. This is the only surface that should ever be the deepest tone — every other panel needs at least one step up.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Root page</span>
+          <div class="ec-body" style="display:block;">
+            <div style="background:var(--bg);padding:20px;border-radius:8px;border:1px dashed var(--border);">
+              <p style="color:var(--fg);font-weight:600;margin:0;">Root layout — bg-background</p>
+              <p style="color:var(--muted-fg);font-size:12px;margin:6px 0 0;">All other surfaces step up from here.</p>
+            </div>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;body className=&quot;bg-background text-foreground min-h-screen&quot;&gt;
+  &lt;Layout&gt;...&lt;/Layout&gt;
+&lt;/body&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Apply <code>bg-background</code> at the body or <code>&lt;Layout&gt;</code> level once. Never re-apply it deeper in the tree.</p>
+</aside>
 <pre><code class="language-tsx">// Page background
 &lt;main className=&quot;bg-background min-h-screen&quot;&gt;
 
@@ -1999,6 +2052,34 @@ Special level — Sidebar
 </code></pre>
 <hr>
 <h2 id="level-1-cards-and-panels">Level 1 — Cards and Panels</h2>
+
+<aside class="ve-block" data-key="level-1-cards-and-panels">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Level 1</span>
+  </header>
+  <p class="ve-block-explanation">Panels, cards, modals, sidebars-as-secondary all sit on <code>bg-card</code>. They float one step above the background and carry the standard border + small shadow.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Card panel</span>
+          <div class="ec-body" style="display:block;">
+            <div class="mock-card">
+              <div class="mc-header">
+                <div><div class="mc-title">Quote summary</div><div class="mc-sub">SO2604102</div></div>
+                <span class="status-pill status-success"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Ready</span>
+              </div>
+              <div class="mc-row"><span class="mc-label">Total</span><span class="mc-value">$4,159.12</span></div>
+            </div>
+          </div>
+          <div class="ec-code">bg-card border border-border rounded-xl shadow-sm</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Card className=&quot;bg-card border border-border rounded-xl shadow-sm p-6&quot;&gt;
+  &lt;CardHeader&gt;...&lt;/CardHeader&gt;
+  &lt;CardContent&gt;...&lt;/CardContent&gt;
+&lt;/Card&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Anything that reads as "a thing on the page" — a record, a panel, a tooltip body — sits on <code>bg-card</code>. Pair with <code>border-border</code> + <code>shadow-sm</code>.</p>
+</aside>
 <pre><code class="language-tsx">// Standard card
 &lt;div className=&quot;bg-card border border-border rounded-xl p-6&quot;&gt;
   &lt;h3 className=&quot;text-foreground font-semibold&quot;&gt;Title&lt;/h3&gt;
@@ -2018,6 +2099,34 @@ Special level — Sidebar
 </code></pre>
 <hr>
 <h2 id="level-2-inner-sections">Level 2 — Inner sections</h2>
+
+<aside class="ve-block" data-key="level-2-inner-sections">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Level 2</span>
+  </header>
+  <p class="ve-block-explanation"><code>bg-muted</code> is the inner step — sub-panels inside a card, hover backgrounds for rows, footnote regions, code blocks. The contrast with <code>bg-card</code> is subtle but unmistakable.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Inner section</span>
+          <div class="ec-body" style="display:block;">
+            <div style="background:var(--card);border:1px solid var(--border);padding:14px;border-radius:8px;">
+              <div style="color:var(--fg);font-weight:600;font-size:13px;margin-bottom:8px;">Quote</div>
+              <div style="background:var(--muted);padding:10px 12px;border-radius:6px;font-size:12px;color:var(--muted-fg);">bg-muted — sub-panel inside the card</div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Card&gt;
+  &lt;CardContent&gt;
+    &lt;h3&gt;Quote&lt;/h3&gt;
+    &lt;div className=&quot;bg-muted rounded-md p-3&quot;&gt;
+      Inner section
+    &lt;/div&gt;
+  &lt;/CardContent&gt;
+&lt;/Card&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Use <code>bg-muted</code> for: hover row backgrounds, code blocks, helper-text regions, sub-headers inside cards, footnote panels.</p>
+</aside>
 <pre><code class="language-tsx">// Sub-section inside a card
 &lt;div className=&quot;bg-muted rounded-lg p-4&quot;&gt;
 
@@ -2036,6 +2145,38 @@ Special level — Sidebar
 </code></pre>
 <hr>
 <h2 id="sidebar-theme-inversion">Sidebar — Theme inversion</h2>
+
+<aside class="ve-block" data-key="sidebar-theme-inversion">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Sidebar invert</span>
+  </header>
+  <p class="ve-block-explanation">Sidebars use a separate token family that inverts the theme: in light app the sidebar is dark, in dark app the sidebar is light. Use <code>bg-sidebar</code>, <code>text-sidebar-foreground</code>, <code>bg-sidebar-accent</code>.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Inverted sidebar</span>
+          <div class="ec-body" style="display:block;">
+            <div class="sidebar-demo" style="min-height:120px;">
+              <div class="sd-side">
+                <span class="sd-item active">Overview</span>
+                <span class="sd-item">Components</span>
+                <span class="sd-item">Tokens</span>
+              </div>
+              <div class="sd-main">Main content stays on bg-background</div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;aside className=&quot;bg-sidebar text-sidebar-foreground&quot;&gt;
+  &lt;nav&gt;
+    &lt;a className=&quot;hover:bg-sidebar-accent&quot;&gt;Overview&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/aside&gt;
+&lt;main className=&quot;bg-background text-foreground&quot;&gt;
+  ...
+&lt;/main&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Always use the sidebar token family for the chrome that wraps your app. Never hardcode <code>bg-zinc-950</code> there.</p>
+</aside>
 <p>The sidebar ALWAYS uses inverted colors relative to the app mode. This is intentional design behavior.</p>
 <pre><code>App in Light → Dark sidebar (zinc-950)
 App in Dark  → Light sidebar (white / zinc-50)
@@ -2063,6 +2204,37 @@ App in Dark  → Light sidebar (white / zinc-50)
 </ul>
 <hr>
 <h2 id="status-sections">Status sections</h2>
+
+<aside class="ve-block" data-key="status-sections">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Status sections</span>
+  </header>
+  <p class="ve-block-explanation">A status section is a full-width banner or callout (info, warning, success, error). Use the state token + the corresponding light variant for the background.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Info banner</span>
+          <div class="ec-body" style="display:block;">
+            <div style="background:color-mix(in srgb, var(--fg) 6%, transparent);border:1px solid var(--border);border-left:3px solid var(--fg);padding:10px 14px;border-radius:6px;display:flex;gap:10px;align-items:flex-start;">
+              <span style="color:var(--fg);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></span>
+              <span style="font-size:13px;color:var(--fg);">Heads-up — the receiving warehouse is closed Mar 18.</span>
+            </div>
+          </div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Destructive banner</span>
+          <div class="ec-body" style="display:block;">
+            <div style="background:color-mix(in srgb, var(--destructive) 12%, transparent);border:1px solid color-mix(in srgb, var(--destructive) 30%, transparent);border-left:3px solid var(--destructive);padding:10px 14px;border-radius:6px;display:flex;gap:10px;align-items:flex-start;color:var(--destructive);">
+              <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <span style="font-size:13px;color:var(--fg);">3 line items are missing required attributes.</span>
+            </div>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Alert variant=&quot;info&quot;&gt;Heads-up — the receiving warehouse is closed Mar 18.&lt;/Alert&gt;
+&lt;Alert variant=&quot;destructive&quot;&gt;3 line items are missing required attributes.&lt;/Alert&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Pick one variant per banner. The DS Alert component handles the icon + border + bg pairing for you.</p>
+</aside>
 <p>When a card or section represents a specific state:</p>
 <pre><code class="language-tsx">// Success section
 &lt;div className=&quot;bg-success/5 border border-success/40 rounded-lg p-4&quot;&gt;
@@ -2099,6 +2271,29 @@ App in Dark  → Light sidebar (white / zinc-50)
 </code></pre>
 <hr>
 <h2 id="elevation-shadows">Elevation / Shadows</h2>
+
+<aside class="ve-block" data-key="elevation-shadows">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Containers · shadows</span>
+  </header>
+  <p class="ve-block-explanation">Shadows reinforce the level hierarchy: Level 0 has no shadow, Level 1 (cards) has <code>shadow-sm</code>, modals/dialogs use <code>shadow-lg</code>. The shadow conveys depth without changing the color.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Shadow per level</span>
+          <div class="ec-body" style="display:block;">
+            <div class="elev-row" style="grid-template-columns:repeat(3,1fr);padding:0;">
+              <div class="elev-card">no shadow<br><span style="font-size:9px;color:var(--muted-fg);">Level 0</span></div>
+              <div class="elev-card elev-sm">shadow-sm<br><span style="font-size:9px;color:var(--muted-fg);">Level 1 cards</span></div>
+              <div class="elev-card elev-lg">shadow-lg<br><span style="font-size:9px;color:var(--muted-fg);">Level 1+ modals</span></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Card className=&quot;shadow-sm&quot;&gt;...&lt;/Card&gt;
+&lt;Dialog className=&quot;shadow-lg&quot;&gt;...&lt;/Dialog&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Cards default to <code>shadow-sm</code>. Anything that floats over the page (popover, modal, command menu) uses <code>shadow-lg</code> or <code>shadow-xl</code>.</p>
+</aside>
 <p>Shadows indicate elevation — use them consistently:</p>
 <pre><code class="language-tsx">// Level 0 — no shadow (integrated with the background)
 className=&quot;bg-card border border-border&quot;
@@ -2846,6 +3041,32 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
     </div>
   
       <h2 id="elevation-levels">Elevation levels</h2>
+
+<aside class="ve-block" data-key="elevation-levels">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Elevation</span>
+  </header>
+  <p class="ve-block-explanation">Strata defines 4 shadow tokens that map to physical "lifting" amounts: <code>shadow-sm</code> (inputs, list items), <code>shadow-md</code> (cards, dropdowns), <code>shadow-lg</code> (modals, dialogs), <code>shadow-xl</code> (overlays, command palettes).</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">4 levels</span>
+          <div class="ec-body" style="display:block;">
+            <div class="elev-row">
+              <div class="elev-card elev-sm">shadow-sm</div>
+              <div class="elev-card elev-md">shadow-md</div>
+              <div class="elev-card elev-lg">shadow-lg</div>
+              <div class="elev-card elev-xl">shadow-xl</div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Input className=&quot;shadow-sm&quot; /&gt;              // form field
+&lt;Card className=&quot;shadow-md hover:shadow-lg&quot; /&gt;  // card with hover lift
+&lt;Dialog className=&quot;shadow-lg&quot; /&gt;                // modal
+&lt;CommandMenu className=&quot;shadow-xl&quot; /&gt;           // overlay</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Pick the elevation that matches the "floating distance" of the surface. Inputs barely lift; modals lift a lot; ambient overlays lift the most.</p>
+</aside>
 <p>Shadows indicate visual surface hierarchy. Do not combine them arbitrarily — each level has a purpose.</p>
 <table>
 <thead>
@@ -2966,6 +3187,33 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 </tbody></table>
 <hr>
 <h2 id="rules">Rules</h2>
+
+<aside class="ve-block" data-key="rules">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Elevation · rules</span>
+  </header>
+  <p class="ve-block-explanation">Three rules govern elevation: (1) never stack the same elevation on itself, (2) hover increments by one level, (3) inactive states drop one level. This keeps the visual stack honest.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Hover increment</span>
+          <div class="ec-body" style="display:block;">
+            <div class="elev-card elev-sm" style="transition:box-shadow 0.15s;cursor:pointer;font-size:11px;" onmouseover="this.style.boxShadow='0 4px 6px -1px rgba(0,0,0,0.10), 0 2px 4px -2px rgba(0,0,0,0.06)'" onmouseout="this.style.boxShadow='0 1px 2px rgba(0,0,0,0.06)'">Hover me · sm → md</div>
+          </div>
+          <div class="ec-code">shadow-sm hover:shadow-md transition-shadow</div>
+        </div>
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Same elevation stacked</span>
+          <div class="ec-body" style="display:block;"><div style="background:var(--card);padding:12px;border-radius:6px;box-shadow:0 4px 6px -1px rgba(0,0,0,0.10);"><div style="background:var(--card);padding:8px;border-radius:4px;box-shadow:0 4px 6px -1px rgba(0,0,0,0.10);">Same shadow as parent</div></div></div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// ✓ Hover lifts one level
+&lt;Card className=&quot;shadow-sm hover:shadow-md transition-shadow&quot;&gt;
+
+// ❌ Nested same shadow — visually flat
+&lt;Card className=&quot;shadow-md&quot;&gt;&lt;Card className=&quot;shadow-md&quot;&gt;...&lt;/Card&gt;&lt;/Card&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Always add <code>transition-shadow</code> to hover-elevated components so the lift reads as motion, not a jump.</p>
+</aside>
 <ol>
 <li><strong>Do not skip levels</strong>: if a panel is at Level 1, its child elements cannot be Level 3. The level drops or stays — never jumps dramatically.</li>
 <li><strong>Do not combine shadow + heavy border</strong>: if it has <code>shadow-md</code> or more, the border can be subtle (<code>border-border</code>) or absent. Heavy shadow + thick border duplicates the signal.</li>
@@ -2975,6 +3223,29 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 </ol>
 <hr>
 <h2 id="anti-patterns">Anti-patterns</h2>
+
+<aside class="ve-block" data-key="anti-patterns">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Elevation · anti</span>
+  </header>
+  <p class="ve-block-explanation">Two common mistakes: hardcoding <code>box-shadow: 0 4px 8px rgba(0,0,0,0.1)</code> instead of using a token, and stacking <code>shadow-lg</code> on every surface so nothing stands out.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Hardcoded shadow values</span>
+          <div class="ec-body"><div style="background:var(--card);padding:14px;border-radius:8px;box-shadow:0 8px 16px rgba(0,0,0,0.18);font-size:12px;color:var(--fg);">custom shadow string</div></div>
+          <div class="ec-code">style={{ boxShadow: '0 8px 16px rgba(0,0,0,0.18)' }}</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Token-defined shadow</span>
+          <div class="ec-body"><div class="elev-card elev-md" style="font-size:12px;">shadow-md</div></div>
+          <div class="ec-code">className="shadow-md"</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// ❌ &lt;div style={{ boxShadow: '0 8px 16px rgba(0,0,0,0.18)' }}&gt;
+// ✓ &lt;div className=&quot;shadow-md&quot;&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> If you find yourself writing inline <code>boxShadow</code>, stop — there is a token for that.</p>
+</aside>
 <table>
 <thead>
 <tr>
@@ -3006,6 +3277,34 @@ import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for e
 </tbody></table>
 <hr>
 <h2 id="pattern-complete-interactive-card">Pattern: complete interactive card</h2>
+
+<aside class="ve-block" data-key="pattern-complete-interactive-card">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Elevation · pattern</span>
+  </header>
+  <p class="ve-block-explanation">A canonical interactive card uses three tokens working together: <code>bg-card</code> + <code>border-border</code> + <code>shadow-sm</code> at rest, lifting to <code>shadow-md</code> on hover with a transition.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Interactive card pattern</span>
+          <div class="ec-body" style="display:block;">
+            <div class="mock-card" style="transition:box-shadow 0.15s, transform 0.15s;cursor:pointer;" onmouseover="this.style.boxShadow='0 10px 15px -3px rgba(0,0,0,0.10), 0 4px 6px -4px rgba(0,0,0,0.06)';this.style.transform='translateY(-1px)';" onmouseout="this.style.boxShadow='0 1px 2px rgba(0,0,0,0.05)';this.style.transform='translateY(0)';">
+              <div class="mc-header">
+                <div><div class="mc-title">Quote QT-1042</div><div class="mc-sub">Hover to lift</div></div>
+                <span class="status-pill status-warning"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Review</span>
+              </div>
+              <div class="mc-row"><span class="mc-label">Net</span><span class="mc-value">$22,108</span></div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Card className=&quot;bg-card border border-border rounded-xl shadow-sm
+                 hover:shadow-md hover:-translate-y-px
+                 transition-all duration-150 cursor-pointer&quot;&gt;
+  ...
+&lt;/Card&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Pair the shadow lift with a 1px vertical translate for a tactile feel. Always add <code>transition-all</code> with a short duration (150ms) so the motion reads natural.</p>
+</aside>
 <pre><code class="language-tsx">&lt;button className=&quot;
   bg-card border border-border rounded-xl p-6
   shadow-sm
