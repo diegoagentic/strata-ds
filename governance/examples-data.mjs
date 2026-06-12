@@ -2889,6 +2889,416 @@ const form = useForm<FormValues>();
   },
 };
 
+// ── F33: 9 new rules (modal patterns + composition + states + voice + a11y) ─
+
+const MODAL_PATTERNS = {
+  'the-5-second-test': {
+    eyebrow: 'Modal · 5-second test',
+    explanation:
+      'Every modal must let the user answer five questions above the fold in under 5 seconds: what am I looking at, how many problems exist, how severe are they, what does the system recommend, what action am I expected to take?',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ All 5 answered above the fold</span>
+          <div class="ec-body" style="display:block;">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:12px;">
+              <div style="font-weight:700;color:var(--fg);">Review discrepancies</div>
+              <div style="color:var(--muted-fg);font-size:11px;margin-bottom:8px;">PO-1027 ⇄ ACK-7839 · Steelcase</div>
+              <div style="color:var(--fg);background:var(--muted);padding:6px 8px;border-radius:4px;">3 discrepancies · Highest: High · AI recommends: Reject report</div>
+            </div>
+          </div>
+        </div>
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Buried under metadata cards</span>
+          <div class="ec-body" style="display:block;">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:11px;color:var(--muted-fg);">
+              [Title] [Subtitle] [PO card] [ACK card] [Vendor card] [Match card] [Tabs] [Helper paragraph] ... scroll to find the count
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `// Above the fold:
+// 1) Title (the TASK)
+// 2) Compact meta line
+// 3) Executive summary
+// 4) AI recommendation
+// 5) Action footer (sticky)`,
+    howto:
+      'Reorder content so the executive summary appears no more than 200px below the header. Demote everything else (metadata grids, helper paragraphs) to expandable sections or tooltips.',
+  },
+  'header-height-limit-15-20-of-visible-modal-area': {
+    eyebrow: 'Modal · header',
+    explanation:
+      'A header that consumes 25-30% of the modal pushes critical content below the fold. Compact the header to 2 rows max: title + state + close on row 1, metadata + document actions on row 2.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ 2-row compact header</span>
+          <div class="ec-body" style="display:block;">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-size:11px;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><strong style="color:var(--fg);">Compare linked documents</strong><span class="status-pill status-destructive">Critical</span><span style="margin-left:auto;color:var(--muted-fg);">×</span></div>
+              <div style="color:var(--muted-fg);">PO-1027 ⇄ ACK-7839 · Steelcase · Run #1</div>
+            </div>
+          </div>
+        </div>
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ 6-row header (25%+ of modal)</span>
+          <div class="ec-body" style="display:block;font-size:10px;color:var(--muted-fg);">
+            Title<br>Subtitle<br>Badge<br>PO row<br>ACK row<br>Vendor row<br>Match row<br>Tabs<br>Doc buttons<br>Helper row
+          </div>
+        </div>
+      </div>`,
+    code: `<ModalHeader>
+  <Row><Title /><StatusBadge /><Metric /><CloseButton /></Row>
+  <Row><Meta /><ActionGroup /></Row>
+</ModalHeader>`,
+    howto:
+      'Audit any modal header > 2 rows. Each removed row recovers ~40px of vertical space — that is one extra discrepancy visible.',
+  },
+};
+
+const LAYOUT_DENSITY = {
+  'core-principle-maximize-desktop-real-estate': {
+    eyebrow: 'Layout · density',
+    explanation:
+      'Strata users work on desktop at 1280-1920px. Using a 600-800px center column wastes 60% of the screen and forces unnecessary scroll. Default to 2-3 column layouts at the lg breakpoint and above.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Narrow center column</span>
+          <div class="ec-body" style="display:block;">
+            <div style="display:flex;justify-content:center;background:var(--muted);padding:14px;border-radius:6px;">
+              <div style="background:var(--card);border:1px solid var(--border);width:60%;padding:10px;font-size:11px;color:var(--fg);">max-w-2xl mx-auto</div>
+            </div>
+          </div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Multi-column desktop</span>
+          <div class="ec-body" style="display:block;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;background:var(--muted);padding:14px;border-radius:6px;">
+              <div style="background:var(--card);border:1px solid var(--border);padding:10px;font-size:11px;color:var(--fg);">Left section</div>
+              <div style="background:var(--card);border:1px solid var(--border);padding:10px;font-size:11px;color:var(--fg);">Right section</div>
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `<div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <section>{leftContent}</section>
+  <section>{rightContent}</section>
+</div>`,
+    howto:
+      'On any view, ask: is 30%+ of horizontal space empty on desktop? If yes, switch to a 2- or 3-column grid that collapses to a stack on mobile.',
+  },
+  'avoid-orphan-elements': {
+    eyebrow: 'Layout · no orphans',
+    explanation:
+      'An orphan is a single piece of metadata pushed to its own row when it could naturally sit next to a related element. Orphans break visual flow and waste vertical space.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Every field on its own row</span>
+          <div class="ec-body" style="display:block;font-size:12px;color:var(--fg);">
+            <div>QT-1042</div>
+            <div>NorthPoint</div>
+            <div>Mar 28, 2025</div>
+            <div>Pending</div>
+            <div>$4,159.12</div>
+          </div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ One-line metadata with separators</span>
+          <div class="ec-body" style="display:block;">
+            <div style="display:flex;align-items:baseline;gap:6px;font-size:13px;color:var(--fg);">
+              <strong>QT-1042</strong><span style="color:var(--muted-fg);">·</span>NorthPoint<span style="color:var(--muted-fg);">·</span>Mar 28, 2025<span class="status-pill status-warning" style="margin-left:8px;">Pending</span><span style="margin-left:auto;font-weight:600;">$4,159.12</span>
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `<Meta>SO2604102 · Leland Furniture · Mar 28, 2025 · $4,159.12</Meta>`,
+    howto:
+      'If you see 3+ consecutive rows with 1 piece of info each, collapse them into a single line with <code>·</code> separators.',
+  },
+  'group-related-information-and-actions': {
+    eyebrow: 'Layout · grouping',
+    explanation:
+      'Every panel must have a clear answer to: what does this group of fields represent? If you cannot give the group a 2-3 word name (Quote Info, Vendor, Terms), the grouping is wrong.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Named sections</span>
+          <div class="ec-body" style="display:block;font-size:11px;color:var(--fg);">
+            <div style="border:1px solid var(--border);border-radius:6px;padding:8px;margin-bottom:6px;">
+              <div style="color:var(--muted-fg);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;">Quote Info</div>
+              <div>Number · Date · Linked PO</div>
+            </div>
+            <div style="border:1px solid var(--border);border-radius:6px;padding:8px;">
+              <div style="color:var(--muted-fg);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;">Vendor</div>
+              <div>Dealer · Ship-to · Contact</div>
+            </div>
+          </div>
+        </div>
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ 12 ungrouped fields</span>
+          <div class="ec-body" style="display:block;font-size:11px;color:var(--fg);">
+            Number<br>Date<br>Linked PO<br>Dealer<br>Ship-to<br>Contact<br>...<br>(no section headers)
+          </div>
+        </div>
+      </div>`,
+    code: `<FieldSection label="Quote Info" icon={<Package />}>
+  <FieldValueRow field="Number" value="SO2604102" />
+  ...
+</FieldSection>
+<FieldSection label="Vendor" icon={<Building />}>
+  ...
+</FieldSection>`,
+    howto:
+      'Audit by section name: every panel of 5+ fields gets a 2-3 word section title. If no name comes to mind, the grouping is wrong.',
+  },
+};
+
+const SPACING_RHYTHM = {
+  'the-4-point-spacing-scale': {
+    eyebrow: 'Spacing · scale',
+    explanation:
+      'Every gap, padding, and margin must land on the 4-point scale (4 · 8 · 12 · 16 · 24 · 32 · 48 · 64). Arbitrary values like <code>p-[18px]</code> break the visual rhythm.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Scale steps</span>
+          <div class="ec-body" style="display:block;">
+            ${[4, 8, 12, 16, 24, 32, 48].map((px) => `<div style="display:flex;align-items:center;gap:8px;margin:3px 0;"><span style="font-family:monospace;font-size:10px;color:var(--muted-fg);width:30px;">${px}px</span><span style="display:inline-block;height:6px;background:var(--primary);width:${px * 2}px;border-radius:2px;"></span></div>`).join('')}
+          </div>
+        </div>
+      </div>`,
+    code: `<div className="p-4 gap-3 mt-8">  {/* ✓ scale: 16 · 12 · 32 */}
+<div className="p-[18px] gap-[14px]">  {/* ❌ arbitrary */}`,
+    howto:
+      'If you reach for an arbitrary value like <code>p-[18px]</code>, step to the nearest scale value (<code>p-4</code> = 16px or <code>p-5</code> = 20px). Consistency beats precision.',
+  },
+};
+
+const RESPONSIVE = {
+  'touch-targets': {
+    eyebrow: 'Responsive · touch',
+    explanation:
+      'Any interactive element on a touch device must be at least 40×40px. Strata buttons at <code>size="default"</code> are 40px; <code>size="sm"</code> (32px) is desktop-only.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Small buttons on touch</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary" style="padding:4px 10px;font-size:11px;">sm = 32px</button></div>
+          <div class="ec-code">size="sm" — fails 40px minimum on touch</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Default size touch-safe</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary">default = 40px</button></div>
+          <div class="ec-code">size="default" everywhere on touch</div>
+        </div>
+      </div>`,
+    code: `<Button size="default">Save</Button>      // ✓ 40px touch-safe
+<Button size="sm">Save</Button>          // ❌ 32px — desktop only`,
+    howto:
+      'For icon-only buttons on touch, use <code>size="icon"</code> (40×40px) and <code>aria-label</code>. Never use <code>size="sm"</code> on mobile.',
+  },
+};
+
+const EMPTY_STATES = {
+  'always-include-a-cta': {
+    eyebrow: 'Empty · CTA',
+    explanation:
+      'The empty state must offer a next step. The user landed here for a reason — the empty state should help them act.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Empty with CTA</span>
+          <div class="ec-body" style="display:block;text-align:center;padding:14px;">
+            <div style="color:var(--muted-fg);margin-bottom:6px;">${ICON.iconSized(20)}</div>
+            <div style="font-weight:600;color:var(--fg);font-size:13px;">No quotes yet</div>
+            <div style="font-size:11px;color:var(--muted-fg);margin:4px 0 10px;">Upload a quote PDF to extract fields.</div>
+            <button class="demo-btn demo-btn-primary" style="font-size:12px;">Upload first quote</button>
+          </div>
+        </div>
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Empty with no next step</span>
+          <div class="ec-body" style="display:block;text-align:center;padding:18px;color:var(--muted-fg);font-size:12px;">No data</div>
+        </div>
+      </div>`,
+    code: `<EmptyState
+  icon={<InboxIcon />}
+  title="No quotes yet"
+  description="Upload a quote PDF to extract fields and line items."
+  action={<Button>Upload first quote</Button>}
+/>`,
+    howto:
+      'Every empty state has 4 elements: icon, title, 1-sentence reason, CTA. No exceptions.',
+  },
+};
+
+const LOADING_STATES = {
+  'three-timing-thresholds': {
+    eyebrow: 'Loading · thresholds',
+    explanation:
+      'Below 200ms no indicator is needed. 200ms–1s use button loading. 1s–3s use skeleton. Above 3s use progress + cancel. Pick by expected duration, not by what is convenient.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">&lt;200ms · none</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary">Toggle</button></div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">200ms-1s · button loading</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary" disabled style="opacity:0.85;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Saving…</button></div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">1s-3s · skeleton</span>
+          <div class="ec-body" style="display:block;"><div style="background:var(--muted);height:14px;border-radius:3px;margin-bottom:4px;"></div><div style="background:var(--muted);height:10px;width:70%;border-radius:3px;"></div></div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">&gt;3s · progress + cancel</span>
+          <div class="ec-body" style="display:block;"><div style="font-size:11px;color:var(--fg);margin-bottom:4px;">Uploading 12 of 25</div><div style="background:var(--muted);height:6px;border-radius:3px;position:relative;"><div style="background:var(--primary);height:100%;width:48%;border-radius:3px;"></div></div></div>
+        </div>
+      </div>`,
+    code: `if (expectedMs < 200) /* no indicator */;
+else if (expectedMs < 1000) <Button loading>...
+else if (expectedMs < 3000) <Skeleton h={...} w={...} />
+else <Progress percent={n} onCancel={abort} />`,
+    howto:
+      'Measure the typical duration of an operation, then pick the matching pattern. Wrong choice = either UI feels broken (no indicator for slow op) or jittery (skeleton flashes for fast op).',
+  },
+  'disabled-vs-loading': {
+    eyebrow: 'Loading · vs disabled',
+    explanation:
+      'Disabled and loading are not the same. Disabled = action cannot be taken. Loading = action is in progress. A loading button must ALSO be disabled so the user cannot double-fire.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ disabled + loading</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary" disabled style="opacity:0.85;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Saving…</button></div>
+        </div>
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ loading only (double-fire)</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Save</button></div>
+        </div>
+      </div>`,
+    code: `<Button loading={isSaving} disabled={isSaving}>Save</Button>`,
+    howto:
+      'Always set both <code>loading</code> AND <code>disabled</code> together. A spinning button without disable still accepts clicks.',
+  },
+};
+
+const MICROCOPY = {
+  'pattern-verb-object': {
+    eyebrow: 'Microcopy · button',
+    explanation:
+      'Bare verbs like "Reject" read ambiguously when the surrounding context scrolls off. Verb + object answers "reject what?" without re-reading the screen.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Bare verbs</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-outline">Accept</button><button class="demo-btn demo-btn-outline">Review</button><button class="demo-btn demo-btn-destructive">Reject</button></div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Verb + object</span>
+          <div class="ec-body" style="flex-wrap:wrap;"><button class="demo-btn demo-btn-outline">Accept report</button><button class="demo-btn demo-btn-outline">Send to review</button><button class="demo-btn demo-btn-destructive">Reject report</button></div>
+        </div>
+      </div>`,
+    code: `<Button>Approve quote</Button>
+<Button variant="destructive">Reject acknowledgement</Button>
+<Button variant="outline">Cancel</Button>  {/* exception — universal */}`,
+    howto:
+      'Cancel / Back are the only exceptions. Every other button gets <code>verb + object</code>. Audit by reading each button label aloud: does it tell you what gets affected?',
+  },
+  'error-messages': {
+    eyebrow: 'Microcopy · errors',
+    explanation:
+      'Errors must answer 3 questions: what happened, why, what to do. "Error" or "Save failed" leaves the user stuck.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Bare error</span>
+          <div class="ec-body" style="display:block;color:var(--destructive);font-size:12px;">Invalid email</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ What · why · how</span>
+          <div class="ec-body" style="display:block;color:var(--destructive);font-size:12px;">Email must include a domain (example@company.com)</div>
+        </div>
+      </div>`,
+    code: `<FieldError>
+  Couldn't save — the quote number is already used by SO-1042.
+  Try a different number or edit the existing quote.
+</FieldError>`,
+    howto:
+      'Audit every error: it must let the user fix the problem without contacting support. If you cannot tell them how to fix it, the error message is incomplete.',
+  },
+};
+
+const ACCESSIBILITY = {
+  'icon-only-buttons-need-aria-label': {
+    eyebrow: 'A11y · icon button',
+    explanation:
+      'Icon-only buttons are invisible to screen readers without an <code>aria-label</code>. The label tells the user what the icon means.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Icon, no aria-label</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-outline" style="padding:7px 9px;">${ICON.iconSized(14)}</button></div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ aria-label present</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-outline" aria-label="Download report" style="padding:7px 9px;">${ICON.download}</button></div>
+          <div class="ec-code">aria-label="Download report"</div>
+        </div>
+      </div>`,
+    code: `<Button size="icon" aria-label="Delete row">
+  <Trash className="size-4" />
+</Button>`,
+    howto:
+      'Every icon-only button gets an <code>aria-label</code>. Decorative icons next to a text label get <code>aria-hidden="true"</code> instead.',
+  },
+};
+
+const DATA_DISPLAY = {
+  'column-alignment-by-data-type': {
+    eyebrow: 'Tables · alignment',
+    explanation:
+      'Text reads left, numbers read right (decimal alignment), actions stay right (out of the way). Mixing breaks the scan rhythm.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Right-aligned currency, tabular-nums</span>
+          <div class="ec-body" style="display:block;">
+            <table style="width:100%;font-size:12px;color:var(--fg);">
+              <thead><tr style="border-bottom:1px solid var(--border);"><th style="text-align:left;padding:4px 8px;">Quote</th><th style="text-align:right;padding:4px 8px;">Total</th></tr></thead>
+              <tbody>
+                <tr><td style="padding:4px 8px;">SO2604102</td><td style="text-align:right;padding:4px 8px;font-variant-numeric:tabular-nums;">$4,159.12</td></tr>
+                <tr><td style="padding:4px 8px;">QT-1042</td><td style="text-align:right;padding:4px 8px;font-variant-numeric:tabular-nums;">$22,108.00</td></tr>
+                <tr><td style="padding:4px 8px;">RFQ-2026</td><td style="text-align:right;padding:4px 8px;font-variant-numeric:tabular-nums;">$487.50</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Currency left-aligned</span>
+          <div class="ec-body" style="display:block;">
+            <table style="width:100%;font-size:12px;color:var(--fg);">
+              <thead><tr style="border-bottom:1px solid var(--border);"><th style="text-align:left;padding:4px 8px;">Quote</th><th style="text-align:left;padding:4px 8px;">Total</th></tr></thead>
+              <tbody>
+                <tr><td style="padding:4px 8px;">SO2604102</td><td style="padding:4px 8px;">$4,159.12</td></tr>
+                <tr><td style="padding:4px 8px;">QT-1042</td><td style="padding:4px 8px;">$22,108.00</td></tr>
+                <tr><td style="padding:4px 8px;">RFQ-2026</td><td style="padding:4px 8px;">$487.50</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>`,
+    code: `<ColumnDef field="total" align="right"
+  cell={(r) => <span className="tabular-nums">{formatMoney(r.total)}</span>}
+/>`,
+    howto:
+      'Currency, percentages, counts, dates → right with <code>tabular-nums</code>. Text → left. Actions → right. Icons-only → center.',
+  },
+};
+
 // ── Export ──────────────────────────────────────────────────────────────
 
 export const EXAMPLES_BY_HEADING = {
@@ -2903,4 +3313,14 @@ export const EXAMPLES_BY_HEADING = {
   'rules-typography': TYPOGRAPHY,
   'rules-elevation': ELEVATION,
   'token-reference': TOKEN_REFERENCE,
+  // F33 — new rules
+  'modal-patterns': MODAL_PATTERNS,
+  'layout-density': LAYOUT_DENSITY,
+  'spacing-rhythm': SPACING_RHYTHM,
+  'responsive-behavior': RESPONSIVE,
+  'empty-states': EMPTY_STATES,
+  'loading-states': LOADING_STATES,
+  'microcopy-tone': MICROCOPY,
+  'accessibility-focus': ACCESSIBILITY,
+  'data-display': DATA_DISPLAY,
 };

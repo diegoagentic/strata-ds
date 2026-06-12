@@ -46,6 +46,16 @@ const SECTIONS = [
   { id: 'rules-elevation',       title: 'Elevation and shadows',   file: 'governance/rules/07-elevation.md' },
   { id: 'anti-patterns',         title: 'Anti-patterns (10)',      file: 'governance/anti-patterns/common-errors.md' },
   { id: 'token-reference',       title: 'Token reference',         file: 'governance/tokens/token-reference.md' },
+  // F33 — DS Manager rule set (composition, states, voice, a11y, data display)
+  { id: 'modal-patterns',        title: 'Modal patterns',          file: 'governance/rules/08-modal-patterns.md' },
+  { id: 'layout-density',        title: 'Layout density',          file: 'governance/rules/09-layout-density.md' },
+  { id: 'spacing-rhythm',        title: 'Spacing & rhythm',        file: 'governance/rules/10-spacing-rhythm.md' },
+  { id: 'responsive-behavior',   title: 'Responsive behavior',     file: 'governance/rules/11-responsive-behavior.md' },
+  { id: 'empty-states',          title: 'Empty states',            file: 'governance/rules/12-empty-states.md' },
+  { id: 'loading-states',        title: 'Loading states',          file: 'governance/rules/13-loading-states.md' },
+  { id: 'microcopy-tone',        title: 'Microcopy & tone',        file: 'governance/rules/14-microcopy-tone.md' },
+  { id: 'accessibility-focus',   title: 'Accessibility & focus',   file: 'governance/rules/15-accessibility-focus.md' },
+  { id: 'data-display',          title: 'Data display',            file: 'governance/rules/16-data-display.md' },
 ];
 
 const TOKENS_LIGHT = 'src/styles/tokens/variables.css';

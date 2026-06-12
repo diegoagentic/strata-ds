@@ -655,6 +655,15 @@ pre:hover .copy-btn { opacity: 1; }
       <a href="#rules-elevation" data-id="rules-elevation">Elevation and shadows</a>
       <a href="#anti-patterns" data-id="anti-patterns">Anti-patterns (10)</a>
       <a href="#token-reference" data-id="token-reference">Token reference</a>
+      <a href="#modal-patterns" data-id="modal-patterns">Modal patterns</a>
+      <a href="#layout-density" data-id="layout-density">Layout density</a>
+      <a href="#spacing-rhythm" data-id="spacing-rhythm">Spacing & rhythm</a>
+      <a href="#responsive-behavior" data-id="responsive-behavior">Responsive behavior</a>
+      <a href="#empty-states" data-id="empty-states">Empty states</a>
+      <a href="#loading-states" data-id="loading-states">Loading states</a>
+      <a href="#microcopy-tone" data-id="microcopy-tone">Microcopy & tone</a>
+      <a href="#accessibility-focus" data-id="accessibility-focus">Accessibility & focus</a>
+      <a href="#data-display" data-id="data-display">Data display</a>
       <a href="#css-tokens" data-id="css-tokens">CSS tokens (live)</a>
       </nav>
     </aside>
@@ -663,7 +672,7 @@ pre:hover .copy-btn { opacity: 1; }
       <div class="page-header">
         <div>
           <h1>Strata DS — Rules Guide</h1>
-          <div class="subtitle">Generated 2026-06-12T16:36:39.851Z · 11 rule files · 9 overview blocks + 97 sub-rule examples · 207 CSS tokens</div>
+          <div class="subtitle">Generated 2026-06-12T17:26:41.473Z · 20 rule files · 9 overview blocks + 111 sub-rule examples · 207 CSS tokens</div>
         </div>
         <button id="theme-toggle" class="theme-toggle" type="button">Toggle theme</button>
       </div>
@@ -6354,6 +6363,2922 @@ font-mono  → ui-monospace stack     → code, tokens, numerals</code></pre>
 <li><code>Strata Design System/strata-ds/src/styles/tokens/variables.css</code> → light mode tokens</li>
 <li><code>Strata Design System/strata-ds/src/styles/tokens/variables-dark.css</code> → dark mode tokens</li>
 <li><code>Strata Design System/strata-ds/src/styles/theme.css</code> → mapping to Tailwind v4</li>
+</ul>
+
+    </section>
+
+    <section id="modal-patterns" class="guide-section">
+      <h2>Modal patterns</h2>
+      
+      <p>Modals are the most overloaded surface in any product. A bad modal hides the task behind walls of metadata, repeats actions, and forces the user to scroll inside a window that should already be self-contained. A good modal lets the user understand <strong>what they are looking at, what is wrong, what the system recommends, and what they need to do</strong> in under 5 seconds.</p>
+<p>This rule extends <a href="./03-containers-and-cards.md"><code>rules/03-containers-and-cards.md</code></a> for surface tokens, <a href="./04-buttons-and-actions.md"><code>rules/04-buttons-and-actions.md</code></a> for action hierarchy, and the canonical <code>Dialog</code> / <code>SplitPaneReviewModal</code> / <code>DocumentReviewModal</code> components in the DS.</p>
+<p><strong>Source</strong>: this rule was authored from a frontend-team review of the smart-comparator discrepancy modal. The recommendations apply to any decision-oriented modal across Strata projects.</p>
+<hr>
+<h2 id="the-5-second-test">The 5-second test</h2>
+
+<aside class="ve-block" data-key="the-5-second-test">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Modal · 5-second test</span>
+  </header>
+  <p class="ve-block-explanation">Every modal must let the user answer five questions above the fold in under 5 seconds: what am I looking at, how many problems exist, how severe are they, what does the system recommend, what action am I expected to take?</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ All 5 answered above the fold</span>
+          <div class="ec-body" style="display:block;">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:12px;">
+              <div style="font-weight:700;color:var(--fg);">Review discrepancies</div>
+              <div style="color:var(--muted-fg);font-size:11px;margin-bottom:8px;">PO-1027 ⇄ ACK-7839 · Steelcase</div>
+              <div style="color:var(--fg);background:var(--muted);padding:6px 8px;border-radius:4px;">3 discrepancies · Highest: High · AI recommends: Reject report</div>
+            </div>
+          </div>
+        </div>
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Buried under metadata cards</span>
+          <div class="ec-body" style="display:block;">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:11px;color:var(--muted-fg);">
+              [Title] [Subtitle] [PO card] [ACK card] [Vendor card] [Match card] [Tabs] [Helper paragraph] ... scroll to find the count
+            </div>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// Above the fold:
+// 1) Title (the TASK)
+// 2) Compact meta line
+// 3) Executive summary
+// 4) AI recommendation
+// 5) Action footer (sticky)</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Reorder content so the executive summary appears no more than 200px below the header. Demote everything else (metadata grids, helper paragraphs) to expandable sections or tooltips.</p>
+</aside>
+<p>Every modal must let the user answer these five questions in under 5 seconds without scrolling:</p>
+<ol>
+<li><strong>What am I looking at?</strong> (the title)</li>
+<li><strong>How many problems exist?</strong> (a single count, not a paragraph)</li>
+<li><strong>How severe are they?</strong> (highest severity, not a description of each)</li>
+<li><strong>What does the system recommend?</strong> (one line)</li>
+<li><strong>What action am I expected to take?</strong> (clear footer CTA)</li>
+</ol>
+<p>If the modal cannot answer these five questions above the fold, it is over-scoped. Demote content to expandable rows, tooltips, or secondary screens.</p>
+<hr>
+<h2 id="header">Header</h2>
+<h3 id="header-height-limit-15-20-of-visible-modal-area">Header height limit — 15-20% of visible modal area</h3>
+
+<aside class="ve-block" data-key="header-height-limit-15-20-of-visible-modal-area">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Modal · header</span>
+  </header>
+  <p class="ve-block-explanation">A header that consumes 25-30% of the modal pushes critical content below the fold. Compact the header to 2 rows max: title + state + close on row 1, metadata + document actions on row 2.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ 2-row compact header</span>
+          <div class="ec-body" style="display:block;">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-size:11px;">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><strong style="color:var(--fg);">Compare linked documents</strong><span class="status-pill status-destructive">Critical</span><span style="margin-left:auto;color:var(--muted-fg);">×</span></div>
+              <div style="color:var(--muted-fg);">PO-1027 ⇄ ACK-7839 · Steelcase · Run #1</div>
+            </div>
+          </div>
+        </div>
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ 6-row header (25%+ of modal)</span>
+          <div class="ec-body" style="display:block;font-size:10px;color:var(--muted-fg);">
+            Title<br>Subtitle<br>Badge<br>PO row<br>ACK row<br>Vendor row<br>Match row<br>Tabs<br>Doc buttons<br>Helper row
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;ModalHeader&gt;
+  &lt;Row&gt;&lt;Title /&gt;&lt;StatusBadge /&gt;&lt;Metric /&gt;&lt;CloseButton /&gt;&lt;/Row&gt;
+  &lt;Row&gt;&lt;Meta /&gt;&lt;ActionGroup /&gt;&lt;/Row&gt;
+&lt;/ModalHeader&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Audit any modal header > 2 rows. Each removed row recovers ~40px of vertical space — that is one extra discrepancy visible.</p>
+</aside>
+<p>The header must contain only:</p>
+<ul>
+<li>The title (the <strong>task</strong>, not the content)</li>
+<li>The state badge (<code>Critical</code>, <code>Pending</code>, <code>Resolved</code>)</li>
+<li>Minimal context line (IDs, vendor, run number — one row)</li>
+<li>Document/document-pair actions (<code>View PO</code>, <code>View ACK</code>)</li>
+<li>Close button</li>
+</ul>
+<p>Do not put: long subtitles, instructional text, summary paragraphs, secondary navigation, or tab counts spread across multiple rows.</p>
+<pre><code class="language-tsx">// ✅ Do — compact 2-row header
+&lt;ModalHeader&gt;
+  &lt;Row&gt;
+    &lt;Title&gt;Compare linked documents&lt;/Title&gt;
+    &lt;StatusBadge tone=&quot;destructive&quot;&gt;Critical&lt;/StatusBadge&gt;
+    &lt;Metric&gt;62% match&lt;/Metric&gt;
+    &lt;CloseButton /&gt;
+  &lt;/Row&gt;
+  &lt;Row tone=&quot;muted&quot;&gt;
+    &lt;Meta&gt;PO-1027 ⇄ ACK-7839 · Steelcase · Run #1&lt;/Meta&gt;
+    &lt;ActionGroup&gt;
+      &lt;Button variant=&quot;ghost&quot; size=&quot;sm&quot;&gt;View PO&lt;/Button&gt;
+      &lt;Button variant=&quot;ghost&quot; size=&quot;sm&quot;&gt;View ACK&lt;/Button&gt;
+    &lt;/ActionGroup&gt;
+  &lt;/Row&gt;
+&lt;/ModalHeader&gt;
+
+// ❌ Don&#39;t — 6-row header consuming 25% of modal height
+&lt;ModalHeader&gt;
+  &lt;Title&gt;Compare linked documents&lt;/Title&gt;
+  &lt;Subtitle&gt;Review discrepancies between purchase order and acknowledgement&lt;/Subtitle&gt;
+  &lt;StatusBadge&gt;Critical issues found&lt;/StatusBadge&gt;
+  &lt;MetadataRow&gt;PO: PO-1027&lt;/MetadataRow&gt;
+  &lt;MetadataRow&gt;ACK: ACK-7839&lt;/MetadataRow&gt;
+  &lt;MetadataRow&gt;Vendor: Steelcase&lt;/MetadataRow&gt;
+  &lt;MetadataRow&gt;Match: 62%&lt;/MetadataRow&gt;
+  &lt;MetadataRow&gt;Run: #1&lt;/MetadataRow&gt;
+  &lt;TabBar&gt;...&lt;/TabBar&gt;
+  &lt;DocumentButtons&gt;View PO · View ACK&lt;/DocumentButtons&gt;
+  &lt;ExplanationRow&gt;Show impact &amp; 4 recommended actions&lt;/ExplanationRow&gt;
+&lt;/ModalHeader&gt;
+</code></pre>
+<h3 id="title-describes-the-task-not-the-content">Title describes the task, not the content</h3>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Title&gt;Compare linked documents&lt;/Title&gt;
+&lt;Title&gt;Review discrepancies&lt;/Title&gt;
+&lt;Title&gt;Validate extracted fields&lt;/Title&gt;
+
+// ❌ Don&#39;t — long content description in the title
+&lt;Title&gt;Compare purchase order PO-1027 with acknowledgement ACK-7839 from Steelcase&lt;/Title&gt;
+</code></pre>
+<p>The content context (IDs, vendor, run number) belongs in the metadata row immediately below the title, not in the title itself.</p>
+<h3 id="metadata-row-single-compact-line">Metadata row — single compact line</h3>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Meta&gt;PO-1027 ⇄ ACK-7839 · Steelcase · Run #1&lt;/Meta&gt;
+
+// ❌ Don&#39;t — cards or stacked labels for context data
+&lt;MetaGrid&gt;
+  &lt;MetaCard&gt;&lt;Label&gt;PO&lt;/Label&gt;&lt;Value&gt;PO-1027&lt;/Value&gt;&lt;/MetaCard&gt;
+  &lt;MetaCard&gt;&lt;Label&gt;ACK&lt;/Label&gt;&lt;Value&gt;ACK-7839&lt;/Value&gt;&lt;/MetaCard&gt;
+  &lt;MetaCard&gt;&lt;Label&gt;Vendor&lt;/Label&gt;&lt;Value&gt;Steelcase&lt;/Value&gt;&lt;/MetaCard&gt;
+&lt;/MetaGrid&gt;
+</code></pre>
+<hr>
+<h2 id="tabs-and-content-hierarchy">Tabs and content hierarchy</h2>
+<h3 id="tabs-sit-adjacent-to-the-content-they-control">Tabs sit adjacent to the content they control</h3>
+<p>Tabs are not part of the header — they are the first row of the body. Place them immediately above the active panel, with no gap or extra row between.</p>
+<pre><code class="language-tsx">// ✅ Do — tabs glue to content
+&lt;TabsList&gt;
+  &lt;TabsTrigger value=&quot;actions&quot;&gt;Action Required (3)&lt;/TabsTrigger&gt;
+  &lt;TabsTrigger value=&quot;fields&quot;&gt;Fields (6)&lt;/TabsTrigger&gt;
+  &lt;TabsTrigger value=&quot;lines&quot;&gt;Line Items (3)&lt;/TabsTrigger&gt;
+&lt;/TabsList&gt;
+&lt;TabsContent value=&quot;actions&quot;&gt;
+  ...
+&lt;/TabsContent&gt;
+
+// ❌ Don&#39;t — header rows between tabs and content
+&lt;TabsList&gt;...&lt;/TabsList&gt;
+&lt;HeaderRow&gt;Showing 3 of 12 discrepancies for current filter&lt;/HeaderRow&gt;
+&lt;HeaderRow&gt;Sort: severity ↓&lt;/HeaderRow&gt;
+&lt;HeaderRow&gt;Last updated: 2 minutes ago&lt;/HeaderRow&gt;
+&lt;TabsContent&gt;...&lt;/TabsContent&gt;
+</code></pre>
+<h3 id="executive-summary-first-list-second">Executive summary first, list second</h3>
+<p>Before any list of items, render a one-line executive summary that captures: count, status distribution, severity high-watermark, and AI/system recommendation if any.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;ExecutiveSummary&gt;
+  3 discrepancies · 0 resolved · Highest severity: High · AI recommends: Reject report
+&lt;/ExecutiveSummary&gt;
+&lt;DiscrepancyList&gt;...&lt;/DiscrepancyList&gt;
+
+// ❌ Don&#39;t — jump straight into the list, let the user count
+&lt;DiscrepancyList&gt;...&lt;/DiscrepancyList&gt;
+</code></pre>
+<hr>
+<h2 id="rows-and-item-structure">Rows and item structure</h2>
+<h3 id="compare-values-in-columns-never-stacked">Compare values in columns, never stacked</h3>
+<p>When a row carries multiple parallel values (Expected vs Received, PO vs ACK, Before vs After), render them as columns. Never stack two parallel values vertically when they fit horizontally.</p>
+<pre><code class="language-tsx">// ✅ Do — 4-column comparison row
+&lt;DiscrepancyRow severity=&quot;high&quot;&gt;
+  &lt;Cell&gt;Line 1 · Product&lt;/Cell&gt;
+  &lt;Cell&gt;Series 2&lt;/Cell&gt;
+  &lt;Cell&gt;Amia&lt;/Cell&gt;
+  &lt;Cell&gt;AI: Reject · 98% confidence&lt;/Cell&gt;
+&lt;/DiscrepancyRow&gt;
+
+// ❌ Don&#39;t — vertical stack inside a card per discrepancy
+&lt;DiscrepancyCard&gt;
+  &lt;h3&gt;Line 1 · Product&lt;/h3&gt;
+  &lt;Label&gt;Purchase Order value&lt;/Label&gt;
+  &lt;Value&gt;Series 2&lt;/Value&gt;
+  &lt;Label&gt;Acknowledgement value&lt;/Label&gt;
+  &lt;Value&gt;Amia&lt;/Value&gt;
+  &lt;Section&gt;AI Analysis&lt;/Section&gt;
+  &lt;Bullet&gt;Unauthorized model swap…&lt;/Bullet&gt;
+  &lt;Bullet&gt;Customer requested Series 2 specifically…&lt;/Bullet&gt;
+  &lt;Bullet&gt;Amia lacks lumbar support…&lt;/Bullet&gt;
+  &lt;ActionGroup&gt;&lt;Accept /&gt;&lt;Flag /&gt;&lt;Reject /&gt;&lt;/ActionGroup&gt;
+&lt;/DiscrepancyCard&gt;
+</code></pre>
+<p>Use the canonical <code>&lt;DiscrepancyRow&gt;</code> + <code>&lt;DiscrepancyComparisonBlock&gt;</code> primitives from the DS.</p>
+<h3 id="severity-is-scanning-not-decoration">Severity is scanning, not decoration</h3>
+<p>Severity belongs at the start of the row so the user can scan a list of 10 items by left-edge color alone.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Row&gt;
+  &lt;Severity tone=&quot;high&quot;&gt;HIGH&lt;/Severity&gt;
+  &lt;Field&gt;Line 1 · Product&lt;/Field&gt;
+  ...
+&lt;/Row&gt;
+
+// ❌ Don&#39;t — severity hidden in the middle, as a decoration
+&lt;Row&gt;
+  &lt;Field&gt;Line 1 · Product&lt;/Field&gt;
+  ...
+  &lt;DecorativeChip&gt;· high severity&lt;/DecorativeChip&gt;
+&lt;/Row&gt;
+</code></pre>
+<h3 id="every-row-answers-4-questions">Every row answers 4 questions</h3>
+<p>A discrepancy row that does not let the user answer <strong>what changed · expected value · received value · recommendation</strong> at a glance is over-engineered. Audit each row against these four. If any is missing or buried, restructure.</p>
+<hr>
+<h2 id="long-reasoning-collapse-by-default">Long reasoning — collapse by default</h2>
+<p>Show only the verdict above the fold:</p>
+<pre><code>AI: Reject · 98% confidence
+Unauthorized model swap — Series 2 → Amia
+</code></pre>
+<p>Then offer a <code>View reasoning</code> link that expands to the bullets. The user reads the <strong>decision</strong> first, the <strong>explanation</strong> on demand.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;AIVerdict&gt;
+  &lt;Decision tone=&quot;destructive&quot;&gt;Reject · 98%&lt;/Decision&gt;
+  &lt;OneLineExplanation&gt;Unauthorized model swap — Series 2 → Amia&lt;/OneLineExplanation&gt;
+  &lt;Collapsible label=&quot;View reasoning&quot;&gt;
+    &lt;ReasoningBullet&gt;Customer specced Series 2 explicitly in the original PO&lt;/ReasoningBullet&gt;
+    &lt;ReasoningBullet&gt;Amia lacks lumbar support required for the spec&lt;/ReasoningBullet&gt;
+    &lt;ReasoningBullet&gt;No swap authorization on file&lt;/ReasoningBullet&gt;
+  &lt;/Collapsible&gt;
+&lt;/AIVerdict&gt;
+
+// ❌ Don&#39;t — render all 3-5 reasoning bullets visible by default
+</code></pre>
+<hr>
+<h2 id="actions">Actions</h2>
+<h3 id="per-row-actions-are-secondary-demote-to-a-menu">Per-row actions are secondary; demote to a menu</h3>
+<p>When a row offers multiple decisions (accept, flag, reject), do not render three buttons per row. Demote to a single <code>Override ▾</code> dropdown that contains the row-level actions.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Row&gt;
+  ...
+  &lt;RecommendedDecision&gt;Reject&lt;/RecommendedDecision&gt;
+  &lt;DropdownMenu&gt;
+    &lt;DropdownMenuTrigger asChild&gt;
+      &lt;Button variant=&quot;ghost&quot; size=&quot;sm&quot;&gt;Override ▾&lt;/Button&gt;
+    &lt;/DropdownMenuTrigger&gt;
+    &lt;DropdownMenuContent&gt;
+      &lt;DropdownMenuItem&gt;Accept this item&lt;/DropdownMenuItem&gt;
+      &lt;DropdownMenuItem&gt;Flag for review&lt;/DropdownMenuItem&gt;
+      &lt;DropdownMenuItem&gt;Reject this item&lt;/DropdownMenuItem&gt;
+    &lt;/DropdownMenuContent&gt;
+  &lt;/DropdownMenu&gt;
+&lt;/Row&gt;
+
+// ❌ Don&#39;t — three buttons in every row, multiplying visual noise
+&lt;Row&gt;
+  ...
+  &lt;Button&gt;Accept&lt;/Button&gt;
+  &lt;Button&gt;Flag&lt;/Button&gt;
+  &lt;Button&gt;Reject&lt;/Button&gt;
+&lt;/Row&gt;
+</code></pre>
+<h3 id="global-actions-live-in-the-footer-never-duplicated-per-row">Global actions live in the footer — never duplicated per row</h3>
+<p>If the modal&#39;s footer carries <code>Accept report · Review manually · Reject report</code>, do not also offer per-row <code>Accept · Review · Reject</code>. Pick one scope per action verb.</p>
+<pre><code class="language-tsx">// ✅ Do — clear scopes
+&lt;RowAction&gt;Override item&lt;/RowAction&gt;
+&lt;FooterAction&gt;Accept report&lt;/FooterAction&gt;
+
+// ❌ Don&#39;t — same verb at two scopes
+&lt;RowAction&gt;Accept&lt;/RowAction&gt;      // accepts what? this row? the report?
+&lt;FooterAction&gt;Accept&lt;/FooterAction&gt;
+</code></pre>
+<h3 id="action-labels-carry-the-consequence">Action labels carry the consequence</h3>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Button&gt;Reject report&lt;/Button&gt;
+&lt;Button&gt;Send to review&lt;/Button&gt;
+&lt;Button&gt;Apply AI recommendations&lt;/Button&gt;
+
+// ❌ Don&#39;t — bare verbs that read as ambiguous when the context scrolls off
+&lt;Button&gt;Reject&lt;/Button&gt;
+&lt;Button&gt;Review&lt;/Button&gt;
+&lt;Button&gt;Accept&lt;/Button&gt;
+</code></pre>
+<p>A user who arrives at the footer after scrolling should know exactly what <code>Reject</code> rejects — the line item, this discrepancy, the whole report?</p>
+<h3 id="ai-suggests-human-decides-visual-separation">AI suggests, human decides — visual separation</h3>
+<pre><code class="language-tsx">// ✅ Do — clear AI recommendation block, separate action block
+&lt;Recommendation&gt;AI recommends: Reject report&lt;/Recommendation&gt;
+&lt;UserDecision&gt;
+  &lt;Button variant=&quot;outline&quot;&gt;Accept&lt;/Button&gt;
+  &lt;Button variant=&quot;outline&quot;&gt;Review&lt;/Button&gt;
+  &lt;Button variant=&quot;destructive&quot;&gt;Reject&lt;/Button&gt;
+&lt;/UserDecision&gt;
+
+// ❌ Don&#39;t — make the AI recommendation look like the final action was already taken
+&lt;AILabel&gt;AI decision: Reject&lt;/AILabel&gt;
+&lt;TinyOverride&gt;Override decision&lt;/TinyOverride&gt;
+</code></pre>
+<hr>
+<h2 id="footer">Footer</h2>
+<h3 id="footer-is-compact-not-full-width-buttons">Footer is compact, not full-width buttons</h3>
+<pre><code class="language-tsx">// ✅ Do
+&lt;ModalFooter&gt;
+  &lt;RoutingMeta&gt;Routing: Mandatory Review · 35% confidence&lt;/RoutingMeta&gt;
+  &lt;ActionGroup&gt;
+    &lt;Button variant=&quot;outline&quot;&gt;Accept&lt;/Button&gt;
+    &lt;Button variant=&quot;outline&quot;&gt;Review&lt;/Button&gt;
+    &lt;Button variant=&quot;destructive&quot;&gt;Reject&lt;/Button&gt;
+  &lt;/ActionGroup&gt;
+&lt;/ModalFooter&gt;
+
+// ❌ Don&#39;t — three full-width buttons consuming half the footer height
+&lt;ModalFooter style={{ flexDirection: &#39;column&#39;, gap: &#39;1rem&#39; }}&gt;
+  &lt;Button fullWidth size=&quot;lg&quot;&gt;Accept report&lt;/Button&gt;
+  &lt;Button fullWidth size=&quot;lg&quot;&gt;Review manually&lt;/Button&gt;
+  &lt;Button fullWidth size=&quot;lg&quot; variant=&quot;destructive&quot;&gt;Reject report&lt;/Button&gt;
+&lt;/ModalFooter&gt;
+</code></pre>
+<h3 id="footer-stays-fixed-header-fixed-body-scrolls">Footer stays fixed — header fixed, body scrolls</h3>
+<p>Decision modals must keep the footer (and header) sticky. The body scrolls; the action surface never disappears under the fold.</p>
+<pre><code class="language-tsx">&lt;Modal&gt;
+  &lt;ModalHeader sticky&gt;...&lt;/ModalHeader&gt;
+  &lt;ModalBody scrollable&gt;...&lt;/ModalBody&gt;
+  &lt;ModalFooter sticky&gt;...&lt;/ModalFooter&gt;
+&lt;/Modal&gt;
+</code></pre>
+<hr>
+<h2 id="modal-sizing-and-scroll-behavior">Modal sizing and scroll behavior</h2>
+<h3 id="match-the-modal-width-to-the-content-type">Match the modal width to the content type</h3>
+<table>
+<thead>
+<tr>
+<th>Use case</th>
+<th>Width</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Confirmation (single question)</td>
+<td><code>max-w-md</code> (~28rem)</td>
+<td>Dialog primitive</td>
+</tr>
+<tr>
+<td>Form (3-8 fields)</td>
+<td><code>max-w-lg</code> (~32rem)</td>
+<td>Sheet preferred over modal for &gt;5 fields</td>
+</tr>
+<tr>
+<td>Detail / review (parallel data)</td>
+<td><code>max-w-4xl</code> (~56rem)</td>
+<td>Allows column comparison</td>
+</tr>
+<tr>
+<td>Document comparison / split pane</td>
+<td><code>max-w-6xl</code> + sidebar offset</td>
+<td>Use <code>SplitPaneReviewModal</code></td>
+</tr>
+<tr>
+<td>Full hero / dashboard takeover</td>
+<td>Full screen</td>
+<td>Reconsider — a full route is often better</td>
+</tr>
+</tbody></table>
+<h3 id="internal-scroll-budget">Internal scroll budget</h3>
+<p>The user should always see at least: full header · executive summary · 2-3 list items · full footer. If only one item is visible, the row design is too tall — restructure to columns + collapsibles before resizing the modal.</p>
+<pre><code class="language-tsx">// ✅ Do — bounded modal height, internal scroll on the body only
+&lt;ModalContent className=&quot;max-h-[90vh] flex flex-col&quot;&gt;
+  &lt;ModalHeader /&gt;
+  &lt;ModalBody className=&quot;overflow-y-auto flex-1 min-h-0&quot;&gt;
+    &lt;Summary /&gt;
+    &lt;List&gt;...&lt;/List&gt;
+  &lt;/ModalBody&gt;
+  &lt;ModalFooter /&gt;
+&lt;/ModalContent&gt;
+
+// ❌ Don&#39;t — modal grows to fit content, page itself scrolls
+&lt;ModalContent className=&quot;h-auto&quot;&gt;
+  ...
+&lt;/ModalContent&gt;
+</code></pre>
+<hr>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<table>
+<thead>
+<tr>
+<th>❌</th>
+<th>✅</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Header spans 25% of modal height</td>
+<td>Header ≤ 20% with compact 2-row layout</td>
+</tr>
+<tr>
+<td>Title contains IDs and vendor</td>
+<td>Title describes the task; IDs in meta row</td>
+</tr>
+<tr>
+<td>Tab bar separated from content by 2-3 rows</td>
+<td>Tabs glue to content directly</td>
+</tr>
+<tr>
+<td>Long AI reasoning visible by default</td>
+<td>Decision + 1 line visible; reasoning collapsible</td>
+</tr>
+<tr>
+<td>3 buttons per row + 3 buttons in footer</td>
+<td>Per-row <code>Override ▾</code>; global verbs in footer</td>
+</tr>
+<tr>
+<td>Full-width footer buttons stacked</td>
+<td>Compact button group right-aligned</td>
+</tr>
+<tr>
+<td>Body scrolls past the header</td>
+<td>Sticky header + body scroll + sticky footer</td>
+</tr>
+<tr>
+<td><code>&lt;Button&gt;Accept&lt;/Button&gt;</code> (bare verb)</td>
+<td><code>&lt;Button&gt;Accept report&lt;/Button&gt;</code> (verb + object)</td>
+</tr>
+<tr>
+<td>AI verdict styled as final decision</td>
+<td>Clear &quot;AI recommends&quot; label + separate user action group</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="component-primitives-in-the-ds">Component primitives in the DS</h2>
+<p>Use these instead of rolling custom modal scaffolding:</p>
+<ul>
+<li><code>&lt;DocumentReviewModal&gt;</code> — for single-document review with tab strip</li>
+<li><code>&lt;SplitPaneReviewModal&gt;</code> — for two-document compare (PO ⇄ ACK)</li>
+<li><code>&lt;DiscrepancyRow&gt;</code> + <code>&lt;DiscrepancyComparisonBlock&gt;</code> — for the inner rows</li>
+<li><code>&lt;Dialog&gt;</code> (Radix) — for confirmations and forms</li>
+<li><code>&lt;DropdownMenu&gt;</code> — for the per-row <code>Override ▾</code></li>
+</ul>
+<p>See <a href="../code-usage.md"><code>code-usage.md</code></a> for the import paths.</p>
+<hr>
+<h2 id="source-files">Source files</h2>
+<ul>
+<li><code>governance/rules/03-containers-and-cards.md</code> — surface tokens used by modals</li>
+<li><code>governance/rules/04-buttons-and-actions.md</code> — action hierarchy applied here</li>
+<li><code>Strata Design System/strata-ds/src/components/overlays/document-review-modal.tsx</code></li>
+<li><code>Strata Design System/strata-ds/src/components/overlays/split-pane-review-modal.tsx</code></li>
+<li><code>Strata Design System/strata-ds/src/components/application-ui/discrepancy-row.tsx</code></li>
+</ul>
+
+    </section>
+
+    <section id="layout-density" class="guide-section">
+      <h2>Layout density</h2>
+      
+      <p>The most common complaint about UI built quickly is the same: <strong>too much vertical scroll, too much empty space, related elements pushed to separate rows, important things buried below the fold</strong>. This rule codifies how to lay out information for maximum usable density on desktop without compromising legibility on smaller viewports.</p>
+<p>This rule extends <a href="./03-containers-and-cards.md"><code>rules/03-containers-and-cards.md</code></a> and <a href="./08-modal-patterns.md"><code>rules/08-modal-patterns.md</code></a>.</p>
+<hr>
+<h2 id="core-principle-maximize-desktop-real-estate">Core principle — maximize desktop real estate</h2>
+
+<aside class="ve-block" data-key="core-principle-maximize-desktop-real-estate">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Layout · density</span>
+  </header>
+  <p class="ve-block-explanation">Strata users work on desktop at 1280-1920px. Using a 600-800px center column wastes 60% of the screen and forces unnecessary scroll. Default to 2-3 column layouts at the lg breakpoint and above.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Narrow center column</span>
+          <div class="ec-body" style="display:block;">
+            <div style="display:flex;justify-content:center;background:var(--muted);padding:14px;border-radius:6px;">
+              <div style="background:var(--card);border:1px solid var(--border);width:60%;padding:10px;font-size:11px;color:var(--fg);">max-w-2xl mx-auto</div>
+            </div>
+          </div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Multi-column desktop</span>
+          <div class="ec-body" style="display:block;">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;background:var(--muted);padding:14px;border-radius:6px;">
+              <div style="background:var(--card);border:1px solid var(--border);padding:10px;font-size:11px;color:var(--fg);">Left section</div>
+              <div style="background:var(--card);border:1px solid var(--border);padding:10px;font-size:11px;color:var(--fg);">Right section</div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;div className=&quot;grid grid-cols-1 lg:grid-cols-2 gap-6&quot;&gt;
+  &lt;section&gt;{leftContent}&lt;/section&gt;
+  &lt;section&gt;{rightContent}&lt;/section&gt;
+&lt;/div&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> On any view, ask: is 30%+ of horizontal space empty on desktop? If yes, switch to a 2- or 3-column grid that collapses to a stack on mobile.</p>
+</aside>
+<p>Strata users work primarily on desktop. The viewport is 1280-1920px wide; using only the center 600-800px for a single column wastes 60% of the screen and forces unnecessary scroll. Default to <strong>2-column or 3-column layouts</strong> at the <code>lg</code> breakpoint and above.</p>
+<pre><code class="language-tsx">// ✅ Do — 2-column layout on lg, collapses to stack on mobile
+&lt;div className=&quot;grid grid-cols-1 lg:grid-cols-2 gap-6&quot;&gt;
+  &lt;section&gt;{leftContent}&lt;/section&gt;
+  &lt;section&gt;{rightContent}&lt;/section&gt;
+&lt;/div&gt;
+
+// ❌ Don&#39;t — single narrow column on every viewport
+&lt;div className=&quot;max-w-2xl mx-auto space-y-6&quot;&gt;
+  &lt;section&gt;{leftContent}&lt;/section&gt;
+  &lt;section&gt;{rightContent}&lt;/section&gt;
+&lt;/div&gt;
+</code></pre>
+<hr>
+<h2 id="avoid-orphan-elements">Avoid orphan elements</h2>
+
+<aside class="ve-block" data-key="avoid-orphan-elements">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Layout · no orphans</span>
+  </header>
+  <p class="ve-block-explanation">An orphan is a single piece of metadata pushed to its own row when it could naturally sit next to a related element. Orphans break visual flow and waste vertical space.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Every field on its own row</span>
+          <div class="ec-body" style="display:block;font-size:12px;color:var(--fg);">
+            <div>QT-1042</div>
+            <div>NorthPoint</div>
+            <div>Mar 28, 2025</div>
+            <div>Pending</div>
+            <div>$4,159.12</div>
+          </div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ One-line metadata with separators</span>
+          <div class="ec-body" style="display:block;">
+            <div style="display:flex;align-items:baseline;gap:6px;font-size:13px;color:var(--fg);">
+              <strong>QT-1042</strong><span style="color:var(--muted-fg);">·</span>NorthPoint<span style="color:var(--muted-fg);">·</span>Mar 28, 2025<span class="status-pill status-warning" style="margin-left:8px;">Pending</span><span style="margin-left:auto;font-weight:600;">$4,159.12</span>
+            </div>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Meta&gt;SO2604102 · Leland Furniture · Mar 28, 2025 · $4,159.12&lt;/Meta&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> If you see 3+ consecutive rows with 1 piece of info each, collapse them into a single line with <code>·</code> separators.</p>
+</aside>
+<p>An orphan is a single line of text, a lone label, or a metric pushed onto its own row when it could naturally sit next to a related element. Orphans waste vertical space and break visual flow.</p>
+<pre><code class="language-tsx">// ❌ Don&#39;t — every piece of metadata on its own row
+&lt;div&gt;
+  &lt;div&gt;Quote: QT-1042&lt;/div&gt;
+  &lt;div&gt;Vendor: NorthPoint&lt;/div&gt;
+  &lt;div&gt;Date: Mar 28, 2025&lt;/div&gt;
+  &lt;div&gt;Status: Pending&lt;/div&gt;
+  &lt;div&gt;Total: $4,159.12&lt;/div&gt;
+&lt;/div&gt;
+
+// ✅ Do — group related metadata on the same row
+&lt;div className=&quot;flex items-baseline gap-4 text-sm&quot;&gt;
+  &lt;span className=&quot;font-semibold&quot;&gt;QT-1042&lt;/span&gt;
+  &lt;span className=&quot;text-muted-foreground&quot;&gt;·&lt;/span&gt;
+  &lt;span&gt;NorthPoint&lt;/span&gt;
+  &lt;span className=&quot;text-muted-foreground&quot;&gt;·&lt;/span&gt;
+  &lt;span&gt;Mar 28, 2025&lt;/span&gt;
+  &lt;Badge&gt;Pending&lt;/Badge&gt;
+  &lt;span className=&quot;ml-auto tabular-nums font-semibold&quot;&gt;$4,159.12&lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="use-middle-dot-or-pipe-separators-for-one-line-metadata">Use middle-dot or pipe separators for one-line metadata</h3>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Meta&gt;SO2604102 · Leland Furniture · Mar 28, 2025 · $4,159.12&lt;/Meta&gt;
+&lt;Meta&gt;PO-1027 ⇄ ACK-7839 · Steelcase · Run #1&lt;/Meta&gt;
+
+// ❌ Don&#39;t
+&lt;MetaLine&gt;SO2604102&lt;/MetaLine&gt;
+&lt;MetaLine&gt;Leland Furniture&lt;/MetaLine&gt;
+&lt;MetaLine&gt;Mar 28, 2025&lt;/MetaLine&gt;
+&lt;MetaLine&gt;$4,159.12&lt;/MetaLine&gt;
+</code></pre>
+<hr>
+<h2 id="group-related-information-and-actions">Group related information and actions</h2>
+
+<aside class="ve-block" data-key="group-related-information-and-actions">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Layout · grouping</span>
+  </header>
+  <p class="ve-block-explanation">Every panel must have a clear answer to: what does this group of fields represent? If you cannot give the group a 2-3 word name (Quote Info, Vendor, Terms), the grouping is wrong.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Named sections</span>
+          <div class="ec-body" style="display:block;font-size:11px;color:var(--fg);">
+            <div style="border:1px solid var(--border);border-radius:6px;padding:8px;margin-bottom:6px;">
+              <div style="color:var(--muted-fg);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;">Quote Info</div>
+              <div>Number · Date · Linked PO</div>
+            </div>
+            <div style="border:1px solid var(--border);border-radius:6px;padding:8px;">
+              <div style="color:var(--muted-fg);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;">Vendor</div>
+              <div>Dealer · Ship-to · Contact</div>
+            </div>
+          </div>
+        </div>
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ 12 ungrouped fields</span>
+          <div class="ec-body" style="display:block;font-size:11px;color:var(--fg);">
+            Number<br>Date<br>Linked PO<br>Dealer<br>Ship-to<br>Contact<br>...<br>(no section headers)
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;FieldSection label=&quot;Quote Info&quot; icon={&lt;Package /&gt;}&gt;
+  &lt;FieldValueRow field=&quot;Number&quot; value=&quot;SO2604102&quot; /&gt;
+  ...
+&lt;/FieldSection&gt;
+&lt;FieldSection label=&quot;Vendor&quot; icon={&lt;Building /&gt;}&gt;
+  ...
+&lt;/FieldSection&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Audit by section name: every panel of 5+ fields gets a 2-3 word section title. If no name comes to mind, the grouping is wrong.</p>
+</aside>
+<p>Every panel must have a clear answer to: <strong>what does this group of fields represent?</strong> If you cannot give the group a 2-3 word name (Quote Info, Vendor, Terms), the grouping is wrong.</p>
+<pre><code class="language-tsx">// ✅ Do — three named groups, each carrying their fields
+&lt;FieldSection label=&quot;Quote Info&quot; icon={&lt;Package /&gt;}&gt;
+  &lt;FieldValueRow field=&quot;Quote number&quot; value=&quot;SO2604102&quot; /&gt;
+  &lt;FieldValueRow field=&quot;Date&quot; value=&quot;Mar 28, 2025&quot; /&gt;
+  &lt;FieldValueRow field=&quot;Linked PO&quot; value=&quot;4522-7162&quot; /&gt;
+&lt;/FieldSection&gt;
+
+&lt;FieldSection label=&quot;Vendor&quot; icon={&lt;Building /&gt;}&gt;
+  &lt;FieldValueRow field=&quot;Dealer&quot; value=&quot;Leland Furniture&quot; /&gt;
+  &lt;FieldValueRow field=&quot;Ship-to&quot; value=&quot;Continua IL Warehouse&quot; /&gt;
+  &lt;FieldValueRow field=&quot;Contact&quot; value=&quot;orders@leland.com&quot; /&gt;
+&lt;/FieldSection&gt;
+
+// ❌ Don&#39;t — 12 ungrouped fields in a single column
+&lt;div&gt;
+  &lt;Field&gt;Quote number: SO2604102&lt;/Field&gt;
+  &lt;Field&gt;Date: Mar 28, 2025&lt;/Field&gt;
+  &lt;Field&gt;Linked PO: 4522-7162&lt;/Field&gt;
+  &lt;Field&gt;Dealer: Leland Furniture&lt;/Field&gt;
+  &lt;Field&gt;Ship-to: Continua IL Warehouse&lt;/Field&gt;
+  &lt;Field&gt;Contact: orders@leland.com&lt;/Field&gt;
+  &lt;Field&gt;...&lt;/Field&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="action-groups-follow-the-same-rule">Action groups follow the same rule</h3>
+<p>Group buttons by what they act on. Confirmation actions go together; navigation actions go together; destructive actions sit alone (left or right edge).</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Footer&gt;
+  &lt;Button variant=&quot;destructive&quot;&gt;Delete&lt;/Button&gt;  {/* Isolated destructive */}
+  &lt;Spacer /&gt;
+  &lt;ButtonGroup&gt;                                  {/* Confirmation group */}
+    &lt;Button variant=&quot;outline&quot;&gt;Cancel&lt;/Button&gt;
+    &lt;Button&gt;Save&lt;/Button&gt;
+  &lt;/ButtonGroup&gt;
+&lt;/Footer&gt;
+
+// ❌ Don&#39;t — six buttons in a row with no grouping
+&lt;Footer&gt;
+  &lt;Button&gt;Delete&lt;/Button&gt;
+  &lt;Button&gt;Cancel&lt;/Button&gt;
+  &lt;Button&gt;Save draft&lt;/Button&gt;
+  &lt;Button&gt;Save&lt;/Button&gt;
+  &lt;Button&gt;Preview&lt;/Button&gt;
+  &lt;Button&gt;Help&lt;/Button&gt;
+&lt;/Footer&gt;
+</code></pre>
+<hr>
+<h2 id="density-modes-comfortable-vs-compact">Density modes — comfortable vs compact</h2>
+<p>Strata supports two density modes for data lists. Pick per context, never mix on the same page.</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Row height</th>
+<th>Padding</th>
+<th>Use when</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Comfortable</strong></td>
+<td>48-56px</td>
+<td><code>py-3 px-4</code></td>
+<td>Default for browsing, primary navigation, hero lists</td>
+</tr>
+<tr>
+<td><strong>Compact</strong></td>
+<td>32-40px</td>
+<td><code>py-1.5 px-3</code></td>
+<td>Data-dense tables, reports, modals, sub-panels</td>
+</tr>
+</tbody></table>
+<pre><code class="language-tsx">// ✅ Comfortable — main transactions table
+&lt;DataListTable rowClassName=&quot;py-3 px-4&quot;&gt;...&lt;/DataListTable&gt;
+
+// ✅ Compact — line items inside a quote
+&lt;EditableLineTable rowClassName=&quot;py-1.5 px-3&quot;&gt;...&lt;/EditableLineTable&gt;
+</code></pre>
+<hr>
+<h2 id="avoid-stacking-related-elements-when-they-fit-horizontally">Avoid stacking related elements when they fit horizontally</h2>
+<p>If two pieces of information are read together (label + value, before + after, count + label), render them on the same row.</p>
+<pre><code class="language-tsx">// ✅ Do — KPI with delta inline
+&lt;div className=&quot;flex items-baseline gap-3&quot;&gt;
+  &lt;span className=&quot;text-3xl font-extrabold tabular-nums&quot;&gt;$4,159&lt;/span&gt;
+  &lt;span className=&quot;text-sm font-semibold text-success&quot;&gt;+12.5%&lt;/span&gt;
+&lt;/div&gt;
+
+// ❌ Don&#39;t — two rows for one KPI
+&lt;div&gt;
+  &lt;div className=&quot;text-3xl&quot;&gt;$4,159&lt;/div&gt;
+  &lt;div className=&quot;text-sm text-success&quot;&gt;+12.5%&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<hr>
+<h2 id="sticky-chrome-scroll-bound-body">Sticky chrome + scroll-bound body</h2>
+<p>For long lists or scrollable detail views, keep navigation, search, and primary actions sticky at the top so the user always has them in reach.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;PageLayout&gt;
+  &lt;Header sticky&gt;
+    &lt;Title&gt;Transactions&lt;/Title&gt;
+    &lt;Toolbar&gt;&lt;Search /&gt;&lt;FilterPills /&gt;&lt;/Toolbar&gt;
+  &lt;/Header&gt;
+  &lt;ScrollableBody&gt;
+    &lt;Table&gt;...&lt;/Table&gt;
+  &lt;/ScrollableBody&gt;
+&lt;/PageLayout&gt;
+</code></pre>
+<hr>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<table>
+<thead>
+<tr>
+<th>❌</th>
+<th>✅</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>One field per row, 12 rows of vertical stacking</td>
+<td>2-3 grouped sections, each with 3-5 fields</td>
+</tr>
+<tr>
+<td><code>max-w-2xl mx-auto</code> on every panel</td>
+<td><code>grid grid-cols-1 lg:grid-cols-2 gap-6</code></td>
+</tr>
+<tr>
+<td>Metadata as orphan lines (4 rows for 4 facts)</td>
+<td>Single inline meta with <code>·</code> separators</td>
+</tr>
+<tr>
+<td>Comfortable density inside a modal with 10 line items</td>
+<td>Compact density (<code>py-1.5</code>) for data-dense surfaces</td>
+</tr>
+<tr>
+<td>Buttons scattered with no visual grouping</td>
+<td>Logical groups: destructive isolated, confirmation paired</td>
+</tr>
+<tr>
+<td>Critical actions below the fold</td>
+<td>Sticky footer + scrollable body</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="quick-audit">Quick audit</h2>
+<p>Open any view and ask:</p>
+<ol>
+<li><strong>Are there 3+ consecutive rows with one piece of info each?</strong> → orphan problem</li>
+<li><strong>Is more than 30% of horizontal space empty on desktop?</strong> → single-column problem</li>
+<li><strong>Can I name every section in 2-3 words?</strong> → grouping problem</li>
+<li><strong>Do I see the same density (row height) across panels of different scope?</strong> → density-mode problem</li>
+</ol>
+<p>If any answer is yes, restructure before adding more content.</p>
+<hr>
+<h2 id="source-files">Source files</h2>
+<ul>
+<li><code>governance/rules/03-containers-and-cards.md</code> — surface hierarchy</li>
+<li><code>governance/rules/08-modal-patterns.md</code> — applies layout density specifically to modals</li>
+<li><code>Strata Design System/strata-ds/src/components/application-ui/data-list-table.tsx</code></li>
+<li><code>Strata Design System/strata-ds/src/components/application-ui/data-list-card.tsx</code></li>
+</ul>
+
+    </section>
+
+    <section id="spacing-rhythm" class="guide-section">
+      <h2>Spacing & rhythm</h2>
+      
+      <p>Consistent spacing is what makes a design system feel unified. Inconsistent spacing is what makes a screen feel cluttered or undermined even when every component is technically correct. Strata uses an opinionated spacing scale and a baseline vertical rhythm that all components honor.</p>
+<p>This rule extends <a href="./06-typography.md"><code>rules/06-typography.md</code></a> and <a href="./09-layout-density.md"><code>rules/09-layout-density.md</code></a>.</p>
+<hr>
+<h2 id="the-4-point-spacing-scale">The 4-point spacing scale</h2>
+
+<aside class="ve-block" data-key="the-4-point-spacing-scale">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Spacing · scale</span>
+  </header>
+  <p class="ve-block-explanation">Every gap, padding, and margin must land on the 4-point scale (4 · 8 · 12 · 16 · 24 · 32 · 48 · 64). Arbitrary values like <code>p-[18px]</code> break the visual rhythm.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Scale steps</span>
+          <div class="ec-body" style="display:block;">
+            <div style="display:flex;align-items:center;gap:8px;margin:3px 0;"><span style="font-family:monospace;font-size:10px;color:var(--muted-fg);width:30px;">4px</span><span style="display:inline-block;height:6px;background:var(--primary);width:8px;border-radius:2px;"></span></div><div style="display:flex;align-items:center;gap:8px;margin:3px 0;"><span style="font-family:monospace;font-size:10px;color:var(--muted-fg);width:30px;">8px</span><span style="display:inline-block;height:6px;background:var(--primary);width:16px;border-radius:2px;"></span></div><div style="display:flex;align-items:center;gap:8px;margin:3px 0;"><span style="font-family:monospace;font-size:10px;color:var(--muted-fg);width:30px;">12px</span><span style="display:inline-block;height:6px;background:var(--primary);width:24px;border-radius:2px;"></span></div><div style="display:flex;align-items:center;gap:8px;margin:3px 0;"><span style="font-family:monospace;font-size:10px;color:var(--muted-fg);width:30px;">16px</span><span style="display:inline-block;height:6px;background:var(--primary);width:32px;border-radius:2px;"></span></div><div style="display:flex;align-items:center;gap:8px;margin:3px 0;"><span style="font-family:monospace;font-size:10px;color:var(--muted-fg);width:30px;">24px</span><span style="display:inline-block;height:6px;background:var(--primary);width:48px;border-radius:2px;"></span></div><div style="display:flex;align-items:center;gap:8px;margin:3px 0;"><span style="font-family:monospace;font-size:10px;color:var(--muted-fg);width:30px;">32px</span><span style="display:inline-block;height:6px;background:var(--primary);width:64px;border-radius:2px;"></span></div><div style="display:flex;align-items:center;gap:8px;margin:3px 0;"><span style="font-family:monospace;font-size:10px;color:var(--muted-fg);width:30px;">48px</span><span style="display:inline-block;height:6px;background:var(--primary);width:96px;border-radius:2px;"></span></div>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;div className=&quot;p-4 gap-3 mt-8&quot;&gt;  {/* ✓ scale: 16 · 12 · 32 */}
+&lt;div className=&quot;p-[18px] gap-[14px]&quot;&gt;  {/* ❌ arbitrary */}</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> If you reach for an arbitrary value like <code>p-[18px]</code>, step to the nearest scale value (<code>p-4</code> = 16px or <code>p-5</code> = 20px). Consistency beats precision.</p>
+</aside>
+<p>Every gap, padding, and margin in Strata must be a step on the 4-point scale: <strong>4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 · 96</strong>. Tailwind classes: <code>1 · 2 · 3 · 4 · 6 · 8 · 12 · 16 · 24</code>.</p>
+<pre><code class="language-tsx">// ✅ Do — values from the scale
+&lt;div className=&quot;p-4&quot;&gt;     {/* 16px */}
+&lt;div className=&quot;gap-3&quot;&gt;   {/* 12px */}
+&lt;div className=&quot;mt-8&quot;&gt;    {/* 32px */}
+
+// ❌ Don&#39;t — arbitrary or off-scale values
+&lt;div className=&quot;p-[18px]&quot;&gt;
+&lt;div className=&quot;gap-[14px]&quot;&gt;
+&lt;div style={{ marginTop: 28 }}&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Tailwind</th>
+<th>Use case</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>4</strong></td>
+<td><code>1</code></td>
+<td>Internal icon padding · tight badge insets</td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td><code>2</code></td>
+<td>Compact button padding · small gap</td>
+</tr>
+<tr>
+<td><strong>12</strong></td>
+<td><code>3</code></td>
+<td>Default gap between siblings · compact card padding</td>
+</tr>
+<tr>
+<td><strong>16</strong></td>
+<td><code>4</code></td>
+<td>Default card padding · default vertical section spacing</td>
+</tr>
+<tr>
+<td><strong>24</strong></td>
+<td><code>6</code></td>
+<td>Section padding · row spacing in dense lists</td>
+</tr>
+<tr>
+<td><strong>32</strong></td>
+<td><code>8</code></td>
+<td>Section separation · default page padding</td>
+</tr>
+<tr>
+<td><strong>48</strong></td>
+<td><code>12</code></td>
+<td>Major section break</td>
+</tr>
+<tr>
+<td><strong>64</strong></td>
+<td><code>16</code></td>
+<td>Hero padding · top-level page margin</td>
+</tr>
+<tr>
+<td><strong>96</strong></td>
+<td><code>24</code></td>
+<td>Marketing pages only</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="vertical-rhythm-section-spacing">Vertical rhythm — section spacing</h2>
+<p>Sections inside a card or page use a consistent rhythm. Default to <code>space-y-6</code> (24px) between sibling sections and <code>space-y-3</code> (12px) within a section.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;PageLayout&gt;
+  &lt;div className=&quot;space-y-8&quot;&gt;                {/* 32px between major sections */}
+    &lt;section className=&quot;space-y-3&quot;&gt;          {/* 12px within a section */}
+      &lt;Heading&gt;Quote info&lt;/Heading&gt;
+      &lt;FieldValueRow ... /&gt;
+      &lt;FieldValueRow ... /&gt;
+    &lt;/section&gt;
+    &lt;section className=&quot;space-y-3&quot;&gt;
+      &lt;Heading&gt;Vendor&lt;/Heading&gt;
+      &lt;FieldValueRow ... /&gt;
+    &lt;/section&gt;
+  &lt;/div&gt;
+&lt;/PageLayout&gt;
+
+// ❌ Don&#39;t — random spacing between siblings
+&lt;section&gt;
+  &lt;Heading&gt;Quote info&lt;/Heading&gt;
+  &lt;div className=&quot;mt-7&quot;&gt;...&lt;/div&gt;
+  &lt;div className=&quot;mt-3&quot;&gt;...&lt;/div&gt;
+  &lt;div className=&quot;mt-10&quot;&gt;...&lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+<hr>
+<h2 id="padding-consistency-by-surface-level">Padding consistency by surface level</h2>
+<p>Each surface level has a default padding:</p>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>Default padding</th>
+<th>Tailwind</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Page root (Level 0)</td>
+<td>48px desktop · 24px mobile</td>
+<td><code>p-6 lg:p-12</code></td>
+</tr>
+<tr>
+<td>Card / panel (Level 1)</td>
+<td>24px</td>
+<td><code>p-6</code></td>
+</tr>
+<tr>
+<td>Compact card</td>
+<td>16px</td>
+<td><code>p-4</code></td>
+</tr>
+<tr>
+<td>Inner section (Level 2)</td>
+<td>16px</td>
+<td><code>p-4</code></td>
+</tr>
+<tr>
+<td>Modal body</td>
+<td>24px</td>
+<td><code>p-6</code></td>
+</tr>
+<tr>
+<td>Modal header / footer</td>
+<td>16px vertical, 24px horizontal</td>
+<td><code>px-6 py-4</code></td>
+</tr>
+</tbody></table>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Card className=&quot;p-6&quot;&gt;                    {/* Level 1 */}
+  &lt;section className=&quot;bg-muted p-4&quot;&gt;      {/* Level 2 */}
+    ...
+  &lt;/section&gt;
+&lt;/Card&gt;
+
+// ❌ Don&#39;t — same padding at every level (flattens the hierarchy)
+&lt;Card className=&quot;p-4&quot;&gt;
+  &lt;section className=&quot;bg-muted p-4&quot;&gt;
+    ...
+  &lt;/section&gt;
+&lt;/Card&gt;
+</code></pre>
+<hr>
+<h2 id="gap-conventions">Gap conventions</h2>
+<p>Gaps describe how siblings sit next to each other. Stick to these by intent:</p>
+<table>
+<thead>
+<tr>
+<th>Gap</th>
+<th>Tailwind</th>
+<th>Use case</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>4</strong></td>
+<td><code>gap-1</code></td>
+<td>Icon + label inside a single button or badge</td>
+</tr>
+<tr>
+<td><strong>8</strong></td>
+<td><code>gap-2</code></td>
+<td>Adjacent buttons in a button group</td>
+</tr>
+<tr>
+<td><strong>12</strong></td>
+<td><code>gap-3</code></td>
+<td>Form field siblings · table row siblings</td>
+</tr>
+<tr>
+<td><strong>16</strong></td>
+<td><code>gap-4</code></td>
+<td>Default grid gap · siblings in a row</td>
+</tr>
+<tr>
+<td><strong>24</strong></td>
+<td><code>gap-6</code></td>
+<td>Section grid · large grid breakpoint</td>
+</tr>
+</tbody></table>
+<pre><code class="language-tsx">// ✅ Do
+&lt;ButtonGroup className=&quot;gap-2&quot;&gt;
+  &lt;Button&gt;Cancel&lt;/Button&gt;
+  &lt;Button&gt;Save&lt;/Button&gt;
+&lt;/ButtonGroup&gt;
+
+&lt;Grid className=&quot;grid-cols-3 gap-6&quot;&gt;
+  &lt;KPICard /&gt;
+  &lt;KPICard /&gt;
+  &lt;KPICard /&gt;
+&lt;/Grid&gt;
+
+// ❌ Don&#39;t — same gap for unrelated relationships
+&lt;div className=&quot;gap-6&quot;&gt;                       {/* too wide for adjacent buttons */}
+  &lt;Button&gt;Cancel&lt;/Button&gt;
+  &lt;Button&gt;Save&lt;/Button&gt;
+&lt;/div&gt;
+</code></pre>
+<hr>
+<h2 id="margin-between-text-and-following-element">Margin between text and following element</h2>
+<table>
+<thead>
+<tr>
+<th>Text element</th>
+<th>Margin to next</th>
+<th>Tailwind</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>h1 → paragraph</td>
+<td>12px</td>
+<td><code>mb-3</code></td>
+</tr>
+<tr>
+<td>h2 → content</td>
+<td>12px</td>
+<td><code>mb-3</code></td>
+</tr>
+<tr>
+<td>h3 → content</td>
+<td>8px</td>
+<td><code>mb-2</code></td>
+</tr>
+<tr>
+<td>Paragraph → paragraph</td>
+<td>16px</td>
+<td><code>mb-4</code> (or <code>space-y-4</code> on parent)</td>
+</tr>
+<tr>
+<td>Eyebrow → h1</td>
+<td>6px</td>
+<td><code>mb-1.5</code></td>
+</tr>
+</tbody></table>
+<pre><code class="language-tsx">// ✅ Do
+&lt;header className=&quot;mb-6&quot;&gt;
+  &lt;p className=&quot;text-xs font-bold uppercase text-muted-foreground mb-1.5&quot;&gt;Tool&lt;/p&gt;
+  &lt;h1 className=&quot;text-4xl font-extrabold mb-3&quot;&gt;Quote Converter&lt;/h1&gt;
+  &lt;p className=&quot;text-base text-muted-foreground&quot;&gt;Drag-and-drop a quote PDF…&lt;/p&gt;
+&lt;/header&gt;
+</code></pre>
+<hr>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<table>
+<thead>
+<tr>
+<th>❌</th>
+<th>✅</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>mt-[18px]</code>, <code>gap-[14px]</code>, <code>p-[20px]</code></td>
+<td>Stick to the 4-point scale</td>
+</tr>
+<tr>
+<td>Same padding at Level 0, 1, 2 (flat hierarchy)</td>
+<td>Step the padding per surface level</td>
+</tr>
+<tr>
+<td><code>&lt;div className=&quot;mb-7&quot;&gt;</code> (arbitrary one-off)</td>
+<td>Use <code>space-y-*</code> on the parent for sibling rhythm</td>
+</tr>
+<tr>
+<td>Section spacing varies per page</td>
+<td><code>space-y-8</code> (or <code>space-y-6</code>) consistent across views</td>
+</tr>
+<tr>
+<td>Gap-6 between adjacent buttons</td>
+<td>Gap-2 between button siblings</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="source-files">Source files</h2>
+<ul>
+<li><code>governance/rules/06-typography.md</code> — text hierarchy interacts with vertical rhythm</li>
+<li><code>governance/rules/09-layout-density.md</code> — density modes reuse the spacing scale</li>
+<li><code>Strata Design System/strata-ds/src/styles/tokens/variables.css</code> — token-level spacing</li>
+</ul>
+
+    </section>
+
+    <section id="responsive-behavior" class="guide-section">
+      <h2>Responsive behavior</h2>
+      
+      <p>Strata is built desktop-first because that is where the work happens. But every layout must adapt gracefully to smaller viewports — phones for quick lookups, tablets for review. This rule defines the breakpoints, the content-priority hierarchy, and the canonical patterns for how layouts reflow.</p>
+<p>This rule extends <a href="./09-layout-density.md"><code>rules/09-layout-density.md</code></a>.</p>
+<hr>
+<h2 id="breakpoints">Breakpoints</h2>
+<p>Strata uses the Tailwind defaults:</p>
+<table>
+<thead>
+<tr>
+<th>Breakpoint</th>
+<th>Min width</th>
+<th>Tailwind</th>
+<th>Target devices</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>base</strong></td>
+<td>0</td>
+<td>(no prefix)</td>
+<td>Phones portrait (320-639px)</td>
+</tr>
+<tr>
+<td><strong>sm</strong></td>
+<td>640px</td>
+<td><code>sm:</code></td>
+<td>Phones landscape · small tablets</td>
+</tr>
+<tr>
+<td><strong>md</strong></td>
+<td>768px</td>
+<td><code>md:</code></td>
+<td>Tablets portrait</td>
+</tr>
+<tr>
+<td><strong>lg</strong></td>
+<td>1024px</td>
+<td><code>lg:</code></td>
+<td>Tablets landscape · small laptops</td>
+</tr>
+<tr>
+<td><strong>xl</strong></td>
+<td>1280px</td>
+<td><code>xl:</code></td>
+<td>Default desktop</td>
+</tr>
+<tr>
+<td><strong>2xl</strong></td>
+<td>1536px</td>
+<td><code>2xl:</code></td>
+<td>Large desktop · wide monitors</td>
+</tr>
+</tbody></table>
+<p><strong>Primary target</strong>: <code>lg</code> and above. Mobile (<code>base</code> / <code>sm</code>) is a graceful fallback, not the design target.</p>
+<hr>
+<h2 id="content-prioritization">Content prioritization</h2>
+<p>When the viewport shrinks, you must decide what to <strong>keep visible</strong>, what to <strong>stack</strong>, what to <strong>collapse</strong>, and what to <strong>hide</strong>. Always in that order — never hide content the user needs to complete the task.</p>
+<table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Pattern</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1. Keep</td>
+<td>Same layout, smaller padding</td>
+<td>Difference &lt; 200px</td>
+</tr>
+<tr>
+<td>2. Stack</td>
+<td>Side-by-side becomes vertical</td>
+<td>Two columns no longer fit</td>
+</tr>
+<tr>
+<td>3. Collapse</td>
+<td>Expanded panel becomes accordion</td>
+<td>Deep nested information</td>
+</tr>
+<tr>
+<td>4. Hide</td>
+<td>Decorative content disappears</td>
+<td>Only when content is not load-bearing</td>
+</tr>
+</tbody></table>
+<pre><code class="language-tsx">// ✅ Do — stack two columns on mobile
+&lt;div className=&quot;grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6&quot;&gt;
+  &lt;Main /&gt;
+  &lt;Sidebar /&gt;
+&lt;/div&gt;
+
+// ✅ Do — collapse sidebar to accordion on mobile
+&lt;div className=&quot;space-y-4&quot;&gt;
+  &lt;Main /&gt;
+  &lt;details className=&quot;lg:hidden&quot;&gt;
+    &lt;summary&gt;Show details&lt;/summary&gt;
+    &lt;Sidebar /&gt;
+  &lt;/details&gt;
+  &lt;Sidebar className=&quot;hidden lg:block&quot; /&gt;
+&lt;/div&gt;
+
+// ❌ Don&#39;t — hide critical content because mobile is hard
+&lt;Sidebar className=&quot;hidden lg:block&quot;&gt;
+  {/* sidebar with required filters — mobile users cannot filter */}
+&lt;/Sidebar&gt;
+</code></pre>
+<hr>
+<h2 id="stack-vs-reflow-vs-hide">Stack vs reflow vs hide</h2>
+<h3 id="stack-convert-horizontal-to-vertical">Stack — convert horizontal to vertical</h3>
+<pre><code class="language-tsx">// ✅ Do
+&lt;div className=&quot;flex flex-col lg:flex-row gap-4&quot;&gt;
+  &lt;Item /&gt;
+  &lt;Item /&gt;
+  &lt;Item /&gt;
+&lt;/div&gt;
+
+// Tables stack on mobile via responsive utility classes:
+&lt;table className=&quot;hidden md:table&quot;&gt;...&lt;/table&gt;
+&lt;MobileList className=&quot;md:hidden&quot;&gt;...&lt;/MobileList&gt;
+</code></pre>
+<h3 id="reflow-same-content-different-arrangement">Reflow — same content, different arrangement</h3>
+<pre><code class="language-tsx">// ✅ Do — KPIs reflow from 4 columns to 2 columns to 1
+&lt;div className=&quot;grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4&quot;&gt;
+  &lt;KPICard /&gt;
+  &lt;KPICard /&gt;
+  &lt;KPICard /&gt;
+  &lt;KPICard /&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="hide-only-for-truly-decorative-content">Hide — only for truly decorative content</h3>
+<pre><code class="language-tsx">// ✅ Do
+&lt;DecorativeIllustration className=&quot;hidden xl:block&quot; /&gt;
+&lt;HeroVideo className=&quot;hidden lg:block&quot; /&gt;
+
+// ❌ Don&#39;t — hiding interactive controls
+&lt;FilterBar className=&quot;hidden md:flex&quot; /&gt;   {/* mobile cannot filter! */}
+&lt;Toolbar className=&quot;hidden lg:flex&quot; /&gt;     {/* mobile cannot act! */}
+</code></pre>
+<hr>
+<h2 id="touch-targets">Touch targets</h2>
+
+<aside class="ve-block" data-key="touch-targets">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Responsive · touch</span>
+  </header>
+  <p class="ve-block-explanation">Any interactive element on a touch device must be at least 40×40px. Strata buttons at <code>size="default"</code> are 40px; <code>size="sm"</code> (32px) is desktop-only.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Small buttons on touch</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary" style="padding:4px 10px;font-size:11px;">sm = 32px</button></div>
+          <div class="ec-code">size="sm" — fails 40px minimum on touch</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Default size touch-safe</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary">default = 40px</button></div>
+          <div class="ec-code">size="default" everywhere on touch</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Button size=&quot;default&quot;&gt;Save&lt;/Button&gt;      // ✓ 40px touch-safe
+&lt;Button size=&quot;sm&quot;&gt;Save&lt;/Button&gt;          // ❌ 32px — desktop only</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> For icon-only buttons on touch, use <code>size="icon"</code> (40×40px) and <code>aria-label</code>. Never use <code>size="sm"</code> on mobile.</p>
+</aside>
+<p>Any interactive element rendered on a touch device must be at least <strong>40×40px</strong> (Apple HIG / Material guideline). Strata buttons at <code>size=&quot;default&quot;</code> are 40px tall; <code>size=&quot;sm&quot;</code> (32px) is desktop-only.</p>
+<pre><code class="language-tsx">// ✅ Do — full-size buttons on mobile
+&lt;Button size=&quot;default&quot;&gt;Save&lt;/Button&gt;
+
+// ❌ Don&#39;t — small buttons on touch
+&lt;Button size=&quot;sm&quot;&gt;Save&lt;/Button&gt;     {/* 32px — too small for touch */}
+</code></pre>
+<p>For icon-only buttons:</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Button size=&quot;icon&quot; aria-label=&quot;Delete&quot;&gt;  {/* 40×40px */}
+  &lt;Trash className=&quot;size-4&quot; /&gt;
+&lt;/Button&gt;
+
+// ❌ Don&#39;t
+&lt;button className=&quot;p-1&quot; aria-label=&quot;Delete&quot;&gt;  {/* ~28×28px touch target */}
+  &lt;Trash className=&quot;size-4&quot; /&gt;
+&lt;/button&gt;
+</code></pre>
+<hr>
+<h2 id="modal-behavior-across-breakpoints">Modal behavior across breakpoints</h2>
+<table>
+<thead>
+<tr>
+<th>Breakpoint</th>
+<th>Default modal pattern</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>base</code> / <code>sm</code></td>
+<td>Full-screen sheet (slide up from bottom) — <code>&lt;Sheet&gt;</code></td>
+</tr>
+<tr>
+<td><code>md</code></td>
+<td>Centered dialog with reduced padding — <code>&lt;Dialog&gt;</code> <code>max-w-md</code></td>
+</tr>
+<tr>
+<td><code>lg</code>+</td>
+<td>Centered dialog with full padding — <code>&lt;Dialog&gt;</code> <code>max-w-2xl</code> or <code>max-w-4xl</code></td>
+</tr>
+</tbody></table>
+<pre><code class="language-tsx">// ✅ Do — switch overlay type at breakpoint
+{isMobile ? &lt;Sheet&gt;...&lt;/Sheet&gt; : &lt;Dialog&gt;...&lt;/Dialog&gt;}
+
+// Or — single component that adapts
+&lt;Dialog className=&quot;sm:max-w-full sm:rounded-none sm:h-screen lg:max-w-2xl lg:rounded-lg lg:h-auto&quot;&gt;
+</code></pre>
+<hr>
+<h2 id="sidebar-behavior">Sidebar behavior</h2>
+<table>
+<thead>
+<tr>
+<th>Breakpoint</th>
+<th>Sidebar</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>base</code> to <code>md</code></td>
+<td>Hidden by default; opens as overlay drawer</td>
+</tr>
+<tr>
+<td><code>lg</code>+</td>
+<td>Persistent left column</td>
+</tr>
+</tbody></table>
+<pre><code class="language-tsx">&lt;aside className=&quot;
+  fixed inset-y-0 left-0 w-72 transform -translate-x-full
+  lg:translate-x-0 lg:static
+  transition-transform
+&quot;&gt;
+  {nav}
+&lt;/aside&gt;
+</code></pre>
+<hr>
+<h2 id="typography-scaling">Typography scaling</h2>
+<p>Heading sizes step down on smaller viewports to avoid breaking long words onto multiple lines.</p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>base</th>
+<th>sm</th>
+<th>md</th>
+<th>lg+</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>h1</td>
+<td><code>text-2xl</code></td>
+<td><code>text-3xl</code></td>
+<td><code>text-3xl</code></td>
+<td><code>text-4xl</code></td>
+</tr>
+<tr>
+<td>h2</td>
+<td><code>text-xl</code></td>
+<td><code>text-xl</code></td>
+<td><code>text-2xl</code></td>
+<td><code>text-2xl</code></td>
+</tr>
+<tr>
+<td>h3</td>
+<td><code>text-lg</code></td>
+<td><code>text-lg</code></td>
+<td><code>text-lg</code></td>
+<td><code>text-xl</code></td>
+</tr>
+</tbody></table>
+<pre><code class="language-tsx">// ✅ Do
+&lt;h1 className=&quot;text-2xl sm:text-3xl lg:text-4xl font-extrabold&quot;&gt;Dashboard&lt;/h1&gt;
+</code></pre>
+<hr>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<table>
+<thead>
+<tr>
+<th>❌</th>
+<th>✅</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Hide interactive controls below a breakpoint</td>
+<td>Always reflow / stack / collapse — never hide</td>
+</tr>
+<tr>
+<td><code>size=&quot;sm&quot;</code> buttons on touch devices</td>
+<td><code>size=&quot;default&quot;</code> (40px) at mobile breakpoints</td>
+</tr>
+<tr>
+<td>Fixed pixel widths that overflow on mobile</td>
+<td><code>max-w-full</code> + percentage / fr-based widths</td>
+</tr>
+<tr>
+<td>Single column on every viewport</td>
+<td><code>grid-cols-1 lg:grid-cols-N</code> (responsive grid)</td>
+</tr>
+<tr>
+<td>Modal <code>max-w-4xl</code> on mobile (overflows viewport)</td>
+<td>Sheet on mobile, dialog on desktop</td>
+</tr>
+<tr>
+<td>h1 <code>text-4xl</code> on a 320px viewport (breaks words)</td>
+<td>Step down: <code>text-2xl sm:text-3xl lg:text-4xl</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="source-files">Source files</h2>
+<ul>
+<li><code>governance/rules/09-layout-density.md</code> — desktop density principles</li>
+<li><code>governance/rules/06-typography.md</code> — base scale that responsive utilities step</li>
+<li>Tailwind defaults: <a href="https://tailwindcss.com/docs/responsive-design">https://tailwindcss.com/docs/responsive-design</a></li>
+</ul>
+
+    </section>
+
+    <section id="empty-states" class="guide-section">
+      <h2>Empty states</h2>
+      
+      <p>An empty state is what the user sees when there is nothing to show — no items in a list, no results for a filter, no data in a chart, no notifications. It is one of the most-touched-yet-most-neglected screens in any product. A good empty state explains <strong>why</strong> the surface is empty, <strong>what</strong> the user can do about it, and <strong>how</strong> to get started.</p>
+<p>This rule extends <a href="./04-buttons-and-actions.md"><code>rules/04-buttons-and-actions.md</code></a> (CTAs) and <a href="./14-microcopy-tone.md"><code>rules/14-microcopy-tone.md</code></a> (voice).</p>
+<hr>
+<h2 id="the-four-empty-state-variants">The four empty-state variants</h2>
+<table>
+<thead>
+<tr>
+<th>Variant</th>
+<th>Trigger</th>
+<th>Required elements</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Fresh</strong></td>
+<td>First-time view; user has not created anything yet</td>
+<td>Icon · headline · 1-sentence explanation · primary CTA</td>
+</tr>
+<tr>
+<td><strong>Filtered</strong></td>
+<td>Filter or search returned nothing</td>
+<td>Icon · &quot;no results&quot; headline · suggestion to relax filters</td>
+</tr>
+<tr>
+<td><strong>Loading-error</strong></td>
+<td>Network or backend failed</td>
+<td>Warning icon · cause · retry CTA</td>
+</tr>
+<tr>
+<td><strong>Permission</strong></td>
+<td>User does not have access</td>
+<td>Lock icon · cause · request-access CTA or contact-admin link</td>
+</tr>
+</tbody></table>
+<pre><code class="language-tsx">// ✅ Do — distinct treatment per variant
+{isError ? &lt;EmptyError onRetry={refetch} /&gt; :
+ isFiltered ? &lt;EmptyFiltered onClearFilters={clear} /&gt; :
+ noItems ? &lt;EmptyFresh onCreate={openCreateModal} /&gt; :
+ &lt;List items={items} /&gt;}
+
+// ❌ Don&#39;t — same generic &quot;No data&quot; for every case
+{items.length === 0 &amp;&amp; &lt;div&gt;No data&lt;/div&gt;}
+</code></pre>
+<hr>
+<h2 id="always-include-a-cta">Always include a CTA</h2>
+
+<aside class="ve-block" data-key="always-include-a-cta">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Empty · CTA</span>
+  </header>
+  <p class="ve-block-explanation">The empty state must offer a next step. The user landed here for a reason — the empty state should help them act.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Empty with CTA</span>
+          <div class="ec-body" style="display:block;text-align:center;padding:14px;">
+            <div style="color:var(--muted-fg);margin-bottom:6px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+            <div style="font-weight:600;color:var(--fg);font-size:13px;">No quotes yet</div>
+            <div style="font-size:11px;color:var(--muted-fg);margin:4px 0 10px;">Upload a quote PDF to extract fields.</div>
+            <button class="demo-btn demo-btn-primary" style="font-size:12px;">Upload first quote</button>
+          </div>
+        </div>
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Empty with no next step</span>
+          <div class="ec-body" style="display:block;text-align:center;padding:18px;color:var(--muted-fg);font-size:12px;">No data</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;EmptyState
+  icon={&lt;InboxIcon /&gt;}
+  title=&quot;No quotes yet&quot;
+  description=&quot;Upload a quote PDF to extract fields and line items.&quot;
+  action={&lt;Button&gt;Upload first quote&lt;/Button&gt;}
+/&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Every empty state has 4 elements: icon, title, 1-sentence reason, CTA. No exceptions.</p>
+</aside>
+<p>The empty state must offer a next step. The user landed here for a reason — the empty state should help them act.</p>
+<pre><code class="language-tsx">// ✅ Do — clear CTA per variant
+&lt;EmptyState
+  icon={&lt;InboxIcon /&gt;}
+  title=&quot;No quotes yet&quot;
+  description=&quot;Upload a quote PDF to extract fields and line items.&quot;
+  action={&lt;Button&gt;Upload first quote&lt;/Button&gt;}
+/&gt;
+
+// ❌ Don&#39;t — empty state with no next step
+&lt;EmptyState
+  icon={&lt;InboxIcon /&gt;}
+  title=&quot;No quotes yet&quot;
+/&gt;
+</code></pre>
+<p>The CTA changes per variant:</p>
+<ul>
+<li><strong>Fresh</strong> → &quot;Create your first X&quot;, &quot;Upload a Y&quot;, &quot;Get started&quot;</li>
+<li><strong>Filtered</strong> → &quot;Clear filters&quot;, &quot;Reset search&quot;</li>
+<li><strong>Loading-error</strong> → &quot;Retry&quot;, &quot;Refresh&quot;</li>
+<li><strong>Permission</strong> → &quot;Request access&quot;, &quot;Contact admin&quot;</li>
+</ul>
+<hr>
+<h2 id="microcopy-empathetic-but-not-chatty">Microcopy — empathetic but not chatty</h2>
+<pre><code class="language-tsx">// ✅ Do — direct, action-oriented
+&lt;Title&gt;No quotes match these filters&lt;/Title&gt;
+&lt;Description&gt;Try clearing one or more filters to see more results.&lt;/Description&gt;
+
+// ❌ Don&#39;t — too friendly / chatty
+&lt;Title&gt;Oh no, looks like we couldn&#39;t find any quotes! 😅&lt;/Title&gt;
+&lt;Description&gt;Don&#39;t worry, this happens sometimes. Why not try a different search?&lt;/Description&gt;
+
+// ❌ Don&#39;t — too cold / technical
+&lt;Title&gt;Result set: 0 records&lt;/Title&gt;
+&lt;Description&gt;Query returned no matches.&lt;/Description&gt;
+</code></pre>
+<p>The tone is calm + helpful. Not apologetic, not corporate.</p>
+<hr>
+<h2 id="illustration-vs-icon-vs-nothing">Illustration vs icon vs nothing</h2>
+<table>
+<thead>
+<tr>
+<th>Surface size</th>
+<th>Recommended visual</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Full page</td>
+<td>Optional illustration (60×60px max) or large icon (48px)</td>
+</tr>
+<tr>
+<td>Card / panel</td>
+<td>Small icon (24-32px) — no illustration</td>
+</tr>
+<tr>
+<td>Inline / small</td>
+<td>No icon — text only</td>
+</tr>
+</tbody></table>
+<pre><code class="language-tsx">// ✅ Full-page empty
+&lt;EmptyState size=&quot;lg&quot;&gt;
+  &lt;Icon size={48} className=&quot;text-muted-foreground/40&quot; /&gt;
+  &lt;Heading&gt;No quotes yet&lt;/Heading&gt;
+  ...
+&lt;/EmptyState&gt;
+
+// ✅ Card-level empty
+&lt;EmptyState size=&quot;sm&quot; className=&quot;py-12&quot;&gt;
+  &lt;Icon size={24} className=&quot;text-muted-foreground/60&quot; /&gt;
+  ...
+&lt;/EmptyState&gt;
+
+// ✅ Inline empty (table cell, dropdown body)
+&lt;div className=&quot;text-sm text-muted-foreground text-center py-4&quot;&gt;
+  No results
+&lt;/div&gt;
+</code></pre>
+<p>Never use a stock-photo-like illustration. The DS does not ship them and they conflict with the brand&#39;s minimal feel.</p>
+<hr>
+<h2 id="filtered-empty-show-the-user-what-they-searched">Filtered empty — show the user what they searched</h2>
+<p>When the empty state comes from a filter, surface the active filters so the user knows what to relax.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;EmptyState
+  icon={&lt;SearchIcon /&gt;}
+  title=&quot;No documents match these filters&quot;
+  description={
+    &lt;&gt;
+      Active filters: &lt;Pill&gt;Status: Pending&lt;/Pill&gt; &lt;Pill&gt;Vendor: NorthPoint&lt;/Pill&gt;
+    &lt;/&gt;
+  }
+  action={&lt;Button onClick={clearFilters}&gt;Clear filters&lt;/Button&gt;}
+/&gt;
+
+// ❌ Don&#39;t — generic &quot;no results&quot; with no hint
+&lt;div className=&quot;text-sm text-muted-foreground&quot;&gt;No results.&lt;/div&gt;
+</code></pre>
+<hr>
+<h2 id="error-empty-state-actionable-cause">Error empty state — actionable cause</h2>
+<pre><code class="language-tsx">// ✅ Do
+&lt;EmptyState
+  icon={&lt;AlertTriangle className=&quot;text-destructive&quot; /&gt;}
+  title=&quot;Couldn&#39;t load quotes&quot;
+  description=&quot;The server didn&#39;t respond. Check your connection and try again.&quot;
+  action={&lt;Button variant=&quot;outline&quot; onClick={refetch}&gt;Retry&lt;/Button&gt;}
+/&gt;
+
+// ❌ Don&#39;t — bare error code or stack trace
+&lt;div&gt;Error: ECONNREFUSED&lt;/div&gt;
+</code></pre>
+<p>If the cause is a known recoverable error (rate limit, auth expired), tell the user exactly what to do. If it is unknown, offer Retry and a link to support.</p>
+<hr>
+<h2 id="surface-hierarchy-of-empty-states">Surface hierarchy of empty states</h2>
+<p>The empty state respects the surface it sits on. On <code>bg-card</code>, the empty state body is <code>bg-muted/30</code> or transparent (not another card). On <code>bg-background</code>, it is unstyled (just content).</p>
+<pre><code class="language-tsx">// ✅ Card-bound empty — softer background to read as &quot;inner empty&quot;
+&lt;Card&gt;
+  &lt;EmptyState className=&quot;bg-muted/30 py-10 rounded-lg&quot;&gt;...&lt;/EmptyState&gt;
+&lt;/Card&gt;
+
+// ✅ Page-bound empty — no extra container
+&lt;PageLayout&gt;
+  &lt;EmptyState className=&quot;py-20&quot;&gt;...&lt;/EmptyState&gt;
+&lt;/PageLayout&gt;
+</code></pre>
+<hr>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<table>
+<thead>
+<tr>
+<th>❌</th>
+<th>✅</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&quot;No data&quot;</code> as the only message</td>
+<td>Title + 1-sentence reason + CTA</td>
+</tr>
+<tr>
+<td>Same empty state for fresh / filtered / error</td>
+<td>Distinct copy + icon + action per variant</td>
+</tr>
+<tr>
+<td>Apologetic copy (&quot;Oh no, we couldn&#39;t…&quot;)</td>
+<td>Calm, direct (&quot;No quotes match these filters&quot;)</td>
+</tr>
+<tr>
+<td>Stock illustrations</td>
+<td>DS icon at the appropriate size, or no icon</td>
+</tr>
+<tr>
+<td>Hide the surface entirely (no list at all)</td>
+<td>Empty state is the state — keep the page chrome around it</td>
+</tr>
+<tr>
+<td>Tiny &quot;no results&quot; text in the center of a huge surface</td>
+<td>Full empty-state block at the size of the surface</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="source-files">Source files</h2>
+<ul>
+<li><code>governance/rules/04-buttons-and-actions.md</code> — CTAs used by empty states</li>
+<li><code>governance/rules/14-microcopy-tone.md</code> — voice for the headline + description</li>
+<li><code>Strata Design System/strata-ds/src/components/data-visualization/empty-state.tsx</code></li>
+</ul>
+
+    </section>
+
+    <section id="loading-states" class="guide-section">
+      <h2>Loading states</h2>
+      
+      <p>Loading states communicate what is happening, how long it will take, and (if possible) why. Picking the right pattern at the right time is the difference between a UI that feels responsive and one that feels broken.</p>
+<p>This rule extends <a href="./04-buttons-and-actions.md"><code>rules/04-buttons-and-actions.md</code></a> (button loading variant).</p>
+<hr>
+<h2 id="three-timing-thresholds">Three timing thresholds</h2>
+
+<aside class="ve-block" data-key="three-timing-thresholds">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Loading · thresholds</span>
+  </header>
+  <p class="ve-block-explanation">Below 200ms no indicator is needed. 200ms–1s use button loading. 1s–3s use skeleton. Above 3s use progress + cancel. Pick by expected duration, not by what is convenient.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">&lt;200ms · none</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary">Toggle</button></div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">200ms-1s · button loading</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary" disabled style="opacity:0.85;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Saving…</button></div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">1s-3s · skeleton</span>
+          <div class="ec-body" style="display:block;"><div style="background:var(--muted);height:14px;border-radius:3px;margin-bottom:4px;"></div><div style="background:var(--muted);height:10px;width:70%;border-radius:3px;"></div></div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">&gt;3s · progress + cancel</span>
+          <div class="ec-body" style="display:block;"><div style="font-size:11px;color:var(--fg);margin-bottom:4px;">Uploading 12 of 25</div><div style="background:var(--muted);height:6px;border-radius:3px;position:relative;"><div style="background:var(--primary);height:100%;width:48%;border-radius:3px;"></div></div></div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>if (expectedMs &lt; 200) /* no indicator */;
+else if (expectedMs &lt; 1000) &lt;Button loading&gt;...
+else if (expectedMs &lt; 3000) &lt;Skeleton h={...} w={...} /&gt;
+else &lt;Progress percent={n} onCancel={abort} /&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Measure the typical duration of an operation, then pick the matching pattern. Wrong choice = either UI feels broken (no indicator for slow op) or jittery (skeleton flashes for fast op).</p>
+</aside>
+<table>
+<thead>
+<tr>
+<th>Delay</th>
+<th>Pattern</th>
+<th>Reasoning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>&lt;200ms</strong></td>
+<td>None (or instant feedback)</td>
+<td>Below human perception of delay — no indicator needed</td>
+</tr>
+<tr>
+<td><strong>200ms–1s</strong></td>
+<td>Inline spinner or button loading state</td>
+<td>User notices but expects fast completion</td>
+</tr>
+<tr>
+<td><strong>1s–3s</strong></td>
+<td>Skeleton or progress indicator</td>
+<td>User waits — show structure to set expectations</td>
+</tr>
+<tr>
+<td><strong>&gt;3s</strong></td>
+<td>Progress with explanation + cancel</td>
+<td>User must know what is happening and have an escape hatch</td>
+</tr>
+</tbody></table>
+<pre><code class="language-tsx">// ✅ &lt;200ms — no indicator
+const handleSelect = (option) =&gt; setSelected(option);
+
+// ✅ 200ms-1s — button loading
+const handleSubmit = async () =&gt; {
+  setSubmitting(true);
+  await submitForm();   // ~500ms
+  setSubmitting(false);
+};
+&lt;Button loading={submitting}&gt;Save&lt;/Button&gt;
+
+// ✅ 1s-3s — skeleton on the panel
+{isFetching ? &lt;CardSkeleton /&gt; : &lt;Card&gt;{data}&lt;/Card&gt;}
+
+// ✅ &gt;3s — progress + cancel
+&lt;UploadProgress percent={45} onCancel={abort} message=&quot;Uploading 12 of 25 files…&quot; /&gt;
+</code></pre>
+<hr>
+<h2 id="skeleton-vs-spinner">Skeleton vs spinner</h2>
+<h3 id="skeleton-for-structured-content">Skeleton — for structured content</h3>
+<p>Use a skeleton when the loading content has a predictable shape (a card, a table row, a paragraph). The skeleton must match the final layout dimensions so the page does not jump when content loads.</p>
+<pre><code class="language-tsx">// ✅ Do — skeleton matches the final card structure
+{isLoading ? (
+  &lt;Card&gt;
+    &lt;Skeleton className=&quot;h-5 w-32 mb-2&quot; /&gt;     {/* title placeholder */}
+    &lt;Skeleton className=&quot;h-3 w-full mb-1&quot; /&gt;   {/* line 1 */}
+    &lt;Skeleton className=&quot;h-3 w-3/4&quot; /&gt;         {/* line 2 */}
+  &lt;/Card&gt;
+) : (
+  &lt;Card&gt;
+    &lt;h3&gt;{data.title}&lt;/h3&gt;
+    &lt;p&gt;{data.summary}&lt;/p&gt;
+  &lt;/Card&gt;
+)}
+
+// ❌ Don&#39;t — spinner in the middle of an empty card
+{isLoading ? &lt;Card&gt;&lt;Spinner /&gt;&lt;/Card&gt; : &lt;Card&gt;{data}&lt;/Card&gt;}
+</code></pre>
+<h3 id="spinner-for-indeterminate-short-waits">Spinner — for indeterminate / short waits</h3>
+<p>Spinners are for actions where the user knows what they triggered: a button click, a form submit, a manual refresh. They are NOT for first paint.</p>
+<pre><code class="language-tsx">// ✅ Do — button spinner during submit
+&lt;Button loading={submitting}&gt;Save&lt;/Button&gt;
+
+// ✅ Do — refresh action spinner
+&lt;IconButton aria-label=&quot;Refresh&quot;&gt;
+  {refreshing ? &lt;Spinner /&gt; : &lt;RefreshIcon /&gt;}
+&lt;/IconButton&gt;
+
+// ❌ Don&#39;t — center the page on a spinner during first paint
+{isLoading ? &lt;CenteredSpinner /&gt; : &lt;Dashboard data={data} /&gt;}
+</code></pre>
+<hr>
+<h2 id="prevent-layout-shift-cls">Prevent layout shift (CLS)</h2>
+<p>The skeleton must occupy the same space as the final content. Layout shift is one of the most disorienting UX problems.</p>
+<pre><code class="language-tsx">// ✅ Do — skeleton has explicit dimensions
+&lt;Skeleton className=&quot;h-8 w-64&quot; /&gt;        {/* matches the title&#39;s actual size */}
+&lt;Skeleton className=&quot;h-[420px] w-full&quot; /&gt; {/* matches the chart&#39;s final size */}
+
+// ❌ Don&#39;t — skeleton with no size constraint
+&lt;Skeleton /&gt;                              {/* collapses to 0 then jumps */}
+</code></pre>
+<hr>
+<h2 id="disabled-vs-loading">Disabled vs loading</h2>
+
+<aside class="ve-block" data-key="disabled-vs-loading">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Loading · vs disabled</span>
+  </header>
+  <p class="ve-block-explanation">Disabled and loading are not the same. Disabled = action cannot be taken. Loading = action is in progress. A loading button must ALSO be disabled so the user cannot double-fire.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ disabled + loading</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary" disabled style="opacity:0.85;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Saving…</button></div>
+        </div>
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ loading only (double-fire)</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 0.8s linear infinite;"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Save</button></div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Button loading={isSaving} disabled={isSaving}&gt;Save&lt;/Button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Always set both <code>loading</code> AND <code>disabled</code> together. A spinning button without disable still accepts clicks.</p>
+</aside>
+<p>Disabled and loading are NOT the same.</p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Visual</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Disabled</strong></td>
+<td>Greyed out, no spinner</td>
+<td>Action cannot be taken (validation failed, dependency missing)</td>
+</tr>
+<tr>
+<td><strong>Loading</strong></td>
+<td>Spinner inline, label may change</td>
+<td>Action is in progress</td>
+</tr>
+</tbody></table>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Button disabled={!isValid}&gt;Save&lt;/Button&gt;           {/* invalid — cannot save */}
+&lt;Button loading={isSaving}&gt;Save&lt;/Button&gt;            {/* saving in progress */}
+&lt;Button loading={isSaving} disabled&gt;Saving…&lt;/Button&gt; {/* both — disable to prevent double-fire */}
+
+// ❌ Don&#39;t — loading without disabled (allows double-submit)
+&lt;Button loading={isSaving}&gt;Save&lt;/Button&gt;  {/* still clickable, fires twice */}
+</code></pre>
+<p>Always disable a button while it is loading so the user cannot double-fire the action.</p>
+<hr>
+<h2 id="long-operations-progress-cancel">Long operations — progress + cancel</h2>
+<p>Above 3 seconds, the user needs to know:</p>
+<ol>
+<li><strong>What is happening</strong> (uploading, processing, generating)</li>
+<li><strong>How far along</strong> (12 of 25, 45%, 30 seconds remaining)</li>
+<li><strong>How to escape</strong> (cancel, abort, hide)</li>
+</ol>
+<pre><code class="language-tsx">// ✅ Do — explicit progress + cancel
+&lt;UploadProgress
+  current={12}
+  total={25}
+  percent={48}
+  onCancel={abortUpload}
+  message=&quot;Uploading documents…&quot;
+/&gt;
+
+// ❌ Don&#39;t — indeterminate spinner for 30 seconds
+&lt;Spinner /&gt;
+</code></pre>
+<p>For operations where progress cannot be measured (server-side processing), show an estimated time and a cancel button:</p>
+<pre><code class="language-tsx">&lt;ProcessingNotice
+  message=&quot;Analyzing 25 documents — usually takes 30-60 seconds&quot;
+  onCancel={abortJob}
+/&gt;
+</code></pre>
+<hr>
+<h2 id="multi-step-staged-loading">Multi-step / staged loading</h2>
+<p>When a page loads multiple data sources, show them progressively. Do not block the whole page on the slowest call.</p>
+<pre><code class="language-tsx">// ✅ Do — render each section as its data arrives
+&lt;PageLayout&gt;
+  &lt;KPIRow data={kpiData ?? null} loading={kpiLoading} /&gt;
+  &lt;Chart data={chartData ?? null} loading={chartLoading} /&gt;
+  &lt;RecentActivity data={activityData ?? null} loading={activityLoading} /&gt;
+&lt;/PageLayout&gt;
+
+// ❌ Don&#39;t — block everything on the slowest fetch
+{isLoading ? &lt;FullPageSpinner /&gt; : &lt;PageLayout&gt;...&lt;/PageLayout&gt;}
+</code></pre>
+<hr>
+<h2 id="loading-inside-a-button">Loading inside a button</h2>
+<p>Strata <code>&lt;Button loading&gt;</code> swaps the icon (or prepends one) for a spinner, keeps the label text, and disables clicks.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Button loading={isSubmitting}&gt;Save&lt;/Button&gt;            {/* default text stays visible */}
+&lt;Button loading={isSubmitting}&gt;{isSubmitting ? &#39;Saving…&#39; : &#39;Save&#39;}&lt;/Button&gt;   {/* optional label swap */}
+
+// ❌ Don&#39;t
+&lt;Button&gt;{isSubmitting &amp;&amp; &lt;Spinner /&gt;} Save&lt;/Button&gt;     {/* manual; loses focus + disable */}
+</code></pre>
+<hr>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<table>
+<thead>
+<tr>
+<th>❌</th>
+<th>✅</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Spinner during first paint</td>
+<td>Skeleton matching final layout</td>
+</tr>
+<tr>
+<td>Skeleton with no explicit dimensions (causes layout shift)</td>
+<td>Skeleton with <code>h-* w-*</code> matching real content</td>
+</tr>
+<tr>
+<td>Loading button without disabled (allows double-fire)</td>
+<td><code>loading={x} disabled={x}</code> both set</td>
+</tr>
+<tr>
+<td>Indeterminate spinner &gt; 3 seconds</td>
+<td>Progress + cancel</td>
+</tr>
+<tr>
+<td>Block the whole page on the slowest fetch</td>
+<td>Progressive loading per section</td>
+</tr>
+<tr>
+<td>Disabled button with spinner (looks broken)</td>
+<td>Disabled = greyed, no spinner</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="source-files">Source files</h2>
+<ul>
+<li><code>governance/rules/04-buttons-and-actions.md</code> — button loading variant</li>
+<li><code>Strata Design System/strata-ds/src/components/application-ui/skeleton.tsx</code></li>
+<li><code>Strata Design System/strata-ds/src/components/application-ui/progress.tsx</code></li>
+<li><code>Strata Design System/strata-ds/src/components/application-ui/button.tsx</code> — loading prop</li>
+</ul>
+
+    </section>
+
+    <section id="microcopy-tone" class="guide-section">
+      <h2>Microcopy & tone</h2>
+      
+      <p>The words on the screen are part of the design system. Inconsistent button labels, vague error messages, and chatty helper text undermine the visual rules even when every component is correct. This rule defines Strata&#39;s voice + a set of canonical patterns for the most-touched copy surfaces.</p>
+<p>This rule extends <a href="./04-buttons-and-actions.md"><code>rules/04-buttons-and-actions.md</code></a>, <a href="./12-empty-states.md"><code>rules/12-empty-states.md</code></a>, and <a href="./13-loading-states.md"><code>rules/13-loading-states.md</code></a>.</p>
+<hr>
+<h2 id="voice-principles">Voice principles</h2>
+<ol>
+<li><strong>Direct</strong> — say what happens, not what might happen. Prefer &quot;Saved&quot; over &quot;Your changes have been saved successfully.&quot;</li>
+<li><strong>Active voice</strong> — &quot;Delete this record&quot; over &quot;This record will be deleted&quot;.</li>
+<li><strong>Verb + object</strong> in any actionable label — &quot;Save report&quot;, &quot;Reject acknowledgement&quot;. Never bare verbs.</li>
+<li><strong>No filler</strong> — &quot;Please&quot; / &quot;Just&quot; / &quot;Simply&quot; / emojis stay out of UI copy.</li>
+<li><strong>No apology</strong> — &quot;Couldn&#39;t load&quot; instead of &quot;Oh no, sorry…&quot;.</li>
+<li><strong>System speaks plainly</strong> — &quot;3 of 25 uploaded&quot; beats &quot;Processing your magnificent batch of documents&quot;.</li>
+</ol>
+<hr>
+<h2 id="buttons">Buttons</h2>
+<h3 id="pattern-verb-object">Pattern: verb + object</h3>
+
+<aside class="ve-block" data-key="pattern-verb-object">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Microcopy · button</span>
+  </header>
+  <p class="ve-block-explanation">Bare verbs like "Reject" read ambiguously when the surrounding context scrolls off. Verb + object answers "reject what?" without re-reading the screen.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Bare verbs</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-outline">Accept</button><button class="demo-btn demo-btn-outline">Review</button><button class="demo-btn demo-btn-destructive">Reject</button></div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Verb + object</span>
+          <div class="ec-body" style="flex-wrap:wrap;"><button class="demo-btn demo-btn-outline">Accept report</button><button class="demo-btn demo-btn-outline">Send to review</button><button class="demo-btn demo-btn-destructive">Reject report</button></div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Button&gt;Approve quote&lt;/Button&gt;
+&lt;Button variant=&quot;destructive&quot;&gt;Reject acknowledgement&lt;/Button&gt;
+&lt;Button variant=&quot;outline&quot;&gt;Cancel&lt;/Button&gt;  {/* exception — universal */}</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Cancel / Back are the only exceptions. Every other button gets <code>verb + object</code>. Audit by reading each button label aloud: does it tell you what gets affected?</p>
+</aside>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Button&gt;Save quote&lt;/Button&gt;
+&lt;Button&gt;Approve report&lt;/Button&gt;
+&lt;Button&gt;Reject acknowledgement&lt;/Button&gt;
+&lt;Button&gt;Send to review&lt;/Button&gt;
+
+// ❌ Don&#39;t — bare verb that reads ambiguous when the context scrolls off
+&lt;Button&gt;Save&lt;/Button&gt;
+&lt;Button&gt;Approve&lt;/Button&gt;
+&lt;Button&gt;Reject&lt;/Button&gt;
+</code></pre>
+<p>The user must understand the action without seeing the rest of the screen. &quot;Reject&quot; alone could mean rejecting a line item, a discrepancy, or the whole report — be specific.</p>
+<h3 id="cancel-and-back">Cancel and Back</h3>
+<p><code>Cancel</code> and <code>Back</code> are the canonical exceptions to verb+object — they are intransitive and universally understood. Use them, do not invent variants.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Button variant=&quot;outline&quot;&gt;Cancel&lt;/Button&gt;
+&lt;Button variant=&quot;ghost&quot;&gt;Back&lt;/Button&gt;
+
+// ❌ Don&#39;t
+&lt;Button&gt;Cancel changes&lt;/Button&gt;
+&lt;Button&gt;Go back to list&lt;/Button&gt;
+</code></pre>
+<h3 id="destructive-actions">Destructive actions</h3>
+<p>Destructive labels must surface the consequence and the noun:</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Button variant=&quot;destructive&quot;&gt;Delete quote&lt;/Button&gt;
+&lt;Button variant=&quot;destructive&quot;&gt;Reject acknowledgement&lt;/Button&gt;
+
+// ❌ Don&#39;t
+&lt;Button variant=&quot;destructive&quot;&gt;Delete&lt;/Button&gt;
+&lt;Button variant=&quot;destructive&quot;&gt;Reject&lt;/Button&gt;
+</code></pre>
+<h3 id="loading-state-present-continuous">Loading state — present continuous</h3>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Button loading&gt;Saving…&lt;/Button&gt;
+&lt;Button loading&gt;Uploading…&lt;/Button&gt;
+
+// ❌ Don&#39;t
+&lt;Button loading&gt;Save&lt;/Button&gt;
+&lt;Button loading&gt;Please wait&lt;/Button&gt;
+</code></pre>
+<hr>
+<h2 id="error-messages">Error messages</h2>
+
+<aside class="ve-block" data-key="error-messages">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Microcopy · errors</span>
+  </header>
+  <p class="ve-block-explanation">Errors must answer 3 questions: what happened, why, what to do. "Error" or "Save failed" leaves the user stuck.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Bare error</span>
+          <div class="ec-body" style="display:block;color:var(--destructive);font-size:12px;">Invalid email</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ What · why · how</span>
+          <div class="ec-body" style="display:block;color:var(--destructive);font-size:12px;">Email must include a domain (example@company.com)</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;FieldError&gt;
+  Couldn't save — the quote number is already used by SO-1042.
+  Try a different number or edit the existing quote.
+&lt;/FieldError&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Audit every error: it must let the user fix the problem without contacting support. If you cannot tell them how to fix it, the error message is incomplete.</p>
+</aside>
+<p>Error copy must answer three questions: <strong>what happened</strong> · <strong>why</strong> · <strong>what to do</strong>.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;FieldError&gt;
+  Couldn&#39;t save — the quote number is already used by SO-1042.
+  Try a different number or edit the existing quote.
+&lt;/FieldError&gt;
+
+// ❌ Don&#39;t — what happened, no why, no remedy
+&lt;FieldError&gt;Save failed.&lt;/FieldError&gt;
+
+// ❌ Don&#39;t — technical detail user cannot act on
+&lt;FieldError&gt;HTTP 409: Conflict (constraint violation)&lt;/FieldError&gt;
+</code></pre>
+<h3 id="inline-field-errors">Inline field errors</h3>
+<pre><code class="language-tsx">// ✅ Do — specific, actionable
+&lt;FieldError&gt;Email must include a domain (example@company.com)&lt;/FieldError&gt;
+
+// ❌ Don&#39;t — generic
+&lt;FieldError&gt;Invalid email&lt;/FieldError&gt;
+</code></pre>
+<h3 id="system-level-errors">System-level errors</h3>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Alert variant=&quot;destructive&quot;&gt;
+  &lt;AlertTitle&gt;Couldn&#39;t load quotes&lt;/AlertTitle&gt;
+  &lt;AlertDescription&gt;
+    The server didn&#39;t respond. Check your connection and try again.
+  &lt;/AlertDescription&gt;
+  &lt;Button variant=&quot;outline&quot; onClick={refetch}&gt;Retry&lt;/Button&gt;
+&lt;/Alert&gt;
+
+// ❌ Don&#39;t
+&lt;Alert variant=&quot;destructive&quot;&gt;
+  &lt;AlertTitle&gt;Error&lt;/AlertTitle&gt;
+  &lt;AlertDescription&gt;Something went wrong.&lt;/AlertDescription&gt;
+&lt;/Alert&gt;
+</code></pre>
+<hr>
+<h2 id="helper-text-and-descriptions">Helper text and descriptions</h2>
+<h3 id="helper-text-describe-expected-format">Helper text — describe expected format</h3>
+<pre><code class="language-tsx">// ✅ Do
+&lt;FieldDescription&gt;Format: SO-####### (e.g. SO-2604102)&lt;/FieldDescription&gt;
+&lt;FieldDescription&gt;We&#39;ll email you when the upload finishes.&lt;/FieldDescription&gt;
+
+// ❌ Don&#39;t — restate the label
+&lt;FieldLabel&gt;Quote number&lt;/FieldLabel&gt;
+&lt;FieldDescription&gt;Enter the quote number for this record.&lt;/FieldDescription&gt;
+</code></pre>
+<h3 id="empty-state-descriptions">Empty state descriptions</h3>
+<pre><code class="language-tsx">// ✅ Do
+&lt;EmptyState
+  title=&quot;No quotes match these filters&quot;
+  description=&quot;Try clearing one or more filters to see more results.&quot;
+/&gt;
+
+// ❌ Don&#39;t
+&lt;EmptyState
+  title=&quot;Empty&quot;
+  description=&quot;Sorry, we couldn&#39;t find anything for you right now.&quot;
+/&gt;
+</code></pre>
+<hr>
+<h2 id="confirmations-and-success">Confirmations and success</h2>
+<p>Be brief. The user knows what they did — confirm and move on.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Toast&gt;Quote saved.&lt;/Toast&gt;
+&lt;Toast&gt;5 documents uploaded.&lt;/Toast&gt;
+
+// ❌ Don&#39;t
+&lt;Toast&gt;Your quote has been saved successfully to the database.&lt;/Toast&gt;
+&lt;Toast&gt;Great job! Your documents have all been uploaded.&lt;/Toast&gt;
+</code></pre>
+<hr>
+<h2 id="numbers-and-units">Numbers and units</h2>
+<p>Always include the unit. &quot;5&quot; alone is meaningless.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Stat&gt;5 quotes&lt;/Stat&gt;
+&lt;Stat&gt;$4,159.12&lt;/Stat&gt;
+&lt;Stat&gt;3 of 25 uploaded&lt;/Stat&gt;
+
+// ❌ Don&#39;t
+&lt;Stat&gt;5&lt;/Stat&gt;
+&lt;Stat&gt;4159.12&lt;/Stat&gt;
+&lt;Stat&gt;3 / 25&lt;/Stat&gt;
+</code></pre>
+<p>For currency, always use the symbol prefix + thousands separator + 2 decimals (US locale default in Strata):</p>
+<pre><code class="language-tsx">// ✅ Do
+$4,159.12
+$12,000.00
+
+// ❌ Don&#39;t
+4159.12
+$4159
+$4,159
+</code></pre>
+<hr>
+<h2 id="dates-and-times">Dates and times</h2>
+<p>Use relative dates for recent items, absolute for older.</p>
+<table>
+<thead>
+<tr>
+<th>Age</th>
+<th>Format</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&lt; 1 minute</td>
+<td>&quot;Just now&quot;</td>
+</tr>
+<tr>
+<td>&lt; 1 hour</td>
+<td>&quot;5 minutes ago&quot;</td>
+</tr>
+<tr>
+<td>&lt; 24 hours</td>
+<td>&quot;3 hours ago&quot;</td>
+</tr>
+<tr>
+<td>&lt; 7 days</td>
+<td>&quot;Yesterday&quot; / &quot;2 days ago&quot;</td>
+</tr>
+<tr>
+<td>&lt; 1 year</td>
+<td>&quot;Mar 28&quot;</td>
+</tr>
+<tr>
+<td>≥ 1 year</td>
+<td>&quot;Mar 28, 2025&quot;</td>
+</tr>
+</tbody></table>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Time&gt;5 minutes ago&lt;/Time&gt;
+&lt;Time&gt;Mar 28, 2025&lt;/Time&gt;
+
+// ❌ Don&#39;t
+&lt;Time&gt;2025-03-28T14:35:00.000Z&lt;/Time&gt;     {/* technical */}
+&lt;Time&gt;3/28/25&lt;/Time&gt;                      {/* ambiguous */}
+</code></pre>
+<hr>
+<h2 id="status-labels">Status labels</h2>
+<p>Status labels are nouns or adjectives, capitalized, single-word when possible.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;StatusBadge&gt;Pending&lt;/StatusBadge&gt;
+&lt;StatusBadge&gt;Reviewed&lt;/StatusBadge&gt;
+&lt;StatusBadge&gt;Archived&lt;/StatusBadge&gt;
+
+// ❌ Don&#39;t
+&lt;StatusBadge&gt;pending review&lt;/StatusBadge&gt;
+&lt;StatusBadge&gt;NEEDS_ATTENTION&lt;/StatusBadge&gt;
+&lt;StatusBadge&gt;is_complete&lt;/StatusBadge&gt;
+</code></pre>
+<hr>
+<h2 id="tooltips">Tooltips</h2>
+<p>Tooltips give context that does not fit inline. Keep to 1 sentence (max 2). Never include actions inside a tooltip.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Tooltip&gt;The match score combines field similarity and AI confidence.&lt;/Tooltip&gt;
+
+// ❌ Don&#39;t — multi-paragraph
+&lt;Tooltip&gt;
+  This is the match score. It is calculated by combining several factors
+  including field similarity, AI confidence, and historical match patterns.
+  You can read more about how this works in our documentation.
+&lt;/Tooltip&gt;
+
+// ❌ Don&#39;t — action inside tooltip
+&lt;Tooltip&gt;&lt;Button&gt;Open settings&lt;/Button&gt;&lt;/Tooltip&gt;
+</code></pre>
+<hr>
+<h2 id="microcopy-dodont-quick-table">Microcopy do/don&#39;t quick table</h2>
+<table>
+<thead>
+<tr>
+<th>❌ Don&#39;t</th>
+<th>✅ Do</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&quot;Please save your work&quot;</td>
+<td>&quot;Save quote&quot;</td>
+</tr>
+<tr>
+<td>&quot;Oh no, something went wrong!&quot;</td>
+<td>&quot;Couldn&#39;t load — check your connection and retry.&quot;</td>
+</tr>
+<tr>
+<td>&quot;Submit&quot;</td>
+<td>&quot;Submit application&quot; / &quot;Submit for review&quot;</td>
+</tr>
+<tr>
+<td>&quot;OK&quot;</td>
+<td>&quot;Continue&quot; / &quot;Approve&quot; / &quot;Save&quot; (be specific)</td>
+</tr>
+<tr>
+<td>&quot;Just click here to start&quot;</td>
+<td>&quot;Upload first quote&quot;</td>
+</tr>
+<tr>
+<td>&quot;Your data is being processed&quot;</td>
+<td>&quot;Processing 3 of 25 documents…&quot;</td>
+</tr>
+<tr>
+<td>Emojis in interactive UI</td>
+<td>Plain text</td>
+</tr>
+<tr>
+<td>All-caps for emphasis</td>
+<td>Bold or color emphasis, never all-caps</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="source-files">Source files</h2>
+<ul>
+<li><code>governance/rules/04-buttons-and-actions.md</code> — labels for buttons</li>
+<li><code>governance/rules/12-empty-states.md</code> — empty-state copy</li>
+<li><code>governance/rules/13-loading-states.md</code> — loading-state copy</li>
+</ul>
+
+    </section>
+
+    <section id="accessibility-focus" class="guide-section">
+      <h2>Accessibility & focus</h2>
+      
+      <p>Accessibility is not a checkbox at the end of a project — it is a design principle that shapes every component decision. Strata&#39;s components ship a11y wiring (focus rings, ARIA attributes, keyboard handlers) but the application code must use them correctly. This rule covers the application-level rules that complement the component-level a11y.</p>
+<p>This rule extends <a href="./01-color-tokens.md"><code>rules/01-color-tokens.md</code></a> (color contrast), <a href="./04-buttons-and-actions.md"><code>rules/04-buttons-and-actions.md</code></a> (interactive elements), and <a href="./05-icons.md"><code>rules/05-icons.md</code></a> (aria-hidden / aria-label).</p>
+<hr>
+<h2 id="focus-management">Focus management</h2>
+<h3 id="visible-focus-on-every-interactive-element">Visible focus on every interactive element</h3>
+<p>Every focusable element (button, link, input, card-as-button) must show a clear focus ring. Strata components do this automatically — never disable it.</p>
+<pre><code class="language-tsx">// ✅ Do — keep the focus ring that Strata ships
+&lt;Button&gt;Save&lt;/Button&gt;
+
+// ❌ Don&#39;t — strip the outline globally
+&lt;Button className=&quot;outline-none&quot;&gt;Save&lt;/Button&gt;
+
+// ❌ Don&#39;t — restore an invisible outline
+&lt;Button style={{ outline: &#39;0px&#39; }}&gt;Save&lt;/Button&gt;
+</code></pre>
+<h3 id="use-focus-visible-not-focus">Use focus-visible, not focus</h3>
+<p>Focus rings should appear on keyboard focus, not on mouse click. Strata buttons use <code>focus-visible:ring-2</code> so the ring shows on Tab/keyboard but not on a click.</p>
+<pre><code class="language-tsx">// ✅ Do — Strata default
+&lt;button className=&quot;focus-visible:ring-2 focus-visible:ring-primary/40&quot;&gt;
+  ...
+&lt;/button&gt;
+
+// ❌ Don&#39;t — focus ring on every mouse click (visually noisy)
+&lt;button className=&quot;focus:ring-2 focus:ring-primary/40&quot;&gt;
+  ...
+&lt;/button&gt;
+</code></pre>
+<h3 id="restore-focus-after-closing-overlays">Restore focus after closing overlays</h3>
+<p>After a modal, popover, or sheet closes, focus must return to the element that opened it. Radix-based DS components (Dialog, Sheet, Popover) do this automatically — do not override.</p>
+<pre><code class="language-tsx">// ✅ Do — Radix Dialog manages focus restoration
+&lt;Dialog&gt;
+  &lt;DialogTrigger asChild&gt;&lt;Button&gt;Open&lt;/Button&gt;&lt;/DialogTrigger&gt;
+  &lt;DialogContent&gt;...&lt;/DialogContent&gt;
+&lt;/Dialog&gt;
+
+// ❌ Don&#39;t — custom modal without focus restoration
+{open &amp;&amp; (
+  &lt;div className=&quot;fixed inset-0&quot;&gt;{modalContent}&lt;/div&gt;
+)}
+</code></pre>
+<hr>
+<h2 id="keyboard-navigation">Keyboard navigation</h2>
+<h3 id="tab-order-matches-visual-order">Tab order matches visual order</h3>
+<p>Tab order must follow the natural reading order of the page (top-to-bottom, left-to-right). Avoid <code>tabIndex</code> overrides unless you have a specific accessibility reason.</p>
+<pre><code class="language-tsx">// ✅ Do — natural source order
+&lt;Form&gt;
+  &lt;Input name=&quot;first&quot; /&gt;
+  &lt;Input name=&quot;last&quot; /&gt;
+  &lt;Input name=&quot;email&quot; /&gt;
+  &lt;Button&gt;Submit&lt;/Button&gt;
+&lt;/Form&gt;
+
+// ❌ Don&#39;t — tabIndex acrobatics
+&lt;Form&gt;
+  &lt;Input tabIndex={3} /&gt;
+  &lt;Input tabIndex={1} /&gt;
+  &lt;Input tabIndex={2} /&gt;
+&lt;/Form&gt;
+</code></pre>
+<h3 id="standard-shortcuts">Standard shortcuts</h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Tab</code></td>
+<td>Move focus forward</td>
+</tr>
+<tr>
+<td><code>Shift+Tab</code></td>
+<td>Move focus back</td>
+</tr>
+<tr>
+<td><code>Enter</code></td>
+<td>Activate primary button / submit form</td>
+</tr>
+<tr>
+<td><code>Space</code></td>
+<td>Toggle checkbox / activate button</td>
+</tr>
+<tr>
+<td><code>Esc</code></td>
+<td>Close modal / cancel inline edit</td>
+</tr>
+<tr>
+<td><code>Arrow keys</code></td>
+<td>Navigate within menus, radio groups, tabs</td>
+</tr>
+<tr>
+<td><code>Cmd/Ctrl+K</code></td>
+<td>Open command palette (where present)</td>
+</tr>
+</tbody></table>
+<p>Component primitives (Radix Menu, Tabs, RadioGroup) wire these up. Use them instead of rolling custom keyboard handlers.</p>
+<h3 id="skip-to-content-link">Skip-to-content link</h3>
+<p>Pages with persistent navigation chrome (sidebar, top nav) must offer a &quot;Skip to main content&quot; link as the first focusable element.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;a href=&quot;#main&quot; className=&quot;sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 bg-card border border-border px-3 py-2 rounded-md&quot;&gt;
+  Skip to main content
+&lt;/a&gt;
+&lt;Sidebar /&gt;
+&lt;main id=&quot;main&quot;&gt;...&lt;/main&gt;
+</code></pre>
+<hr>
+<h2 id="aria-usage">ARIA usage</h2>
+<h3 id="icon-only-buttons-need-aria-label">Icon-only buttons need aria-label</h3>
+
+<aside class="ve-block" data-key="icon-only-buttons-need-aria-label">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · A11y · icon button</span>
+  </header>
+  <p class="ve-block-explanation">Icon-only buttons are invisible to screen readers without an <code>aria-label</code>. The label tells the user what the icon means.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Icon, no aria-label</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-outline" style="padding:7px 9px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></button></div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ aria-label present</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-outline" aria-label="Download report" style="padding:7px 9px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button></div>
+          <div class="ec-code">aria-label="Download report"</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;Button size=&quot;icon&quot; aria-label=&quot;Delete row&quot;&gt;
+  &lt;Trash className=&quot;size-4&quot; /&gt;
+&lt;/Button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Every icon-only button gets an <code>aria-label</code>. Decorative icons next to a text label get <code>aria-hidden="true"</code> instead.</p>
+</aside>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Button size=&quot;icon&quot; aria-label=&quot;Delete row&quot;&gt;
+  &lt;Trash className=&quot;size-4&quot; /&gt;
+&lt;/Button&gt;
+
+// ❌ Don&#39;t
+&lt;Button size=&quot;icon&quot;&gt;
+  &lt;Trash className=&quot;size-4&quot; /&gt;
+&lt;/Button&gt;
+</code></pre>
+<h3 id="icons-that-decorate-labeled-buttons-are-aria-hidden">Icons that decorate labeled buttons are aria-hidden</h3>
+<pre><code class="language-tsx">// ✅ Do — the label says &quot;Export&quot;, the icon is decorative
+&lt;Button&gt;
+  &lt;Download className=&quot;size-4&quot; aria-hidden=&quot;true&quot; /&gt;
+  Export
+&lt;/Button&gt;
+
+// ❌ Don&#39;t — duplicate announcement (&quot;Download Export&quot;)
+&lt;Button&gt;
+  &lt;Download className=&quot;size-4&quot; /&gt;
+  Export
+&lt;/Button&gt;
+</code></pre>
+<h3 id="form-labels">Form labels</h3>
+<p>Every input has an associated label. The DS <code>Field</code> compound does this automatically; for raw HTML, use <code>htmlFor</code> + <code>id</code>.</p>
+<pre><code class="language-tsx">// ✅ Do — DS pattern
+&lt;Field&gt;
+  &lt;FieldLabel&gt;Email&lt;/FieldLabel&gt;
+  &lt;Input type=&quot;email&quot; /&gt;
+&lt;/Field&gt;
+
+// ✅ Acceptable — raw HTML with proper association
+&lt;label htmlFor=&quot;email&quot;&gt;Email&lt;/label&gt;
+&lt;input id=&quot;email&quot; type=&quot;email&quot; /&gt;
+
+// ❌ Don&#39;t — placeholder as the only label
+&lt;input type=&quot;email&quot; placeholder=&quot;Email&quot; /&gt;
+</code></pre>
+<h3 id="live-regions-for-async-updates">Live regions for async updates</h3>
+<p>When content updates without user action (toast appears, new notification arrives), use a <code>aria-live</code> region so screen readers announce it.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Toaster /&gt;   {/* Strata Sonner wires aria-live automatically */}
+
+// ❌ Don&#39;t — silent visual update
+&lt;div className=&quot;fixed bottom-4 right-4&quot;&gt;{toastMessage}&lt;/div&gt;
+</code></pre>
+<hr>
+<h2 id="color-contrast">Color contrast</h2>
+<p>Color alone is never the only carrier of information.</p>
+<pre><code class="language-tsx">// ✅ Do — color + icon + text
+&lt;StatusBadge status=&quot;completed&quot;&gt;
+  &lt;Check className=&quot;size-3&quot; aria-hidden=&quot;true&quot; /&gt;
+  Reviewed
+&lt;/StatusBadge&gt;
+
+// ❌ Don&#39;t — color is the only signal
+&lt;div className=&quot;w-3 h-3 rounded-full bg-success&quot; /&gt;   {/* no text, no aria */}
+</code></pre>
+<h3 id="minimum-contrast-ratios">Minimum contrast ratios</h3>
+<table>
+<thead>
+<tr>
+<th>Surface</th>
+<th>Minimum</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Body text on <code>bg-background</code> / <code>bg-card</code></td>
+<td>4.5:1 (WCAG AA)</td>
+</tr>
+<tr>
+<td>Large text (18pt+ or 14pt+ bold)</td>
+<td>3:1</td>
+</tr>
+<tr>
+<td>Icon stroke on background</td>
+<td>3:1</td>
+</tr>
+<tr>
+<td>Border that conveys structure</td>
+<td>3:1</td>
+</tr>
+</tbody></table>
+<p>Strata semantic tokens already pass these ratios in both themes. Never override with arbitrary colors.</p>
+<hr>
+<h2 id="motion-and-prefers-reduced-motion">Motion and prefers-reduced-motion</h2>
+<p>Respect the user&#39;s motion preference. Transitions and animations must be disabled or reduced when <code>prefers-reduced-motion: reduce</code> is set.</p>
+<pre><code class="language-tsx">// ✅ Do — Tailwind v3+ honors prefers-reduced-motion in `motion-safe:` and `motion-reduce:`
+&lt;div className=&quot;motion-safe:transition-all motion-safe:hover:-translate-y-px&quot;&gt;
+  ...
+&lt;/div&gt;
+</code></pre>
+<hr>
+<h2 id="forms">Forms</h2>
+<h3 id="required-fields-are-marked-visually-and-announced">Required fields are marked visually AND announced</h3>
+<pre><code class="language-tsx">// ✅ Do — asterisk + aria-required
+&lt;Field&gt;
+  &lt;FieldLabel&gt;
+    Email &lt;span className=&quot;text-destructive&quot; aria-hidden=&quot;true&quot;&gt;*&lt;/span&gt;
+  &lt;/FieldLabel&gt;
+  &lt;Input type=&quot;email&quot; aria-required=&quot;true&quot; /&gt;
+&lt;/Field&gt;
+
+// ❌ Don&#39;t — visual only
+&lt;FieldLabel&gt;Email *&lt;/FieldLabel&gt;
+&lt;Input type=&quot;email&quot; /&gt;
+</code></pre>
+<h3 id="error-association">Error association</h3>
+<p>Field errors must be associated with the input via <code>aria-describedby</code>.</p>
+<pre><code class="language-tsx">// ✅ Do — DS Field compound handles this
+&lt;Field&gt;
+  &lt;FieldLabel&gt;Email&lt;/FieldLabel&gt;
+  &lt;Input /&gt;
+  &lt;FieldError&gt;Email must include a domain.&lt;/FieldError&gt;
+&lt;/Field&gt;
+
+// ❌ Don&#39;t — error message orphaned from the input
+&lt;label&gt;Email&lt;/label&gt;
+&lt;input /&gt;
+&lt;p className=&quot;text-destructive&quot;&gt;Email must include a domain.&lt;/p&gt;
+</code></pre>
+<hr>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<table>
+<thead>
+<tr>
+<th>❌</th>
+<th>✅</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>outline:none</code> on focused buttons</td>
+<td>Keep Strata&#39;s <code>focus-visible:ring-2</code></td>
+</tr>
+<tr>
+<td>Icon-only button without <code>aria-label</code></td>
+<td>Always include <code>aria-label</code></td>
+</tr>
+<tr>
+<td><code>&lt;div onClick&gt;</code> as a button</td>
+<td><code>&lt;button&gt;</code> or DS <code>&lt;Button&gt;</code></td>
+</tr>
+<tr>
+<td>Placeholder as the only label</td>
+<td>Real <code>&lt;label&gt;</code> (or DS <code>&lt;FieldLabel&gt;</code>)</td>
+</tr>
+<tr>
+<td>Color-only status (red dot, no text)</td>
+<td>Icon + text + color</td>
+</tr>
+<tr>
+<td>Custom modal without focus trap</td>
+<td>Use Radix <code>&lt;Dialog&gt;</code></td>
+</tr>
+<tr>
+<td>Tab order overridden with <code>tabIndex</code></td>
+<td>Match source to visual order</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="source-files">Source files</h2>
+<ul>
+<li><code>governance/rules/01-color-tokens.md</code> — contrast ratios</li>
+<li><code>governance/rules/05-icons.md</code> — icon aria-hidden vs aria-label</li>
+<li><code>Strata Design System/strata-ds/src/components/overlays/dialog.tsx</code> — Radix focus trap</li>
+<li><code>Strata Design System/strata-ds/src/components/forms/field.tsx</code> — Field compound</li>
+</ul>
+
+    </section>
+
+    <section id="data-display" class="guide-section">
+      <h2>Data display</h2>
+      
+      <p>Tables, lists, and dashboards are where users do most of their work in Strata. They demand consistent decisions about alignment, sort affordances, density, pagination, and how to surface empty/loading/error states inline. This rule codifies the canonical patterns so every data surface looks and behaves the same.</p>
+<p>This rule extends <a href="./09-layout-density.md"><code>rules/09-layout-density.md</code></a>, <a href="./12-empty-states.md"><code>rules/12-empty-states.md</code></a>, and <a href="./13-loading-states.md"><code>rules/13-loading-states.md</code></a>.</p>
+<hr>
+<h2 id="tables">Tables</h2>
+<h3 id="column-alignment-by-data-type">Column alignment by data type</h3>
+
+<aside class="ve-block" data-key="column-alignment-by-data-type">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Tables · alignment</span>
+  </header>
+  <p class="ve-block-explanation">Text reads left, numbers read right (decimal alignment), actions stay right (out of the way). Mixing breaks the scan rhythm.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Right-aligned currency, tabular-nums</span>
+          <div class="ec-body" style="display:block;">
+            <table style="width:100%;font-size:12px;color:var(--fg);">
+              <thead><tr style="border-bottom:1px solid var(--border);"><th style="text-align:left;padding:4px 8px;">Quote</th><th style="text-align:right;padding:4px 8px;">Total</th></tr></thead>
+              <tbody>
+                <tr><td style="padding:4px 8px;">SO2604102</td><td style="text-align:right;padding:4px 8px;font-variant-numeric:tabular-nums;">$4,159.12</td></tr>
+                <tr><td style="padding:4px 8px;">QT-1042</td><td style="text-align:right;padding:4px 8px;font-variant-numeric:tabular-nums;">$22,108.00</td></tr>
+                <tr><td style="padding:4px 8px;">RFQ-2026</td><td style="text-align:right;padding:4px 8px;font-variant-numeric:tabular-nums;">$487.50</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Currency left-aligned</span>
+          <div class="ec-body" style="display:block;">
+            <table style="width:100%;font-size:12px;color:var(--fg);">
+              <thead><tr style="border-bottom:1px solid var(--border);"><th style="text-align:left;padding:4px 8px;">Quote</th><th style="text-align:left;padding:4px 8px;">Total</th></tr></thead>
+              <tbody>
+                <tr><td style="padding:4px 8px;">SO2604102</td><td style="padding:4px 8px;">$4,159.12</td></tr>
+                <tr><td style="padding:4px 8px;">QT-1042</td><td style="padding:4px 8px;">$22,108.00</td></tr>
+                <tr><td style="padding:4px 8px;">RFQ-2026</td><td style="padding:4px 8px;">$487.50</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>&lt;ColumnDef field=&quot;total&quot; align=&quot;right&quot;
+  cell={(r) =&gt; &lt;span className=&quot;tabular-nums&quot;&gt;{formatMoney(r.total)}&lt;/span&gt;}
+/&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Currency, percentages, counts, dates → right with <code>tabular-nums</code>. Text → left. Actions → right. Icons-only → center.</p>
+</aside>
+<table>
+<thead>
+<tr>
+<th>Data type</th>
+<th>Alignment</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Text (name, description)</td>
+<td>Left</td>
+<td>Reading direction</td>
+</tr>
+<tr>
+<td>Number / currency</td>
+<td>Right</td>
+<td>Decimal alignment</td>
+</tr>
+<tr>
+<td>Status / badge</td>
+<td>Left or center</td>
+<td>Visual scanning</td>
+</tr>
+<tr>
+<td>Action column</td>
+<td>Right</td>
+<td>Out of the way until needed</td>
+</tr>
+<tr>
+<td>Icon-only column</td>
+<td>Center</td>
+<td>Symmetric look</td>
+</tr>
+</tbody></table>
+<pre><code class="language-tsx">// ✅ Do
+&lt;ColumnDef field=&quot;name&quot;   align=&quot;left&quot;   /&gt;
+&lt;ColumnDef field=&quot;total&quot;  align=&quot;right&quot; cell={(r) =&gt; &lt;Money value={r.total} /&gt;} /&gt;
+&lt;ColumnDef field=&quot;status&quot; align=&quot;left&quot;  cell={(r) =&gt; &lt;StatusBadge&gt;{r.status}&lt;/StatusBadge&gt;} /&gt;
+&lt;ColumnDef field=&quot;actions&quot; align=&quot;right&quot; /&gt;
+
+// ❌ Don&#39;t — currency left-aligned (impossible to scan)
+&lt;ColumnDef field=&quot;total&quot; align=&quot;left&quot; cell={(r) =&gt; `$${r.total}`} /&gt;
+</code></pre>
+<h3 id="tabular-numerals-on-all-numeric-columns">Tabular numerals on all numeric columns</h3>
+<pre><code class="language-tsx">// ✅ Do
+&lt;td className=&quot;tabular-nums text-right&quot;&gt;$4,159.12&lt;/td&gt;
+
+// ❌ Don&#39;t — proportional digits cause shaky column widths
+&lt;td className=&quot;text-right&quot;&gt;$4,159.12&lt;/td&gt;
+</code></pre>
+<h3 id="sortable-column-headers">Sortable column headers</h3>
+<p>Sortable headers must show:</p>
+<ol>
+<li>The label</li>
+<li>A subtle sort affordance (↑/↓ arrow or chevron)</li>
+<li>A clear active state (filled arrow, highlighted background)</li>
+</ol>
+<pre><code class="language-tsx">// ✅ Do
+&lt;TableHead
+  onClick={() =&gt; toggleSort(&#39;total&#39;)}
+  className=&quot;cursor-pointer hover:bg-muted/40&quot;
+&gt;
+  &lt;div className=&quot;inline-flex items-center gap-1&quot;&gt;
+    Total
+    {sortBy === &#39;total&#39;
+      ? (sortDir === &#39;asc&#39; ? &lt;ChevronUp className=&quot;size-3&quot; /&gt; : &lt;ChevronDown className=&quot;size-3&quot; /&gt;)
+      : &lt;ChevronsUpDown className=&quot;size-3 text-muted-foreground/50&quot; /&gt;}
+  &lt;/div&gt;
+&lt;/TableHead&gt;
+
+// ❌ Don&#39;t — clickable header with no visual affordance
+&lt;TableHead onClick={() =&gt; toggleSort(&#39;total&#39;)}&gt;Total&lt;/TableHead&gt;
+</code></pre>
+<h3 id="row-hover-and-selection">Row hover and selection</h3>
+<p>Hover and selected states are distinct.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;TableRow
+  data-state={selected ? &#39;selected&#39; : undefined}
+  className=&quot;hover:bg-muted/40 data-[state=selected]:bg-primary/10&quot;
+&gt;
+  ...
+&lt;/TableRow&gt;
+</code></pre>
+<h3 id="sticky-header-on-long-tables">Sticky header on long tables</h3>
+<p>For tables longer than the viewport, the header stays sticky.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;table&gt;
+  &lt;thead className=&quot;sticky top-0 bg-card z-10&quot;&gt;
+    &lt;tr&gt;...&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;...&lt;/tbody&gt;
+&lt;/table&gt;
+</code></pre>
+<hr>
+<h2 id="inline-empty-loading-error-rows">Inline empty / loading / error rows</h2>
+<p>Tables have their own version of empty / loading / error states — rendered inline, spanning all columns.</p>
+<pre><code class="language-tsx">// ✅ Empty
+&lt;TableRow&gt;
+  &lt;TableCell colSpan={columns.length} className=&quot;text-center py-10 text-sm text-muted-foreground&quot;&gt;
+    No quotes match these filters.
+  &lt;/TableCell&gt;
+&lt;/TableRow&gt;
+
+// ✅ Loading (skeleton rows matching final column count)
+{Array.from({ length: 5 }).map((_, i) =&gt; (
+  &lt;TableRow key={i}&gt;
+    {columns.map((col, j) =&gt; (
+      &lt;TableCell key={j}&gt;&lt;Skeleton className=&quot;h-4 w-full&quot; /&gt;&lt;/TableCell&gt;
+    ))}
+  &lt;/TableRow&gt;
+))}
+
+// ✅ Error
+&lt;TableRow&gt;
+  &lt;TableCell colSpan={columns.length} className=&quot;py-10&quot;&gt;
+    &lt;div className=&quot;flex flex-col items-center gap-3&quot;&gt;
+      &lt;AlertTriangle className=&quot;size-6 text-destructive&quot; /&gt;
+      &lt;span className=&quot;text-sm&quot;&gt;Couldn&#39;t load quotes.&lt;/span&gt;
+      &lt;Button variant=&quot;outline&quot; onClick={refetch}&gt;Retry&lt;/Button&gt;
+    &lt;/div&gt;
+  &lt;/TableCell&gt;
+&lt;/TableRow&gt;
+</code></pre>
+<hr>
+<h2 id="lists-non-tabular">Lists (non-tabular)</h2>
+<p>For collections without uniform columns (recent activity, notifications, search results), use a list with consistent row structure.</p>
+<h3 id="standard-list-item">Standard list item</h3>
+<pre><code class="language-tsx">// ✅ Do
+&lt;li className=&quot;flex items-start gap-3 py-3 hover:bg-muted/40 px-3 -mx-3 rounded-md transition-colors&quot;&gt;
+  &lt;Icon className=&quot;size-5 text-muted-foreground shrink-0 mt-0.5&quot; /&gt;
+  &lt;div className=&quot;flex-1 min-w-0&quot;&gt;
+    &lt;p className=&quot;text-sm font-semibold truncate&quot;&gt;{title}&lt;/p&gt;
+    &lt;p className=&quot;text-xs text-muted-foreground truncate&quot;&gt;{meta}&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;time className=&quot;text-xs text-muted-foreground shrink-0&quot;&gt;{when}&lt;/time&gt;
+&lt;/li&gt;
+</code></pre>
+<h3 id="density-modes">Density modes</h3>
+<p>Apply <a href="./09-layout-density.md"><code>rules/09-layout-density.md</code></a>: comfortable for hero lists (<code>py-3</code>), compact for dense lists (<code>py-1.5</code>).</p>
+<hr>
+<h2 id="pagination-vs-infinite-scroll">Pagination vs infinite scroll</h2>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Use when</th>
+<th>Don&#39;t use when</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Pagination</strong></td>
+<td>Tabular data, comparison, jump-to-page is useful</td>
+<td>Infinite &quot;feed&quot; content</td>
+</tr>
+<tr>
+<td><strong>Load more</strong></td>
+<td>Activity feeds, notifications, short additional batches</td>
+<td>The user needs to find a specific record (lose position on reload)</td>
+</tr>
+<tr>
+<td><strong>Infinite scroll</strong></td>
+<td>Social feeds, image grids — Strata rarely uses</td>
+<td>Tabular data (cannot deep-link)</td>
+</tr>
+</tbody></table>
+<pre><code class="language-tsx">// ✅ Do — pagination for record lists
+&lt;Pagination&gt;
+  &lt;PaginationPrev disabled={page === 1} /&gt;
+  &lt;PaginationItem&gt;{page} of {totalPages}&lt;/PaginationItem&gt;
+  &lt;PaginationNext disabled={page === totalPages} /&gt;
+&lt;/Pagination&gt;
+
+// ✅ Do — load more for activity feed
+&lt;Button variant=&quot;outline&quot; onClick={loadMore}&gt;Load 25 more&lt;/Button&gt;
+</code></pre>
+<h3 id="always-show-n-of-m-or-showing-x-y-of-z">Always show &quot;N of M&quot; or &quot;Showing X-Y of Z&quot;</h3>
+<pre><code class="language-tsx">// ✅ Do
+&lt;TableCaption&gt;Showing 1-25 of 487 quotes&lt;/TableCaption&gt;
+
+// ❌ Don&#39;t
+&lt;TableCaption&gt;Some quotes&lt;/TableCaption&gt;
+</code></pre>
+<hr>
+<h2 id="bulk-selection-and-bulk-actions">Bulk selection and bulk actions</h2>
+<p>When a list supports multi-select, use a header checkbox + per-row checkbox + a <code>&lt;BulkActionBar&gt;</code> that appears when ≥1 row is selected.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;BulkActionBar
+  selectedCount={selected.size}
+  itemNoun=&quot;quote&quot;
+  onClearSelection={() =&gt; setSelected(new Set())}
+  actions={
+    &lt;&gt;
+      &lt;Button variant=&quot;outline&quot; size=&quot;sm&quot;&gt;&lt;Download className=&quot;size-3.5 mr-1.5&quot; /&gt; Export&lt;/Button&gt;
+      &lt;Button variant=&quot;destructive&quot; size=&quot;sm&quot;&gt;&lt;Trash className=&quot;size-3.5 mr-1.5&quot; /&gt; Delete&lt;/Button&gt;
+    &lt;/&gt;
+  }
+/&gt;
+
+// ❌ Don&#39;t — bulk actions live in the page header all the time (even with 0 selected)
+&lt;PageHeader&gt;
+  &lt;Button&gt;Export selected&lt;/Button&gt;
+  &lt;Button&gt;Delete selected&lt;/Button&gt;
+&lt;/PageHeader&gt;
+</code></pre>
+<hr>
+<h2 id="filtering">Filtering</h2>
+<h3 id="filter-pills-above-the-list">Filter pills above the list</h3>
+<p>For status-style filters with mutually exclusive options, use <code>&lt;FilterPills&gt;</code>.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;FilterPills
+  activeKey={status}
+  onChange={setStatus}
+  options={[
+    { key: &#39;all&#39;,      label: &#39;All&#39;,      count: 487 },
+    { key: &#39;pending&#39;,  label: &#39;Pending&#39;,  count: 12 },
+    { key: &#39;reviewed&#39;, label: &#39;Reviewed&#39;, count: 462 },
+    { key: &#39;archived&#39;, label: &#39;Archived&#39;, count: 13 },
+  ]}
+/&gt;
+</code></pre>
+<h3 id="filter-pills-show-counts">Filter pills show counts</h3>
+<p>Always show counts per filter. Counts both confirm the filter does something and help the user choose where to look.</p>
+<h3 id="persistent-active-filter-chips">Persistent active-filter chips</h3>
+<p>For more complex filtering (multiple dimensions), show active filters as removable chips above the list.</p>
+<pre><code class="language-tsx">&lt;ActiveFilters&gt;
+  &lt;Chip onRemove={() =&gt; clearFilter(&#39;vendor&#39;)}&gt;Vendor: NorthPoint&lt;/Chip&gt;
+  &lt;Chip onRemove={() =&gt; clearFilter(&#39;after&#39;)}&gt;After: Mar 1, 2025&lt;/Chip&gt;
+  &lt;button onClick={clearAll} className=&quot;text-xs underline&quot;&gt;Clear all&lt;/button&gt;
+&lt;/ActiveFilters&gt;
+</code></pre>
+<hr>
+<h2 id="dashboards">Dashboards</h2>
+<h3 id="kpi-row-first-charts-second-lists-third">KPI row first, charts second, lists third</h3>
+<p>The visual scan order is: high-level metrics → trends → detail.</p>
+<pre><code class="language-tsx">&lt;PageLayout&gt;
+  &lt;KPIRow&gt;
+    &lt;KPICard label=&quot;Quotes (30d)&quot; value=&quot;487&quot; delta=&quot;+12%&quot; /&gt;
+    &lt;KPICard label=&quot;Approved&quot; value=&quot;462&quot; /&gt;
+    &lt;KPICard label=&quot;Pending&quot; value=&quot;12&quot; /&gt;
+    &lt;KPICard label=&quot;Rejected&quot; value=&quot;13&quot; /&gt;
+  &lt;/KPIRow&gt;
+  &lt;ChartGrid&gt;
+    &lt;BarChart /&gt;
+    &lt;LineChart /&gt;
+  &lt;/ChartGrid&gt;
+  &lt;Table&gt;...&lt;/Table&gt;
+&lt;/PageLayout&gt;
+</code></pre>
+<h3 id="kpi-cards-always-show-context">KPI cards — always show context</h3>
+<p>A KPI without context (delta, comparison period, target) is just a number. Always pair the value with a small delta or &quot;vs last period&quot;.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;KPICard
+  label=&quot;Quotes (30d)&quot;
+  value=&quot;487&quot;
+  delta={{ value: &#39;+12.5%&#39;, tone: &#39;success&#39; }}
+  caption=&quot;vs previous 30 days&quot;
+/&gt;
+
+// ❌ Don&#39;t — bare number
+&lt;KPICard label=&quot;Quotes&quot; value=&quot;487&quot; /&gt;
+</code></pre>
+<hr>
+<h2 id="anti-patterns">Anti-patterns</h2>
+<table>
+<thead>
+<tr>
+<th>❌</th>
+<th>✅</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Currency left-aligned</td>
+<td>Currency right-aligned with <code>tabular-nums</code></td>
+</tr>
+<tr>
+<td>Sortable headers with no affordance</td>
+<td>ChevronUp / Down / ChevronsUpDown indicator</td>
+</tr>
+<tr>
+<td>Empty state inside a card with no message</td>
+<td><code>colSpan={cols} text-center</code> empty row with reason + CTA</td>
+</tr>
+<tr>
+<td><code>&lt;Spinner&gt;</code> centered in an empty table</td>
+<td>Skeleton rows matching the column count</td>
+</tr>
+<tr>
+<td>Bulk action bar always visible (even with 0 selected)</td>
+<td><code>&lt;BulkActionBar hideWhenEmpty&gt;</code> from the DS</td>
+</tr>
+<tr>
+<td>Pagination with no total (&quot;Page 3 of ?&quot;)</td>
+<td>&quot;Showing 51-75 of 487&quot;</td>
+</tr>
+<tr>
+<td>Filter pills with no counts</td>
+<td>Always include counts per pill</td>
+</tr>
+<tr>
+<td>Mixed density modes on the same page</td>
+<td>One density per surface; compact for sub-panels</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="source-files">Source files</h2>
+<ul>
+<li><code>governance/rules/09-layout-density.md</code> — density modes</li>
+<li><code>governance/rules/12-empty-states.md</code> — empty-state copy and CTAs</li>
+<li><code>governance/rules/13-loading-states.md</code> — skeleton sizing</li>
+<li><code>Strata Design System/strata-ds/src/components/application-ui/data-list-table.tsx</code></li>
+<li><code>Strata Design System/strata-ds/src/components/application-ui/data-list-card.tsx</code></li>
+<li><code>Strata Design System/strata-ds/src/components/application-ui/filter-pills.tsx</code></li>
+<li><code>Strata Design System/strata-ds/src/components/application-ui/bulk-action-bar.tsx</code></li>
 </ul>
 
     </section>
