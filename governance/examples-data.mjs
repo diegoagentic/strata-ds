@@ -1814,6 +1814,475 @@ const ICONS = {
   },
 };
 
+// ── Stage 5: rules/06-typography + tokens/token-reference ───────────────
+
+const TYPOGRAPHY = {
+  'font-families': {
+    eyebrow: 'Type · families',
+    explanation:
+      'Strata uses 3 font families: <code>--font-brand</code> (PP Monument Extended, display only) for hero headings, <code>--font-sans</code> (Inter, the workhorse) for everything else, and <code>--font-mono</code> for code + tabular numbers.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">3 families in context</span>
+          <div class="ec-body" style="display:block;">
+            <h2 style="font-family:'PP Monument Extended', system-ui, sans-serif;font-size:24px;font-weight:800;margin:0;letter-spacing:-0.02em;color:var(--fg);">Brand display heading</h2>
+            <p style="margin:6px 0 0;font-size:14px;color:var(--fg);">Body copy with the Inter sans-serif family.</p>
+            <code style="display:inline-block;margin-top:6px;font-size:12px;background:var(--muted);padding:2px 6px;border-radius:3px;font-family:ui-monospace, monospace;">monospace inline code</code>
+          </div>
+          <div class="ec-code">font-brand · font-sans · font-mono</div>
+        </div>
+      </div>`,
+    code: `<h1 className="font-brand text-4xl font-bold">Brand display</h1>
+<p className="font-sans text-base">Body copy</p>
+<code className="font-mono text-sm">{tokenName}</code>`,
+    howto:
+      'Default to <code>font-sans</code> everywhere. Only reach for <code>font-brand</code> on hero h1s and marketing headers. <code>font-mono</code> for tokens, code snippets, and tabular numerals.',
+  },
+
+  'size-scale': {
+    eyebrow: 'Type · sizes',
+    explanation:
+      'The Strata size scale is opinionated: <code>text-xs</code> (12) / <code>text-sm</code> (14) / <code>text-base</code> (16) / <code>text-lg</code> (18) / <code>text-xl</code> (20) / <code>text-2xl</code> (24) / <code>text-3xl</code> (30) / <code>text-4xl</code> (36). Stick to the scale — no arbitrary <code>text-[15px]</code>.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Scale ladder</span>
+          <div class="ec-body" style="display:block;">
+            <div class="type-scale">
+              <div class="type-row"><span class="t-tag">4xl / 36</span><span style="font-size:36px;font-weight:800;letter-spacing:-0.02em;line-height:1.1;color:var(--fg);">Aa</span></div>
+              <div class="type-row"><span class="t-tag">3xl / 30</span><span style="font-size:30px;font-weight:700;line-height:1.15;color:var(--fg);">Aa</span></div>
+              <div class="type-row"><span class="t-tag">2xl / 24</span><span style="font-size:24px;font-weight:700;line-height:1.2;color:var(--fg);">Aa</span></div>
+              <div class="type-row"><span class="t-tag">xl / 20</span><span style="font-size:20px;font-weight:600;color:var(--fg);">Aa</span></div>
+              <div class="type-row"><span class="t-tag">lg / 18</span><span style="font-size:18px;font-weight:500;color:var(--fg);">Aa</span></div>
+              <div class="type-row"><span class="t-tag">base / 16</span><span style="font-size:16px;color:var(--fg);">Aa</span></div>
+              <div class="type-row"><span class="t-tag">sm / 14</span><span style="font-size:14px;color:var(--fg);">Aa</span></div>
+              <div class="type-row"><span class="t-tag">xs / 12</span><span style="font-size:12px;color:var(--muted-fg);">Aa</span></div>
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `<h1 className="text-4xl font-bold">Page title</h1>
+<h2 className="text-2xl font-bold">Section</h2>
+<p className="text-base">Body copy</p>
+<span className="text-xs text-muted-foreground">Meta · footnote</span>`,
+    howto:
+      'Step the scale, do not interpolate. If a design calls for "15px", round to <code>text-sm</code> or <code>text-base</code>. Custom sizes break vertical rhythm.',
+  },
+
+  'weights': {
+    eyebrow: 'Type · weights',
+    explanation:
+      'Five canonical weights: <code>font-normal</code> (400, body), <code>font-medium</code> (500, emphasis), <code>font-semibold</code> (600, labels), <code>font-bold</code> (700, h2/h3), <code>font-extrabold</code> (800, h1). Skip 300 (Light) — it reads as washed out.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">5 weights</span>
+          <div class="ec-body" style="display:block;">
+            <div style="font-weight:400;color:var(--fg);">Regular · 400 · body</div>
+            <div style="font-weight:500;color:var(--fg);">Medium · 500 · emphasis</div>
+            <div style="font-weight:600;color:var(--fg);">Semibold · 600 · labels</div>
+            <div style="font-weight:700;color:var(--fg);">Bold · 700 · h2/h3</div>
+            <div style="font-weight:800;color:var(--fg);">Extra-bold · 800 · h1</div>
+          </div>
+        </div>
+      </div>`,
+    code: `<h1 className="font-extrabold">...</h1>     {/* 800 */}
+<h2 className="font-bold">...</h2>          {/* 700 */}
+<label className="font-semibold">...</label> {/* 600 */}
+<strong className="font-medium">...</strong> {/* 500 */}
+<p className="font-normal">...</p>           {/* 400 */}`,
+    howto:
+      'Default <code>font-normal</code> for body, <code>font-semibold</code> for labels and table headers, <code>font-bold</code> for section headers, <code>font-extrabold</code> for h1 only.',
+  },
+
+  'line-height': {
+    eyebrow: 'Type · leading',
+    explanation:
+      'Strata line-heights pair with the size scale: <code>leading-tight</code> (1.2) for h1/h2, <code>leading-snug</code> (1.4) for h3-h4, <code>leading-normal</code> (1.5) for short body, <code>leading-relaxed</code> (1.625) for long-form copy.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Leading samples</span>
+          <div class="ec-body" style="display:block;">
+            <p style="line-height:1.2;margin:0 0 8px;font-size:14px;color:var(--fg);">Tight · 1.2 · used for h1/h2 and bold short headings</p>
+            <p style="line-height:1.5;margin:0 0 8px;font-size:14px;color:var(--fg);">Normal · 1.5 · for body copy in cards, panels, lists, helper text and similar surfaces</p>
+            <p style="line-height:1.625;margin:0;font-size:14px;color:var(--fg);">Relaxed · 1.625 · for long-form prose where you want readers to settle into the rhythm of paragraphs — documentation, blog posts, etc.</p>
+          </div>
+        </div>
+      </div>`,
+    code: `<h1 className="leading-tight">Tight heading</h1>
+<p className="leading-normal">Short body</p>
+<article className="leading-relaxed">Long-form prose…</article>`,
+    howto:
+      'Pair size + leading thoughtfully: large + tight, small + normal, long-form + relaxed. Mixing creates visual noise.',
+  },
+
+  'letter-spacing': {
+    eyebrow: 'Type · tracking',
+    explanation:
+      'Two cases for letter-spacing: <code>tracking-tight</code> (-0.02em) on large display headings to keep them compact, and <code>tracking-wider</code> (0.05em) on small uppercase labels to make them readable.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Display tight</span>
+          <div class="ec-body" style="display:block;"><span style="font-size:32px;font-weight:800;letter-spacing:-0.02em;color:var(--fg);">Strata Design System</span></div>
+          <div class="ec-code">tracking-tight on large headings</div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Label wider</span>
+          <div class="ec-body" style="display:block;"><span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted-fg);">SECTION · LABEL</span></div>
+          <div class="ec-code">tracking-wider uppercase</div>
+        </div>
+      </div>`,
+    code: `<h1 className="text-4xl font-extrabold tracking-tight">Strata</h1>
+<span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+  Section
+</span>`,
+    howto:
+      'Avoid <code>tracking-wide</code> or wider on regular body text — it hurts readability. Only on small caps labels.',
+  },
+
+  'heading-description': {
+    eyebrow: 'Pattern · heading+desc',
+    explanation:
+      'The canonical page header: an h1 with description below. Use <code>font-extrabold tracking-tight</code> on the heading and <code>text-muted-foreground text-base</code> on the description.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Page header</span>
+          <div class="ec-body" style="display:block;">
+            <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted-fg);margin:0 0 6px;">Eyebrow</p>
+            <h1 style="font-size:32px;font-weight:800;letter-spacing:-0.02em;margin:0;color:var(--fg);">Quote Converter</h1>
+            <p style="font-size:15px;color:var(--muted-fg);margin:6px 0 0;max-width:480px;line-height:1.5;">Drag-and-drop a quote PDF to extract fields and line items.</p>
+          </div>
+        </div>
+      </div>`,
+    code: `<header className="space-y-2">
+  <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+    Tool
+  </p>
+  <h1 className="text-4xl font-extrabold tracking-tight">Quote Converter</h1>
+  <p className="text-base text-muted-foreground max-w-prose">
+    Drag-and-drop a quote PDF…
+  </p>
+</header>`,
+    howto:
+      'Optional eyebrow above the h1 ties the page to a section. Description max-width should be 60-80 characters for readability.',
+  },
+
+  'kpi-with-large-number': {
+    eyebrow: 'Pattern · KPI',
+    explanation:
+      'For KPI tiles: small uppercase label, huge tabular number, optional delta in <code>text-success</code> or <code>text-destructive</code>. Use <code>font-mono</code> on the number for stable digit widths.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">KPI card</span>
+          <div class="ec-body" style="display:block;">
+            <div class="mock-card" style="max-width:none;">
+              <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted-fg);margin:0;">Quoted total</p>
+              <div style="display:flex;align-items:baseline;gap:10px;margin-top:4px;">
+                <span style="font-size:32px;font-weight:800;color:var(--fg);font-variant-numeric:tabular-nums;">$4,159.12</span>
+                <span style="font-size:13px;font-weight:600;color:var(--success);">+12.5%</span>
+              </div>
+              <p style="font-size:12px;color:var(--muted-fg);margin:2px 0 0;">vs last quarter</p>
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `<div className="space-y-1">
+  <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+    Quoted total
+  </p>
+  <div className="flex items-baseline gap-3">
+    <span className="text-3xl font-extrabold tabular-nums">$4,159.12</span>
+    <span className="text-sm font-semibold text-success">+12.5%</span>
+  </div>
+</div>`,
+    howto:
+      'Always add <code>tabular-nums</code> to KPI numbers so the digits line up when values change. Apply <code>text-success</code> / <code>text-destructive</code> to the delta, never to the main number.',
+  },
+
+  'form-label': {
+    eyebrow: 'Pattern · form label',
+    explanation:
+      'Form labels are <code>text-sm font-semibold</code>. Optional helper text below uses <code>text-xs text-muted-foreground</code>. Required indicator is <code>*</code> after the label in <code>text-destructive</code>.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Labeled field</span>
+          <div class="ec-body" style="display:block;">
+            <label style="font-size:14px;font-weight:600;color:var(--fg);display:block;margin-bottom:6px;">Quote number <span style="color:var(--destructive);">*</span></label>
+            <input type="text" placeholder="SO-…" style="background:var(--card);border:1px solid var(--border);padding:8px 12px;border-radius:6px;font-size:13px;color:var(--fg);width:100%;max-width:240px;font-family:inherit;outline:none;" />
+            <p style="font-size:12px;color:var(--muted-fg);margin:6px 0 0;">Format: SO-#######</p>
+          </div>
+        </div>
+      </div>`,
+    code: `<Field>
+  <FieldLabel>
+    Quote number <span className="text-destructive">*</span>
+  </FieldLabel>
+  <Input placeholder="SO-…" />
+  <FieldHelper>Format: SO-#######</FieldHelper>
+</Field>`,
+    howto:
+      'Helper text goes BELOW the input, not above. Error messages replace the helper (in <code>text-destructive</code>) when the field is invalid.',
+  },
+
+  'file-path-inline-code': {
+    eyebrow: 'Pattern · code',
+    explanation:
+      'Inline code (file paths, token names, function names) uses <code>font-mono text-xs bg-muted px-1.5 py-0.5 rounded</code>. Slightly smaller than body so it sits visually nested.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Inline code</span>
+          <div class="ec-body" style="display:block;">
+            <p style="margin:0;font-size:14px;color:var(--fg);">The token <code style="font-family:ui-monospace, monospace;font-size:12px;background:var(--muted);padding:1px 6px;border-radius:3px;color:var(--fg);">--color-primary</code> lives in <code style="font-family:ui-monospace, monospace;font-size:12px;background:var(--muted);padding:1px 6px;border-radius:3px;color:var(--fg);">src/styles/tokens/variables.css</code>.</p>
+          </div>
+        </div>
+      </div>`,
+    code: `<p>
+  The token{' '}
+  <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">
+    --color-primary
+  </code>
+  {' '}lives in{' '}
+  <code className="font-mono text-xs bg-muted px-1.5 py-0.5 rounded">
+    src/styles/tokens/variables.css
+  </code>.
+</p>`,
+    howto:
+      'Apply the same class to every inline <code>&lt;code&gt;</code>. Block code uses <code>pre</code> with the same classes plus <code>p-3 overflow-x-auto</code>.',
+  },
+
+  'anti-patterns': {
+    eyebrow: 'Type · anti',
+    explanation:
+      'Three typography anti-patterns: (1) arbitrary pixel sizes like <code>text-[15px]</code>, (2) <code>font-light</code> for body text (washes out), (3) all-caps body text without <code>tracking-wider</code> (reads as shouting).',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Arbitrary size</span>
+          <div class="ec-body" style="display:block;"><p style="font-size:15px;color:var(--fg);margin:0;">Body in 15px breaks vertical rhythm</p></div>
+          <div class="ec-code">text-[15px]</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Scale step</span>
+          <div class="ec-body" style="display:block;"><p style="font-size:14px;color:var(--fg);margin:0;">Body in 14px stays on the scale</p></div>
+          <div class="ec-code">text-sm</div>
+        </div>
+      </div>`,
+    code: `// ❌ text-[15px]   font-light   text-base uppercase
+
+// ✓ text-sm
+// ✓ font-normal
+// ✓ text-xs uppercase tracking-wider`,
+    howto:
+      'Hunt for <code>text-[</code> in your codebase — every occurrence is a scale violation. Audit <code>font-light</code> for body text and remove.',
+  },
+};
+
+const TOKEN_REFERENCE = {
+  'semantic-surface-colors': {
+    eyebrow: 'Reference · surfaces',
+    explanation:
+      '4 surface tokens cover most layouts: <code>--color-background</code> (root), <code>--color-card</code> (panels), <code>--color-muted</code> (inner sections), <code>--color-popover</code> (overlay surface).',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">4 surface tokens</span>
+          <div class="ec-body" style="display:block;">
+            <div class="surface-demo" style="padding:14px;">
+              <div class="sd-card">
+                <div class="sd-muted">
+                  <span class="sd-label">bg-popover ≈ overlay</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `bg-background  → page root
+bg-card        → panel / card
+bg-muted       → inner section / hover
+bg-popover     → overlay surface (popovers, dropdowns)`,
+    howto:
+      'Use the surface that matches the DOM nesting depth. The live CSS tokens table below shows exact light + dark values.',
+  },
+
+  'primary-action-colors-brand': {
+    eyebrow: 'Reference · primary',
+    explanation:
+      'Two tokens form the brand CTA pair: <code>--color-primary</code> (lime, same in both themes) and <code>--color-primary-foreground</code> (dark text, same in both themes).',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">CTA pair</span>
+          <div class="ec-body"><button class="demo-btn demo-btn-primary">Primary CTA</button></div>
+          <div class="ec-code">--color-primary + --color-primary-foreground</div>
+        </div>
+      </div>`,
+    code: `bg-primary text-primary-foreground   // CTA
+ring-primary/40                       // focus ring`,
+    howto:
+      'Both tokens stay constant across themes. If you find a dark mode override on either, remove it.',
+  },
+
+  'borders-and-inputs': {
+    eyebrow: 'Reference · borders',
+    explanation:
+      'Three tokens for borders and input fills: <code>--color-border</code> (default divider), <code>--color-input</code> (form field border), <code>--color-input-background</code> (form field fill).',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Input + divider</span>
+          <div class="ec-body" style="display:block;">
+            <input type="text" placeholder="Input field" style="background:var(--card);border:1px solid var(--border);padding:8px 12px;border-radius:6px;font-size:13px;color:var(--fg);width:100%;max-width:240px;outline:none;font-family:inherit;" />
+            <hr style="border:none;border-top:1px solid var(--border);margin:10px 0;" />
+            <p style="font-size:12px;color:var(--muted-fg);margin:0;">Below divider</p>
+          </div>
+        </div>
+      </div>`,
+    code: `border-border      → dividers + outlines
+border-input       → form fields
+bg-input-background → form fill`,
+    howto:
+      'Default to <code>border-border</code> everywhere. Use the input-specific tokens only inside form controls.',
+  },
+
+  'state-colors': {
+    eyebrow: 'Reference · states',
+    explanation:
+      '4 state tokens with foreground pairs: success, warning, destructive, info. Each has a "light" variant for soft backgrounds.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">4 states</span>
+          <div class="ec-body" style="flex-wrap:wrap;">
+            <span class="status-pill status-success">${ICON.check} success</span>
+            <span class="status-pill status-warning">${ICON.alert} warning</span>
+            <span class="status-pill status-destructive">${ICON.alert} destructive</span>
+            <span class="status-pill status-info">${ICON.info} info</span>
+          </div>
+        </div>
+      </div>`,
+    code: `text-success     bg-success     bg-success-light
+text-warning     bg-warning     bg-warning-light
+text-destructive bg-destructive bg-destructive-light
+text-info        bg-info        bg-info-light`,
+    howto:
+      'Pick a state and use its complete family (text + bg + light variant). Never mix state token families in one component.',
+  },
+
+  'sidebar-tokens': {
+    eyebrow: 'Reference · sidebar',
+    explanation:
+      'Sidebar tokens invert relative to the app body. 5 tokens cover all sidebar needs: <code>bg-sidebar</code>, <code>text-sidebar-foreground</code>, <code>bg-sidebar-accent</code>, <code>text-sidebar-accent-foreground</code>, <code>border-sidebar-border</code>.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Inverted sidebar</span>
+          <div class="ec-body" style="display:block;">
+            <div class="sidebar-demo" style="min-height:110px;">
+              <div class="sd-side">
+                <span class="sd-item active">Overview</span>
+                <span class="sd-item">Components</span>
+                <span class="sd-item">Tokens</span>
+              </div>
+              <div class="sd-main">Main app surface</div>
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `bg-sidebar                  → sidebar surface
+text-sidebar-foreground     → sidebar text
+bg-sidebar-accent           → active item bg
+text-sidebar-accent-foreground → active item text
+border-sidebar-border       → sidebar dividers`,
+    howto:
+      'Use this family ONLY inside the sidebar shell. Inside sidebar content (a card, a popover), revert to the regular semantic tokens.',
+  },
+
+  'brand-scale-primitives': {
+    eyebrow: 'Reference · brand ramp',
+    explanation:
+      'The primitive brand scale (<code>--color-brand-50</code> through <code>--color-brand-950</code>) is exposed for foundation work and design tooling. App code should consume <code>--color-primary</code> instead.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">50 → 950 ramp</span>
+          <div class="ec-body" style="display:block;">
+            <div class="brand-row">
+              ${[50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950].map((n) => {
+                const shades = {
+                  50: '#fafee5', 100: '#f4fbc4', 200: '#ebf99a',
+                  300: '#dff463', 400: '#E6F993', 500: '#c0e032',
+                  600: '#9fbb1f', 700: '#7e911b', 800: '#65741c',
+                  900: '#56631e', 950: '#2e370a',
+                };
+                return `<div class="brand-cell" style="background:${shades[n]};color:#02060C;">${n}</div>`;
+              }).join('')}
+            </div>
+          </div>
+        </div>
+      </div>`,
+    code: `/* Foundation only */
+.foundation-swatch { background: var(--color-brand-400); }
+
+/* App code: */
+className="bg-primary"`,
+    howto:
+      'If you reach for <code>bg-brand-500</code> in a component, you are circumventing the semantic layer. Switch to <code>bg-primary</code> instead.',
+  },
+
+  'chart-tokens': {
+    eyebrow: 'Reference · charts',
+    explanation:
+      'Chart tokens (<code>--color-chart-1</code> through <code>--color-chart-5</code>) form a tuned palette for data visualization. Pre-balanced for readability in both themes.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">5 series</span>
+          <div class="ec-body" style="flex-wrap:wrap;">
+            <span class="status-pill" style="background:#6366f1;color:#fff;">chart-1</span>
+            <span class="status-pill" style="background:#22c55e;color:#fff;">chart-2</span>
+            <span class="status-pill" style="background:#E52D49;color:#fff;">chart-3</span>
+            <span class="status-pill" style="background:#f59e0b;color:#fff;">chart-4</span>
+            <span class="status-pill" style="background:#a855f7;color:#fff;">chart-5</span>
+          </div>
+        </div>
+      </div>`,
+    code: `<Bar fill="var(--color-chart-1)" />
+<Bar fill="var(--color-chart-2)" />`,
+    howto:
+      'More than 5 series? Rotate the palette. The 5 tokens are designed for maximum distinguishability — adding ad-hoc colors weakens that.',
+  },
+
+  'typography': {
+    eyebrow: 'Reference · type',
+    explanation:
+      '3 font-family tokens cover all typography: <code>--font-brand</code> (PP Monument Extended), <code>--font-sans</code> (Inter), <code>--font-mono</code> (system monospace stack).',
+    visual: `
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">3 families</span>
+          <div class="ec-body" style="display:block;">
+            <p style="font-family:'PP Monument Extended', system-ui, sans-serif;font-weight:800;font-size:18px;margin:0;letter-spacing:-0.01em;color:var(--fg);">--font-brand · PP Monument</p>
+            <p style="font-family:Inter, system-ui, sans-serif;font-size:14px;margin:4px 0 0;color:var(--fg);">--font-sans · Inter (default everywhere)</p>
+            <p style="font-family:ui-monospace, monospace;font-size:13px;margin:4px 0 0;color:var(--fg);">--font-mono · code &amp; tabular numerals</p>
+          </div>
+        </div>
+      </div>`,
+    code: `font-brand → PP Monument Extended → hero h1
+font-sans  → Inter                  → everything else
+font-mono  → ui-monospace stack     → code, tokens, numerals`,
+    howto:
+      'Default to <code>font-sans</code>. Only escalate to <code>font-brand</code> on the hero h1 of a marketing page or top-level page header.',
+  },
+};
+
 // ── Export ──────────────────────────────────────────────────────────────
 
 export const EXAMPLES_BY_HEADING = {
@@ -1824,7 +2293,7 @@ export const EXAMPLES_BY_HEADING = {
   'rules-containers': CONTAINERS,
   'rules-buttons': BUTTONS,
   'rules-icons': ICONS,
+  'rules-typography': TYPOGRAPHY,
   'rules-elevation': ELEVATION,
-  // Stage 5 will populate the remaining 2 section ids:
-  //   'rules-typography', 'token-reference'
+  'token-reference': TOKEN_REFERENCE,
 };
