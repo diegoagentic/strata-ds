@@ -1,47 +1,47 @@
-# Regla 03 — Contenedores, Cards y Secciones
+# Rule 03 — Containers, Cards and Sections
 
-## Jerarquía de fondos
+## Background hierarchy
 
-Cada nivel de la UI tiene su fondo asignado. No intercambiar entre niveles.
+Each UI level has its assigned background. Do not swap them between levels.
 
 ```
-Nivel 0 — Layout raíz
+Level 0 — Root layout
   bg-background (#EBECEE light / #02060C dark)
   
-Nivel 1 — Panels, Cards, Modals
+Level 1 — Panels, Cards, Modals
   bg-card (#fafafa light / #02060C dark)
   
-Nivel 2 — Secciones internas, Tablas, Sub-paneles
-  bg-muted o bg-secondary (#fafafa light / #141E2C dark)
+Level 2 — Inner sections, Tables, Sub-panels
+  bg-muted or bg-secondary (#fafafa light / #141E2C dark)
   
-Nivel especial — Sidebar
-  bg-sidebar (ver sección de sidebar abajo)
+Special level — Sidebar
+  bg-sidebar (see sidebar section below)
 ```
 
 ---
 
-## Nivel 0 — Layout raíz y páginas
+## Level 0 — Root layout and pages
 
 ```tsx
-// Fondo de página
+// Page background
 <main className="bg-background min-h-screen">
 
-// Fondo de vista / route
+// View / route background
 <div className="bg-background p-6">
 ```
 
 ---
 
-## Nivel 1 — Cards y Panels
+## Level 1 — Cards and Panels
 
 ```tsx
-// Card estándar
+// Standard card
 <div className="bg-card border border-border rounded-xl p-6">
-  <h3 className="text-foreground font-semibold">Título</h3>
-  <p className="text-muted-foreground text-sm">Descripción</p>
+  <h3 className="text-foreground font-semibold">Title</h3>
+  <p className="text-muted-foreground text-sm">Description</p>
 </div>
 
-// Card interactiva (hover state obligatorio)
+// Interactive card (hover state required)
 <div className="bg-card border border-border rounded-xl p-6 
                 hover:shadow-lg hover:border-primary/50 
                 transition-all cursor-pointer">
@@ -55,119 +55,119 @@ Nivel especial — Sidebar
 
 ---
 
-## Nivel 2 — Secciones internas
+## Level 2 — Inner sections
 
 ```tsx
-// Sub-sección dentro de card
+// Sub-section inside a card
 <div className="bg-muted rounded-lg p-4">
 
-// Fila de tabla / item de lista
+// Table row / list item
 <div className="bg-muted/50 hover:bg-muted rounded-md px-4 py-3 transition-colors">
 
-// Área de input / form section
+// Input / form section area
 <div className="bg-secondary rounded-lg p-4 border border-border">
 
-// Header de sección dentro de panel
+// Section header inside a panel
 <div className="bg-muted px-6 py-3 border-b border-border">
   <span className="text-muted-foreground text-xs font-medium uppercase tracking-wider">
-    Sección
+    Section
   </span>
 </div>
 ```
 
 ---
 
-## Sidebar — Inversión de tema
+## Sidebar — Theme inversion
 
-El sidebar SIEMPRE usa colores invertidos al modo del app. Este es comportamiento intencional de diseño.
+The sidebar ALWAYS uses inverted colors relative to the app mode. This is intentional design behavior.
 
 ```
-App en Light → Sidebar oscuro (zinc-950)
-App en Dark  → Sidebar claro (white / zinc-50)
+App in Light → Dark sidebar (zinc-950)
+App in Dark  → Light sidebar (white / zinc-50)
 ```
 
 ```tsx
-// Tokens dedicados de sidebar (no usar bg-background aquí)
+// Dedicated sidebar tokens (do not use bg-background here)
 <aside className="bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
 
-// Item de nav normal
+// Regular nav item
 <NavItem className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
 
-// Item de nav activo
+// Active nav item
 <NavItem className="bg-sidebar-primary/15 text-sidebar-primary border-l-2 border-sidebar-primary">
 
-// Ícono en sidebar
+// Icon in sidebar
 <Icon className="text-sidebar-foreground/70 group-hover:text-sidebar-foreground" />
 ```
 
-Tokens de sidebar disponibles:
-- `--color-sidebar` → fondo principal
-- `--color-sidebar-foreground` → texto principal
-- `--color-sidebar-primary` → color brand para activos
+Available sidebar tokens:
+- `--color-sidebar` → main background
+- `--color-sidebar-foreground` → main text
+- `--color-sidebar-primary` → brand color for active items
 - `--color-sidebar-accent` → hover background
-- `--color-sidebar-accent-foreground` → texto en hover
-- `--color-sidebar-border` → borde separador
+- `--color-sidebar-accent-foreground` → text on hover
+- `--color-sidebar-border` → divider border
 
 ---
 
-## Secciones de estado / Status sections
+## Status sections
 
-Cuando una card o sección representa un estado específico:
+When a card or section represents a specific state:
 
 ```tsx
-// Sección de éxito
+// Success section
 <div className="bg-success/5 border border-success/40 rounded-lg p-4">
   <div className="flex items-center gap-2">
     <CheckIcon className="text-success w-5 h-5" />
-    <span className="text-success font-medium">Completado</span>
+    <span className="text-success font-medium">Completed</span>
   </div>
-  <p className="text-foreground text-sm mt-1">Descripción del resultado</p>
+  <p className="text-foreground text-sm mt-1">Result description</p>
 </div>
 
-// Sección de advertencia
+// Warning section
 <div className="bg-warning/5 border border-warning/40 rounded-lg p-4">
   <ExclamationIcon className="text-warning w-5 h-5" />
-  <span className="text-warning font-medium">Advertencia</span>
+  <span className="text-warning font-medium">Warning</span>
 </div>
 
-// Sección de error
+// Error section
 <div className="bg-destructive/5 border border-destructive/30 rounded-lg p-4">
   <XCircleIcon className="text-destructive w-5 h-5" />
   <span className="text-destructive font-medium">Error</span>
 </div>
 
-// Sección de info
+// Info section
 <div className="bg-info/5 border border-info/40 rounded-lg p-4">
   <InfoIcon className="text-info w-5 h-5" />
-  <span className="text-info font-medium">Información</span>
+  <span className="text-info font-medium">Information</span>
 </div>
 
-// Sección AI
+// AI section
 <div className="bg-ai/10 border border-ai/30 rounded-lg p-4">
   <SparklesIcon className="text-ai w-5 h-5" />
-  <span className="text-ai font-medium">Sugerencia de IA</span>
+  <span className="text-ai font-medium">AI suggestion</span>
 </div>
 ```
 
 ---
 
-## Elevation / Sombras
+## Elevation / Shadows
 
-Las sombras indican elevación — usarlas consistentemente:
+Shadows indicate elevation — use them consistently:
 
 ```tsx
-// Nivel 0 — sin sombra (integrado al fondo)
+// Level 0 — no shadow (integrated with the background)
 className="bg-card border border-border"
 
-// Nivel 1 — sombra pequeña (cards)
+// Level 1 — small shadow (cards)
 className="bg-card border border-border shadow-sm"
 
-// Nivel 2 — sombra media (panels flotantes)
+// Level 2 — medium shadow (floating panels)
 className="bg-card border border-border shadow-md"
 
-// Nivel 3 — sombra grande (modals, drawers)
+// Level 3 — large shadow (modals, drawers)
 className="bg-background border border-border shadow-xl"
 
-// Estado hover de card (elevación al interactuar)
+// Card hover state (elevation on interaction)
 className="... hover:shadow-lg hover:border-primary/50 transition-all"
 ```

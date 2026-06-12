@@ -20,6 +20,8 @@ import { FoundationsView } from "./views/FoundationsView";
 import { BrandingView } from "./views/BrandingView";
 import { TransparencyView } from "./views/TransparencyView";
 import { GridContainersView } from "./views/GridContainersView";
+import { GovernanceView } from "./components/GovernanceView";
+import { RecipeDetailView } from "./views/RecipeDetailView";
 
 type ViewId = string;
 
@@ -41,6 +43,7 @@ const NAV: NavSection[] = [
       { id: "overview", label: "Overview" },
       { id: "developer-guide", label: "Developer Guide", isNew: true },
       { id: "mcp", label: "MCP Connection", isNew: true },
+      { id: "governance", label: "Governance", isNew: true },
     ],
   },
   {
@@ -54,6 +57,35 @@ const NAV: NavSection[] = [
       { id: "borders", label: "Borders & Radius" },
       { id: "shadows", label: "Elevation & Shadows" },
       { id: "transparency", label: "Transparency & Glass" },
+    ],
+  },
+  {
+    title: "Strata Components",
+    items: [
+      // Data List family
+      { id: "strata-top-bar", label: "StrataTopBar", isNew: true },
+      { id: "data-list-toolbar", label: "DataListToolbar", isNew: true },
+      { id: "view-toggle", label: "ViewToggle", isNew: true },
+      { id: "filter-pills", label: "FilterPills", isNew: true },
+      { id: "data-list-table", label: "DataListTable", isNew: true },
+      { id: "data-list-card", label: "DataListCard", isNew: true },
+      { id: "data-list-card-grid", label: "DataListCardGrid", isNew: true },
+      { id: "bulk-action-bar", label: "BulkActionBar", isNew: true },
+      // Funnel / pipeline
+      { id: "funnel-stepper", label: "FunnelStepper", isNew: true },
+      { id: "kanban-funnel", label: "KanbanFunnel", isNew: true },
+      // Upload + line items
+      { id: "file-upload-modal", label: "FileUploadModal", isNew: true },
+      { id: "editable-line-table", label: "EditableLineTable", isNew: true },
+      // Document review family
+      { id: "document-review-modal", label: "DocumentReviewModal", isNew: true },
+      { id: "field-section", label: "FieldSection", isNew: true },
+      { id: "field-value-row", label: "FieldValueRow", isNew: true },
+      { id: "confidence-indicator", label: "ConfidenceIndicator", isNew: true },
+      { id: "split-pane-review-modal", label: "SplitPaneReviewModal", isNew: true },
+      // OCR / comparison
+      { id: "discrepancy-row", label: "DiscrepancyRow", isNew: true },
+      { id: "discrepancy-comparison-block", label: "DiscrepancyComparisonBlock", isNew: true },
     ],
   },
   {
@@ -159,6 +191,15 @@ const NAV: NavSection[] = [
       { id: "stacked-list", label: "StackedList" },
     ],
   },
+  {
+    title: "Recipes",
+    items: [
+      { id: "recipe-sif-generator", label: "SIF Generator", isNew: true },
+      { id: "recipe-transactions-list", label: "Transactions List", isNew: true },
+      { id: "recipe-ack-reconciliation", label: "ACK Reconciliation", isNew: true },
+      { id: "recipe-dashboard-kpi", label: "Dashboard KPI Grid", isNew: true },
+    ],
+  },
 ];
 
 export default function App() {
@@ -188,6 +229,8 @@ export default function App() {
         return <DeveloperGuideView />;
       case "mcp":
         return <MCPView />;
+      case "governance":
+        return <GovernanceView />;
       case "branding":
         return <BrandingView />;
       case "transparency":
@@ -197,6 +240,13 @@ export default function App() {
       default:
         if (FOUNDATIONS_IDS.has(currentView)) {
           return <FoundationsView section={currentView} />;
+        }
+        if (currentView.startsWith("recipe-")) {
+          return <RecipeDetailView id={currentView.replace("recipe-", "")} />;
+        }
+        // Legacy alias: deep-links to "examples" land on the first recipe
+        if (currentView === "examples") {
+          return <RecipeDetailView id="sif-generator" />;
         }
         // sidebar-component is the navbar nav id but the MCP component is just "sidebar"
         const componentId = currentView === "sidebar-component" ? "sidebar" : currentView;
@@ -214,7 +264,7 @@ export default function App() {
             </div>
             <div>
               <div className="font-bold text-foreground">Strata DS</div>
-              <div className="text-xs text-muted-foreground">v1.0 · 93 components</div>
+              <div className="text-xs text-muted-foreground">v1.0 · 112 components</div>
             </div>
           </div>
         </SidebarHeader>

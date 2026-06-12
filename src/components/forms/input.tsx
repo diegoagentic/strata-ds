@@ -24,7 +24,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         variant="ghost"
         size="icon"
         onClick={() => setShowPassword(!showPassword)}
-        className="pointer-events-auto cursor-pointer text-zinc-500 dark:text-muted-foreground"
+        className="pointer-events-auto cursor-pointer text-muted-foreground dark:text-muted-foreground"
         aria-label={showPassword ? "Hide password" : "Show password"}
       >
         {showPassword ? (
@@ -41,7 +41,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     const inputClasses = cn(
       "flex h-9 w-full min-w-0 rounded-lg border border-zinc-300 bg-input-background/30 pl-10 pr-4 py-2 text-sm text-foreground shadow-sm outline-none transition-all dark:border-zinc-700",
-      "placeholder:text-zinc-500 dark:placeholder:text-muted-foreground/60",
+      "placeholder:text-muted-foreground dark:placeholder:text-muted-foreground/60",
       "focus:border-primary focus:ring-2 focus:ring-primary",
       "file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground",
       "selection:bg-primary/20 selection:text-foreground",
@@ -65,7 +65,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             />
             {hasPrefix && (
               <div
-                className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-zinc-500 dark:text-muted-foreground [&_svg]:size-4"
+                className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-muted-foreground dark:text-muted-foreground [&_svg]:size-4"
                 aria-hidden
               >
                 {prefixSlot}
@@ -74,7 +74,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             {hasSuffix && (
               <div
                 className={cn(
-                  "absolute inset-y-0 right-0 flex w-10 items-center justify-center text-zinc-500 dark:text-muted-foreground [&_svg]:size-4",
+                  "absolute inset-y-0 right-0 flex w-10 items-center justify-center text-muted-foreground dark:text-muted-foreground [&_svg]:size-4",
                   !isPassword && "pointer-events-none",
                 )}
                 aria-hidden={!isPassword}
@@ -98,7 +98,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     if (label) {
       return (
         <>
-          <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-zinc-300">
+          <label className="mb-1 block text-sm font-medium text-foreground dark:text-zinc-300">
             {label}
           </label>
           {inputElement}

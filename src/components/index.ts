@@ -2,7 +2,11 @@
 
 export * from './Navbar';
 export * from './ThemeProvider';
-export * from './theme-tokens-provider';
+// Removed: export * from './theme-tokens-provider';
+// Audit (ds-component-map F22.B): no consumer project imports ThemeTokensProvider
+// or useThemeTokens from strata-design-system. The file stays on disk for future
+// use but is no longer surfaced via the public barrel. Re-add the line if a
+// consumer needs the API.
 
 // application-ui
 export * from './application-ui/action-center';
@@ -25,6 +29,17 @@ export * from './application-ui/divider';
 export * from './application-ui/experiences-navbar';
 export * from './application-ui/feature-section';
 export * from './application-ui/filter-panel';
+export * from './application-ui/filter-pills';
+export * from './application-ui/data-list-toolbar';
+export * from './application-ui/data-list-table';
+export * from './application-ui/data-list-card';
+export * from './application-ui/editable-line-table';
+export * from './application-ui/view-toggle';
+export * from './application-ui/strata-top-bar';
+export * from './application-ui/funnel-stepper';
+export * from './application-ui/kanban-funnel';
+export * from './application-ui/discrepancy-row';
+export * from './application-ui/bulk-action-bar';
 export * from './application-ui/heading';
 export * from './application-ui/hero-section';
 export * from './application-ui/hover-card';
@@ -116,6 +131,9 @@ export * from './overlays/dialog';
 export * from './overlays/drawer';
 export * from './overlays/dropdown-menu';
 export * from './overlays/feedback-toast';
+export * from './overlays/file-upload-modal';
+export * from './overlays/document-review-modal';
+export * from './overlays/split-pane-review-modal';
 export * from './overlays/popover';
 export * from './overlays/resizable';
 export * from './overlays/scroll-area';

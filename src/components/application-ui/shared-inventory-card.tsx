@@ -50,7 +50,7 @@ function StatusBadge({ label, variant = 'zinc' }: { label: string; variant?: str
     blue: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
     green: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
     orange: 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400',
-    zinc: 'bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-400',
+    zinc: 'bg-zinc-100 text-muted-foreground dark:bg-zinc-800 dark:text-muted-foreground',
   };
 
   return (
@@ -103,10 +103,10 @@ export function SharedInventoryCard({
 }: SharedInventoryCardProps) {
   return (
     <div
-      className="group bg-card rounded-2xl border shadow-sm hover:shadow-lg transition-all cursor-pointer relative overflow-hidden flex flex-col h-[340px] border-zinc-200 dark:border-zinc-800 hover:border-primary/50"
+      className="group bg-card rounded-2xl border shadow-sm hover:shadow-lg transition-all cursor-pointer relative overflow-hidden flex flex-col h-[340px] border-border hover:border-primary/50"
       onClick={onClick}
     >
-      <div className="h-44 w-full relative bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
+      <div className="h-44 w-full relative bg-muted overflow-hidden">
         {imageUrl ? (
           <img
             src={imageUrl}
@@ -114,7 +114,7 @@ export function SharedInventoryCard({
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
         ) : (
-          <div className="w-full h-full flex flex-col items-center justify-center text-zinc-300 dark:text-zinc-600">
+          <div className="w-full h-full flex flex-col items-center justify-center text-zinc-300 dark:text-muted-foreground">
             {FallbackIcon && <FallbackIcon className="w-12 h-12 mb-2" />}
             {imageFallbackLabel && <span className="text-xs font-medium">{imageFallbackLabel}</span>}
           </div>
@@ -163,7 +163,7 @@ export function SharedInventoryCard({
           <p className="text-xs text-muted-foreground mb-3 truncate">
             {subtitle}
           </p>
-          <div className="flex items-center gap-1.5 text-xs text-zinc-500 dark:text-zinc-400 mb-2">
+          <div className="flex items-center gap-1.5 text-xs text-muted-foreground mb-2">
             <MapPin className="w-3.5 h-3.5 shrink-0" aria-hidden />
             <span className="truncate">{location}</span>
           </div>
