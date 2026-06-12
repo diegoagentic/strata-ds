@@ -220,6 +220,75 @@ const CHECKS: Check[] = [
     message: 'Icon-only button with no aria-label. Screen readers cannot announce it.',
     suggestion: '<button aria-label="Describe the action"> ... </button>',
   },
+
+  // ── F43: extra checks ───────────────────────────────────────────────
+  {
+    id: 'arbitrary-text-size',
+    rule: 'rules/06-typography',
+    severity: 'warning',
+    pattern: /\btext-\[(?:\d+(?:\.\d+)?(?:px|rem)?|\d+(?:px|rem))\]/g,
+    message: 'Arbitrary text size off the canonical scale.',
+    suggestion: 'Use text-xs / sm / base / lg / xl / 2xl / 3xl / 4xl instead of text-[15px].',
+  },
+  {
+    id: 'light-font-weights',
+    rule: 'rules/06-typography · rules/14-microcopy-tone',
+    severity: 'warning',
+    pattern: /\bfont-(?:thin|extralight)\b/g,
+    message: 'font-thin / font-extralight is too washed-out for product UI.',
+    suggestion: 'Use font-normal (400) as the body default.',
+  },
+  {
+    id: 'placeholder-href',
+    rule: 'code-usage Rule 5 · rules/15-accessibility-focus',
+    severity: 'info',
+    pattern: /\bhref=(?:["'`]#["'`]|\{['"`]#['"`]\})/g,
+    message: 'Placeholder href="#" is not a real navigation target.',
+    suggestion: 'Use a real route or a <Button> with onClick for non-navigation actions.',
+  },
+  {
+    id: 'arbitrary-height',
+    rule: 'rules/10-spacing-rhythm · rules/09-layout-density',
+    severity: 'warning',
+    pattern: /\b(?:min-h|max-h|h|w|min-w|max-w)-\[(?:\d+(?:\.\d+)?(?:px|rem|vh|vw)?|\d+(?:px|rem|vh|vw))\]/g,
+    message: 'Arbitrary size value. Stick to the canonical scale or semantic tokens.',
+    suggestion: 'Use h-screen / h-full / h-1/2 / max-w-md|lg|xl|2xl etc., or pull from the spacing scale.',
+    skipIfAlso: /\b(?:max-h-\[90vh\]|max-h-\[calc)/, // common modal pattern
+  },
+  {
+    id: 'bare-verb-button-extended',
+    rule: 'rules/14-microcopy-tone',
+    severity: 'info',
+    pattern: />\s*(?:Open|Close|Edit|Add|Create|Update|View|Yes|No)\s*</g,
+    message: 'Bare verb / yes-no button label. Use verb + object so the action stays clear.',
+    suggestion: 'Open → Open quote · Edit → Edit row · Yes → Yes, delete · No → Cancel',
+    skipIfAlso: /<\/?(?:option|li|h[1-6]|p|span|td|th)\b/,
+  },
+  {
+    id: 'non-lucide-icons',
+    rule: 'rules/05-icons · code-usage Rule 3',
+    severity: 'info',
+    pattern: /from\s+["'`](?:react-icons|@heroicons|tabler-icons-react|@fortawesome|feather-icons)/g,
+    message: 'Strata standardises on lucide-react for application icons.',
+    suggestion: 'import { ... } from "lucide-react" instead.',
+  },
+  {
+    id: 'inline-style-hex-color',
+    rule: 'LAW 1 · rules/01-color-tokens',
+    severity: 'error',
+    pattern: /style=\{[^}]*?(?:color|background|backgroundColor|borderColor):\s*['"`]#[0-9a-f]{3,8}['"`][^}]*?\}/gi,
+    message: 'Inline style with hardcoded hex color.',
+    suggestion: 'Replace with className="text-... / bg-... / border-..." using semantic tokens.',
+  },
+  {
+    id: 'role-dialog-without-ds',
+    rule: 'rules/08-modal-patterns · code-usage Overlays',
+    severity: 'warning',
+    pattern: /role=["'`]dialog["'`]/g,
+    message: 'Custom role="dialog" markup. Use the DS <Dialog> compound for focus trap + a11y.',
+    suggestion: 'import { Dialog, DialogContent, DialogHeader, ... } from "@avantodev/strata-design-system"',
+    skipIfAlso: /Radix|@radix-ui|aria-labelledby|aria-describedby/,
+  },
 ];
 
 export function validateCode(code: string, _filename?: string): ValidationResult {
