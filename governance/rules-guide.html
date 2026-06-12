@@ -614,7 +614,7 @@ footer.guide-footer {
       <div class="page-header">
         <div>
           <h1>Strata DS — Rules Guide</h1>
-          <div class="subtitle">Generated 2026-06-12T16:06:18.329Z · 11 rule files · 9 overview blocks + 91 sub-rule examples · 207 CSS tokens</div>
+          <div class="subtitle">Generated 2026-06-12T16:30:36.421Z · 11 rule files · 9 overview blocks + 97 sub-rule examples · 207 CSS tokens</div>
         </div>
         <button id="theme-toggle" class="theme-toggle" type="button">Toggle theme</button>
       </div>
@@ -1295,6 +1295,49 @@ import { Button, Link } from &#39;@avantodev/strata-design-system&#39;;
 <h2 id="part-2-pattern-reference">Part 2: Pattern Reference</h2>
 <hr>
 <h3 id="colors-and-typography">Colors and Typography</h3>
+
+<aside class="ve-block" data-key="colors-and-typography">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Pattern · color + type</span>
+  </header>
+  <p class="ve-block-explanation">Combining semantic color tokens with the <code>&lt;Heading&gt;</code> and <code>&lt;Text&gt;</code> components keeps every page on the same hierarchy. <code>&lt;Heading level={N}&gt;</code> emits the right tag + size + weight; <code>&lt;Text&gt;</code> is the canonical body paragraph that already consumes <code>text-foreground</code>.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Raw HTML + Tailwind primitives</span>
+          <div class="ec-body" style="display:block;">
+            <h2 style="font-size:20px;font-weight:700;color:#18181b;margin:0;">Section Title</h2>
+            <p style="font-size:13px;color:#6b7280;margin:6px 0 0;">Helper text · text-gray-500</p>
+          </div>
+          <div class="ec-code">text-xl font-bold text-zinc-900 · text-sm text-gray-500</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ &lt;Heading&gt; + &lt;Text&gt;</span>
+          <div class="ec-body" style="display:block;">
+            <h2 style="font-size:20px;font-weight:700;color:var(--fg);margin:0;letter-spacing:-0.01em;">Section Title</h2>
+            <p style="font-size:13px;color:var(--muted-fg);margin:6px 0 0;">Helper text · text-muted-foreground</p>
+          </div>
+          <div class="ec-code">&lt;Heading level={2}&gt; · &lt;Text className="text-muted-foreground"&gt;</div>
+        </div>
+      </div>
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Semantic token reference</span>
+          <div class="ec-body" style="display:block;font-size:12px;line-height:1.7;">
+            <div><strong style="color:var(--fg);">Text:</strong> <code style="font-size:11px;">text-foreground</code> · <code style="font-size:11px;">text-muted-foreground</code> · <code style="font-size:11px;">text-destructive</code></div>
+            <div><strong style="color:var(--fg);">Background:</strong> <code style="font-size:11px;">bg-background</code> · <code style="font-size:11px;">bg-card</code> · <code style="font-size:11px;">bg-muted</code></div>
+            <div><strong style="color:var(--fg);">Border:</strong> <code style="font-size:11px;">border-border</code> · <code style="font-size:11px;">border-input</code></div>
+            <div><strong style="color:var(--fg);">Brand:</strong> <code style="font-size:11px;">bg-brand-500</code> · <code style="font-size:11px;">hover:bg-brand-600</code></div>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>import { Heading, Text } from '@avantodev/strata-design-system';
+
+&lt;Heading level={2}&gt;Section Title&lt;/Heading&gt;
+&lt;Text className=&quot;text-muted-foreground&quot;&gt;Helper text&lt;/Text&gt;
+&lt;Text className=&quot;text-destructive&quot;&gt;Error state&lt;/Text&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Default to <code>&lt;Heading&gt;</code> and <code>&lt;Text&gt;</code>. Reach for raw <code>&lt;h1-h6&gt;</code> only inside markdown rendering or third-party content where the DS components do not apply.</p>
+</aside>
 <p><strong>Semantic color tokens:</strong></p>
 <table>
 <thead>
@@ -1337,6 +1380,68 @@ import { Button, Link } from &#39;@avantodev/strata-design-system&#39;;
 </code></pre>
 <hr>
 <h3 id="buttons-and-links">Buttons and Links</h3>
+
+<aside class="ve-block" data-key="buttons-and-links">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Pattern · buttons</span>
+  </header>
+  <p class="ve-block-explanation">Strata <code>&lt;Button&gt;</code> ships 8 variants, 4 sizes, and 2 shapes. Pair the variant with the action emphasis: <code>default</code> for the primary CTA, <code>destructive</code> for irreversible actions, <code>outline</code> / <code>ghost</code> for secondary, <code>link</code> for inline text actions.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">8 variants</span>
+          <div class="ec-body" style="flex-wrap:wrap;">
+            <button class="demo-btn demo-btn-primary">default</button>
+            <button class="demo-btn demo-btn-destructive">destructive</button>
+            <button class="demo-btn demo-btn-outline">outline</button>
+            <button class="demo-btn demo-btn-secondary">secondary</button>
+            <button class="demo-btn demo-btn-ghost">ghost</button>
+            <button class="demo-btn demo-btn-link">link</button>
+            <button class="demo-btn" style="background:color-mix(in srgb, var(--primary) 25%, transparent);color:var(--fg);border:1px solid color-mix(in srgb, var(--primary) 50%, transparent);">brand</button>
+            <button class="demo-btn" style="background:var(--muted);color:var(--fg);">accent</button>
+          </div>
+        </div>
+      </div>
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Sizes · sm / default / lg</span>
+          <div class="ec-body" style="align-items:center;">
+            <button class="demo-btn demo-btn-primary" style="padding:4px 10px;font-size:12px;">sm</button>
+            <button class="demo-btn demo-btn-primary">default</button>
+            <button class="demo-btn demo-btn-primary" style="padding:10px 18px;font-size:14px;">lg</button>
+            <button class="demo-btn demo-btn-primary" style="padding:7px 9px;" aria-label="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
+          </div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Shape · default vs pill</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-primary">default</button>
+            <button class="demo-btn demo-btn-primary" style="border-radius:999px;">pill</button>
+          </div>
+        </div>
+      </div>
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ &lt;a href&gt; with lime classes</span>
+          <div class="ec-body"><a href="#" style="color:#84cc16;text-decoration:underline;font-size:13px;">Go to Dashboard</a></div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ &lt;Link&gt; from DS</span>
+          <div class="ec-body"><a href="#" style="color:var(--fg);text-decoration:underline;text-underline-offset:3px;font-size:13px;font-weight:500;">Go to Dashboard</a></div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>import { Button, Link } from '@avantodev/strata-design-system';
+import { Plus, Trash2 } from 'lucide-react';
+
+&lt;Button variant=&quot;default&quot;&gt;Save&lt;/Button&gt;
+&lt;Button variant=&quot;destructive&quot; size=&quot;sm&quot;&gt;&lt;Trash2 className=&quot;w-4 h-4&quot; /&gt;Delete&lt;/Button&gt;
+&lt;Button variant=&quot;outline&quot;&gt;Cancel&lt;/Button&gt;
+&lt;Button variant=&quot;ghost&quot; size=&quot;icon&quot;&gt;&lt;Plus className=&quot;w-4 h-4&quot; /&gt;&lt;/Button&gt;
+&lt;Button shape=&quot;pill&quot;&gt;Pill action&lt;/Button&gt;
+
+&lt;Link href=&quot;/dashboard&quot;&gt;Go to Dashboard&lt;/Link&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Match variant to action emphasis. One <code>default</code> per view, <code>destructive</code> only for irreversible actions, <code>link</code> for inline-with-text actions.</p>
+</aside>
 <p><strong>Variants:</strong> <code>default</code> (lime-green), <code>destructive</code>, <code>outline</code>, <code>secondary</code>, <code>ghost</code>, <code>link</code>, <code>brand</code>, <code>accent</code>
 <strong>Sizes:</strong> <code>default</code>, <code>sm</code>, <code>lg</code>, <code>icon</code>
 <strong>Shape:</strong> <code>default</code> (rounded), <code>pill</code> (fully rounded)</p>
@@ -1364,6 +1469,67 @@ import { Plus, Trash2 } from &#39;lucide-react&#39;;
 </code></pre>
 <hr>
 <h3 id="icons-reference">Icons reference</h3>
+
+<aside class="ve-block" data-key="icons-reference">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Pattern · icons</span>
+  </header>
+  <p class="ve-block-explanation">Strata standardizes on <strong>lucide-react</strong>. Size with Tailwind utility classes — <code>w-4 h-4</code> inline with text, <code>w-5 h-5</code> standalone in icon-only buttons. Use <code>strokeWidth={1.5}</code> for lighter visual weight (sparingly).</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Sizing convention</span>
+          <div class="ec-body" style="display:block;font-size:13px;color:var(--fg);">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+              <span style="display:inline-flex;color:var(--fg);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
+              <span>w-4 h-4 (16px) · inline with text</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+              <span style="display:inline-flex;color:var(--fg);"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
+              <span>w-5 h-5 (20px) · standalone in button</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span style="display:inline-flex;color:var(--fg);"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
+              <span>strokeWidth={1.5} · lighter weight</span>
+            </div>
+          </div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">In context</span>
+          <div class="ec-body" style="flex-wrap:wrap;">
+            <span class="icon-pair"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Inline</span>
+            <button class="demo-btn demo-btn-outline"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> With label</button>
+            <button class="demo-btn demo-btn-ghost" aria-label="Settings" style="padding:7px 9px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></button>
+          </div>
+        </div>
+      </div>
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Text characters</span>
+          <div class="ec-body">
+            <span style="font-size:18px;color:var(--fg);">›</span>
+            <span style="font-size:18px;color:var(--fg);">→</span>
+            <button style="background:transparent;border:none;font-size:18px;color:var(--fg);cursor:pointer;">✕</button>
+          </div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ lucide-react</span>
+          <div class="ec-body" style="color:var(--fg);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>import { ChevronRight, ArrowRight, X, Check } from 'lucide-react';
+
+&lt;ChevronRight className=&quot;w-4 h-4&quot; /&gt;
+&lt;Button variant=&quot;ghost&quot; size=&quot;icon&quot; aria-label=&quot;Close&quot;&gt;
+  &lt;X className=&quot;w-5 h-5&quot; /&gt;
+&lt;/Button&gt;
+&lt;Check className=&quot;w-4 h-4&quot; strokeWidth={1.5} /&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Always add <code>aria-label</code> on icon-only buttons. Color comes from <code>className</code> via <code>currentColor</code> — never set the SVG <code>stroke</code> attribute directly.</p>
+</aside>
 <p><strong>Always import from <code>lucide-react</code>. Size with Tailwind classes.</strong></p>
 <pre><code class="language-tsx">import { ChevronRight, ArrowRight, X, Check, AlertCircle } from &#39;lucide-react&#39;;
 
@@ -1405,6 +1571,75 @@ import { Plus, Trash2 } from &#39;lucide-react&#39;;
 </tbody></table>
 <hr>
 <h3 id="forms">Forms</h3>
+
+<aside class="ve-block" data-key="forms">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Pattern · forms</span>
+  </header>
+  <p class="ve-block-explanation">The Field family wraps every input. For complex forms with validation, pair Field with React Hook Form via the <code>&lt;Form&gt;</code>/<code>&lt;FormField&gt;</code> compound — it bridges the controlled-component world to React Hook Form's <code>register</code>/<code>field</code> contract.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Standalone Field</span>
+          <div class="ec-body" style="display:block;">
+            <label style="display:block;font-size:14px;font-weight:600;color:var(--fg);">Email</label>
+            <input type="email" style="background:var(--card);border:1px solid var(--border);padding:8px 12px;border-radius:6px;font-size:13px;color:var(--fg);margin-top:6px;width:100%;font-family:inherit;outline:none;" placeholder="you@example.com" />
+            <p style="font-size:12px;color:var(--muted-fg);margin:6px 0 0;">We'll never share your email.</p>
+          </div>
+          <div class="ec-code">&lt;Field&gt; + &lt;FieldLabel&gt; + &lt;Input&gt; + &lt;FieldDescription&gt;</div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Select compound</span>
+          <div class="ec-body" style="display:block;">
+            <label style="display:block;font-size:14px;font-weight:600;color:var(--fg);">Vendor</label>
+            <div style="background:var(--card);border:1px solid var(--border);padding:8px 12px;border-radius:6px;font-size:13px;color:var(--fg);margin-top:6px;width:100%;display:flex;align-items:center;justify-content:space-between;cursor:pointer;">
+              <span style="color:var(--muted-fg);">Select vendor…</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted-fg);"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
+          <div class="ec-code">&lt;Select&gt; + &lt;SelectTrigger&gt; + &lt;SelectContent&gt; + &lt;SelectItem&gt;</div>
+        </div>
+      </div>
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">DatePicker (not Input type=date)</span>
+          <div class="ec-body" style="display:block;">
+            <label style="display:block;font-size:14px;font-weight:600;color:var(--fg);">Delivery date</label>
+            <div style="background:var(--card);border:1px solid var(--border);padding:8px 12px;border-radius:6px;font-size:13px;color:var(--fg);margin-top:6px;width:100%;display:flex;align-items:center;justify-content:space-between;">
+              <span>Jun 28, 2026</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--muted-fg);"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Validation error state</span>
+          <div class="ec-body" style="display:block;">
+            <label style="display:block;font-size:14px;font-weight:600;color:var(--fg);">Email</label>
+            <input type="email" style="background:var(--card);border:1.5px solid var(--destructive);padding:8px 12px;border-radius:6px;font-size:13px;color:var(--fg);margin-top:6px;width:100%;font-family:inherit;outline:none;" value="not-an-email" />
+            <p style="font-size:12px;color:var(--destructive);margin:4px 0 0;font-weight:500;">Please enter a valid email.</p>
+          </div>
+          <div class="ec-code">&lt;FieldError&gt;</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage, Input }
+  from '@avantodev/strata-design-system';
+import { useForm } from 'react-hook-form';
+
+const form = useForm&lt;FormValues&gt;();
+
+&lt;Form {...form}&gt;
+  &lt;form onSubmit={form.handleSubmit(onSubmit)}&gt;
+    &lt;FormField control={form.control} name=&quot;email&quot; render={({ field }) =&gt; (
+      &lt;FormItem&gt;
+        &lt;FormLabel&gt;Email&lt;/FormLabel&gt;
+        &lt;FormControl&gt;&lt;Input type=&quot;email&quot; {...field} /&gt;&lt;/FormControl&gt;
+        &lt;FormMessage /&gt;
+      &lt;/FormItem&gt;
+    )} /&gt;
+  &lt;/form&gt;
+&lt;/Form&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> For one-off inputs use <code>&lt;Field&gt;</code>. For validated multi-field forms use the Form/FormField compound — React Hook Form is wired up correctly.</p>
+</aside>
 <p><strong>Always use <code>&lt;Field&gt;</code> with its sub-components. Never write raw label/input/error HTML.</strong></p>
 <pre><code class="language-tsx">import {
   Field, FieldLabel, FieldDescription, FieldError,
@@ -1472,6 +1707,79 @@ const form = useForm&lt;FormValues&gt;();
 </code></pre>
 <hr>
 <h3 id="layout">Layout</h3>
+
+<aside class="ve-block" data-key="layout">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Pattern · layout</span>
+  </header>
+  <p class="ve-block-explanation"><code>&lt;PageLayout&gt;</code> is the canonical page shell — heading + subheading + optional headerActions slot + content slot. <code>&lt;Breadcrumb&gt;</code> compound handles nested navigation, <code>&lt;Tabs&gt;</code> compound handles tabbed views.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">PageLayout</span>
+          <div class="ec-body" style="display:block;">
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--border);">
+                <div>
+                  <div style="font-size:18px;font-weight:700;color:var(--fg);letter-spacing:-0.01em;">Dashboard</div>
+                  <div style="font-size:12px;color:var(--muted-fg);margin-top:2px;">Overview of all activity</div>
+                </div>
+                <button class="demo-btn demo-btn-primary" style="padding:6px 12px;font-size:12px;">New Item</button>
+              </div>
+              <div style="font-size:12px;color:var(--muted-fg);">{ /* page content */ }</div>
+            </div>
+          </div>
+          <div class="ec-code">heading + subheading + headerActions</div>
+        </div>
+      </div>
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Breadcrumb</span>
+          <div class="ec-body" style="display:block;">
+            <nav style="display:flex;align-items:center;gap:6px;font-size:13px;">
+              <a href="#" style="color:var(--muted-fg);text-decoration:none;">Home</a>
+              <span style="color:var(--muted-fg);">/</span>
+              <a href="#" style="color:var(--muted-fg);text-decoration:none;">Quotes</a>
+              <span style="color:var(--muted-fg);">/</span>
+              <span style="color:var(--fg);font-weight:600;">QT-1042</span>
+            </nav>
+          </div>
+          <div class="ec-code">&lt;Breadcrumb&gt; → BreadcrumbList → BreadcrumbItem + BreadcrumbSeparator</div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Tabs compound</span>
+          <div class="ec-body" style="display:block;">
+            <div style="display:flex;gap:0;border-bottom:1px solid var(--border);">
+              <button style="background:transparent;border:none;padding:8px 14px;font-size:13px;font-weight:600;color:var(--fg);border-bottom:2px solid var(--primary);cursor:pointer;font-family:inherit;">Details</button>
+              <button style="background:transparent;border:none;padding:8px 14px;font-size:13px;color:var(--muted-fg);border-bottom:2px solid transparent;cursor:pointer;font-family:inherit;">History</button>
+              <button style="background:transparent;border:none;padding:8px 14px;font-size:13px;color:var(--muted-fg);border-bottom:2px solid transparent;cursor:pointer;font-family:inherit;">Activity</button>
+            </div>
+            <div style="padding:12px 0;font-size:12px;color:var(--muted-fg);">Active panel content…</div>
+          </div>
+          <div class="ec-code">&lt;Tabs&gt; → TabsList → TabsTrigger + TabsContent</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>import {
+  PageLayout, Breadcrumb, BreadcrumbList, BreadcrumbItem,
+  BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator,
+  Tabs, TabsList, TabsTrigger, TabsContent,
+} from '@avantodev/strata-design-system';
+
+&lt;PageLayout
+  heading=&quot;Dashboard&quot;
+  subheading=&quot;Overview of all activity&quot;
+  headerActions={&lt;Button&gt;New Item&lt;/Button&gt;}
+&gt;
+  &lt;Tabs defaultValue=&quot;details&quot;&gt;
+    &lt;TabsList&gt;
+      &lt;TabsTrigger value=&quot;details&quot;&gt;Details&lt;/TabsTrigger&gt;
+      &lt;TabsTrigger value=&quot;history&quot;&gt;History&lt;/TabsTrigger&gt;
+    &lt;/TabsList&gt;
+    &lt;TabsContent value=&quot;details&quot;&gt;...&lt;/TabsContent&gt;
+  &lt;/Tabs&gt;
+&lt;/PageLayout&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Default every page to <code>&lt;PageLayout&gt;</code>. Reach for raw <code>&lt;div className="p-8"&gt;</code> only inside the body of a layout — never as the page shell.</p>
+</aside>
 <p><strong>Use <code>&lt;PageLayout&gt;</code> for every page — never a raw <code>&lt;div&gt;</code> with padding and a manual heading.</strong></p>
 <pre><code class="language-tsx">import { PageLayout } from &#39;@avantodev/strata-design-system&#39;;
 
@@ -1522,6 +1830,92 @@ const form = useForm&lt;FormValues&gt;();
 </code></pre>
 <hr>
 <h3 id="overlays">Overlays</h3>
+
+<aside class="ve-block" data-key="overlays">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Pattern · overlays</span>
+  </header>
+  <p class="ve-block-explanation">Three overlay families cover most cases: <code>&lt;Dialog&gt;</code> for modal forms or confirmations, <code>&lt;Tooltip&gt;</code> for inline hover hints, <code>&lt;Popover&gt;</code> for richer floating panels (filters, menus, mini-forms). Never roll a custom modal with <code>fixed inset-0</code>.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Dialog (mock open state)</span>
+          <div class="ec-body" style="display:block;">
+            <div style="position:relative;background:color-mix(in srgb, var(--fg) 12%, transparent);padding:18px 14px;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+              <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;box-shadow:0 10px 15px -3px rgba(0,0,0,0.10);width:100%;max-width:280px;">
+                <div style="font-size:14px;font-weight:700;color:var(--fg);">Confirm Action</div>
+                <div style="font-size:12px;color:var(--muted-fg);margin-top:4px;">This action cannot be undone.</div>
+                <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px;">
+                  <button class="demo-btn demo-btn-outline" style="padding:5px 12px;font-size:12px;">Cancel</button>
+                  <button class="demo-btn demo-btn-destructive" style="padding:5px 12px;font-size:12px;">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ec-code">&lt;Dialog&gt; + &lt;DialogTrigger&gt; + &lt;DialogContent&gt; + &lt;DialogFooter&gt;</div>
+        </div>
+      </div>
+      <div class="example-row">
+        <div class="example-card">
+          <span class="ec-tag">Tooltip</span>
+          <div class="ec-body" style="display:block;">
+            <div style="position:relative;display:inline-block;">
+              <button class="demo-btn demo-btn-ghost" style="padding:7px 9px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></button>
+              <div style="position:absolute;left:50%;transform:translateX(-50%);bottom:calc(100% + 6px);background:var(--fg);color:var(--bg);font-size:11px;padding:4px 8px;border-radius:4px;white-space:nowrap;">This action is permanent.</div>
+            </div>
+          </div>
+          <div class="ec-code">&lt;Tooltip&gt; + &lt;TooltipTrigger&gt; + &lt;TooltipContent&gt;</div>
+        </div>
+        <div class="example-card">
+          <span class="ec-tag">Popover (filter menu mock)</span>
+          <div class="ec-body" style="display:block;">
+            <div style="position:relative;display:inline-block;">
+              <button class="demo-btn demo-btn-outline">Filter</button>
+              <div style="position:absolute;top:calc(100% + 6px);left:0;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;box-shadow:0 10px 15px -3px rgba(0,0,0,0.10);min-width:160px;font-size:12px;color:var(--fg);">
+                <div style="font-weight:700;margin-bottom:6px;font-size:11px;text-transform:uppercase;color:var(--muted-fg);letter-spacing:0.04em;">Status</div>
+                <div style="display:flex;flex-direction:column;gap:4px;">
+                  <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" checked />Active</label>
+                  <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" />Archived</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ec-code">&lt;Popover&gt; + &lt;PopoverTrigger&gt; + &lt;PopoverContent&gt;</div>
+        </div>
+      </div>
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Custom modal with fixed inset-0</span>
+          <div class="ec-body">
+            <pre style="background:var(--muted);padding:8px 10px;border-radius:4px;font-size:11px;margin:0;color:var(--fg);overflow-x:auto;">&lt;div className="fixed inset-0 bg-black/50"&gt;
+  &lt;div className="bg-white p-6"&gt;...&lt;/div&gt;
+&lt;/div&gt;</pre>
+          </div>
+          <div class="ec-code">No focus trap, no Escape, no a11y</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>import {
+  Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle,
+  DialogDescription, DialogFooter,
+  Tooltip, TooltipTrigger, TooltipContent,
+  Popover, PopoverTrigger, PopoverContent,
+} from '@avantodev/strata-design-system';
+
+&lt;Dialog&gt;
+  &lt;DialogTrigger asChild&gt;&lt;Button variant=&quot;outline&quot;&gt;Open&lt;/Button&gt;&lt;/DialogTrigger&gt;
+  &lt;DialogContent&gt;
+    &lt;DialogHeader&gt;
+      &lt;DialogTitle&gt;Confirm&lt;/DialogTitle&gt;
+      &lt;DialogDescription&gt;This cannot be undone.&lt;/DialogDescription&gt;
+    &lt;/DialogHeader&gt;
+    &lt;DialogFooter&gt;
+      &lt;Button variant=&quot;outline&quot;&gt;Cancel&lt;/Button&gt;
+      &lt;Button variant=&quot;destructive&quot;&gt;Delete&lt;/Button&gt;
+    &lt;/DialogFooter&gt;
+  &lt;/DialogContent&gt;
+&lt;/Dialog&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Pick by intent: Dialog → confirmation or full form; Tooltip → 1-line hint on hover; Popover → menu, filter, or mini-form anchored to a trigger.</p>
+</aside>
 <p><strong>Dialog — use the compound component. Never roll a custom modal with <code>fixed inset-0</code>.</strong></p>
 <pre><code class="language-tsx">import {
   Dialog, DialogTrigger, DialogContent,
