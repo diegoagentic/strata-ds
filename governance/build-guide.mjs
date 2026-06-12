@@ -36,6 +36,7 @@ const OUT = resolve(__dirname, 'rules-guide.html');
 
 const SECTIONS = [
   { id: 'laws',                  title: 'Absolute Laws',           file: 'governance/LAWS.md' },
+  { id: 'code-usage',            title: 'Code Usage Rules',        file: 'governance/code-usage.md' },
   { id: 'rules-color-tokens',    title: 'Color tokens',            file: 'governance/rules/01-color-tokens.md' },
   { id: 'rules-brand-colors',    title: 'Brand colors',            file: 'governance/rules/02-brand-colors.md' },
   { id: 'rules-containers',      title: 'Containers and cards',    file: 'governance/rules/03-containers-and-cards.md' },

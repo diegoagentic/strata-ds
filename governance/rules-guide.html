@@ -596,6 +596,7 @@ footer.guide-footer {
       </div>
       <nav class="toc" aria-label="Table of contents">
       <a href="#laws" data-id="laws">Absolute Laws</a>
+      <a href="#code-usage" data-id="code-usage">Code Usage Rules</a>
       <a href="#rules-color-tokens" data-id="rules-color-tokens">Color tokens</a>
       <a href="#rules-brand-colors" data-id="rules-brand-colors">Brand colors</a>
       <a href="#rules-containers" data-id="rules-containers">Containers and cards</a>
@@ -613,7 +614,7 @@ footer.guide-footer {
       <div class="page-header">
         <div>
           <h1>Strata DS — Rules Guide</h1>
-          <div class="subtitle">Generated 2026-06-12T15:41:57.966Z · 10 rule files · 9 overview blocks + 85 sub-rule examples · 207 CSS tokens</div>
+          <div class="subtitle">Generated 2026-06-12T16:06:18.329Z · 11 rule files · 9 overview blocks + 91 sub-rule examples · 207 CSS tokens</div>
         </div>
         <button id="theme-toggle" class="theme-toggle" type="button">Toggle theme</button>
       </div>
@@ -960,6 +961,681 @@ className=&quot;... hover:text-primary transition-colors&quot;
 <li>Is it interactive? → Add hover + transition</li>
 <li>Unsure of the right token? → Check <code>tokens/token-reference.md</code></li>
 </ol>
+
+    </section>
+
+    <section id="code-usage" class="guide-section">
+      <h2>Code Usage Rules</h2>
+      
+      <p>These rules govern <strong>how you use the Strata Design System inside application code</strong>. They are complementary to the visual rules in the other governance files: the visual rules tell you what good UI looks like; these rules tell you how to write the code that produces it.</p>
+<p>Contributed by the frontend team — both Part 1 (six core non-negotiables) and Part 2 (pattern reference for components categories) are intended to be the first thing any dev reads before opening a TSX file.</p>
+<hr>
+<h2 id="part-1-core-rules">Part 1: Core Rules</h2>
+<p>Six non-negotiables. If you break these, the design system cannot help you.</p>
+<hr>
+<h3 id="rule-1-import-from-the-design-system-package">Rule 1 — Import from the design system package</h3>
+
+<aside class="ve-block" data-key="rule-1-import-from-the-design-system-package">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Rule 1</span>
+  </header>
+  <p class="ve-block-explanation">Always import from the public DS package. Reaching into storybook/source paths bypasses the barrel — components stop receiving updates and consumers fork in unpredictable ways.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Reaches into source</span>
+          <div class="ec-body" style="display:block;">
+            <pre style="background:var(--muted);padding:8px 10px;border-radius:4px;font-size:11.5px;margin:0;color:var(--fg);">import { Button } from '../../storybook/src/components/button';</pre>
+          </div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Public package</span>
+          <div class="ec-body" style="display:block;">
+            <pre style="background:var(--muted);padding:8px 10px;border-radius:4px;font-size:11.5px;margin:0;color:var(--fg);">import { Button, Field, Input } from '@avantodev/strata-design-system';</pre>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>import {
+  Button, Field, FieldLabel, FieldDescription, FieldError,
+  Input, Select, DatePicker,
+} from '@avantodev/strata-design-system';</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Grep your codebase for <code>storybook/src</code> in any import path — every match is a violation. The barrel is the only contract.</p>
+</aside>
+<p>Always import from <code>@avantodev/strata-design-system</code>. Never reach into storybook source files directly.</p>
+<pre><code class="language-tsx">// ✅ Do
+import { Button, Field, Input } from &#39;@avantodev/strata-design-system&#39;;
+
+// ❌ Don&#39;t
+import { Button } from &#39;../../storybook/src/components/button&#39;;
+</code></pre>
+<hr>
+<h3 id="rule-2-use-semantic-color-tokens-never-hardcode-colors">Rule 2 — Use semantic color tokens, never hardcode colors</h3>
+
+<aside class="ve-block" data-key="rule-2-use-semantic-color-tokens-never-hardcode-colors">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Rule 2</span>
+  </header>
+  <p class="ve-block-explanation">Semantic tokens (<code>text-foreground</code>, <code>bg-card</code>, <code>border-border</code>) adapt to light/dark automatically and survive token redesigns. Tailwind primitives (<code>text-zinc-900</code>, <code>bg-white</code>) freeze your component in one theme.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Hardcoded zinc / red / white</span>
+          <div class="ec-body" style="display:block;background:#fff;border:1px solid #e5e7eb;padding:12px;border-radius:6px;">
+            <p style="color:#18181b;font-size:13px;margin:0 0 4px;">Main text · text-zinc-900</p>
+            <p style="color:#71717a;font-size:12px;margin:0 0 4px;">Helper · text-gray-500</p>
+            <p style="color:#ef4444;font-size:12px;margin:0;">Error · text-red-500</p>
+          </div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Semantic tokens</span>
+          <div class="ec-body" style="display:block;background:var(--card);border:1px solid var(--border);padding:12px;border-radius:6px;">
+            <p style="color:var(--fg);font-size:13px;margin:0 0 4px;">Main text · text-foreground</p>
+            <p style="color:var(--muted-fg);font-size:12px;margin:0 0 4px;">Helper · text-muted-foreground</p>
+            <p style="color:var(--destructive);font-size:12px;margin:0;">Error · text-destructive</p>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>// ✅ Do
+&lt;p className=&quot;text-foreground&quot;&gt;Main text&lt;/p&gt;
+&lt;p className=&quot;text-muted-foreground&quot;&gt;Secondary text&lt;/p&gt;
+&lt;p className=&quot;text-destructive&quot;&gt;Error text&lt;/p&gt;
+&lt;div className=&quot;bg-card border-border&quot;&gt;...&lt;/div&gt;
+
+// ❌ Don't
+&lt;p className=&quot;text-zinc-900&quot;&gt;Main text&lt;/p&gt;
+&lt;p className=&quot;text-red-500&quot;&gt;Error text&lt;/p&gt;
+&lt;div className=&quot;bg-white border-gray-200&quot;&gt;...&lt;/div&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Toggle the theme on this guide to confirm: every semantic token recolors itself, every hardcoded class stays the same.</p>
+</aside>
+<p>Use the token names. Never use Tailwind primitives, hex values, or arbitrary classes for color.</p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;p className=&quot;text-foreground&quot;&gt;Main text&lt;/p&gt;
+&lt;p className=&quot;text-muted-foreground&quot;&gt;Secondary text&lt;/p&gt;
+&lt;p className=&quot;text-destructive&quot;&gt;Error text&lt;/p&gt;
+&lt;div className=&quot;bg-card border-border&quot;&gt;...&lt;/div&gt;
+&lt;button className=&quot;bg-brand-500 hover:bg-brand-600&quot;&gt;Action&lt;/button&gt;
+
+// ❌ Don&#39;t
+&lt;p className=&quot;text-zinc-900&quot;&gt;Main text&lt;/p&gt;
+&lt;p className=&quot;text-gray-500&quot;&gt;Secondary text&lt;/p&gt;
+&lt;p className=&quot;text-red-500&quot;&gt;Error text&lt;/p&gt;
+&lt;div className=&quot;bg-white border-gray-200&quot;&gt;...&lt;/div&gt;
+&lt;button className=&quot;bg-lime-400 text-black&quot;&gt;Action&lt;/button&gt;
+</code></pre>
+<hr>
+<h3 id="rule-3-use-lucide-react-for-all-icons-never-text-characters">Rule 3 — Use lucide-react for all icons, never text characters</h3>
+
+<aside class="ve-block" data-key="rule-3-use-lucide-react-for-all-icons-never-text-characters">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Rule 3</span>
+  </header>
+  <p class="ve-block-explanation">Text characters used as icons (›, →, ✕) inherit font weight, do not scale predictably, and fail screen readers. Lucide icons are SVGs with proper a11y, semantic color via <code>currentColor</code>, and exact sizing via Tailwind classes.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Text characters as icons</span>
+          <div class="ec-body" style="display:flex;gap:14px;align-items:center;">
+            <span style="font-size:18px;color:var(--fg);">›</span>
+            <span style="font-size:18px;color:var(--fg);">→</span>
+            <button style="background:transparent;border:none;font-size:18px;color:var(--fg);cursor:pointer;">✕</button>
+          </div>
+          <div class="ec-code">&lt;span&gt;›&lt;/span&gt;</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ lucide-react SVGs</span>
+          <div class="ec-body" style="display:flex;gap:14px;align-items:center;color:var(--fg);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <button style="background:transparent;border:none;color:var(--fg);cursor:pointer;padding:0;display:inline-flex;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          </div>
+          <div class="ec-code">&lt;ChevronRight className="w-4 h-4" /&gt;</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>import { ChevronRight, X, ArrowRight } from 'lucide-react';
+
+&lt;ChevronRight className=&quot;w-4 h-4&quot; /&gt;
+&lt;Button variant=&quot;ghost&quot; size=&quot;icon&quot; aria-label=&quot;Close&quot;&gt;
+  &lt;X className=&quot;w-4 h-4&quot; /&gt;
+&lt;/Button&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Grep your codebase for the literal characters <code>›</code>, <code>→</code>, <code>✕</code>, <code>★</code>, <code>•</code> inside JSX. Each match swaps to a lucide import.</p>
+</aside>
+<pre><code class="language-tsx">// ✅ Do
+import { ChevronRight, X, ArrowRight } from &#39;lucide-react&#39;;
+&lt;ChevronRight className=&quot;w-4 h-4&quot; /&gt;
+
+// ❌ Don&#39;t
+&lt;span&gt;›&lt;/span&gt;
+&lt;span&gt;→&lt;/span&gt;
+&lt;button&gt;✕&lt;/button&gt;
+</code></pre>
+<hr>
+<h3 id="rule-4-use-cn-for-all-classname-merging">Rule 4 — Use cn() for all className merging</h3>
+
+<aside class="ve-block" data-key="rule-4-use-cn-for-all-classname-merging">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Rule 4</span>
+  </header>
+  <p class="ve-block-explanation">String concatenation and template literals break when conditional classes are <code>false</code>, <code>null</code>, or <code>undefined</code> — you get stray "false" tokens in the DOM. <code>cn()</code> handles falsy values and de-dupes Tailwind conflicts automatically.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ String concatenation</span>
+          <div class="ec-body" style="display:block;">
+            <pre style="background:var(--muted);padding:8px 10px;border-radius:4px;font-size:11.5px;margin:0;color:var(--fg);overflow-x:auto;">&lt;div className={'base-class ' + className} /&gt;
+&lt;div className={`base-class ${isActive && 'active'}`} /&gt;
+// → DOM ends up with className="base-class false"</pre>
+          </div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ cn() merges + filters</span>
+          <div class="ec-body" style="display:block;">
+            <pre style="background:var(--muted);padding:8px 10px;border-radius:4px;font-size:11.5px;margin:0;color:var(--fg);overflow-x:auto;">&lt;div className={cn(
+  'base-class',
+  isActive && 'active-class',
+  className,
+)} /&gt;</pre>
+          </div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>import { cn } from '@avantodev/strata-design-system';
+
+&lt;div className={cn(
+  'base-class',
+  isActive &amp;&amp; 'active-class',
+  variant === 'large' &amp;&amp; 'p-6',
+  className,
+)} /&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Grep for <code>${className}</code> and <code>+ className</code> inside JSX. Each match becomes a <code>cn(...)</code> call.</p>
+</aside>
+<pre><code class="language-tsx">import { cn } from &#39;@avantodev/strata-design-system&#39;;
+
+// ✅ Do
+&lt;div className={cn(&#39;base-class&#39;, isActive &amp;&amp; &#39;active-class&#39;, className)} /&gt;
+
+// ❌ Don&#39;t
+&lt;div className={&#39;base-class &#39; + className} /&gt;
+&lt;div className={`base-class ${className}`} /&gt;
+</code></pre>
+<hr>
+<h3 id="rule-5-use-ds-components-never-raw-html-equivalents">Rule 5 — Use DS components, never raw HTML equivalents</h3>
+
+<aside class="ve-block" data-key="rule-5-use-ds-components-never-raw-html-equivalents">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Rule 5</span>
+  </header>
+  <p class="ve-block-explanation">Raw HTML elements (<code>&lt;button&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;table&gt;</code>, <code>&lt;h1&gt;</code>) miss the design system's focus rings, hover states, dark mode tokens, and a11y wiring. The DS components ship all of that.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Raw HTML with manual classes</span>
+          <div class="ec-body">
+            <button style="border:1px solid #e5e7eb;background:#fff;border-radius:4px;padding:8px 16px;color:#000;cursor:pointer;font-family:inherit;font-size:13px;">Cancel</button>
+            <a href="#" style="color:#84cc16;text-decoration:underline;font-size:13px;">Dashboard</a>
+          </div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ DS components</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-outline">Cancel</button>
+            <a href="#" style="color:var(--fg);text-decoration:underline;text-underline-offset:3px;font-size:13px;font-weight:500;">Dashboard</a>
+          </div>
+          <div class="ec-code">&lt;Button variant="outline"&gt; · &lt;Link&gt;</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>import { Button, Link, Heading, Text } from '@avantodev/strata-design-system';
+
+&lt;Button variant=&quot;outline&quot;&gt;Cancel&lt;/Button&gt;
+&lt;Link href=&quot;/dashboard&quot;&gt;Dashboard&lt;/Link&gt;
+&lt;Heading level={2}&gt;Section Title&lt;/Heading&gt;
+&lt;Text className=&quot;text-muted-foreground&quot;&gt;Helper text&lt;/Text&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Any time you reach for <code>&lt;button&gt;</code>, <code>&lt;a&gt;</code>, or a Tailwind-classed heading, pause and check the DS — the component exists.</p>
+</aside>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Use</th>
+<th>Never use</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Button</td>
+<td><code>&lt;Button&gt;</code></td>
+<td><code>&lt;button&gt;</code></td>
+</tr>
+<tr>
+<td>Navigation link</td>
+<td><code>&lt;Link&gt;</code> from DS</td>
+<td><code>&lt;a href&gt;</code></td>
+</tr>
+<tr>
+<td>Date input</td>
+<td><code>&lt;DatePicker&gt;</code></td>
+<td><code>&lt;Input type=&quot;date&quot; /&gt;</code></td>
+</tr>
+<tr>
+<td>Table</td>
+<td>DS <code>&lt;Table&gt;</code> family</td>
+<td><code>&lt;table&gt;</code></td>
+</tr>
+<tr>
+<td>Typography</td>
+<td><code>&lt;Heading&gt;</code>, <code>&lt;Text&gt;</code></td>
+<td><code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code>, <code>&lt;p&gt;</code> with manual classes</td>
+</tr>
+</tbody></table>
+<pre><code class="language-tsx">// ✅ Do
+import { Button, Link } from &#39;@avantodev/strata-design-system&#39;;
+&lt;Button variant=&quot;outline&quot;&gt;Cancel&lt;/Button&gt;
+&lt;Link href=&quot;/dashboard&quot;&gt;Dashboard&lt;/Link&gt;
+
+// ❌ Don&#39;t
+&lt;button className=&quot;border rounded px-4 py-2&quot;&gt;Cancel&lt;/button&gt;
+&lt;a href=&quot;/dashboard&quot; className=&quot;text-lime-400 underline&quot;&gt;Dashboard&lt;/a&gt;
+</code></pre>
+<hr>
+<h3 id="rule-6-wrap-form-inputs-in-field">Rule 6 — Wrap form inputs in Field</h3>
+
+<aside class="ve-block" data-key="rule-6-wrap-form-inputs-in-field">
+  <header class="ve-block-head">
+    <span class="ve-block-eyebrow">Example · Rule 6</span>
+  </header>
+  <p class="ve-block-explanation">The <code>&lt;Field&gt;</code> compound (Field, FieldLabel, FieldDescription, FieldError) wires up label association, description for screen readers, error styling, and tokenized spacing in one bundle. Raw label/input/error HTML re-implements all of that, badly.</p>
+  <div class="ve-block-visual">
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Raw HTML form</span>
+          <div class="ec-body" style="display:block;">
+            <label style="display:block;font-size:13px;font-weight:500;color:#3f3f46;">Email</label>
+            <input type="email" style="border:1px solid #e5e7eb;border-radius:4px;padding:6px 12px;font-size:13px;margin-top:4px;width:100%;max-width:240px;font-family:inherit;outline:none;" placeholder="you@example.com" />
+            <p style="font-size:11px;color:#ef4444;margin:4px 0 0;">Please enter a valid email.</p>
+          </div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Field compound</span>
+          <div class="ec-body" style="display:block;">
+            <label style="display:block;font-size:14px;font-weight:600;color:var(--fg);">Email</label>
+            <input type="email" style="background:var(--card);border:1px solid var(--border);padding:8px 12px;border-radius:6px;font-size:13px;color:var(--fg);margin-top:6px;width:100%;max-width:240px;font-family:inherit;outline:none;" placeholder="you@example.com" />
+            <p style="font-size:12px;color:var(--muted-fg);margin:6px 0 0;">We'll never share your email.</p>
+            <p style="font-size:12px;color:var(--destructive);margin:4px 0 0;font-weight:500;">Please enter a valid email.</p>
+          </div>
+          <div class="ec-code">&lt;Field&gt; · &lt;FieldLabel&gt; · &lt;FieldDescription&gt; · &lt;FieldError&gt;</div>
+        </div>
+      </div></div>
+  <pre class="ve-block-code"><code>import { Field, FieldLabel, FieldDescription, FieldError, Input }
+  from '@avantodev/strata-design-system';
+
+&lt;Field&gt;
+  &lt;FieldLabel&gt;Email&lt;/FieldLabel&gt;
+  &lt;Input type=&quot;email&quot; placeholder=&quot;you@example.com&quot; /&gt;
+  &lt;FieldDescription&gt;We'll never share your email.&lt;/FieldDescription&gt;
+  &lt;FieldError&gt;Please enter a valid email.&lt;/FieldError&gt;
+&lt;/Field&gt;</code></pre>
+  <p class="ve-block-howto"><strong>How to use:</strong> Audit every form. If you find <code>&lt;label&gt;</code> + <code>&lt;input&gt;</code> + <code>&lt;p&gt;</code> error pattern in raw HTML, refactor to the Field compound — accessibility comes for free.</p>
+</aside>
+<p>Every input needs a <code>&lt;Field&gt;</code> wrapper with its label, description, and error sub-components. No raw label/input/error HTML.</p>
+<pre><code class="language-tsx">import { Field, FieldLabel, FieldDescription, FieldError, Input } from &#39;@avantodev/strata-design-system&#39;;
+
+// ✅ Do
+&lt;Field&gt;
+  &lt;FieldLabel&gt;Email&lt;/FieldLabel&gt;
+  &lt;Input type=&quot;email&quot; placeholder=&quot;you@example.com&quot; /&gt;
+  &lt;FieldDescription&gt;We&#39;ll never share your email.&lt;/FieldDescription&gt;
+  &lt;FieldError&gt;Please enter a valid email.&lt;/FieldError&gt;
+&lt;/Field&gt;
+
+// ❌ Don&#39;t
+&lt;div&gt;
+  &lt;label className=&quot;text-sm font-medium text-zinc-700&quot;&gt;Email&lt;/label&gt;
+  &lt;input type=&quot;email&quot; className=&quot;border rounded px-3 py-2&quot; /&gt;
+  &lt;p className=&quot;text-xs text-red-500&quot;&gt;Please enter a valid email.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<hr>
+<h2 id="part-2-pattern-reference">Part 2: Pattern Reference</h2>
+<hr>
+<h3 id="colors-and-typography">Colors and Typography</h3>
+<p><strong>Semantic color tokens:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Tokens</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Text</td>
+<td><code>text-foreground</code>, <code>text-muted-foreground</code>, <code>text-destructive</code>, <code>text-primary</code></td>
+</tr>
+<tr>
+<td>Background</td>
+<td><code>bg-background</code>, <code>bg-card</code>, <code>bg-muted</code>, <code>bg-primary</code></td>
+</tr>
+<tr>
+<td>Border</td>
+<td><code>border-border</code>, <code>border-input</code></td>
+</tr>
+<tr>
+<td>Brand</td>
+<td><code>bg-brand-500</code>, <code>text-brand-500</code>, <code>hover:bg-brand-600</code></td>
+</tr>
+<tr>
+<td>Status</td>
+<td><code>text-destructive</code> (error), <code>text-green-600</code> (success — use sparingly)</td>
+</tr>
+</tbody></table>
+<p><strong>Use <code>&lt;Heading&gt;</code> and <code>&lt;Text&gt;</code> for all typography — never raw HTML tags with manual size classes.</strong></p>
+<pre><code class="language-tsx">import { Heading, Text } from &#39;@avantodev/strata-design-system&#39;;
+
+// ✅ Do
+&lt;Heading level={2}&gt;Section Title&lt;/Heading&gt;
+&lt;Text className=&quot;text-muted-foreground&quot;&gt;Helper text&lt;/Text&gt;
+
+// ❌ Don&#39;t
+&lt;h2 className=&quot;text-xl font-bold text-zinc-900&quot;&gt;Section Title&lt;/h2&gt;
+&lt;p className=&quot;text-sm text-gray-500&quot;&gt;Helper text&lt;/p&gt;
+</code></pre>
+<hr>
+<h3 id="buttons-and-links">Buttons and Links</h3>
+<p><strong>Variants:</strong> <code>default</code> (lime-green), <code>destructive</code>, <code>outline</code>, <code>secondary</code>, <code>ghost</code>, <code>link</code>, <code>brand</code>, <code>accent</code>
+<strong>Sizes:</strong> <code>default</code>, <code>sm</code>, <code>lg</code>, <code>icon</code>
+<strong>Shape:</strong> <code>default</code> (rounded), <code>pill</code> (fully rounded)</p>
+<pre><code class="language-tsx">import { Button } from &#39;@avantodev/strata-design-system&#39;;
+import { Plus, Trash2 } from &#39;lucide-react&#39;;
+
+// ✅ Do
+&lt;Button variant=&quot;default&quot; size=&quot;default&quot;&gt;Save&lt;/Button&gt;
+&lt;Button variant=&quot;destructive&quot; size=&quot;sm&quot;&gt;&lt;Trash2 className=&quot;w-4 h-4&quot; /&gt;Delete&lt;/Button&gt;
+&lt;Button variant=&quot;outline&quot;&gt;Cancel&lt;/Button&gt;
+&lt;Button variant=&quot;ghost&quot; size=&quot;icon&quot;&gt;&lt;Plus className=&quot;w-4 h-4&quot; /&gt;&lt;/Button&gt;
+
+// ❌ Don&#39;t
+&lt;button className=&quot;bg-lime-400 text-black px-4 py-2 rounded&quot;&gt;Save&lt;/button&gt;
+&lt;button onClick={handleDelete}&gt;✕ Delete&lt;/button&gt;
+</code></pre>
+<p><strong>Links — use DS <code>&lt;Link&gt;</code>, not <code>&lt;a&gt;</code>:</strong></p>
+<pre><code class="language-tsx">import { Link } from &#39;@avantodev/strata-design-system&#39;;
+
+// ✅ Do
+&lt;Link href=&quot;/dashboard&quot;&gt;Go to Dashboard&lt;/Link&gt;
+
+// ❌ Don&#39;t
+&lt;a href=&quot;/dashboard&quot; className=&quot;text-lime-400 underline&quot;&gt;Go to Dashboard&lt;/a&gt;
+</code></pre>
+<hr>
+<h3 id="icons-reference">Icons reference</h3>
+<p><strong>Always import from <code>lucide-react</code>. Size with Tailwind classes.</strong></p>
+<pre><code class="language-tsx">import { ChevronRight, ArrowRight, X, Check, AlertCircle } from &#39;lucide-react&#39;;
+
+// ✅ Do
+&lt;ChevronRight className=&quot;w-4 h-4&quot; /&gt;
+&lt;Button variant=&quot;ghost&quot; size=&quot;icon&quot;&gt;
+  &lt;X className=&quot;w-4 h-4&quot; /&gt;
+&lt;/Button&gt;
+
+// ❌ Don&#39;t
+&lt;span&gt;›&lt;/span&gt;
+&lt;span&gt;→&lt;/span&gt;
+&lt;button&gt;✕&lt;/button&gt;
+</code></pre>
+<p><strong>Sizing convention:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Context</th>
+<th>Class</th>
+<th>strokeWidth</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Inline with text</td>
+<td><code>w-4 h-4</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>Standalone in button</td>
+<td><code>w-5 h-5</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>Lighter visual weight</td>
+<td>—</td>
+<td><code>strokeWidth={1.5}</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="forms">Forms</h3>
+<p><strong>Always use <code>&lt;Field&gt;</code> with its sub-components. Never write raw label/input/error HTML.</strong></p>
+<pre><code class="language-tsx">import {
+  Field, FieldLabel, FieldDescription, FieldError,
+  Input, Select, SelectTrigger, SelectContent, SelectItem, SelectValue,
+  DatePicker, Textarea,
+} from &#39;@avantodev/strata-design-system&#39;;
+
+// ✅ Do — text input
+&lt;Field&gt;
+  &lt;FieldLabel&gt;Email&lt;/FieldLabel&gt;
+  &lt;Input type=&quot;email&quot; placeholder=&quot;you@example.com&quot; /&gt;
+  &lt;FieldDescription&gt;We&#39;ll never share your email.&lt;/FieldDescription&gt;
+  &lt;FieldError&gt;Please enter a valid email.&lt;/FieldError&gt;
+&lt;/Field&gt;
+
+// ✅ Do — date input
+&lt;Field&gt;
+  &lt;FieldLabel&gt;Delivery Date&lt;/FieldLabel&gt;
+  &lt;DatePicker value={date} onChange={setDate} /&gt;
+&lt;/Field&gt;
+
+// ❌ Don&#39;t
+&lt;Input type=&quot;date&quot; value={date} onChange={...} /&gt;
+</code></pre>
+<p><strong>Select:</strong></p>
+<pre><code class="language-tsx">// ✅ Do
+&lt;Select value={value} onValueChange={setValue}&gt;
+  &lt;SelectTrigger&gt;
+    &lt;SelectValue placeholder=&quot;Select option&quot; /&gt;
+  &lt;/SelectTrigger&gt;
+  &lt;SelectContent&gt;
+    &lt;SelectItem value=&quot;a&quot;&gt;Option A&lt;/SelectItem&gt;
+    &lt;SelectItem value=&quot;b&quot;&gt;Option B&lt;/SelectItem&gt;
+  &lt;/SelectContent&gt;
+&lt;/Select&gt;
+
+// ❌ Don&#39;t
+&lt;select className=&quot;border rounded px-2 py-1&quot;&gt;
+  &lt;option value=&quot;a&quot;&gt;Option A&lt;/option&gt;
+&lt;/select&gt;
+</code></pre>
+<p><strong>React Hook Form integration:</strong></p>
+<pre><code class="language-tsx">import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from &#39;@avantodev/strata-design-system&#39;;
+import { useForm } from &#39;react-hook-form&#39;;
+
+const form = useForm&lt;FormValues&gt;();
+
+&lt;Form {...form}&gt;
+  &lt;form onSubmit={form.handleSubmit(onSubmit)}&gt;
+    &lt;FormField
+      control={form.control}
+      name=&quot;email&quot;
+      render={({ field }) =&gt; (
+        &lt;FormItem&gt;
+          &lt;FormLabel&gt;Email&lt;/FormLabel&gt;
+          &lt;FormControl&gt;
+            &lt;Input type=&quot;email&quot; {...field} /&gt;
+          &lt;/FormControl&gt;
+          &lt;FormMessage /&gt;
+        &lt;/FormItem&gt;
+      )}
+    /&gt;
+  &lt;/form&gt;
+&lt;/Form&gt;
+</code></pre>
+<hr>
+<h3 id="layout">Layout</h3>
+<p><strong>Use <code>&lt;PageLayout&gt;</code> for every page — never a raw <code>&lt;div&gt;</code> with padding and a manual heading.</strong></p>
+<pre><code class="language-tsx">import { PageLayout } from &#39;@avantodev/strata-design-system&#39;;
+
+// ✅ Do
+&lt;PageLayout
+  heading=&quot;Dashboard&quot;
+  subheading=&quot;Overview of all activity&quot;
+  headerActions={&lt;Button&gt;New Item&lt;/Button&gt;}
+&gt;
+  {/* page content */}
+&lt;/PageLayout&gt;
+
+// ❌ Don&#39;t
+&lt;div className=&quot;p-8&quot;&gt;
+  &lt;h1 className=&quot;text-2xl font-bold&quot;&gt;Dashboard&lt;/h1&gt;
+  {/* content */}
+&lt;/div&gt;
+</code></pre>
+<p><strong>Breadcrumbs — compound component pattern:</strong></p>
+<pre><code class="language-tsx">import {
+  Breadcrumb, BreadcrumbList, BreadcrumbItem,
+  BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator,
+} from &#39;@avantodev/strata-design-system&#39;;
+
+&lt;Breadcrumb&gt;
+  &lt;BreadcrumbList&gt;
+    &lt;BreadcrumbItem&gt;
+      &lt;BreadcrumbLink href=&quot;/&quot;&gt;Home&lt;/BreadcrumbLink&gt;
+    &lt;/BreadcrumbItem&gt;
+    &lt;BreadcrumbSeparator /&gt;
+    &lt;BreadcrumbItem&gt;
+      &lt;BreadcrumbPage&gt;Current Page&lt;/BreadcrumbPage&gt;
+    &lt;/BreadcrumbItem&gt;
+  &lt;/BreadcrumbList&gt;
+&lt;/Breadcrumb&gt;
+</code></pre>
+<p><strong>Tabs:</strong></p>
+<pre><code class="language-tsx">import { Tabs, TabsList, TabsTrigger, TabsContent } from &#39;@avantodev/strata-design-system&#39;;
+
+&lt;Tabs defaultValue=&quot;details&quot;&gt;
+  &lt;TabsList&gt;
+    &lt;TabsTrigger value=&quot;details&quot;&gt;Details&lt;/TabsTrigger&gt;
+    &lt;TabsTrigger value=&quot;history&quot;&gt;History&lt;/TabsTrigger&gt;
+  &lt;/TabsList&gt;
+  &lt;TabsContent value=&quot;details&quot;&gt;...&lt;/TabsContent&gt;
+  &lt;TabsContent value=&quot;history&quot;&gt;...&lt;/TabsContent&gt;
+&lt;/Tabs&gt;
+</code></pre>
+<hr>
+<h3 id="overlays">Overlays</h3>
+<p><strong>Dialog — use the compound component. Never roll a custom modal with <code>fixed inset-0</code>.</strong></p>
+<pre><code class="language-tsx">import {
+  Dialog, DialogTrigger, DialogContent,
+  DialogHeader, DialogTitle, DialogDescription, DialogFooter,
+} from &#39;@avantodev/strata-design-system&#39;;
+
+// ✅ Do
+&lt;Dialog&gt;
+  &lt;DialogTrigger asChild&gt;
+    &lt;Button variant=&quot;outline&quot;&gt;Open&lt;/Button&gt;
+  &lt;/DialogTrigger&gt;
+  &lt;DialogContent&gt;
+    &lt;DialogHeader&gt;
+      &lt;DialogTitle&gt;Confirm Action&lt;/DialogTitle&gt;
+      &lt;DialogDescription&gt;This action cannot be undone.&lt;/DialogDescription&gt;
+    &lt;/DialogHeader&gt;
+    &lt;DialogFooter&gt;
+      &lt;Button variant=&quot;outline&quot;&gt;Cancel&lt;/Button&gt;
+      &lt;Button variant=&quot;destructive&quot;&gt;Delete&lt;/Button&gt;
+    &lt;/DialogFooter&gt;
+  &lt;/DialogContent&gt;
+&lt;/Dialog&gt;
+
+// ❌ Don&#39;t
+{showModal &amp;&amp; (
+  &lt;div className=&quot;fixed inset-0 flex items-center justify-center bg-black/50&quot;&gt;
+    &lt;div className=&quot;bg-white p-6 rounded-lg&quot;&gt;...&lt;/div&gt;
+  &lt;/div&gt;
+)}
+</code></pre>
+<p><strong>Tooltip:</strong></p>
+<pre><code class="language-tsx">import { Tooltip, TooltipTrigger, TooltipContent } from &#39;@avantodev/strata-design-system&#39;;
+import { AlertCircle } from &#39;lucide-react&#39;;
+
+// ✅ Do
+&lt;Tooltip&gt;
+  &lt;TooltipTrigger asChild&gt;
+    &lt;Button variant=&quot;ghost&quot; size=&quot;icon&quot;&gt;
+      &lt;AlertCircle className=&quot;w-4 h-4&quot; /&gt;
+    &lt;/Button&gt;
+  &lt;/TooltipTrigger&gt;
+  &lt;TooltipContent&gt;This action is permanent.&lt;/TooltipContent&gt;
+&lt;/Tooltip&gt;
+</code></pre>
+<p><strong>Popover:</strong></p>
+<pre><code class="language-tsx">import { Popover, PopoverTrigger, PopoverContent } from &#39;@avantodev/strata-design-system&#39;;
+
+&lt;Popover&gt;
+  &lt;PopoverTrigger asChild&gt;
+    &lt;Button variant=&quot;outline&quot;&gt;Open menu&lt;/Button&gt;
+  &lt;/PopoverTrigger&gt;
+  &lt;PopoverContent&gt;
+    {/* content */}
+  &lt;/PopoverContent&gt;
+&lt;/Popover&gt;
+</code></pre>
+<hr>
+<h2 id="summary">Summary</h2>
+<table>
+<thead>
+<tr>
+<th>Don&#39;t write</th>
+<th>Use instead</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&lt;button&gt;</code></td>
+<td><code>&lt;Button&gt;</code></td>
+</tr>
+<tr>
+<td><code>&lt;a href&gt;</code></td>
+<td><code>&lt;Link&gt;</code></td>
+</tr>
+<tr>
+<td><code>&lt;input type=&quot;date&quot;&gt;</code></td>
+<td><code>&lt;DatePicker&gt;</code></td>
+</tr>
+<tr>
+<td><code>&lt;select&gt;</code></td>
+<td><code>&lt;Select&gt;</code> compound</td>
+</tr>
+<tr>
+<td><code>&lt;h1&gt;</code> / <code>&lt;p&gt;</code> with manual classes</td>
+<td><code>&lt;Heading&gt;</code> / <code>&lt;Text&gt;</code></td>
+</tr>
+<tr>
+<td><code>&lt;table&gt;</code></td>
+<td>DS <code>&lt;Table&gt;</code> family</td>
+</tr>
+<tr>
+<td>Custom modal with <code>fixed inset-0</code></td>
+<td><code>&lt;Dialog&gt;</code> compound</td>
+</tr>
+<tr>
+<td>Raw <code>&lt;label&gt;</code> + <code>&lt;input&gt;</code> + error <code>&lt;p&gt;</code></td>
+<td><code>&lt;Field&gt;</code> wrapper</td>
+</tr>
+<tr>
+<td><code>text-zinc-900</code>, <code>text-red-500</code>, <code>bg-white</code></td>
+<td>Semantic tokens (<code>text-foreground</code>, <code>text-destructive</code>, <code>bg-card</code>)</td>
+</tr>
+<tr>
+<td><code>›</code>, <code>→</code>, <code>✕</code></td>
+<td><code>lucide-react</code> icons</td>
+</tr>
+<tr>
+<td><code>&#39;classA &#39; + className</code></td>
+<td><code>cn(&#39;classA&#39;, className)</code></td>
+</tr>
+<tr>
+<td><code>import from &#39;../../storybook/...&#39;</code></td>
+<td><code>import from &#39;@avantodev/strata-design-system&#39;</code></td>
+</tr>
+</tbody></table>
 
     </section>
 

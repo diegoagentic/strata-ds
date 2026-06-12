@@ -2283,10 +2283,221 @@ font-mono  → ui-monospace stack     → code, tokens, numerals`,
   },
 };
 
+// ── code-usage.md (frontend team's 6 Core Rules) ────────────────────────
+
+const CODE_USAGE = {
+  'rule-1-import-from-the-design-system-package': {
+    eyebrow: 'Rule 1',
+    explanation:
+      'Always import from the public DS package. Reaching into storybook/source paths bypasses the barrel — components stop receiving updates and consumers fork in unpredictable ways.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Reaches into source</span>
+          <div class="ec-body" style="display:block;">
+            <pre style="background:var(--muted);padding:8px 10px;border-radius:4px;font-size:11.5px;margin:0;color:var(--fg);">import { Button } from '../../storybook/src/components/button';</pre>
+          </div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Public package</span>
+          <div class="ec-body" style="display:block;">
+            <pre style="background:var(--muted);padding:8px 10px;border-radius:4px;font-size:11.5px;margin:0;color:var(--fg);">import { Button, Field, Input } from '@avantodev/strata-design-system';</pre>
+          </div>
+        </div>
+      </div>`,
+    code: `import {
+  Button, Field, FieldLabel, FieldDescription, FieldError,
+  Input, Select, DatePicker,
+} from '@avantodev/strata-design-system';`,
+    howto:
+      'Grep your codebase for <code>storybook/src</code> in any import path — every match is a violation. The barrel is the only contract.',
+  },
+
+  'rule-2-use-semantic-color-tokens-never-hardcode-colors': {
+    eyebrow: 'Rule 2',
+    explanation:
+      'Semantic tokens (<code>text-foreground</code>, <code>bg-card</code>, <code>border-border</code>) adapt to light/dark automatically and survive token redesigns. Tailwind primitives (<code>text-zinc-900</code>, <code>bg-white</code>) freeze your component in one theme.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Hardcoded zinc / red / white</span>
+          <div class="ec-body" style="display:block;background:#fff;border:1px solid #e5e7eb;padding:12px;border-radius:6px;">
+            <p style="color:#18181b;font-size:13px;margin:0 0 4px;">Main text · text-zinc-900</p>
+            <p style="color:#71717a;font-size:12px;margin:0 0 4px;">Helper · text-gray-500</p>
+            <p style="color:#ef4444;font-size:12px;margin:0;">Error · text-red-500</p>
+          </div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Semantic tokens</span>
+          <div class="ec-body" style="display:block;background:var(--card);border:1px solid var(--border);padding:12px;border-radius:6px;">
+            <p style="color:var(--fg);font-size:13px;margin:0 0 4px;">Main text · text-foreground</p>
+            <p style="color:var(--muted-fg);font-size:12px;margin:0 0 4px;">Helper · text-muted-foreground</p>
+            <p style="color:var(--destructive);font-size:12px;margin:0;">Error · text-destructive</p>
+          </div>
+        </div>
+      </div>`,
+    code: `// ✅ Do
+<p className="text-foreground">Main text</p>
+<p className="text-muted-foreground">Secondary text</p>
+<p className="text-destructive">Error text</p>
+<div className="bg-card border-border">...</div>
+
+// ❌ Don't
+<p className="text-zinc-900">Main text</p>
+<p className="text-red-500">Error text</p>
+<div className="bg-white border-gray-200">...</div>`,
+    howto:
+      'Toggle the theme on this guide to confirm: every semantic token recolors itself, every hardcoded class stays the same.',
+  },
+
+  'rule-3-use-lucide-react-for-all-icons-never-text-characters': {
+    eyebrow: 'Rule 3',
+    explanation:
+      'Text characters used as icons (›, →, ✕) inherit font weight, do not scale predictably, and fail screen readers. Lucide icons are SVGs with proper a11y, semantic color via <code>currentColor</code>, and exact sizing via Tailwind classes.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Text characters as icons</span>
+          <div class="ec-body" style="display:flex;gap:14px;align-items:center;">
+            <span style="font-size:18px;color:var(--fg);">›</span>
+            <span style="font-size:18px;color:var(--fg);">→</span>
+            <button style="background:transparent;border:none;font-size:18px;color:var(--fg);cursor:pointer;">✕</button>
+          </div>
+          <div class="ec-code">&lt;span&gt;›&lt;/span&gt;</div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ lucide-react SVGs</span>
+          <div class="ec-body" style="display:flex;gap:14px;align-items:center;color:var(--fg);">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <button style="background:transparent;border:none;color:var(--fg);cursor:pointer;padding:0;display:inline-flex;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+          </div>
+          <div class="ec-code">&lt;ChevronRight className="w-4 h-4" /&gt;</div>
+        </div>
+      </div>`,
+    code: `import { ChevronRight, X, ArrowRight } from 'lucide-react';
+
+<ChevronRight className="w-4 h-4" />
+<Button variant="ghost" size="icon" aria-label="Close">
+  <X className="w-4 h-4" />
+</Button>`,
+    howto:
+      'Grep your codebase for the literal characters <code>›</code>, <code>→</code>, <code>✕</code>, <code>★</code>, <code>•</code> inside JSX. Each match swaps to a lucide import.',
+  },
+
+  'rule-4-use-cn-for-all-classname-merging': {
+    eyebrow: 'Rule 4',
+    explanation:
+      'String concatenation and template literals break when conditional classes are <code>false</code>, <code>null</code>, or <code>undefined</code> — you get stray "false" tokens in the DOM. <code>cn()</code> handles falsy values and de-dupes Tailwind conflicts automatically.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ String concatenation</span>
+          <div class="ec-body" style="display:block;">
+            <pre style="background:var(--muted);padding:8px 10px;border-radius:4px;font-size:11.5px;margin:0;color:var(--fg);overflow-x:auto;">&lt;div className={'base-class ' + className} /&gt;
+&lt;div className={\`base-class \${isActive && 'active'}\`} /&gt;
+// → DOM ends up with className="base-class false"</pre>
+          </div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ cn() merges + filters</span>
+          <div class="ec-body" style="display:block;">
+            <pre style="background:var(--muted);padding:8px 10px;border-radius:4px;font-size:11.5px;margin:0;color:var(--fg);overflow-x:auto;">&lt;div className={cn(
+  'base-class',
+  isActive && 'active-class',
+  className,
+)} /&gt;</pre>
+          </div>
+        </div>
+      </div>`,
+    code: `import { cn } from '@avantodev/strata-design-system';
+
+<div className={cn(
+  'base-class',
+  isActive && 'active-class',
+  variant === 'large' && 'p-6',
+  className,
+)} />`,
+    howto:
+      'Grep for <code>\${className}</code> and <code>+ className</code> inside JSX. Each match becomes a <code>cn(...)</code> call.',
+  },
+
+  'rule-5-use-ds-components-never-raw-html-equivalents': {
+    eyebrow: 'Rule 5',
+    explanation:
+      'Raw HTML elements (<code>&lt;button&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;table&gt;</code>, <code>&lt;h1&gt;</code>) miss the design system\'s focus rings, hover states, dark mode tokens, and a11y wiring. The DS components ship all of that.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Raw HTML with manual classes</span>
+          <div class="ec-body">
+            <button style="border:1px solid #e5e7eb;background:#fff;border-radius:4px;padding:8px 16px;color:#000;cursor:pointer;font-family:inherit;font-size:13px;">Cancel</button>
+            <a href="#" style="color:#84cc16;text-decoration:underline;font-size:13px;">Dashboard</a>
+          </div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ DS components</span>
+          <div class="ec-body">
+            <button class="demo-btn demo-btn-outline">Cancel</button>
+            <a href="#" style="color:var(--fg);text-decoration:underline;text-underline-offset:3px;font-size:13px;font-weight:500;">Dashboard</a>
+          </div>
+          <div class="ec-code">&lt;Button variant="outline"&gt; · &lt;Link&gt;</div>
+        </div>
+      </div>`,
+    code: `import { Button, Link, Heading, Text } from '@avantodev/strata-design-system';
+
+<Button variant="outline">Cancel</Button>
+<Link href="/dashboard">Dashboard</Link>
+<Heading level={2}>Section Title</Heading>
+<Text className="text-muted-foreground">Helper text</Text>`,
+    howto:
+      'Any time you reach for <code>&lt;button&gt;</code>, <code>&lt;a&gt;</code>, or a Tailwind-classed heading, pause and check the DS — the component exists.',
+  },
+
+  'rule-6-wrap-form-inputs-in-field': {
+    eyebrow: 'Rule 6',
+    explanation:
+      'The <code>&lt;Field&gt;</code> compound (Field, FieldLabel, FieldDescription, FieldError) wires up label association, description for screen readers, error styling, and tokenized spacing in one bundle. Raw label/input/error HTML re-implements all of that, badly.',
+    visual: `
+      <div class="example-row">
+        <div class="example-card is-bad">
+          <span class="ec-tag">✕ Raw HTML form</span>
+          <div class="ec-body" style="display:block;">
+            <label style="display:block;font-size:13px;font-weight:500;color:#3f3f46;">Email</label>
+            <input type="email" style="border:1px solid #e5e7eb;border-radius:4px;padding:6px 12px;font-size:13px;margin-top:4px;width:100%;max-width:240px;font-family:inherit;outline:none;" placeholder="you@example.com" />
+            <p style="font-size:11px;color:#ef4444;margin:4px 0 0;">Please enter a valid email.</p>
+          </div>
+        </div>
+        <div class="example-card is-good">
+          <span class="ec-tag">✓ Field compound</span>
+          <div class="ec-body" style="display:block;">
+            <label style="display:block;font-size:14px;font-weight:600;color:var(--fg);">Email</label>
+            <input type="email" style="background:var(--card);border:1px solid var(--border);padding:8px 12px;border-radius:6px;font-size:13px;color:var(--fg);margin-top:6px;width:100%;max-width:240px;font-family:inherit;outline:none;" placeholder="you@example.com" />
+            <p style="font-size:12px;color:var(--muted-fg);margin:6px 0 0;">We'll never share your email.</p>
+            <p style="font-size:12px;color:var(--destructive);margin:4px 0 0;font-weight:500;">Please enter a valid email.</p>
+          </div>
+          <div class="ec-code">&lt;Field&gt; · &lt;FieldLabel&gt; · &lt;FieldDescription&gt; · &lt;FieldError&gt;</div>
+        </div>
+      </div>`,
+    code: `import { Field, FieldLabel, FieldDescription, FieldError, Input }
+  from '@avantodev/strata-design-system';
+
+<Field>
+  <FieldLabel>Email</FieldLabel>
+  <Input type="email" placeholder="you@example.com" />
+  <FieldDescription>We'll never share your email.</FieldDescription>
+  <FieldError>Please enter a valid email.</FieldError>
+</Field>`,
+    howto:
+      'Audit every form. If you find <code>&lt;label&gt;</code> + <code>&lt;input&gt;</code> + <code>&lt;p&gt;</code> error pattern in raw HTML, refactor to the Field compound — accessibility comes for free.',
+  },
+};
+
 // ── Export ──────────────────────────────────────────────────────────────
 
 export const EXAMPLES_BY_HEADING = {
   laws: LAWS,
+  'code-usage': CODE_USAGE,
   'anti-patterns': ANTI,
   'rules-color-tokens': COLOR_TOKENS,
   'rules-brand-colors': BRAND_COLORS,
