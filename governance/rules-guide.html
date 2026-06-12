@@ -1,0 +1,2369 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Strata DS — Rules Guide</title>
+  <style>
+:root {
+  --bg: #EBECEE;
+  --fg: #02060C;
+  --card: #fafafa;
+  --muted: #fafafa;
+  --muted-fg: #959DA7;
+  --border: #D0D4D8;
+  --primary: #E6F993;
+  --primary-fg: #02060C;
+  --accent: #fafafa;
+  --destructive: #E52D49;
+  --success: #000;
+  --warning: #000;
+}
+html.dark {
+  --bg: #02060C;
+  --fg: #EBECEE;
+  --card: #0B0F1A;
+  --muted: #141E2C;
+  --muted-fg: #B4BBC2;
+  --border: #141E2C;
+  --primary: #C3E433;
+  --primary-fg: #02060C;
+  --accent: #141E2C;
+  --destructive: #340209;
+  --success: #000;
+  --warning: #000;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+a { color: var(--fg); text-decoration: underline; text-decoration-color: var(--border); text-underline-offset: 3px; }
+a:hover { text-decoration-color: var(--fg); }
+
+code, pre, kbd, samp {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.85em;
+}
+code {
+  background: var(--muted);
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+pre {
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  margin: 12px 0;
+}
+pre > code {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+h1, h2, h3, h4 { color: var(--fg); margin-top: 1.4em; margin-bottom: 0.5em; line-height: 1.25; }
+h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; margin-top: 0; }
+h2 { font-size: 24px; font-weight: 700; padding-bottom: 0.3em; border-bottom: 1px solid var(--border); }
+h3 { font-size: 18px; font-weight: 700; }
+h4 { font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted-fg); }
+
+p { margin: 0.8em 0; }
+ul, ol { padding-left: 1.4em; }
+li { margin: 0.3em 0; }
+
+strong { color: var(--fg); font-weight: 700; }
+blockquote {
+  border-left: 3px solid var(--primary);
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  padding: 0.6em 1em;
+  margin: 0.8em 0;
+  border-radius: 0 6px 6px 0;
+}
+
+hr { border: none; border-top: 1px solid var(--border); margin: 2em 0; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+th, td { padding: 8px 12px; text-align: left; vertical-align: top; }
+thead { background: var(--muted); }
+thead th { font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted-fg); }
+tbody tr { border-top: 1px solid var(--border); }
+tbody tr:nth-child(odd) { background: color-mix(in srgb, var(--muted) 30%, transparent); }
+
+/* Layout */
+
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+aside.sidebar {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--card);
+  border-right: 1px solid var(--border);
+  padding: 24px 18px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.brand .logo {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: var(--fg);
+  color: var(--bg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+}
+.brand .title { font-weight: 800; font-size: 14px; }
+.brand .meta { font-size: 11px; color: var(--muted-fg); }
+
+nav.toc { display: flex; flex-direction: column; gap: 2px; margin-top: 12px; }
+nav.toc a {
+  text-decoration: none;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--muted-fg);
+  transition: background 0.15s, color 0.15s;
+}
+nav.toc a:hover { background: var(--muted); color: var(--fg); }
+nav.toc a.active {
+  background: var(--primary);
+  color: var(--primary-fg);
+  font-weight: 700;
+}
+
+main.content {
+  padding: 32px 48px 80px;
+  max-width: 900px;
+  margin: 0;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.page-header h1 { margin: 0; }
+.page-header .subtitle { color: var(--muted-fg); font-size: 14px; margin-top: 4px; }
+
+.theme-toggle {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--fg);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.theme-toggle:hover { background: var(--muted); }
+
+section.guide-section {
+  padding-top: 24px;
+  scroll-margin-top: 16px;
+}
+section.guide-section + section.guide-section { margin-top: 32px; }
+
+/* Tokens table */
+.token-table { font-size: 13px; }
+.token-name { width: 36%; }
+.token-value { width: 32%; white-space: nowrap; }
+.token-value code { font-size: 11.5px; }
+.swatch {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+footer.guide-footer {
+  margin-top: 64px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--muted-fg);
+  line-height: 1.5;
+}
+
+/* Print */
+@media print {
+  .layout { grid-template-columns: 1fr; }
+  aside.sidebar { display: none; }
+  main.content { max-width: 100%; padding: 0; }
+  .theme-toggle { display: none; }
+  section.guide-section { break-inside: avoid; }
+  a { color: var(--fg); text-decoration: none; }
+}
+
+/* Narrow viewport */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  aside.sidebar { position: static; height: auto; }
+  main.content { padding: 24px 20px 60px; }
+}
+</style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="logo">ST</span>
+        <div>
+          <div class="title">Strata DS</div>
+          <div class="meta">Rules Guide</div>
+        </div>
+      </div>
+      <nav class="toc" aria-label="Table of contents">
+      <a href="#laws" data-id="laws">Absolute Laws</a>
+      <a href="#rules-color-tokens" data-id="rules-color-tokens">Color tokens</a>
+      <a href="#rules-brand-colors" data-id="rules-brand-colors">Brand colors</a>
+      <a href="#rules-containers" data-id="rules-containers">Containers and cards</a>
+      <a href="#rules-buttons" data-id="rules-buttons">Buttons and actions</a>
+      <a href="#rules-icons" data-id="rules-icons">Icons</a>
+      <a href="#rules-typography" data-id="rules-typography">Typography</a>
+      <a href="#rules-elevation" data-id="rules-elevation">Elevation and shadows</a>
+      <a href="#anti-patterns" data-id="anti-patterns">Anti-patterns (10)</a>
+      <a href="#token-reference" data-id="token-reference">Token reference</a>
+      <a href="#css-tokens" data-id="css-tokens">CSS tokens (live)</a>
+      </nav>
+    </aside>
+
+    <main class="content">
+      <div class="page-header">
+        <div>
+          <h1>Strata DS — Rules Guide</h1>
+          <div class="subtitle">Generated 2026-06-12T14:35:00.398Z · 10 rule files · 207 CSS tokens</div>
+        </div>
+        <button id="theme-toggle" class="theme-toggle" type="button">Toggle theme</button>
+      </div>
+
+      
+    <section id="laws" class="guide-section">
+      <h2>Absolute Laws</h2>
+      <p>These rules are NEVER broken. They are the foundation of every component, flow, and variant.</p>
+<hr>
+<h2>LAW 1 — Never hardcode hex values or raw colors</h2>
+<p><strong>FORBIDDEN:</strong></p>
+<pre><code class="language-tsx">className=&quot;bg-[#E6F993] text-[#02060C]&quot;
+className=&quot;text-green-500&quot;
+className=&quot;bg-zinc-900&quot;
+</code></pre>
+<p><strong>CORRECT:</strong></p>
+<pre><code class="language-tsx">className=&quot;bg-primary text-primary-foreground&quot;
+className=&quot;text-success&quot;
+className=&quot;bg-background&quot;
+</code></pre>
+<p><strong>Why:</strong> Hardcoded hex breaks dark/light theming and does not propagate when tokens change. Raw Tailwind classes (green-500, zinc-900) ignore the semantic system.</p>
+<hr>
+<h2>LAW 2 — brand-300 and brand-400 are NEVER text color on light backgrounds</h2>
+<p><strong>FORBIDDEN:</strong></p>
+<pre><code class="language-tsx">className=&quot;text-brand-300&quot;           // contrast 1.8:1 — FAILS accessibility
+className=&quot;text-primary&quot;             // on body text over bg-white
+</code></pre>
+<p><strong>CORRECT — brand-300/400 only as:</strong></p>
+<ul>
+<li>CTA button background</li>
+<li>Border of active indicator</li>
+<li>Highlighted icon background (small area)</li>
+<li>Focus indicator (focus ring)</li>
+</ul>
+<p><strong>Why:</strong> brand-300 (#E6F993 lime) over white yields contrast 1.8:1. WCAG requires a minimum of 4.5:1 for text. Using it as text is inaccessible.</p>
+<hr>
+<h2>LAW 3 — primary-foreground is always dark text (#02060C)</h2>
+<p>In both modes (light and dark), when the background is <code>bg-primary</code> (lime):</p>
+<pre><code class="language-tsx">// ALWAYS
+className=&quot;bg-primary text-primary-foreground&quot;
+// primary-foreground = #02060C in light AND dark
+</code></pre>
+<p><strong>Never:</strong></p>
+<pre><code class="language-tsx">className=&quot;bg-brand-300 text-white&quot;   // contrast fails on lime
+className=&quot;bg-primary text-foreground&quot; // use the correct variable
+</code></pre>
+<hr>
+<h2>LAW 4 — Semantic tokens before primitive tokens</h2>
+<p>Preference order:</p>
+<ol>
+<li><code>bg-primary</code> ✓ (semantic — adapts to mode)</li>
+<li><code>bg-brand-300</code> ✓ only if you need the specific shade by design</li>
+<li><code>bg-[#E6F993]</code> ✗ NEVER</li>
+</ol>
+<p>For states:</p>
+<ol>
+<li><code>text-success</code> ✓</li>
+<li><code>text-green-600</code> ✗</li>
+<li><code>text-[#098400]</code> ✗</li>
+</ol>
+<hr>
+<h2>LAW 5 — Dark mode via semantic tokens, not via dark: classes</h2>
+<p><strong>FORBIDDEN:</strong></p>
+<pre><code class="language-tsx">className=&quot;bg-white dark:bg-zinc-900&quot;
+className=&quot;text-zinc-900 dark:text-white&quot;
+</code></pre>
+<p><strong>CORRECT:</strong></p>
+<pre><code class="language-tsx">className=&quot;bg-background&quot;    // #EBECEE light / #02060C dark — automatic
+className=&quot;text-foreground&quot;  // #02060C light / #EBECEE dark — automatic
+</code></pre>
+<p><strong>Valid exception:</strong> The sidebar uses explicit inversion. See <code>rules/03-containers-and-cards.md</code>.</p>
+<hr>
+<h2>LAW 6 — Do not mix legacy and new color systems</h2>
+<p>The system has two historical namespaces. Only use the new one:</p>
+<table>
+<thead>
+<tr>
+<th>Legacy (DO NOT use)</th>
+<th>New (use)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--primary</code> (#27272a)</td>
+<td><code>--color-primary</code> (#E6F993)</td>
+</tr>
+<tr>
+<td><code>--secondary</code> (#f4f4f5)</td>
+<td><code>--color-secondary</code> (#fafafa)</td>
+</tr>
+<tr>
+<td><code>--background</code> (#ffffff)</td>
+<td><code>--color-background</code> (#EBECEE)</td>
+</tr>
+</tbody></table>
+<p>If you see classes producing unexpected colors (dark gray instead of lime), they are likely using the legacy namespace.</p>
+<hr>
+<h2>LAW 7 — Every interactive element must have a hover state</h2>
+<pre><code class="language-tsx">// Minimum required for any clickable element:
+className=&quot;... hover:bg-primary/90 transition-colors&quot;
+
+// For cards:
+className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
+
+// For text/icons:
+className=&quot;... hover:text-primary transition-colors&quot;
+</code></pre>
+<hr>
+<h2>Quick summary for AI agents</h2>
+<p>When generating code for Strata DS, before writing any className:</p>
+<ol>
+<li>Is it a color? → Use a semantic token (<code>bg-background</code>, <code>text-foreground</code>, <code>text-success</code>)</li>
+<li>Is it lime/brand? → Only as primary action background, never as text</li>
+<li>Does it have dark mode? → If you use semantic tokens, it is already covered automatically</li>
+<li>Is it interactive? → Add hover + transition</li>
+<li>Unsure of the right token? → Check <code>tokens/token-reference.md</code></li>
+</ol>
+
+    </section>
+
+    <section id="rules-color-tokens" class="guide-section">
+      <h2>Color tokens</h2>
+      <h2>Layer system</h2>
+<p>The DS has 3 layers of tokens. Always use the most semantic one available.</p>
+<pre><code>Layer 3 — Semantic (PREFERRED)
+  bg-primary, text-foreground, bg-card, text-muted-foreground
+
+Layer 2 — Brand primitive (only when the design requires a specific shade)
+  bg-brand-300, bg-brand-400, text-brand-600
+
+Layer 1 — Neutral primitive (only for internal construction of DS components)
+  bg-zinc-950, text-zinc-400
+</code></pre>
+<hr>
+<h2>Available semantic tokens</h2>
+<h3>Surface backgrounds</h3>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Light</th>
+<th>Dark</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>bg-background</code></td>
+<td>#EBECEE</td>
+<td>#02060C</td>
+<td>Page background, root layout</td>
+</tr>
+<tr>
+<td><code>bg-card</code></td>
+<td>#fafafa</td>
+<td>#02060C</td>
+<td>Cards, panels, elevated containers</td>
+</tr>
+<tr>
+<td><code>bg-muted</code></td>
+<td>#fafafa</td>
+<td>#141E2C</td>
+<td>Secondary sections, tables</td>
+</tr>
+<tr>
+<td><code>bg-secondary</code></td>
+<td>#fafafa</td>
+<td>#141E2C</td>
+<td>Alternative backgrounds</td>
+</tr>
+<tr>
+<td><code>bg-accent</code></td>
+<td>#fafafa</td>
+<td>#141E2C</td>
+<td>Hover state backgrounds</td>
+</tr>
+<tr>
+<td><code>bg-popover</code></td>
+<td>#fafafa</td>
+<td>#02060C</td>
+<td>Dropdowns, tooltips, popovers</td>
+</tr>
+</tbody></table>
+<h3>Text colors</h3>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Light</th>
+<th>Dark</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>text-foreground</code></td>
+<td>#02060C</td>
+<td>#EBECEE</td>
+<td>Primary text</td>
+</tr>
+<tr>
+<td><code>text-muted-foreground</code></td>
+<td>#959DA7</td>
+<td>#959DA7</td>
+<td>Secondary text, placeholders</td>
+</tr>
+<tr>
+<td><code>text-card-foreground</code></td>
+<td>#02060C</td>
+<td>#EBECEE</td>
+<td>Text inside cards</td>
+</tr>
+<tr>
+<td><code>text-primary-foreground</code></td>
+<td>#02060C</td>
+<td>#02060C</td>
+<td>Text over primary (lime) background</td>
+</tr>
+</tbody></table>
+<h3>Primary action colors</h3>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Light</th>
+<th>Dark</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>bg-primary</code></td>
+<td>#E6F993</td>
+<td>#C3E433</td>
+<td>Main CTA button</td>
+</tr>
+<tr>
+<td><code>text-primary</code></td>
+<td>#E6F993</td>
+<td>#C3E433</td>
+<td>Highlighted icons, active links</td>
+</tr>
+</tbody></table>
+<h3>Borders and inputs</h3>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Light</th>
+<th>Dark</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>border-border</code></td>
+<td>#D0D4D8</td>
+<td>#141E2C</td>
+<td>General borders</td>
+</tr>
+<tr>
+<td><code>border-input</code></td>
+<td>#D0D4D8</td>
+<td>#141E2C</td>
+<td>Input borders</td>
+</tr>
+<tr>
+<td><code>bg-input</code></td>
+<td>#fafafa</td>
+<td>—</td>
+<td>Input background</td>
+</tr>
+<tr>
+<td><code>ring-ring</code></td>
+<td>#959DA7</td>
+<td>—</td>
+<td>Focus ring</td>
+</tr>
+</tbody></table>
+<h3>Semantic states</h3>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Use for</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>text-success</code> / <code>bg-success</code></td>
+<td>#098400</td>
+<td>Confirmations, success</td>
+</tr>
+<tr>
+<td><code>text-warning</code> / <code>bg-warning</code></td>
+<td>#b27d00</td>
+<td>Warnings</td>
+</tr>
+<tr>
+<td><code>text-destructive</code> / <code>bg-destructive</code></td>
+<td>#E52D49</td>
+<td>Errors, destructive actions</td>
+</tr>
+<tr>
+<td><code>text-info</code> / <code>bg-info</code></td>
+<td>#2164d1</td>
+<td>Information, help</td>
+</tr>
+<tr>
+<td><code>text-ai</code> / <code>bg-ai</code></td>
+<td>#8b5cf6</td>
+<td>AI indicators</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Opacity pattern for soft states</h2>
+<p>For subtle state backgrounds, use opacity utilities:</p>
+<pre><code class="language-tsx">// Subtle success state
+className=&quot;bg-success/5 border border-success/40 text-success&quot;
+
+// Subtle warning state
+className=&quot;bg-warning/5 border border-warning/40 text-warning&quot;
+
+// Subtle error state
+className=&quot;bg-destructive/10 border border-destructive/30 text-destructive&quot;
+
+// Subtle info state
+className=&quot;bg-info/5 border border-info/40 text-info&quot;
+
+// Subtle AI state
+className=&quot;bg-ai/10 text-ai&quot;
+</code></pre>
+<hr>
+<h2>Charts rule</h2>
+<p>For charts use the chart tokens, not arbitrary colors:</p>
+<pre><code class="language-tsx">// Correct
+stroke=&quot;var(--color-chart-1)&quot;   // indigo
+fill=&quot;var(--color-chart-2)&quot;     // green
+
+// The 5 available chart tokens:
+// --color-chart-1: #6366f1 (indigo)
+// --color-chart-2: #22c55e (green)
+// --color-chart-3: #E52D49 (red)
+// --color-chart-4: #f59e0b (amber)
+// --color-chart-5: #818cf8 (light indigo)
+</code></pre>
+<hr>
+<h2>State light variants (subtle background)</h2>
+<p>For notification, banner, or subtle badge backgrounds, pre-calculated <code>*-light</code> variants exist. Use them instead of <code>bg-success/10</code> when the design needs a specific pastel tone.</p>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Tailwind</th>
+<th>Light value</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--color-success-light</code></td>
+<td><code>bg-success-light</code></td>
+<td>#e5f9e4</td>
+<td>Background of success banners, subtle badges</td>
+</tr>
+<tr>
+<td><code>--color-warning-light</code></td>
+<td><code>bg-warning-light</code></td>
+<td>#fff5cd</td>
+<td>Subtle warning background</td>
+</tr>
+<tr>
+<td><code>--color-info-light</code></td>
+<td><code>bg-info-light</code></td>
+<td>#ecf4ff</td>
+<td>Informational message background</td>
+</tr>
+<tr>
+<td><code>--color-error-light</code></td>
+<td><code>bg-error-light</code></td>
+<td>#ffe4e7</td>
+<td>Subtle error background (alternative to destructive)</td>
+</tr>
+<tr>
+<td><code>--color-ai-light</code></td>
+<td><code>bg-ai-light</code></td>
+<td>#ede9fe</td>
+<td>Subtle AI suggestion background</td>
+</tr>
+</tbody></table>
+<pre><code class="language-tsx">// Subtle success banner
+&lt;div className=&quot;bg-success-light border border-success/30 rounded-lg p-3&quot;&gt;
+  &lt;p className=&quot;text-success font-medium&quot;&gt;Order finalized&lt;/p&gt;
+&lt;/div&gt;
+
+// AI tag
+&lt;span className=&quot;bg-ai-light text-ai rounded-md px-2 py-0.5 text-xs&quot;&gt;
+  AI suggestion
+&lt;/span&gt;
+</code></pre>
+<p><strong>Rule:</strong> For subtle backgrounds, prefer <code>*-light</code> over <code>*-token/10</code> when the result must be a solid pastel color. The <code>/N</code> syntax gives more control for overlays on any surface, but <code>-light</code> guarantees the same color regardless of background.</p>
+<hr>
+<h2>Surface hierarchy</h2>
+<p>Each level has its assigned background. Do not swap them — see <code>governance/rules/03-containers-and-cards.md</code> for full detail.</p>
+<pre><code>Level 0 — Root layout         → bg-background  (#EBECEE light / #02060C dark)
+Level 1 — Cards and Panels    → bg-card        (#fafafa light / #02060C dark)
+Level 2 — Sub-sections        → bg-muted       (#fafafa light / #141E2C dark)
+Sidebar — Inversion           → bg-sidebar     (zinc-950 light / white dark)
+</code></pre>
+<p>For elevation (shadows) see <code>governance/rules/07-elevation.md</code>. For typography see <code>governance/rules/06-typography.md</code>.</p>
+
+    </section>
+
+    <section id="rules-brand-colors" class="guide-section">
+      <h2>Brand colors</h2>
+      <h2>The brand color is a SIGNAL, not a base color</h2>
+<p>Brand (lime #E6F993 / #C3E433) exists to draw attention to <strong>a specific action or state</strong>. It is not a general fill color.</p>
+<hr>
+<h2>Where to USE brand</h2>
+<h3>1. Primary action button (CTA)</h3>
+<pre><code class="language-tsx">// Light mode
+&lt;button className=&quot;bg-brand-300 text-zinc-900 hover:bg-brand-400 transition-colors&quot;&gt;
+  Primary Action
+&lt;/button&gt;
+
+// Dark mode
+&lt;button className=&quot;bg-brand-400 text-zinc-900 hover:bg-brand-500 transition-colors&quot;&gt;
+  Primary Action
+&lt;/button&gt;
+
+// With semantic token (recommended — adapts to mode automatically)
+&lt;button className=&quot;bg-primary text-primary-foreground hover:bg-primary/90 transition-colors&quot;&gt;
+  Primary Action
+&lt;/button&gt;
+</code></pre>
+<h3>2. Active / selected element indicator</h3>
+<pre><code class="language-tsx">// Active nav item
+&lt;NavItem className=&quot;border-l-2 border-primary text-foreground bg-primary/10&quot;&gt;
+  Dashboard
+&lt;/NavItem&gt;
+
+// Active tab
+&lt;Tab className=&quot;border-b-2 border-primary text-foreground&quot;&gt;
+  Transactions
+&lt;/Tab&gt;
+</code></pre>
+<h3>3. Decorative accent on branded cards</h3>
+<pre><code class="language-tsx">// Top border of featured card
+&lt;Card className=&quot;bg-card border border-border&quot;&gt;
+  &lt;div className=&quot;h-1 bg-brand-400 rounded-t-lg&quot; /&gt;
+  {/* content */}
+&lt;/Card&gt;
+</code></pre>
+<h3>4. Action icon container background</h3>
+<pre><code class="language-tsx">// Icon in primary action context
+&lt;div className=&quot;bg-primary/15 rounded-lg p-2&quot;&gt;
+  &lt;SparklesIcon className=&quot;text-primary w-5 h-5&quot; /&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>5. Focus ring / focus indicator</h3>
+<pre><code class="language-tsx">&lt;input className=&quot;focus:ring-2 focus:ring-primary focus:ring-offset-2&quot; /&gt;
+</code></pre>
+<hr>
+<h2>Where NOT to use brand</h2>
+<table>
+<thead>
+<tr>
+<th>Case</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Body text on light background</td>
+<td>Contrast 1.8:1 — fails WCAG</td>
+</tr>
+<tr>
+<td>Headings or titles</td>
+<td>It is not a text color</td>
+</tr>
+<tr>
+<td>Whole section background</td>
+<td>Too dominant, signal is lost</td>
+</tr>
+<tr>
+<td>Input borders in normal state</td>
+<td>Reserved for focus/active</td>
+</tr>
+<tr>
+<td>State icons (success, error)</td>
+<td>Use semantic state tokens</td>
+</tr>
+<tr>
+<td>Informational badges</td>
+<td>Use info/success/warning tokens</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Full brand scale</h2>
+<pre><code>brand-50:  #fdfee7  — almost white, very subtle
+brand-100: #f9fdc3  — very light tint
+brand-200: #f4fb89  — light tint
+brand-300: #E6F993  — ← PRIMARY LIGHT MODE (CTA)
+brand-400: #C3E433  — ← PRIMARY DARK MODE (CTA) / hover light
+brand-500: #a3c414  — hover dark / strong decoration
+brand-600: #A0C114  — emphasis borders
+brand-700: #7a9410  — text over brand (accessible)
+brand-800: #5c6f0f  — dark text over brand
+brand-900: #4a5810  — very dark
+brand-950: #233502  — almost black brand
+</code></pre>
+<h3>Contrast rule with brand as background:</h3>
+<ul>
+<li>Over <code>brand-300</code> → always <code>text-zinc-900</code> or <code>text-primary-foreground</code> (#02060C)</li>
+<li>Over <code>brand-400</code> → always <code>text-zinc-900</code> (#02060C)</li>
+<li>NEVER <code>text-white</code> over brand-300/400 (insufficient contrast)</li>
+</ul>
+<hr>
+<h2>Pattern: full branded card</h2>
+<pre><code class="language-tsx">// Light mode
+&lt;div className=&quot;bg-white border border-zinc-200 rounded-xl overflow-hidden&quot;&gt;
+  &lt;div className=&quot;h-1 bg-brand-400&quot; /&gt;
+  &lt;div className=&quot;p-6&quot;&gt;
+    &lt;h3 className=&quot;text-zinc-900 font-semibold&quot;&gt;Title&lt;/h3&gt;
+    &lt;p className=&quot;text-zinc-500 text-sm&quot;&gt;Secondary description&lt;/p&gt;
+    &lt;button className=&quot;mt-4 bg-brand-300 text-zinc-900 hover:bg-brand-400 px-4 py-2 rounded-lg transition-colors&quot;&gt;
+      Action
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+// Dark mode (using semantic tokens so it is automatic)
+&lt;div className=&quot;bg-card border border-border rounded-xl overflow-hidden&quot;&gt;
+  &lt;div className=&quot;h-1 bg-primary&quot; /&gt;
+  &lt;div className=&quot;p-6&quot;&gt;
+    &lt;h3 className=&quot;text-foreground font-semibold&quot;&gt;Title&lt;/h3&gt;
+    &lt;p className=&quot;text-muted-foreground text-sm&quot;&gt;Secondary description&lt;/p&gt;
+    &lt;button className=&quot;mt-4 bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-lg transition-colors&quot;&gt;
+      Action
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+    </section>
+
+    <section id="rules-containers" class="guide-section">
+      <h2>Containers and cards</h2>
+      <h2>Background hierarchy</h2>
+<p>Each UI level has its assigned background. Do not swap them between levels.</p>
+<pre><code>Level 0 — Root layout
+  bg-background (#EBECEE light / #02060C dark)
+  
+Level 1 — Panels, Cards, Modals
+  bg-card (#fafafa light / #02060C dark)
+  
+Level 2 — Inner sections, Tables, Sub-panels
+  bg-muted or bg-secondary (#fafafa light / #141E2C dark)
+  
+Special level — Sidebar
+  bg-sidebar (see sidebar section below)
+</code></pre>
+<hr>
+<h2>Level 0 — Root layout and pages</h2>
+<pre><code class="language-tsx">// Page background
+&lt;main className=&quot;bg-background min-h-screen&quot;&gt;
+
+// View / route background
+&lt;div className=&quot;bg-background p-6&quot;&gt;
+</code></pre>
+<hr>
+<h2>Level 1 — Cards and Panels</h2>
+<pre><code class="language-tsx">// Standard card
+&lt;div className=&quot;bg-card border border-border rounded-xl p-6&quot;&gt;
+  &lt;h3 className=&quot;text-foreground font-semibold&quot;&gt;Title&lt;/h3&gt;
+  &lt;p className=&quot;text-muted-foreground text-sm&quot;&gt;Description&lt;/p&gt;
+&lt;/div&gt;
+
+// Interactive card (hover state required)
+&lt;div className=&quot;bg-card border border-border rounded-xl p-6 
+                hover:shadow-lg hover:border-primary/50 
+                transition-all cursor-pointer&quot;&gt;
+
+// Modal / Dialog
+&lt;div className=&quot;bg-background border border-border rounded-2xl shadow-xl&quot;&gt;
+
+// Popover / Dropdown
+&lt;div className=&quot;bg-popover border border-border rounded-lg shadow-md&quot;&gt;
+</code></pre>
+<hr>
+<h2>Level 2 — Inner sections</h2>
+<pre><code class="language-tsx">// Sub-section inside a card
+&lt;div className=&quot;bg-muted rounded-lg p-4&quot;&gt;
+
+// Table row / list item
+&lt;div className=&quot;bg-muted/50 hover:bg-muted rounded-md px-4 py-3 transition-colors&quot;&gt;
+
+// Input / form section area
+&lt;div className=&quot;bg-secondary rounded-lg p-4 border border-border&quot;&gt;
+
+// Section header inside a panel
+&lt;div className=&quot;bg-muted px-6 py-3 border-b border-border&quot;&gt;
+  &lt;span className=&quot;text-muted-foreground text-xs font-medium uppercase tracking-wider&quot;&gt;
+    Section
+  &lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+<hr>
+<h2>Sidebar — Theme inversion</h2>
+<p>The sidebar ALWAYS uses inverted colors relative to the app mode. This is intentional design behavior.</p>
+<pre><code>App in Light → Dark sidebar (zinc-950)
+App in Dark  → Light sidebar (white / zinc-50)
+</code></pre>
+<pre><code class="language-tsx">// Dedicated sidebar tokens (do not use bg-background here)
+&lt;aside className=&quot;bg-sidebar text-sidebar-foreground border-r border-sidebar-border&quot;&gt;
+
+// Regular nav item
+&lt;NavItem className=&quot;text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground&quot;&gt;
+
+// Active nav item
+&lt;NavItem className=&quot;bg-sidebar-primary/15 text-sidebar-primary border-l-2 border-sidebar-primary&quot;&gt;
+
+// Icon in sidebar
+&lt;Icon className=&quot;text-sidebar-foreground/70 group-hover:text-sidebar-foreground&quot; /&gt;
+</code></pre>
+<p>Available sidebar tokens:</p>
+<ul>
+<li><code>--color-sidebar</code> → main background</li>
+<li><code>--color-sidebar-foreground</code> → main text</li>
+<li><code>--color-sidebar-primary</code> → brand color for active items</li>
+<li><code>--color-sidebar-accent</code> → hover background</li>
+<li><code>--color-sidebar-accent-foreground</code> → text on hover</li>
+<li><code>--color-sidebar-border</code> → divider border</li>
+</ul>
+<hr>
+<h2>Status sections</h2>
+<p>When a card or section represents a specific state:</p>
+<pre><code class="language-tsx">// Success section
+&lt;div className=&quot;bg-success/5 border border-success/40 rounded-lg p-4&quot;&gt;
+  &lt;div className=&quot;flex items-center gap-2&quot;&gt;
+    &lt;CheckIcon className=&quot;text-success w-5 h-5&quot; /&gt;
+    &lt;span className=&quot;text-success font-medium&quot;&gt;Completed&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;p className=&quot;text-foreground text-sm mt-1&quot;&gt;Result description&lt;/p&gt;
+&lt;/div&gt;
+
+// Warning section
+&lt;div className=&quot;bg-warning/5 border border-warning/40 rounded-lg p-4&quot;&gt;
+  &lt;ExclamationIcon className=&quot;text-warning w-5 h-5&quot; /&gt;
+  &lt;span className=&quot;text-warning font-medium&quot;&gt;Warning&lt;/span&gt;
+&lt;/div&gt;
+
+// Error section
+&lt;div className=&quot;bg-destructive/5 border border-destructive/30 rounded-lg p-4&quot;&gt;
+  &lt;XCircleIcon className=&quot;text-destructive w-5 h-5&quot; /&gt;
+  &lt;span className=&quot;text-destructive font-medium&quot;&gt;Error&lt;/span&gt;
+&lt;/div&gt;
+
+// Info section
+&lt;div className=&quot;bg-info/5 border border-info/40 rounded-lg p-4&quot;&gt;
+  &lt;InfoIcon className=&quot;text-info w-5 h-5&quot; /&gt;
+  &lt;span className=&quot;text-info font-medium&quot;&gt;Information&lt;/span&gt;
+&lt;/div&gt;
+
+// AI section
+&lt;div className=&quot;bg-ai/10 border border-ai/30 rounded-lg p-4&quot;&gt;
+  &lt;SparklesIcon className=&quot;text-ai w-5 h-5&quot; /&gt;
+  &lt;span className=&quot;text-ai font-medium&quot;&gt;AI suggestion&lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+<hr>
+<h2>Elevation / Shadows</h2>
+<p>Shadows indicate elevation — use them consistently:</p>
+<pre><code class="language-tsx">// Level 0 — no shadow (integrated with the background)
+className=&quot;bg-card border border-border&quot;
+
+// Level 1 — small shadow (cards)
+className=&quot;bg-card border border-border shadow-sm&quot;
+
+// Level 2 — medium shadow (floating panels)
+className=&quot;bg-card border border-border shadow-md&quot;
+
+// Level 3 — large shadow (modals, drawers)
+className=&quot;bg-background border border-border shadow-xl&quot;
+
+// Card hover state (elevation on interaction)
+className=&quot;... hover:shadow-lg hover:border-primary/50 transition-all&quot;
+</code></pre>
+
+    </section>
+
+    <section id="rules-buttons" class="guide-section">
+      <h2>Buttons and actions</h2>
+      <h2>Button variants</h2>
+<h3>Primary (main CTA)</h3>
+<p>One per section/view. The only one with brand lime.</p>
+<pre><code class="language-tsx">&lt;button className=&quot;bg-primary text-primary-foreground 
+                   hover:bg-primary/90 
+                   px-4 py-2 rounded-lg 
+                   transition-colors font-medium&quot;&gt;
+  Primary Action
+&lt;/button&gt;
+</code></pre>
+<h3>Secondary</h3>
+<p>Supporting action next to a primary.</p>
+<pre><code class="language-tsx">&lt;button className=&quot;bg-secondary text-secondary-foreground 
+                   border border-border
+                   hover:bg-muted 
+                   px-4 py-2 rounded-lg 
+                   transition-colors&quot;&gt;
+  Secondary Action
+&lt;/button&gt;
+</code></pre>
+<h3>Outline</h3>
+<p>Alternative, less prominent action.</p>
+<pre><code class="language-tsx">&lt;button className=&quot;border border-input bg-background text-foreground
+                   hover:bg-accent hover:text-accent-foreground 
+                   px-4 py-2 rounded-lg 
+                   transition-colors&quot;&gt;
+  Outline
+&lt;/button&gt;
+</code></pre>
+<h3>Ghost</h3>
+<p>For low-priority actions or dense contexts (tables, toolbars).</p>
+<pre><code class="language-tsx">&lt;button className=&quot;text-foreground 
+                   hover:bg-accent hover:text-accent-foreground 
+                   px-3 py-2 rounded-md 
+                   transition-colors&quot;&gt;
+  Ghost
+&lt;/button&gt;
+</code></pre>
+<h3>Destructive</h3>
+<p>For actions that delete or cannot be undone.</p>
+<pre><code class="language-tsx">&lt;button className=&quot;bg-destructive text-destructive-foreground 
+                   hover:bg-destructive/90 
+                   px-4 py-2 rounded-lg 
+                   transition-colors&quot;&gt;
+  Delete
+&lt;/button&gt;
+
+// Outline destructive variant
+&lt;button className=&quot;border border-destructive text-destructive bg-transparent
+                   hover:bg-destructive/10 
+                   px-4 py-2 rounded-lg 
+                   transition-colors&quot;&gt;
+  Delete
+&lt;/button&gt;
+</code></pre>
+<h3>Link / Text action</h3>
+<p>For navigation or inline actions in text.</p>
+<pre><code class="language-tsx">&lt;button className=&quot;text-primary underline-offset-4 
+                   hover:underline hover:text-primary/90 
+                   transition-colors text-sm&quot;&gt;
+  View details
+&lt;/button&gt;
+
+// Without underline (navigation)
+&lt;button className=&quot;text-muted-foreground 
+                   hover:text-foreground 
+                   transition-colors text-sm&quot;&gt;
+  Cancel
+&lt;/button&gt;
+</code></pre>
+<hr>
+<h2>Button states</h2>
+<h3>Disabled</h3>
+<pre><code class="language-tsx">&lt;button 
+  disabled
+  className=&quot;bg-primary text-primary-foreground 
+             opacity-50 cursor-not-allowed
+             px-4 py-2 rounded-lg&quot;&gt;
+  Not available
+&lt;/button&gt;
+</code></pre>
+<h3>Loading</h3>
+<pre><code class="language-tsx">&lt;button className=&quot;bg-primary text-primary-foreground px-4 py-2 rounded-lg 
+                   flex items-center gap-2&quot;&gt;
+  &lt;span className=&quot;animate-spin text-primary-foreground&quot;&gt;
+    &lt;LoadingIcon className=&quot;w-4 h-4&quot; /&gt;
+  &lt;/span&gt;
+  Processing...
+&lt;/button&gt;
+</code></pre>
+<h3>With icon</h3>
+<pre><code class="language-tsx">// Icon on the left
+&lt;button className=&quot;bg-primary text-primary-foreground px-4 py-2 rounded-lg 
+                   flex items-center gap-2 transition-colors hover:bg-primary/90&quot;&gt;
+  &lt;PlusIcon className=&quot;w-4 h-4&quot; /&gt;
+  Add
+&lt;/button&gt;
+
+// Icon on the right (directional action)
+&lt;button className=&quot;text-foreground hover:text-primary px-4 py-2 
+                   flex items-center gap-2 transition-colors&quot;&gt;
+  View more
+  &lt;ChevronRightIcon className=&quot;w-4 h-4&quot; /&gt;
+&lt;/button&gt;
+
+// Icon only (icon button)
+&lt;button className=&quot;bg-muted hover:bg-accent p-2 rounded-md transition-colors&quot;
+        aria-label=&quot;Close&quot;&gt;
+  &lt;XMarkIcon className=&quot;w-5 h-5 text-muted-foreground&quot; /&gt;
+&lt;/button&gt;
+</code></pre>
+<hr>
+<h2>Hover states on non-button elements</h2>
+<h3>Table / list rows</h3>
+<pre><code class="language-tsx">&lt;tr className=&quot;hover:bg-muted/50 transition-colors cursor-pointer&quot;&gt;
+&lt;div className=&quot;hover:bg-accent rounded-md transition-colors px-3 py-2&quot;&gt;
+</code></pre>
+<h3>Clickable cards</h3>
+<pre><code class="language-tsx">&lt;div className=&quot;bg-card border border-border rounded-xl p-6 cursor-pointer
+                hover:shadow-lg hover:border-primary/50 
+                transition-all duration-200&quot;&gt;
+</code></pre>
+<h3>Navigation links</h3>
+<pre><code class="language-tsx">&lt;a className=&quot;text-muted-foreground hover:text-foreground transition-colors&quot;&gt;
+// If it is the active element:
+&lt;a className=&quot;text-foreground font-medium&quot;&gt;  // no hover — already active
+</code></pre>
+<hr>
+<h2>Composition rules</h2>
+<ol>
+<li><strong>Only one Primary per section</strong> — if there are two CTAs, the less important one goes as Secondary or Outline</li>
+<li><strong>Destructive always requires confirmation</strong> — never fire a destructive action directly on click without a modal/alert confirmation</li>
+<li><strong>Button groups</strong> — Primary on the right (form and dialog convention)</li>
+<li><strong>Sizes</strong> — do not invent sizes. Use the DS padding variants: <code>px-3 py-1.5</code> (sm), <code>px-4 py-2</code> (md), <code>px-6 py-3</code> (lg)</li>
+<li><strong>border-radius</strong> — <code>rounded-md</code> for sm/md, <code>rounded-lg</code> for lg, <code>rounded-full</code> only for circular icon buttons</li>
+</ol>
+
+    </section>
+
+    <section id="rules-icons" class="guide-section">
+      <h2>Icons</h2>
+      <h2>Icon library</h2>
+<p>Strata DS uses <strong>@heroicons/react</strong> as the main library.</p>
+<pre><code class="language-tsx">import { PlusIcon, CheckCircleIcon, XMarkIcon } from &#39;@heroicons/react/24/outline&#39;
+import { SparklesIcon } from &#39;@heroicons/react/24/solid&#39;  // solid for emphasis
+</code></pre>
+<hr>
+<h2>Icon color by context</h2>
+<h3>Primary action icons (brand)</h3>
+<pre><code class="language-tsx">// In CTA or featured-feature context
+&lt;SparklesIcon className=&quot;text-primary w-5 h-5&quot; /&gt;
+&lt;PlusIcon className=&quot;text-primary w-5 h-5&quot; /&gt;
+</code></pre>
+<h3>State icons</h3>
+<pre><code class="language-tsx">// Success
+&lt;CheckCircleIcon className=&quot;text-success w-5 h-5&quot; /&gt;
+
+// Warning
+&lt;ExclamationTriangleIcon className=&quot;text-warning w-5 h-5&quot; /&gt;
+
+// Error / Destructive
+&lt;XCircleIcon className=&quot;text-destructive w-5 h-5&quot; /&gt;
+
+// Info
+&lt;InformationCircleIcon className=&quot;text-info w-5 h-5&quot; /&gt;
+
+// AI / Magic
+&lt;SparklesIcon className=&quot;text-ai w-5 h-5&quot; /&gt;
+</code></pre>
+<h3>Secondary / neutral icons</h3>
+<pre><code class="language-tsx">// Support, navigation, general UI icons
+&lt;ChevronRightIcon className=&quot;text-muted-foreground w-4 h-4&quot; /&gt;
+&lt;MagnifyingGlassIcon className=&quot;text-muted-foreground w-5 h-5&quot; /&gt;
+&lt;EllipsisHorizontalIcon className=&quot;text-muted-foreground w-5 h-5&quot; /&gt;
+</code></pre>
+<h3>Hover icons</h3>
+<pre><code class="language-tsx">// Icon that reacts to its container&#39;s hover (using group)
+&lt;div className=&quot;group hover:bg-accent rounded-md p-2 transition-colors&quot;&gt;
+  &lt;CogIcon className=&quot;text-muted-foreground group-hover:text-foreground w-5 h-5 transition-colors&quot; /&gt;
+&lt;/div&gt;
+
+// Icon that turns brand on hover
+&lt;button className=&quot;group flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors&quot;&gt;
+  &lt;ArrowRightIcon className=&quot;w-4 h-4 group-hover:translate-x-0.5 transition-transform&quot; /&gt;
+  View more
+&lt;/button&gt;
+</code></pre>
+<hr>
+<h2>Sizes</h2>
+<table>
+<thead>
+<tr>
+<th>Context</th>
+<th>Class</th>
+<th>Pixels</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Inline in text (sm)</td>
+<td><code>w-3 h-3</code></td>
+<td>12px</td>
+</tr>
+<tr>
+<td>Inline in text (base)</td>
+<td><code>w-4 h-4</code></td>
+<td>16px</td>
+</tr>
+<tr>
+<td>Buttons, inputs</td>
+<td><code>w-5 h-5</code></td>
+<td>20px</td>
+</tr>
+<tr>
+<td>Cards, sections</td>
+<td><code>w-6 h-6</code></td>
+<td>24px</td>
+</tr>
+<tr>
+<td>Illustration / empty state</td>
+<td><code>w-8 h-8</code> or <code>w-12 h-12</code></td>
+<td>32-48px</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Icon container</h2>
+<p>For icons that need a background:</p>
+<pre><code class="language-tsx">// Brand container (feature highlight)
+&lt;div className=&quot;bg-primary/15 rounded-lg p-2 w-fit&quot;&gt;
+  &lt;SparklesIcon className=&quot;text-primary w-5 h-5&quot; /&gt;
+&lt;/div&gt;
+
+// Success container
+&lt;div className=&quot;bg-success/10 rounded-lg p-2 w-fit&quot;&gt;
+  &lt;CheckCircleIcon className=&quot;text-success w-5 h-5&quot; /&gt;
+&lt;/div&gt;
+
+// Muted container (neutral)
+&lt;div className=&quot;bg-muted rounded-lg p-2 w-fit&quot;&gt;
+  &lt;CogIcon className=&quot;text-muted-foreground w-5 h-5&quot; /&gt;
+&lt;/div&gt;
+</code></pre>
+<hr>
+<h2>Rules</h2>
+<ol>
+<li><strong>Do not use emojis as icons</strong> — always use heroicons</li>
+<li><strong>Outline vs Solid</strong> — outline for general UI, solid for emphasis states or active indicators</li>
+<li><strong>aria-hidden on decorative icons</strong> — <code>&lt;Icon aria-hidden=&quot;true&quot; /&gt;</code></li>
+<li><strong>aria-label on icon buttons</strong> — <code>&lt;button aria-label=&quot;Close&quot;&gt;&lt;XMarkIcon /&gt;&lt;/button&gt;</code></li>
+<li><strong>Do not hardcode color hex</strong> — always use semantic classes (<code>text-success</code>, <code>text-primary</code>, etc.)</li>
+<li><strong>Size consistency within groups</strong> — all icons in the same component must share the same size</li>
+</ol>
+
+    </section>
+
+    <section id="rules-typography" class="guide-section">
+      <h2>Typography</h2>
+      <h2>Font families</h2>
+<p>The DS uses 3 font families. Each one has a specific role — do not swap them.</p>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Family</th>
+<th>CSS var</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>font-brand</code></td>
+<td><strong>PP Monument Extended</strong></td>
+<td><code>--font-brand</code></td>
+<td>Brand headings, hero text, large numbers in KPIs</td>
+</tr>
+<tr>
+<td><code>font-sans</code> (default)</td>
+<td><strong>Inter</strong> + system-ui fallback</td>
+<td><code>--font-sans</code></td>
+<td>Body text, general UI, anything that is not a brand heading</td>
+</tr>
+<tr>
+<td><code>font-mono</code></td>
+<td>ui-monospace + SFMono + Menlo</td>
+<td><code>--font-mono</code></td>
+<td>Code, IDs, technical data, file paths</td>
+</tr>
+</tbody></table>
+<pre><code class="language-tsx">// Brand heading
+&lt;h1 className=&quot;font-brand text-4xl text-foreground&quot;&gt;Strata&lt;/h1&gt;
+
+// Body (default — no class needed)
+&lt;p className=&quot;text-foreground&quot;&gt;Regular text.&lt;/p&gt;
+
+// Code / IDs
+&lt;code className=&quot;font-mono text-xs text-muted-foreground&quot;&gt;ORD-23914&lt;/code&gt;
+</code></pre>
+<p><strong>Rule:</strong> Do not mix PP Monument in body text. It is designed for short headings and numbers — it loses legibility in long blocks.</p>
+<hr>
+<h2>Size scale</h2>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Typical use</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>text-xs</code></td>
+<td>0.75rem  / 12px</td>
+<td>Captions, badges, very small labels</td>
+</tr>
+<tr>
+<td><code>text-sm</code></td>
+<td>0.875rem / 14px</td>
+<td>Secondary UI, card descriptions</td>
+</tr>
+<tr>
+<td><code>text-base</code></td>
+<td>1rem     / 16px</td>
+<td>Default body text</td>
+</tr>
+<tr>
+<td><code>text-lg</code></td>
+<td>1.125rem / 18px</td>
+<td>Sub-headings, emphasized body</td>
+</tr>
+<tr>
+<td><code>text-xl</code></td>
+<td>1.25rem  / 20px</td>
+<td>Heading h4</td>
+</tr>
+<tr>
+<td><code>text-2xl</code></td>
+<td>1.5rem   / 24px</td>
+<td>Heading h3</td>
+</tr>
+<tr>
+<td><code>text-3xl</code></td>
+<td>1.875rem / 30px</td>
+<td>Heading h2</td>
+</tr>
+<tr>
+<td><code>text-4xl</code></td>
+<td>2.25rem  / 36px</td>
+<td>Heading h1</td>
+</tr>
+<tr>
+<td><code>text-5xl</code></td>
+<td>3rem     / 48px</td>
+<td>Hero text (with <code>font-brand</code>)</td>
+</tr>
+<tr>
+<td><code>text-6xl</code></td>
+<td>3.75rem  / 60px</td>
+<td>Large hero text (with <code>font-brand</code>)</td>
+</tr>
+<tr>
+<td><code>text-7xl</code></td>
+<td>4.5rem   / 72px</td>
+<td>Display hero</td>
+</tr>
+<tr>
+<td><code>text-8xl</code></td>
+<td>6rem     / 96px</td>
+<td>Marketing display</td>
+</tr>
+<tr>
+<td><code>text-9xl</code></td>
+<td>8rem     / 128px</td>
+<td>Extreme marketing display</td>
+</tr>
+</tbody></table>
+<p><strong>Rule:</strong> For brand headings (with <code>font-brand</code>), prefer sizes from <code>text-3xl</code> and up.</p>
+<hr>
+<h2>Weights</h2>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>font-thin</code></td>
+<td>100</td>
+<td>(rare)</td>
+</tr>
+<tr>
+<td><code>font-extralight</code></td>
+<td>200</td>
+<td>(rare)</td>
+</tr>
+<tr>
+<td><code>font-light</code></td>
+<td>300</td>
+<td>Subtle captions</td>
+</tr>
+<tr>
+<td><code>font-normal</code></td>
+<td>400</td>
+<td>Default body — <strong>no class needed</strong></td>
+</tr>
+<tr>
+<td><code>font-medium</code></td>
+<td>500</td>
+<td>Light emphasis, labels, buttons</td>
+</tr>
+<tr>
+<td><code>font-semibold</code></td>
+<td>600</td>
+<td>Sub-headings, card headings</td>
+</tr>
+<tr>
+<td><code>font-bold</code></td>
+<td>700</td>
+<td>Headings h1-h3, strong emphasis</td>
+</tr>
+<tr>
+<td><code>font-extrabold</code></td>
+<td>800</td>
+<td>Display</td>
+</tr>
+<tr>
+<td><code>font-black</code></td>
+<td>900</td>
+<td>Extreme display</td>
+</tr>
+</tbody></table>
+<p><strong>Rule:</strong> Body always uses <code>font-normal</code> (default). To create hierarchy, use size + color + spacing before bold.</p>
+<hr>
+<h2>Line-height</h2>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>leading-none</code></td>
+<td>1</td>
+<td>Very large headings, display numbers</td>
+</tr>
+<tr>
+<td><code>leading-tight</code></td>
+<td>1.25</td>
+<td>Headings h1-h3</td>
+</tr>
+<tr>
+<td><code>leading-snug</code></td>
+<td>1.375</td>
+<td>Headings h4-h6, multiline labels</td>
+</tr>
+<tr>
+<td><code>leading-normal</code></td>
+<td>1.5</td>
+<td>Default body</td>
+</tr>
+<tr>
+<td><code>leading-relaxed</code></td>
+<td>1.625</td>
+<td>Long reading blocks</td>
+</tr>
+<tr>
+<td><code>leading-loose</code></td>
+<td>2</td>
+<td>Generous spacing (rare)</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Letter-spacing</h2>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>tracking-tighter</code></td>
+<td>-0.05em</td>
+<td>Very large PP Monument display</td>
+</tr>
+<tr>
+<td><code>tracking-tight</code></td>
+<td>-0.025em</td>
+<td>PP Monument headings</td>
+</tr>
+<tr>
+<td><code>tracking-normal</code></td>
+<td>0</td>
+<td>Default — <strong>no class needed</strong></td>
+</tr>
+<tr>
+<td><code>tracking-wide</code></td>
+<td>0.025em</td>
+<td>Caption captions in caps</td>
+</tr>
+<tr>
+<td><code>tracking-wider</code></td>
+<td>0.05em</td>
+<td>Uppercase labels</td>
+</tr>
+<tr>
+<td><code>tracking-widest</code></td>
+<td>0.1em</td>
+<td>Decorative</td>
+</tr>
+</tbody></table>
+<pre><code class="language-tsx">// Uppercase label
+&lt;span className=&quot;text-[10px] font-semibold uppercase tracking-wider text-muted-foreground&quot;&gt;
+  Status
+&lt;/span&gt;
+</code></pre>
+<hr>
+<h2>Canonical patterns</h2>
+<h3>Heading + description</h3>
+<pre><code class="language-tsx">&lt;header className=&quot;space-y-1&quot;&gt;
+  &lt;h1 className=&quot;font-brand text-3xl text-foreground&quot;&gt;Dashboard&lt;/h1&gt;
+  &lt;p className=&quot;text-sm text-muted-foreground&quot;&gt;Summary of the last week&lt;/p&gt;
+&lt;/header&gt;
+</code></pre>
+<h3>KPI with large number</h3>
+<pre><code class="language-tsx">&lt;div className=&quot;space-y-1&quot;&gt;
+  &lt;span className=&quot;text-xs uppercase tracking-wider text-muted-foreground&quot;&gt;
+    Orders this week
+  &lt;/span&gt;
+  &lt;div className=&quot;font-brand text-4xl tracking-tight text-foreground&quot;&gt;128&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<h3>Form label</h3>
+<pre><code class="language-tsx">&lt;label className=&quot;block text-sm font-medium text-foreground&quot;&gt;
+  Email
+  &lt;Input className=&quot;mt-1&quot; /&gt;
+&lt;/label&gt;
+</code></pre>
+<h3>File path / inline code</h3>
+<pre><code class="language-tsx">&lt;code className=&quot;font-mono text-[10px] text-muted-foreground&quot;&gt;
+  src/components/button.tsx:42
+&lt;/code&gt;
+</code></pre>
+<hr>
+<h2>Anti-patterns</h2>
+<table>
+<thead>
+<tr>
+<th>❌ Wrong</th>
+<th>✅ Right</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>font-bold</code> in body text</td>
+<td><code>font-medium</code> or <code>font-normal</code></td>
+<td>Bold creates visual noise in long blocks</td>
+</tr>
+<tr>
+<td><code>font-brand</code> inside <code>&lt;p&gt;</code></td>
+<td><code>font-sans</code> or no class</td>
+<td>PP Monument is display, not body</td>
+</tr>
+<tr>
+<td>Inline hex for text color</td>
+<td><code>text-foreground</code> / <code>text-muted-foreground</code></td>
+<td>Automatic dark mode</td>
+</tr>
+<tr>
+<td>Mixing <code>font-mono</code> with <code>font-brand</code></td>
+<td>One or the other</td>
+<td>Character conflict</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Source files</h2>
+<ul>
+<li>Variables: <code>src/styles/tokens/variables.css</code> (lines with <code>--fontFamily-</code>, <code>--fontSize-</code>, <code>--fontWeight-</code>, <code>--lineHeight-</code>, <code>--letterSpacing-</code>)</li>
+<li>Theme mapping: <code>src/styles/theme.css</code></li>
+</ul>
+
+    </section>
+
+    <section id="rules-elevation" class="guide-section">
+      <h2>Elevation and shadows</h2>
+      <h2>Elevation levels</h2>
+<p>Shadows indicate visual surface hierarchy. Do not combine them arbitrarily — each level has a purpose.</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Token</th>
+<th>Tailwind</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>0</strong> — Integrated</td>
+<td>no shadow</td>
+<td><code>bg-card border border-border</code></td>
+<td>Card that lives inside another surface, no need to detach</td>
+</tr>
+<tr>
+<td><strong>1</strong> — Standard</td>
+<td><code>--shadow-sm</code></td>
+<td><code>shadow-sm</code></td>
+<td>Regular cards on a page</td>
+</tr>
+<tr>
+<td><strong>2</strong> — Floating</td>
+<td><code>--shadow-md</code></td>
+<td><code>shadow-md</code></td>
+<td>Panels that float above content (popovers, hover cards)</td>
+</tr>
+<tr>
+<td><strong>3</strong> — Modal</td>
+<td><code>--shadow-xl</code></td>
+<td><code>shadow-xl</code></td>
+<td>Dialogs, Drawers, Sheets — modal surfaces</td>
+</tr>
+<tr>
+<td><strong>hover</strong> — Interactive</td>
+<td><code>--shadow-lg</code></td>
+<td><code>hover:shadow-lg</code></td>
+<td>Clickable card on hover</td>
+</tr>
+</tbody></table>
+<pre><code class="language-tsx">// Level 0 — no shadow (card inside another card)
+&lt;div className=&quot;bg-muted border border-border rounded-lg p-4&quot;&gt;
+  Sub-section
+&lt;/div&gt;
+
+// Level 1 — standard card
+&lt;div className=&quot;bg-card border border-border rounded-xl p-6 shadow-sm&quot;&gt;
+  &lt;h3 className=&quot;font-semibold text-foreground&quot;&gt;Card&lt;/h3&gt;
+&lt;/div&gt;
+
+// Level 2 — floating popover
+&lt;div className=&quot;bg-popover border border-border rounded-lg shadow-md p-3&quot;&gt;
+  Popover content
+&lt;/div&gt;
+
+// Level 3 — modal
+&lt;div className=&quot;bg-background border border-border rounded-2xl shadow-xl&quot;&gt;
+  Dialog content
+&lt;/div&gt;
+
+// Interactive hover
+&lt;div className=&quot;bg-card border border-border rounded-xl p-6 shadow-sm
+                hover:shadow-lg hover:border-primary/50 transition-all cursor-pointer&quot;&gt;
+  Clickable card
+&lt;/div&gt;
+</code></pre>
+<hr>
+<h2>Available tokens</h2>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value (CSS)</th>
+<th>Tailwind class</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--shadow-sm</code></td>
+<td><code>0 1px 2px 0 rgb(0 0 0 / 0.05)</code></td>
+<td><code>shadow-sm</code></td>
+</tr>
+<tr>
+<td><code>--shadow-base</code></td>
+<td><code>0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)</code></td>
+<td><code>shadow</code></td>
+</tr>
+<tr>
+<td><code>--shadow-md</code></td>
+<td><code>0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)</code></td>
+<td><code>shadow-md</code></td>
+</tr>
+<tr>
+<td><code>--shadow-lg</code></td>
+<td><code>0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)</code></td>
+<td><code>shadow-lg</code></td>
+</tr>
+<tr>
+<td><code>--shadow-xl</code></td>
+<td><code>0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)</code></td>
+<td><code>shadow-xl</code></td>
+</tr>
+<tr>
+<td><code>--shadow-2xl</code></td>
+<td><code>0 25px 50px -12px rgb(0 0 0 / 0.25)</code></td>
+<td><code>shadow-2xl</code></td>
+</tr>
+<tr>
+<td><code>--shadow-inner</code></td>
+<td><code>inset 0 2px 4px 0 rgb(0 0 0 / 0.05)</code></td>
+<td><code>shadow-inner</code></td>
+</tr>
+<tr>
+<td><code>--shadow-none</code></td>
+<td><code>none</code></td>
+<td><code>shadow-none</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Rules</h2>
+<ol>
+<li><strong>Do not skip levels</strong>: if a panel is at Level 1, its child elements cannot be Level 3. The level drops or stays — never jumps dramatically.</li>
+<li><strong>Do not combine shadow + heavy border</strong>: if it has <code>shadow-md</code> or more, the border can be subtle (<code>border-border</code>) or absent. Heavy shadow + thick border duplicates the signal.</li>
+<li><strong>Hover state uses level +1</strong>: a <code>shadow-sm</code> card on hover goes up to <code>shadow-lg</code> (not to <code>shadow-2xl</code>).</li>
+<li><strong>Dark mode</strong>: shadows are preserved — values like <code>rgb(0 0 0 / X)</code> project less intensely over dark backgrounds, but still indicate hierarchy.</li>
+<li><strong>Do not hardcode inline <code>box-shadow</code></strong>: always use Tailwind classes to guarantee consistency.</li>
+</ol>
+<hr>
+<h2>Anti-patterns</h2>
+<table>
+<thead>
+<tr>
+<th>❌ Wrong</th>
+<th>✅ Right</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>style={{ boxShadow: &#39;0 4px 6px rgba(0,0,0,0.1)&#39; }}</code></td>
+<td><code>className=&quot;shadow-md&quot;</code></td>
+<td>Inconsistency with the rest of the DS</td>
+</tr>
+<tr>
+<td><code>shadow-2xl</code> on a regular card</td>
+<td><code>shadow-sm</code></td>
+<td>Disproportionate level, visual noise</td>
+</tr>
+<tr>
+<td><code>shadow-xl border-4 border-black</code></td>
+<td><code>shadow-xl</code> alone</td>
+<td>Heavy border duplicates the elevation</td>
+</tr>
+<tr>
+<td><code>hover:shadow-2xl</code> from <code>shadow-sm</code></td>
+<td><code>hover:shadow-lg</code></td>
+<td>Excessive jump</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Pattern: complete interactive card</h2>
+<pre><code class="language-tsx">&lt;button className=&quot;
+  bg-card border border-border rounded-xl p-6
+  shadow-sm
+  hover:shadow-lg hover:border-primary/50
+  focus:ring-2 focus:ring-primary focus:ring-offset-2
+  transition-all
+  text-left
+&quot;&gt;
+  &lt;h3 className=&quot;font-semibold text-foreground&quot;&gt;Title&lt;/h3&gt;
+  &lt;p className=&quot;mt-1 text-sm text-muted-foreground&quot;&gt;Description&lt;/p&gt;
+&lt;/button&gt;
+</code></pre>
+<hr>
+<h2>Source files</h2>
+<ul>
+<li>Variables: <code>src/styles/tokens/variables.css</code> (lines with <code>--shadow-</code>)</li>
+<li>See also: <code>governance/rules/03-containers-and-cards.md</code> for how to combine shadows with surface hierarchy.</li>
+</ul>
+
+    </section>
+
+    <section id="anti-patterns" class="guide-section">
+      <h2>Anti-patterns (10)</h2>
+      <p>These errors have been observed repeatedly across the projects. Each one has its correction.</p>
+<hr>
+<h2>ERROR 01 — Hardcoded state colors</h2>
+<p><strong>Observed in:</strong> UI-Dealer, Smart Comparator, MBI Builder</p>
+<pre><code class="language-tsx">// ❌ WRONG — using raw Tailwind classes for states
+className=&quot;text-green-500 dark:text-green-400&quot;
+className=&quot;text-red-500&quot;
+className=&quot;bg-yellow-100 text-yellow-800&quot;
+className=&quot;text-blue-600&quot;
+</code></pre>
+<pre><code class="language-tsx">// ✅ CORRECT — semantic state tokens
+className=&quot;text-success&quot;
+className=&quot;text-destructive&quot;
+className=&quot;bg-warning/10 text-warning&quot;
+className=&quot;text-info&quot;
+</code></pre>
+<p><strong>Why it fails:</strong> Raw colors (green-500, red-500) do not adapt to the theme system and may have inadequate contrast in dark mode. They are not synced with the DS tokens.</p>
+<hr>
+<h2>ERROR 02 — Hardcoded container backgrounds</h2>
+<p><strong>Observed in:</strong> all projects</p>
+<pre><code class="language-tsx">// ❌ WRONG
+className=&quot;bg-white&quot;              // Does not adapt to dark mode
+className=&quot;bg-zinc-900&quot;           // Not the correct token
+className=&quot;bg-[#EBECEE]&quot;          // Hardcoded hex
+className=&quot;bg-gray-50&quot;            // Raw Tailwind class
+</code></pre>
+<pre><code class="language-tsx">// ✅ CORRECT
+className=&quot;bg-background&quot;         // Page background
+className=&quot;bg-card&quot;               // Cards and panels
+className=&quot;bg-muted&quot;              // Secondary sections
+</code></pre>
+<p><strong>Why it fails:</strong> <code>bg-white</code> in dark mode becomes white on a dark background — completely broken. The <code>bg-background</code> token already handles both modes.</p>
+<hr>
+<h2>ERROR 03 — Mixing legacy and new color systems</h2>
+<p><strong>Observed in:</strong> all projects (inherited from migration)</p>
+<pre><code class="language-tsx">// ❌ WRONG — using the legacy namespace
+className=&quot;text-primary&quot;          // May resolve to #27272a (gray) instead of #E6F993 (lime)
+                                   // depending on which CSS loaded first
+</code></pre>
+<p><strong>The problem:</strong> <code>theme.css</code> has two systems:</p>
+<ul>
+<li>Legacy: <code>--primary: #27272a</code> (dark gray from shadcn)</li>
+<li>New: <code>--color-primary: #E6F993</code> (lime brand)</li>
+</ul>
+<p>If you see a &quot;primary&quot; button that looks gray instead of lime, it is using the legacy namespace.</p>
+<pre><code class="language-tsx">// ✅ CORRECT — verify that theme.css maps correctly
+// The --color-primary token must be the one used via Tailwind
+// Check that vite/tailwind config uses @theme inline with --color-* prefix
+</code></pre>
+<p><strong>Action:</strong> If a component shows unexpected colors, check in DevTools what value <code>--primary</code> vs <code>--color-primary</code> resolves to.</p>
+<hr>
+<h2>ERROR 04 — brand-300 as text</h2>
+<p><strong>Observed in:</strong> demos, new components in prototype flows</p>
+<pre><code class="language-tsx">// ❌ WRONG — lime as text color
+className=&quot;text-brand-300&quot;        // 1.8:1 contrast over white — FAILS WCAG
+className=&quot;text-primary&quot;          // same problem if the token is lime
+</code></pre>
+<pre><code class="language-tsx">// ✅ CORRECT — lime only as background
+className=&quot;bg-primary text-primary-foreground&quot;  // lime background, dark text
+className=&quot;bg-brand-300 text-zinc-900&quot;          // explicit
+</code></pre>
+<hr>
+<h2>ERROR 05 — Dark mode with dark: classes instead of semantic tokens</h2>
+<p><strong>Observed in:</strong> UI-Dealer src/components/, Smart Comparator</p>
+<pre><code class="language-tsx">// ❌ WRONG — manual per-component dark mode
+className=&quot;text-zinc-900 dark:text-white&quot;
+className=&quot;bg-white dark:bg-zinc-800&quot;
+className=&quot;border-zinc-200 dark:border-zinc-700&quot;
+</code></pre>
+<pre><code class="language-tsx">// ✅ CORRECT — semantic token (already handles both modes)
+className=&quot;text-foreground&quot;
+className=&quot;bg-background&quot;
+className=&quot;border-border&quot;
+</code></pre>
+<p><strong>Why it fails:</strong> Every component that uses manual <code>dark:</code> creates a fragile dependency that breaks when token values change. It also doubles the code to maintain.</p>
+<hr>
+<h2>ERROR 06 — Missing hover state on interactive elements</h2>
+<p><strong>Observed in:</strong> components in new flows, proof-of-concept</p>
+<pre><code class="language-tsx">// ❌ WRONG — clickable element with no visual feedback
+&lt;div className=&quot;bg-card border border-border rounded-xl p-6 cursor-pointer&quot;&gt;
+
+// ❌ WRONG — button without hover
+&lt;button className=&quot;bg-primary text-primary-foreground px-4 py-2 rounded-lg&quot;&gt;
+</code></pre>
+<pre><code class="language-tsx">// ✅ CORRECT
+&lt;div className=&quot;bg-card border border-border rounded-xl p-6 cursor-pointer
+                hover:shadow-lg hover:border-primary/50 transition-all&quot;&gt;
+
+&lt;button className=&quot;bg-primary text-primary-foreground px-4 py-2 rounded-lg
+                   hover:bg-primary/90 transition-colors&quot;&gt;
+</code></pre>
+<p><strong>Why it fails:</strong> Without a hover state, the user does not know the element is interactive. It is a basic usability problem and it breaks the visual consistency of the DS.</p>
+<hr>
+<h2>ERROR 07 — Using container opacity instead of color opacity utility</h2>
+<p><strong>Observed in:</strong> several projects</p>
+<pre><code class="language-tsx">// ❌ WRONG — opacity on container affects ALL children including text
+&lt;div className=&quot;bg-primary opacity-10&quot;&gt;
+  &lt;span className=&quot;text-foreground&quot;&gt;This text also drops to 10% opacity&lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+<pre><code class="language-tsx">// ✅ CORRECT — opacity only on the background color
+&lt;div className=&quot;bg-primary/10&quot;&gt;
+  &lt;span className=&quot;text-foreground&quot;&gt;This text keeps normal opacity&lt;/span&gt;
+&lt;/div&gt;
+</code></pre>
+<hr>
+<h2>ERROR 08 — Not using sidebar tokens for the sidebar</h2>
+<p><strong>Observed in:</strong> DemoSidebar.tsx and variants</p>
+<pre><code class="language-tsx">// ❌ WRONG — hardcoding sidebar colors
+className=&quot;bg-zinc-950 text-white&quot;
+className=&quot;bg-white text-zinc-900&quot;
+</code></pre>
+<pre><code class="language-tsx">// ✅ CORRECT — dedicated sidebar tokens
+className=&quot;bg-sidebar text-sidebar-foreground&quot;
+// The sidebar-* tokens already handle theme inversion automatically
+</code></pre>
+<hr>
+<h2>ERROR 09 — Multiple primary CTAs in the same view</h2>
+<p><strong>Observed in:</strong> demo flows with multiple actions</p>
+<pre><code class="language-tsx">// ❌ WRONG — three primary buttons competing for attention
+&lt;button className=&quot;bg-primary ...&quot;&gt;Save&lt;/button&gt;
+&lt;button className=&quot;bg-primary ...&quot;&gt;Publish&lt;/button&gt;
+&lt;button className=&quot;bg-primary ...&quot;&gt;Export&lt;/button&gt;
+</code></pre>
+<pre><code class="language-tsx">// ✅ CORRECT — clear hierarchy
+&lt;button className=&quot;bg-primary text-primary-foreground ...&quot;&gt;Save&lt;/button&gt;      // Primary (1)
+&lt;button className=&quot;border border-input bg-background ...&quot;&gt;Publish&lt;/button&gt;    // Outline
+&lt;button className=&quot;text-muted-foreground hover:text-foreground ...&quot;&gt;Export&lt;/button&gt;  // Ghost
+</code></pre>
+<hr>
+<h2>ERROR 10 — Creating local CSS variables that duplicate DS tokens</h2>
+<p><strong>Observed in:</strong> components in specific projects</p>
+<pre><code class="language-tsx">// ❌ WRONG — in the component CSS
+.my-component {
+  --accent-color: #E6F993;  /* duplicating --color-primary */
+  --text-color: #02060C;    /* duplicating --color-foreground */
+}
+</code></pre>
+<pre><code class="language-tsx">// ✅ CORRECT — reference existing tokens
+.my-component {
+  color: var(--color-foreground);
+  accent-color: var(--color-primary);
+}
+// Or simply use Tailwind: className=&quot;text-foreground&quot;
+</code></pre>
+
+    </section>
+
+    <section id="token-reference" class="guide-section">
+      <h2>Token reference</h2>
+      <p>Quick reference of all available tokens. Source: <code>src/styles/tokens/variables.css</code> + <code>variables-dark.css</code></p>
+<hr>
+<h2>Semantic surface colors</h2>
+<table>
+<thead>
+<tr>
+<th>CSS token</th>
+<th>Tailwind class</th>
+<th>Light</th>
+<th>Dark</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--color-background</code></td>
+<td><code>bg-background</code></td>
+<td>#EBECEE</td>
+<td>#02060C</td>
+<td>Page background</td>
+</tr>
+<tr>
+<td><code>--color-foreground</code></td>
+<td><code>text-foreground</code></td>
+<td>#02060C</td>
+<td>#EBECEE</td>
+<td>Primary text</td>
+</tr>
+<tr>
+<td><code>--color-card</code></td>
+<td><code>bg-card</code></td>
+<td>#fafafa</td>
+<td>#02060C</td>
+<td>Cards and panels</td>
+</tr>
+<tr>
+<td><code>--color-card-foreground</code></td>
+<td><code>text-card-foreground</code></td>
+<td>#02060C</td>
+<td>#EBECEE</td>
+<td>Text inside cards</td>
+</tr>
+<tr>
+<td><code>--color-popover</code></td>
+<td><code>bg-popover</code></td>
+<td>#fafafa</td>
+<td>#02060C</td>
+<td>Dropdowns, tooltips</td>
+</tr>
+<tr>
+<td><code>--color-popover-foreground</code></td>
+<td><code>text-popover-foreground</code></td>
+<td>#02060C</td>
+<td>#EBECEE</td>
+<td>Text inside popovers</td>
+</tr>
+<tr>
+<td><code>--color-muted</code></td>
+<td><code>bg-muted</code></td>
+<td>#fafafa</td>
+<td>#141E2C</td>
+<td>Secondary sections</td>
+</tr>
+<tr>
+<td><code>--color-muted-foreground</code></td>
+<td><code>text-muted-foreground</code></td>
+<td>#959DA7</td>
+<td>#959DA7</td>
+<td>Secondary text</td>
+</tr>
+<tr>
+<td><code>--color-secondary</code></td>
+<td><code>bg-secondary</code></td>
+<td>#fafafa</td>
+<td>#141E2C</td>
+<td>Alternative backgrounds</td>
+</tr>
+<tr>
+<td><code>--color-secondary-foreground</code></td>
+<td><code>text-secondary-foreground</code></td>
+<td>#02060C</td>
+<td>#EBECEE</td>
+<td>Text over secondary</td>
+</tr>
+<tr>
+<td><code>--color-accent</code></td>
+<td><code>bg-accent</code></td>
+<td>#fafafa</td>
+<td>#141E2C</td>
+<td>Hover backgrounds</td>
+</tr>
+<tr>
+<td><code>--color-accent-foreground</code></td>
+<td><code>text-accent-foreground</code></td>
+<td>#02060C</td>
+<td>#EBECEE</td>
+<td>Text on hover</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Primary action colors (Brand)</h2>
+<table>
+<thead>
+<tr>
+<th>CSS token</th>
+<th>Tailwind class</th>
+<th>Light</th>
+<th>Dark</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--color-primary</code></td>
+<td><code>bg-primary</code> / <code>text-primary</code></td>
+<td>#E6F993</td>
+<td>#C3E433</td>
+<td>CTA, active items</td>
+</tr>
+<tr>
+<td><code>--color-primary-foreground</code></td>
+<td><code>text-primary-foreground</code></td>
+<td>#02060C</td>
+<td>#02060C</td>
+<td>Text over primary</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Borders and inputs</h2>
+<table>
+<thead>
+<tr>
+<th>CSS token</th>
+<th>Tailwind class</th>
+<th>Light</th>
+<th>Dark</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--color-border</code></td>
+<td><code>border-border</code></td>
+<td>#D0D4D8</td>
+<td>#141E2C</td>
+<td>General borders</td>
+</tr>
+<tr>
+<td><code>--color-input</code></td>
+<td><code>border-input</code></td>
+<td>#D0D4D8</td>
+<td>#141E2C</td>
+<td>Input borders</td>
+</tr>
+<tr>
+<td><code>--color-input-background</code></td>
+<td><code>bg-input</code></td>
+<td>#fafafa</td>
+<td>—</td>
+<td>Input background</td>
+</tr>
+<tr>
+<td><code>--color-ring</code></td>
+<td><code>ring-ring</code></td>
+<td>#959DA7</td>
+<td>—</td>
+<td>Focus ring</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>State colors</h2>
+<table>
+<thead>
+<tr>
+<th>CSS token</th>
+<th>Tailwind class</th>
+<th>Value</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--color-destructive</code></td>
+<td><code>bg-destructive</code> / <code>text-destructive</code></td>
+<td>#E52D49</td>
+<td>Errors, destructive</td>
+</tr>
+<tr>
+<td><code>--color-destructive-foreground</code></td>
+<td><code>text-destructive-foreground</code></td>
+<td>#ffffff</td>
+<td>Text over destructive</td>
+</tr>
+<tr>
+<td><code>--color-success</code></td>
+<td><code>text-success</code> / <code>bg-success</code></td>
+<td>#098400</td>
+<td>Success, confirmation</td>
+</tr>
+<tr>
+<td><code>--color-success-light</code></td>
+<td><code>bg-success-light</code></td>
+<td>#e5f9e4</td>
+<td>Subtle success background</td>
+</tr>
+<tr>
+<td><code>--color-warning</code></td>
+<td><code>text-warning</code> / <code>bg-warning</code></td>
+<td>#b27d00</td>
+<td>Warnings</td>
+</tr>
+<tr>
+<td><code>--color-warning-light</code></td>
+<td><code>bg-warning-light</code></td>
+<td>#fff5cd</td>
+<td>Subtle warning background</td>
+</tr>
+<tr>
+<td><code>--color-info</code></td>
+<td><code>text-info</code> / <code>bg-info</code></td>
+<td>#2164d1</td>
+<td>Information</td>
+</tr>
+<tr>
+<td><code>--color-info-light</code></td>
+<td><code>bg-info-light</code></td>
+<td>#ecf4ff</td>
+<td>Subtle info background</td>
+</tr>
+<tr>
+<td><code>--color-error</code></td>
+<td><code>text-error</code> / <code>bg-error</code></td>
+<td>#d20322</td>
+<td>Error (alternative)</td>
+</tr>
+<tr>
+<td><code>--color-error-light</code></td>
+<td><code>bg-error-light</code></td>
+<td>#ffe4e7</td>
+<td>Subtle error background</td>
+</tr>
+<tr>
+<td><code>--color-ai</code></td>
+<td><code>text-ai</code> / <code>bg-ai</code></td>
+<td>#8b5cf6</td>
+<td>AI indicators</td>
+</tr>
+<tr>
+<td><code>--color-ai-light</code></td>
+<td><code>bg-ai-light</code></td>
+<td>#ede9fe</td>
+<td>Subtle AI background</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Sidebar tokens</h2>
+<table>
+<thead>
+<tr>
+<th>CSS token</th>
+<th>Tailwind class</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--color-sidebar</code></td>
+<td><code>bg-sidebar</code></td>
+<td>Sidebar background</td>
+</tr>
+<tr>
+<td><code>--color-sidebar-foreground</code></td>
+<td><code>text-sidebar-foreground</code></td>
+<td>Sidebar main text</td>
+</tr>
+<tr>
+<td><code>--color-sidebar-primary</code></td>
+<td><code>text-sidebar-primary</code></td>
+<td>Active brand in sidebar</td>
+</tr>
+<tr>
+<td><code>--color-sidebar-accent</code></td>
+<td><code>bg-sidebar-accent</code></td>
+<td>Sidebar hover background</td>
+</tr>
+<tr>
+<td><code>--color-sidebar-accent-foreground</code></td>
+<td><code>text-sidebar-accent-foreground</code></td>
+<td>Text on sidebar hover</td>
+</tr>
+<tr>
+<td><code>--color-sidebar-border</code></td>
+<td><code>border-sidebar-border</code></td>
+<td>Sidebar divider border</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Brand scale (primitives)</h2>
+<p>Only use when the semantic token is not enough.</p>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--color-brand-50</code></td>
+<td>#fdfee7</td>
+</tr>
+<tr>
+<td><code>--color-brand-100</code></td>
+<td>#f9fdc3</td>
+</tr>
+<tr>
+<td><code>--color-brand-200</code></td>
+<td>#f4fb89</td>
+</tr>
+<tr>
+<td><code>--color-brand-300</code></td>
+<td>#E6F993 ← primary light</td>
+</tr>
+<tr>
+<td><code>--color-brand-400</code></td>
+<td>#C3E433 ← primary dark</td>
+</tr>
+<tr>
+<td><code>--color-brand-500</code></td>
+<td>#a3c414</td>
+</tr>
+<tr>
+<td><code>--color-brand-600</code></td>
+<td>#A0C114</td>
+</tr>
+<tr>
+<td><code>--color-brand-700</code></td>
+<td>#7a9410</td>
+</tr>
+<tr>
+<td><code>--color-brand-800</code></td>
+<td>#5c6f0f</td>
+</tr>
+<tr>
+<td><code>--color-brand-900</code></td>
+<td>#4a5810</td>
+</tr>
+<tr>
+<td><code>--color-brand-950</code></td>
+<td>#233502</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Chart tokens</h2>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Color</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--color-chart-1</code></td>
+<td>#6366f1</td>
+<td>Indigo</td>
+</tr>
+<tr>
+<td><code>--color-chart-2</code></td>
+<td>#22c55e</td>
+<td>Green</td>
+</tr>
+<tr>
+<td><code>--color-chart-3</code></td>
+<td>#E52D49</td>
+<td>Red</td>
+</tr>
+<tr>
+<td><code>--color-chart-4</code></td>
+<td>#f59e0b</td>
+<td>Amber</td>
+</tr>
+<tr>
+<td><code>--color-chart-5</code></td>
+<td>#818cf8</td>
+<td>Light Indigo</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Typography</h2>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Value</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--font-brand</code></td>
+<td>&#39;PP Monument Extended&#39;</td>
+<td>Brand headings, hero text</td>
+</tr>
+<tr>
+<td><code>--font-sans</code></td>
+<td>Inter, system-ui</td>
+<td>Body text (default)</td>
+</tr>
+<tr>
+<td><code>--font-mono</code></td>
+<td>ui-monospace, SFMono</td>
+<td>Code, technical data</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>Source files</h2>
+<ul>
+<li><code>Strata Design System/strata-ds/src/styles/tokens/variables.css</code> → light mode tokens</li>
+<li><code>Strata Design System/strata-ds/src/styles/tokens/variables-dark.css</code> → dark mode tokens</li>
+<li><code>Strata Design System/strata-ds/src/styles/theme.css</code> → mapping to Tailwind v4</li>
+</ul>
+
+    </section>
+      
+    <section id="css-tokens" class="guide-section">
+      <h2>CSS tokens (live)</h2>
+      <p>Auto-generated from <code>src/styles/tokens/variables.css</code> and <code>src/styles/tokens/variables-dark.css</code>. Light and dark values are shown side by side. Use these exact token names — never inline a hex.</p>
+      <h3>Semantic colors</h3>
+<table class="token-table"><thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead><tbody><tr><td class="token-name"><code>--color-accent</code></td><td class="token-value"><span class="swatch" style="background:#fafafa" aria-hidden="true"></span><code>#fafafa</code></td><td class="token-value"><span class="swatch" style="background:#141E2C" aria-hidden="true"></span><code>#141E2C</code></td></tr><tr><td class="token-name"><code>--color-accent-foreground</code></td><td class="token-value"><span class="swatch" style="background:#02060C" aria-hidden="true"></span><code>#02060C</code></td><td class="token-value"><span class="swatch" style="background:#EBECEE" aria-hidden="true"></span><code>#EBECEE</code></td></tr><tr><td class="token-name"><code>--color-amber-100</code></td><td class="token-value"><span class="swatch" style="background:#fef3c7" aria-hidden="true"></span><code>#fef3c7</code></td><td class="token-value"><span class="swatch" style="background:#fef3c7" aria-hidden="true"></span><code>#fef3c7</code></td></tr><tr><td class="token-name"><code>--color-amber-200</code></td><td class="token-value"><span class="swatch" style="background:#fde68a" aria-hidden="true"></span><code>#fde68a</code></td><td class="token-value"><span class="swatch" style="background:#fde68a" aria-hidden="true"></span><code>#fde68a</code></td></tr><tr><td class="token-name"><code>--color-amber-300</code></td><td class="token-value"><span class="swatch" style="background:#fcd34d" aria-hidden="true"></span><code>#fcd34d</code></td><td class="token-value"><span class="swatch" style="background:#fcd34d" aria-hidden="true"></span><code>#fcd34d</code></td></tr><tr><td class="token-name"><code>--color-amber-400</code></td><td class="token-value"><span class="swatch" style="background:#fbbf24" aria-hidden="true"></span><code>#fbbf24</code></td><td class="token-value"><span class="swatch" style="background:#fbbf24" aria-hidden="true"></span><code>#fbbf24</code></td></tr><tr><td class="token-name"><code>--color-amber-50</code></td><td class="token-value"><span class="swatch" style="background:#fffbeb" aria-hidden="true"></span><code>#fffbeb</code></td><td class="token-value"><span class="swatch" style="background:#fffbeb" aria-hidden="true"></span><code>#fffbeb</code></td></tr><tr><td class="token-name"><code>--color-amber-500</code></td><td class="token-value"><span class="swatch" style="background:#f59e0b" aria-hidden="true"></span><code>#f59e0b</code></td><td class="token-value"><span class="swatch" style="background:#f59e0b" aria-hidden="true"></span><code>#f59e0b</code></td></tr><tr><td class="token-name"><code>--color-amber-600</code></td><td class="token-value"><span class="swatch" style="background:#d97706" aria-hidden="true"></span><code>#d97706</code></td><td class="token-value"><span class="swatch" style="background:#d97706" aria-hidden="true"></span><code>#d97706</code></td></tr><tr><td class="token-name"><code>--color-amber-700</code></td><td class="token-value"><span class="swatch" style="background:#b45309" aria-hidden="true"></span><code>#b45309</code></td><td class="token-value"><span class="swatch" style="background:#b45309" aria-hidden="true"></span><code>#b45309</code></td></tr><tr><td class="token-name"><code>--color-amber-800</code></td><td class="token-value"><span class="swatch" style="background:#92400e" aria-hidden="true"></span><code>#92400e</code></td><td class="token-value"><span class="swatch" style="background:#92400e" aria-hidden="true"></span><code>#92400e</code></td></tr><tr><td class="token-name"><code>--color-amber-900</code></td><td class="token-value"><span class="swatch" style="background:#78350f" aria-hidden="true"></span><code>#78350f</code></td><td class="token-value"><span class="swatch" style="background:#78350f" aria-hidden="true"></span><code>#78350f</code></td></tr><tr><td class="token-name"><code>--color-amber-950</code></td><td class="token-value"><span class="swatch" style="background:#451a03" aria-hidden="true"></span><code>#451a03</code></td><td class="token-value"><span class="swatch" style="background:#451a03" aria-hidden="true"></span><code>#451a03</code></td></tr><tr><td class="token-name"><code>--color-background</code></td><td class="token-value"><span class="swatch" style="background:#EBECEE" aria-hidden="true"></span><code>#EBECEE</code></td><td class="token-value"><span class="swatch" style="background:#02060C" aria-hidden="true"></span><code>#02060C</code></td></tr><tr><td class="token-name"><code>--color-black</code></td><td class="token-value"><span class="swatch" style="background:#000000" aria-hidden="true"></span><code>#000000</code></td><td class="token-value"><span class="swatch" style="background:#000000" aria-hidden="true"></span><code>#000000</code></td></tr><tr><td class="token-name"><code>--color-blue-100</code></td><td class="token-value"><span class="swatch" style="background:#dbeafe" aria-hidden="true"></span><code>#dbeafe</code></td><td class="token-value"><span class="swatch" style="background:#dbeafe" aria-hidden="true"></span><code>#dbeafe</code></td></tr><tr><td class="token-name"><code>--color-blue-200</code></td><td class="token-value"><span class="swatch" style="background:#bfdbfe" aria-hidden="true"></span><code>#bfdbfe</code></td><td class="token-value"><span class="swatch" style="background:#bfdbfe" aria-hidden="true"></span><code>#bfdbfe</code></td></tr><tr><td class="token-name"><code>--color-blue-300</code></td><td class="token-value"><span class="swatch" style="background:#93c5fd" aria-hidden="true"></span><code>#93c5fd</code></td><td class="token-value"><span class="swatch" style="background:#93c5fd" aria-hidden="true"></span><code>#93c5fd</code></td></tr><tr><td class="token-name"><code>--color-blue-400</code></td><td class="token-value"><span class="swatch" style="background:#60a5fa" aria-hidden="true"></span><code>#60a5fa</code></td><td class="token-value"><span class="swatch" style="background:#60a5fa" aria-hidden="true"></span><code>#60a5fa</code></td></tr><tr><td class="token-name"><code>--color-blue-50</code></td><td class="token-value"><span class="swatch" style="background:#eff6ff" aria-hidden="true"></span><code>#eff6ff</code></td><td class="token-value"><span class="swatch" style="background:#eff6ff" aria-hidden="true"></span><code>#eff6ff</code></td></tr><tr><td class="token-name"><code>--color-blue-500</code></td><td class="token-value"><span class="swatch" style="background:#3b82f6" aria-hidden="true"></span><code>#3b82f6</code></td><td class="token-value"><span class="swatch" style="background:#3b82f6" aria-hidden="true"></span><code>#3b82f6</code></td></tr><tr><td class="token-name"><code>--color-blue-600</code></td><td class="token-value"><span class="swatch" style="background:#2563eb" aria-hidden="true"></span><code>#2563eb</code></td><td class="token-value"><span class="swatch" style="background:#2563eb" aria-hidden="true"></span><code>#2563eb</code></td></tr><tr><td class="token-name"><code>--color-blue-700</code></td><td class="token-value"><span class="swatch" style="background:#1d4ed8" aria-hidden="true"></span><code>#1d4ed8</code></td><td class="token-value"><span class="swatch" style="background:#1d4ed8" aria-hidden="true"></span><code>#1d4ed8</code></td></tr><tr><td class="token-name"><code>--color-blue-800</code></td><td class="token-value"><span class="swatch" style="background:#1e40af" aria-hidden="true"></span><code>#1e40af</code></td><td class="token-value"><span class="swatch" style="background:#1e40af" aria-hidden="true"></span><code>#1e40af</code></td></tr><tr><td class="token-name"><code>--color-blue-900</code></td><td class="token-value"><span class="swatch" style="background:#1e3a8a" aria-hidden="true"></span><code>#1e3a8a</code></td><td class="token-value"><span class="swatch" style="background:#1e3a8a" aria-hidden="true"></span><code>#1e3a8a</code></td></tr><tr><td class="token-name"><code>--color-blue-950</code></td><td class="token-value"><span class="swatch" style="background:#172554" aria-hidden="true"></span><code>#172554</code></td><td class="token-value"><span class="swatch" style="background:#172554" aria-hidden="true"></span><code>#172554</code></td></tr><tr><td class="token-name"><code>--color-border</code></td><td class="token-value"><span class="swatch" style="background:#D0D4D8" aria-hidden="true"></span><code>#D0D4D8</code></td><td class="token-value"><span class="swatch" style="background:#141E2C" aria-hidden="true"></span><code>#141E2C</code></td></tr><tr><td class="token-name"><code>--color-card</code></td><td class="token-value"><span class="swatch" style="background:#fafafa" aria-hidden="true"></span><code>#fafafa</code></td><td class="token-value"><span class="swatch" style="background:#0B0F1A" aria-hidden="true"></span><code>#0B0F1A</code></td></tr><tr><td class="token-name"><code>--color-card-foreground</code></td><td class="token-value"><span class="swatch" style="background:#02060C" aria-hidden="true"></span><code>#02060C</code></td><td class="token-value"><span class="swatch" style="background:#EBECEE" aria-hidden="true"></span><code>#EBECEE</code></td></tr><tr><td class="token-name"><code>--color-destructive</code></td><td class="token-value"><span class="swatch" style="background:#E52D49" aria-hidden="true"></span><code>#E52D49</code></td><td class="token-value"><span class="swatch" style="background:#340209" aria-hidden="true"></span><code>#340209</code></td></tr><tr><td class="token-name"><code>--color-destructive-foreground</code></td><td class="token-value"><span class="swatch" style="background:#ffffff" aria-hidden="true"></span><code>#ffffff</code></td><td class="token-value"><span class="swatch" style="background:#fff5f6" aria-hidden="true"></span><code>#fff5f6</code></td></tr><tr><td class="token-name"><code>--color-foreground</code></td><td class="token-value"><span class="swatch" style="background:#02060C" aria-hidden="true"></span><code>#02060C</code></td><td class="token-value"><span class="swatch" style="background:#EBECEE" aria-hidden="true"></span><code>#EBECEE</code></td></tr><tr><td class="token-name"><code>--color-green-100</code></td><td class="token-value"><span class="swatch" style="background:#dcfce7" aria-hidden="true"></span><code>#dcfce7</code></td><td class="token-value"><span class="swatch" style="background:#dcfce7" aria-hidden="true"></span><code>#dcfce7</code></td></tr><tr><td class="token-name"><code>--color-green-200</code></td><td class="token-value"><span class="swatch" style="background:#bbf7d0" aria-hidden="true"></span><code>#bbf7d0</code></td><td class="token-value"><span class="swatch" style="background:#bbf7d0" aria-hidden="true"></span><code>#bbf7d0</code></td></tr><tr><td class="token-name"><code>--color-green-300</code></td><td class="token-value"><span class="swatch" style="background:#86efac" aria-hidden="true"></span><code>#86efac</code></td><td class="token-value"><span class="swatch" style="background:#86efac" aria-hidden="true"></span><code>#86efac</code></td></tr><tr><td class="token-name"><code>--color-green-400</code></td><td class="token-value"><span class="swatch" style="background:#4ade80" aria-hidden="true"></span><code>#4ade80</code></td><td class="token-value"><span class="swatch" style="background:#4ade80" aria-hidden="true"></span><code>#4ade80</code></td></tr><tr><td class="token-name"><code>--color-green-50</code></td><td class="token-value"><span class="swatch" style="background:#f0fdf4" aria-hidden="true"></span><code>#f0fdf4</code></td><td class="token-value"><span class="swatch" style="background:#f0fdf4" aria-hidden="true"></span><code>#f0fdf4</code></td></tr><tr><td class="token-name"><code>--color-green-500</code></td><td class="token-value"><span class="swatch" style="background:#22c55e" aria-hidden="true"></span><code>#22c55e</code></td><td class="token-value"><span class="swatch" style="background:#22c55e" aria-hidden="true"></span><code>#22c55e</code></td></tr><tr><td class="token-name"><code>--color-green-600</code></td><td class="token-value"><span class="swatch" style="background:#16a34a" aria-hidden="true"></span><code>#16a34a</code></td><td class="token-value"><span class="swatch" style="background:#16a34a" aria-hidden="true"></span><code>#16a34a</code></td></tr><tr><td class="token-name"><code>--color-green-700</code></td><td class="token-value"><span class="swatch" style="background:#15803d" aria-hidden="true"></span><code>#15803d</code></td><td class="token-value"><span class="swatch" style="background:#15803d" aria-hidden="true"></span><code>#15803d</code></td></tr><tr><td class="token-name"><code>--color-green-800</code></td><td class="token-value"><span class="swatch" style="background:#166534" aria-hidden="true"></span><code>#166534</code></td><td class="token-value"><span class="swatch" style="background:#166534" aria-hidden="true"></span><code>#166534</code></td></tr><tr><td class="token-name"><code>--color-green-900</code></td><td class="token-value"><span class="swatch" style="background:#14532d" aria-hidden="true"></span><code>#14532d</code></td><td class="token-value"><span class="swatch" style="background:#14532d" aria-hidden="true"></span><code>#14532d</code></td></tr><tr><td class="token-name"><code>--color-green-950</code></td><td class="token-value"><span class="swatch" style="background:#052e16" aria-hidden="true"></span><code>#052e16</code></td><td class="token-value"><span class="swatch" style="background:#052e16" aria-hidden="true"></span><code>#052e16</code></td></tr><tr><td class="token-name"><code>--color-indigo-100</code></td><td class="token-value"><span class="swatch" style="background:#e0e7ff" aria-hidden="true"></span><code>#e0e7ff</code></td><td class="token-value"><span class="swatch" style="background:#e0e7ff" aria-hidden="true"></span><code>#e0e7ff</code></td></tr><tr><td class="token-name"><code>--color-indigo-200</code></td><td class="token-value"><span class="swatch" style="background:#c7d2fe" aria-hidden="true"></span><code>#c7d2fe</code></td><td class="token-value"><span class="swatch" style="background:#c7d2fe" aria-hidden="true"></span><code>#c7d2fe</code></td></tr><tr><td class="token-name"><code>--color-indigo-300</code></td><td class="token-value"><span class="swatch" style="background:#a5b4fc" aria-hidden="true"></span><code>#a5b4fc</code></td><td class="token-value"><span class="swatch" style="background:#a5b4fc" aria-hidden="true"></span><code>#a5b4fc</code></td></tr><tr><td class="token-name"><code>--color-indigo-400</code></td><td class="token-value"><span class="swatch" style="background:#818cf8" aria-hidden="true"></span><code>#818cf8</code></td><td class="token-value"><span class="swatch" style="background:#818cf8" aria-hidden="true"></span><code>#818cf8</code></td></tr><tr><td class="token-name"><code>--color-indigo-50</code></td><td class="token-value"><span class="swatch" style="background:#eef2ff" aria-hidden="true"></span><code>#eef2ff</code></td><td class="token-value"><span class="swatch" style="background:#eef2ff" aria-hidden="true"></span><code>#eef2ff</code></td></tr><tr><td class="token-name"><code>--color-indigo-500</code></td><td class="token-value"><span class="swatch" style="background:#6366f1" aria-hidden="true"></span><code>#6366f1</code></td><td class="token-value"><span class="swatch" style="background:#6366f1" aria-hidden="true"></span><code>#6366f1</code></td></tr><tr><td class="token-name"><code>--color-indigo-600</code></td><td class="token-value"><span class="swatch" style="background:#4f46e5" aria-hidden="true"></span><code>#4f46e5</code></td><td class="token-value"><span class="swatch" style="background:#4f46e5" aria-hidden="true"></span><code>#4f46e5</code></td></tr><tr><td class="token-name"><code>--color-indigo-700</code></td><td class="token-value"><span class="swatch" style="background:#4338ca" aria-hidden="true"></span><code>#4338ca</code></td><td class="token-value"><span class="swatch" style="background:#4338ca" aria-hidden="true"></span><code>#4338ca</code></td></tr><tr><td class="token-name"><code>--color-indigo-800</code></td><td class="token-value"><span class="swatch" style="background:#3730a3" aria-hidden="true"></span><code>#3730a3</code></td><td class="token-value"><span class="swatch" style="background:#3730a3" aria-hidden="true"></span><code>#3730a3</code></td></tr><tr><td class="token-name"><code>--color-indigo-900</code></td><td class="token-value"><span class="swatch" style="background:#312e81" aria-hidden="true"></span><code>#312e81</code></td><td class="token-value"><span class="swatch" style="background:#312e81" aria-hidden="true"></span><code>#312e81</code></td></tr><tr><td class="token-name"><code>--color-indigo-950</code></td><td class="token-value"><span class="swatch" style="background:#1e1b4b" aria-hidden="true"></span><code>#1e1b4b</code></td><td class="token-value"><span class="swatch" style="background:#1e1b4b" aria-hidden="true"></span><code>#1e1b4b</code></td></tr><tr><td class="token-name"><code>--color-input</code></td><td class="token-value"><span class="swatch" style="background:#D0D4D8" aria-hidden="true"></span><code>#D0D4D8</code></td><td class="token-value"><span class="swatch" style="background:#141E2C" aria-hidden="true"></span><code>#141E2C</code></td></tr><tr><td class="token-name"><code>--color-input-background</code></td><td class="token-value"><span class="swatch" style="background:#fafafa" aria-hidden="true"></span><code>#fafafa</code></td><td class="token-value"><span class="swatch" style="background:#141E2C" aria-hidden="true"></span><code>#141E2C</code></td></tr><tr><td class="token-name"><code>--color-muted</code></td><td class="token-value"><span class="swatch" style="background:#fafafa" aria-hidden="true"></span><code>#fafafa</code></td><td class="token-value"><span class="swatch" style="background:#141E2C" aria-hidden="true"></span><code>#141E2C</code></td></tr><tr><td class="token-name"><code>--color-muted-foreground</code></td><td class="token-value"><span class="swatch" style="background:#959DA7" aria-hidden="true"></span><code>#959DA7</code></td><td class="token-value"><span class="swatch" style="background:#B4BBC2" aria-hidden="true"></span><code>#B4BBC2</code></td></tr><tr><td class="token-name"><code>--color-popover</code></td><td class="token-value"><span class="swatch" style="background:#f4f4f0" aria-hidden="true"></span><code>#f4f4f0</code></td><td class="token-value"><span class="swatch" style="background:#0F1320" aria-hidden="true"></span><code>#0F1320</code></td></tr><tr><td class="token-name"><code>--color-popover-foreground</code></td><td class="token-value"><span class="swatch" style="background:#02060C" aria-hidden="true"></span><code>#02060C</code></td><td class="token-value"><span class="swatch" style="background:#EBECEE" aria-hidden="true"></span><code>#EBECEE</code></td></tr><tr><td class="token-name"><code>--color-primary</code></td><td class="token-value"><span class="swatch" style="background:#E6F993" aria-hidden="true"></span><code>#E6F993</code></td><td class="token-value"><span class="swatch" style="background:#C3E433" aria-hidden="true"></span><code>#C3E433</code></td></tr><tr><td class="token-name"><code>--color-primary-foreground</code></td><td class="token-value"><span class="swatch" style="background:#02060C" aria-hidden="true"></span><code>#02060C</code></td><td class="token-value"><span class="swatch" style="background:#02060C" aria-hidden="true"></span><code>#02060C</code></td></tr><tr><td class="token-name"><code>--color-red-100</code></td><td class="token-value"><span class="swatch" style="background:#FFECEE" aria-hidden="true"></span><code>#FFECEE</code></td><td class="token-value"><span class="swatch" style="background:#FFECEE" aria-hidden="true"></span><code>#FFECEE</code></td></tr><tr><td class="token-name"><code>--color-red-200</code></td><td class="token-value"><span class="swatch" style="background:#FFD6DC" aria-hidden="true"></span><code>#FFD6DC</code></td><td class="token-value"><span class="swatch" style="background:#FFD6DC" aria-hidden="true"></span><code>#FFD6DC</code></td></tr><tr><td class="token-name"><code>--color-red-300</code></td><td class="token-value"><span class="swatch" style="background:#F99DAA" aria-hidden="true"></span><code>#F99DAA</code></td><td class="token-value"><span class="swatch" style="background:#F99DAA" aria-hidden="true"></span><code>#F99DAA</code></td></tr><tr><td class="token-name"><code>--color-red-400</code></td><td class="token-value"><span class="swatch" style="background:#ED5F74" aria-hidden="true"></span><code>#ED5F74</code></td><td class="token-value"><span class="swatch" style="background:#ED5F74" aria-hidden="true"></span><code>#ED5F74</code></td></tr><tr><td class="token-name"><code>--color-red-50</code></td><td class="token-value"><span class="swatch" style="background:#fff5f6" aria-hidden="true"></span><code>#fff5f6</code></td><td class="token-value"><span class="swatch" style="background:#fff5f6" aria-hidden="true"></span><code>#fff5f6</code></td></tr><tr><td class="token-name"><code>--color-red-500</code></td><td class="token-value"><span class="swatch" style="background:#E52D49" aria-hidden="true"></span><code>#E52D49</code></td><td class="token-value"><span class="swatch" style="background:#E52D49" aria-hidden="true"></span><code>#E52D49</code></td></tr><tr><td class="token-name"><code>--color-red-600</code></td><td class="token-value"><span class="swatch" style="background:#C11736" aria-hidden="true"></span><code>#C11736</code></td><td class="token-value"><span class="swatch" style="background:#C11736" aria-hidden="true"></span><code>#C11736</code></td></tr><tr><td class="token-name"><code>--color-red-700</code></td><td class="token-value"><span class="swatch" style="background:#8B091D" aria-hidden="true"></span><code>#8B091D</code></td><td class="token-value"><span class="swatch" style="background:#8B091D" aria-hidden="true"></span><code>#8B091D</code></td></tr><tr><td class="token-name"><code>--color-red-800</code></td><td class="token-value"><span class="swatch" style="background:#580410" aria-hidden="true"></span><code>#580410</code></td><td class="token-value"><span class="swatch" style="background:#580410" aria-hidden="true"></span><code>#580410</code></td></tr><tr><td class="token-name"><code>--color-red-900</code></td><td class="token-value"><span class="swatch" style="background:#340209" aria-hidden="true"></span><code>#340209</code></td><td class="token-value"><span class="swatch" style="background:#340209" aria-hidden="true"></span><code>#340209</code></td></tr><tr><td class="token-name"><code>--color-red-950</code></td><td class="token-value"><span class="swatch" style="background:#1a0104" aria-hidden="true"></span><code>#1a0104</code></td><td class="token-value"><span class="swatch" style="background:#1a0104" aria-hidden="true"></span><code>#1a0104</code></td></tr><tr><td class="token-name"><code>--color-ring</code></td><td class="token-value"><span class="swatch" style="background:#959DA7" aria-hidden="true"></span><code>#959DA7</code></td><td class="token-value"><span class="swatch" style="background:#B4BBC2" aria-hidden="true"></span><code>#B4BBC2</code></td></tr><tr><td class="token-name"><code>--color-secondary</code></td><td class="token-value"><span class="swatch" style="background:#fafafa" aria-hidden="true"></span><code>#fafafa</code></td><td class="token-value"><span class="swatch" style="background:#141E2C" aria-hidden="true"></span><code>#141E2C</code></td></tr><tr><td class="token-name"><code>--color-secondary-foreground</code></td><td class="token-value"><span class="swatch" style="background:#02060C" aria-hidden="true"></span><code>#02060C</code></td><td class="token-value"><span class="swatch" style="background:#EBECEE" aria-hidden="true"></span><code>#EBECEE</code></td></tr><tr><td class="token-name"><code>--color-status-ai</code></td><td class="token-value"><span class="swatch" style="background:#8b5cf6" aria-hidden="true"></span><code>#8b5cf6</code></td><td class="token-value"><span class="swatch" style="background:#a78bfa" aria-hidden="true"></span><code>#a78bfa</code></td></tr><tr><td class="token-name"><code>--color-status-ai-foreground</code></td><td class="token-value"><span class="swatch" style="background:#ffffff" aria-hidden="true"></span><code>#ffffff</code></td><td class="token-value"><span class="swatch" style="background:#000000" aria-hidden="true"></span><code>#000000</code></td></tr><tr><td class="token-name"><code>--color-status-error</code></td><td class="token-value"><span class="swatch" style="background:#C11736" aria-hidden="true"></span><code>#C11736</code></td><td class="token-value"><span class="swatch" style="background:#ED5F74" aria-hidden="true"></span><code>#ED5F74</code></td></tr><tr><td class="token-name"><code>--color-status-error-foreground</code></td><td class="token-value"><span class="swatch" style="background:#ffffff" aria-hidden="true"></span><code>#ffffff</code></td><td class="token-value"><span class="swatch" style="background:#000000" aria-hidden="true"></span><code>#000000</code></td></tr><tr><td class="token-name"><code>--color-status-info</code></td><td class="token-value"><span class="swatch" style="background:#2563eb" aria-hidden="true"></span><code>#2563eb</code></td><td class="token-value"><span class="swatch" style="background:#60a5fa" aria-hidden="true"></span><code>#60a5fa</code></td></tr><tr><td class="token-name"><code>--color-status-info-foreground</code></td><td class="token-value"><span class="swatch" style="background:#ffffff" aria-hidden="true"></span><code>#ffffff</code></td><td class="token-value"><span class="swatch" style="background:#000000" aria-hidden="true"></span><code>#000000</code></td></tr><tr><td class="token-name"><code>--color-status-success</code></td><td class="token-value"><span class="swatch" style="background:#16a34a" aria-hidden="true"></span><code>#16a34a</code></td><td class="token-value"><span class="swatch" style="background:#4ade80" aria-hidden="true"></span><code>#4ade80</code></td></tr><tr><td class="token-name"><code>--color-status-success-foreground</code></td><td class="token-value"><span class="swatch" style="background:#ffffff" aria-hidden="true"></span><code>#ffffff</code></td><td class="token-value"><span class="swatch" style="background:#000000" aria-hidden="true"></span><code>#000000</code></td></tr><tr><td class="token-name"><code>--color-status-warning</code></td><td class="token-value"><span class="swatch" style="background:#b45309" aria-hidden="true"></span><code>#b45309</code></td><td class="token-value"><span class="swatch" style="background:#fbbf24" aria-hidden="true"></span><code>#fbbf24</code></td></tr><tr><td class="token-name"><code>--color-status-warning-foreground</code></td><td class="token-value"><span class="swatch" style="background:#ffffff" aria-hidden="true"></span><code>#ffffff</code></td><td class="token-value"><span class="swatch" style="background:#000000" aria-hidden="true"></span><code>#000000</code></td></tr><tr><td class="token-name"><code>--color-violet-300</code></td><td class="token-value"><span class="swatch" style="background:#c4b5fd" aria-hidden="true"></span><code>#c4b5fd</code></td><td class="token-value"><span class="swatch" style="background:#c4b5fd" aria-hidden="true"></span><code>#c4b5fd</code></td></tr><tr><td class="token-name"><code>--color-violet-400</code></td><td class="token-value"><span class="swatch" style="background:#a78bfa" aria-hidden="true"></span><code>#a78bfa</code></td><td class="token-value"><span class="swatch" style="background:#a78bfa" aria-hidden="true"></span><code>#a78bfa</code></td></tr><tr><td class="token-name"><code>--color-violet-500</code></td><td class="token-value"><span class="swatch" style="background:#8b5cf6" aria-hidden="true"></span><code>#8b5cf6</code></td><td class="token-value"><span class="swatch" style="background:#8b5cf6" aria-hidden="true"></span><code>#8b5cf6</code></td></tr><tr><td class="token-name"><code>--color-violet-600</code></td><td class="token-value"><span class="swatch" style="background:#7c3aed" aria-hidden="true"></span><code>#7c3aed</code></td><td class="token-value"><span class="swatch" style="background:#7c3aed" aria-hidden="true"></span><code>#7c3aed</code></td></tr><tr><td class="token-name"><code>--color-violet-700</code></td><td class="token-value"><span class="swatch" style="background:#6d28d9" aria-hidden="true"></span><code>#6d28d9</code></td><td class="token-value"><span class="swatch" style="background:#6d28d9" aria-hidden="true"></span><code>#6d28d9</code></td></tr><tr><td class="token-name"><code>--color-white</code></td><td class="token-value"><span class="swatch" style="background:#ffffff" aria-hidden="true"></span><code>#ffffff</code></td><td class="token-value"><span class="swatch" style="background:#ffffff" aria-hidden="true"></span><code>#ffffff</code></td></tr><tr><td class="token-name"><code>--color-zinc-100</code></td><td class="token-value"><span class="swatch" style="background:#EBECEE" aria-hidden="true"></span><code>#EBECEE</code></td><td class="token-value"><span class="swatch" style="background:#EBECEE" aria-hidden="true"></span><code>#EBECEE</code></td></tr><tr><td class="token-name"><code>--color-zinc-200</code></td><td class="token-value"><span class="swatch" style="background:#E0E2E5" aria-hidden="true"></span><code>#E0E2E5</code></td><td class="token-value"><span class="swatch" style="background:#E0E2E5" aria-hidden="true"></span><code>#E0E2E5</code></td></tr><tr><td class="token-name"><code>--color-zinc-300</code></td><td class="token-value"><span class="swatch" style="background:#D0D4D8" aria-hidden="true"></span><code>#D0D4D8</code></td><td class="token-value"><span class="swatch" style="background:#D0D4D8" aria-hidden="true"></span><code>#D0D4D8</code></td></tr><tr><td class="token-name"><code>--color-zinc-400</code></td><td class="token-value"><span class="swatch" style="background:#B4BBC2" aria-hidden="true"></span><code>#B4BBC2</code></td><td class="token-value"><span class="swatch" style="background:#B4BBC2" aria-hidden="true"></span><code>#B4BBC2</code></td></tr><tr><td class="token-name"><code>--color-zinc-50</code></td><td class="token-value"><span class="swatch" style="background:#fafafa" aria-hidden="true"></span><code>#fafafa</code></td><td class="token-value"><span class="swatch" style="background:#fafafa" aria-hidden="true"></span><code>#fafafa</code></td></tr><tr><td class="token-name"><code>--color-zinc-500</code></td><td class="token-value"><span class="swatch" style="background:#959DA7" aria-hidden="true"></span><code>#959DA7</code></td><td class="token-value"><span class="swatch" style="background:#959DA7" aria-hidden="true"></span><code>#959DA7</code></td></tr><tr><td class="token-name"><code>--color-zinc-600</code></td><td class="token-value"><span class="swatch" style="background:#546070" aria-hidden="true"></span><code>#546070</code></td><td class="token-value"><span class="swatch" style="background:#546070" aria-hidden="true"></span><code>#546070</code></td></tr><tr><td class="token-name"><code>--color-zinc-700</code></td><td class="token-value"><span class="swatch" style="background:#333F4E" aria-hidden="true"></span><code>#333F4E</code></td><td class="token-value"><span class="swatch" style="background:#333F4E" aria-hidden="true"></span><code>#333F4E</code></td></tr><tr><td class="token-name"><code>--color-zinc-800</code></td><td class="token-value"><span class="swatch" style="background:#141E2C" aria-hidden="true"></span><code>#141E2C</code></td><td class="token-value"><span class="swatch" style="background:#141E2C" aria-hidden="true"></span><code>#141E2C</code></td></tr><tr><td class="token-name"><code>--color-zinc-900</code></td><td class="token-value"><span class="swatch" style="background:#02060C" aria-hidden="true"></span><code>#02060C</code></td><td class="token-value"><span class="swatch" style="background:#02060C" aria-hidden="true"></span><code>#02060C</code></td></tr><tr><td class="token-name"><code>--color-zinc-950</code></td><td class="token-value"><span class="swatch" style="background:#09090b" aria-hidden="true"></span><code>#09090b</code></td><td class="token-value"><span class="swatch" style="background:#09090b" aria-hidden="true"></span><code>#09090b</code></td></tr></tbody></table>
+<h3>Brand scale</h3>
+<table class="token-table"><thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead><tbody><tr><td class="token-name"><code>--color-brand-100</code></td><td class="token-value"><span class="swatch" style="background:#F4F8E1" aria-hidden="true"></span><code>#F4F8E1</code></td><td class="token-value"><span class="swatch" style="background:#F4F8E1" aria-hidden="true"></span><code>#F4F8E1</code></td></tr><tr><td class="token-name"><code>--color-brand-200</code></td><td class="token-value"><span class="swatch" style="background:#F4FFC9" aria-hidden="true"></span><code>#F4FFC9</code></td><td class="token-value"><span class="swatch" style="background:#F4FFC9" aria-hidden="true"></span><code>#F4FFC9</code></td></tr><tr><td class="token-name"><code>--color-brand-300</code></td><td class="token-value"><span class="swatch" style="background:#E6F993" aria-hidden="true"></span><code>#E6F993</code></td><td class="token-value"><span class="swatch" style="background:#E6F993" aria-hidden="true"></span><code>#E6F993</code></td></tr><tr><td class="token-name"><code>--color-brand-400</code></td><td class="token-value"><span class="swatch" style="background:#DAF75F" aria-hidden="true"></span><code>#DAF75F</code></td><td class="token-value"><span class="swatch" style="background:#DAF75F" aria-hidden="true"></span><code>#DAF75F</code></td></tr><tr><td class="token-name"><code>--color-brand-50</code></td><td class="token-value"><span class="swatch" style="background:#fdfee7" aria-hidden="true"></span><code>#fdfee7</code></td><td class="token-value"><span class="swatch" style="background:#fdfee7" aria-hidden="true"></span><code>#fdfee7</code></td></tr><tr><td class="token-name"><code>--color-brand-500</code></td><td class="token-value"><span class="swatch" style="background:#C3E433" aria-hidden="true"></span><code>#C3E433</code></td><td class="token-value"><span class="swatch" style="background:#C3E433" aria-hidden="true"></span><code>#C3E433</code></td></tr><tr><td class="token-name"><code>--color-brand-600</code></td><td class="token-value"><span class="swatch" style="background:#A0C114" aria-hidden="true"></span><code>#A0C114</code></td><td class="token-value"><span class="swatch" style="background:#A0C114" aria-hidden="true"></span><code>#A0C114</code></td></tr><tr><td class="token-name"><code>--color-brand-700</code></td><td class="token-value"><span class="swatch" style="background:#718B03" aria-hidden="true"></span><code>#718B03</code></td><td class="token-value"><span class="swatch" style="background:#718B03" aria-hidden="true"></span><code>#718B03</code></td></tr><tr><td class="token-name"><code>--color-brand-800</code></td><td class="token-value"><span class="swatch" style="background:#507206" aria-hidden="true"></span><code>#507206</code></td><td class="token-value"><span class="swatch" style="background:#507206" aria-hidden="true"></span><code>#507206</code></td></tr><tr><td class="token-name"><code>--color-brand-900</code></td><td class="token-value"><span class="swatch" style="background:#2A3400" aria-hidden="true"></span><code>#2A3400</code></td><td class="token-value"><span class="swatch" style="background:#2A3400" aria-hidden="true"></span><code>#2A3400</code></td></tr><tr><td class="token-name"><code>--color-brand-950</code></td><td class="token-value"><span class="swatch" style="background:#233502" aria-hidden="true"></span><code>#233502</code></td><td class="token-value"><span class="swatch" style="background:#233502" aria-hidden="true"></span><code>#233502</code></td></tr><tr><td class="token-name"><code>--color-brand-lime</code></td><td class="token-value"><span class="swatch" style="background:#d6ff3c" aria-hidden="true"></span><code>#d6ff3c</code></td><td class="token-value"><span class="swatch" style="background:#d6ff3c" aria-hidden="true"></span><code>#d6ff3c</code></td></tr></tbody></table>
+<h3>Sidebar</h3>
+<table class="token-table"><thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead><tbody><tr><td class="token-name"><code>--color-sidebar</code></td><td class="token-value"><span class="swatch" style="background:#fafafa" aria-hidden="true"></span><code>#fafafa</code></td><td class="token-value"><span class="swatch" style="background:#02060C" aria-hidden="true"></span><code>#02060C</code></td></tr><tr><td class="token-name"><code>--color-sidebar-accent</code></td><td class="token-value"><span class="swatch" style="background:#fafafa" aria-hidden="true"></span><code>#fafafa</code></td><td class="token-value"><span class="swatch" style="background:#141E2C" aria-hidden="true"></span><code>#141E2C</code></td></tr><tr><td class="token-name"><code>--color-sidebar-accent-foreground</code></td><td class="token-value"><span class="swatch" style="background:#02060C" aria-hidden="true"></span><code>#02060C</code></td><td class="token-value"><span class="swatch" style="background:#EBECEE" aria-hidden="true"></span><code>#EBECEE</code></td></tr><tr><td class="token-name"><code>--color-sidebar-border</code></td><td class="token-value"><span class="swatch" style="background:#D0D4D8" aria-hidden="true"></span><code>#D0D4D8</code></td><td class="token-value"><span class="swatch" style="background:#141E2C" aria-hidden="true"></span><code>#141E2C</code></td></tr><tr><td class="token-name"><code>--color-sidebar-foreground</code></td><td class="token-value"><span class="swatch" style="background:#02060C" aria-hidden="true"></span><code>#02060C</code></td><td class="token-value"><span class="swatch" style="background:#EBECEE" aria-hidden="true"></span><code>#EBECEE</code></td></tr><tr><td class="token-name"><code>--color-sidebar-primary</code></td><td class="token-value"><span class="swatch" style="background:#E6F993" aria-hidden="true"></span><code>#E6F993</code></td><td class="token-value"><span class="swatch" style="background:#C3E433" aria-hidden="true"></span><code>#C3E433</code></td></tr><tr><td class="token-name"><code>--color-sidebar-primary-foreground</code></td><td class="token-value"><span class="swatch" style="background:#02060C" aria-hidden="true"></span><code>#02060C</code></td><td class="token-value"><span class="swatch" style="background:#02060C" aria-hidden="true"></span><code>#02060C</code></td></tr><tr><td class="token-name"><code>--color-sidebar-ring</code></td><td class="token-value"><span class="swatch" style="background:#959DA7" aria-hidden="true"></span><code>#959DA7</code></td><td class="token-value"><span class="swatch" style="background:#B4BBC2" aria-hidden="true"></span><code>#B4BBC2</code></td></tr></tbody></table>
+<h3>Chart</h3>
+<table class="token-table"><thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead><tbody><tr><td class="token-name"><code>--color-chart-1</code></td><td class="token-value"><span class="swatch" style="background:#6366f1" aria-hidden="true"></span><code>#6366f1</code></td><td class="token-value"><span class="swatch" style="background:#6366f1" aria-hidden="true"></span><code>#6366f1</code></td></tr><tr><td class="token-name"><code>--color-chart-2</code></td><td class="token-value"><span class="swatch" style="background:#22c55e" aria-hidden="true"></span><code>#22c55e</code></td><td class="token-value"><span class="swatch" style="background:#22c55e" aria-hidden="true"></span><code>#22c55e</code></td></tr><tr><td class="token-name"><code>--color-chart-3</code></td><td class="token-value"><span class="swatch" style="background:#E52D49" aria-hidden="true"></span><code>#E52D49</code></td><td class="token-value"><span class="swatch" style="background:#E52D49" aria-hidden="true"></span><code>#E52D49</code></td></tr><tr><td class="token-name"><code>--color-chart-4</code></td><td class="token-value"><span class="swatch" style="background:#f59e0b" aria-hidden="true"></span><code>#f59e0b</code></td><td class="token-value"><span class="swatch" style="background:#f59e0b" aria-hidden="true"></span><code>#f59e0b</code></td></tr><tr><td class="token-name"><code>--color-chart-5</code></td><td class="token-value"><span class="swatch" style="background:#818cf8" aria-hidden="true"></span><code>#818cf8</code></td><td class="token-value"><span class="swatch" style="background:#818cf8" aria-hidden="true"></span><code>#818cf8</code></td></tr></tbody></table>
+<h3>Shadow / elevation</h3>
+<table class="token-table"><thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead><tbody><tr><td class="token-name"><code>--shadow-2xl</code></td><td class="token-value"><code>0 25px 50px -12px rgb(0 0 0 / 0.25)</code></td><td class="token-value"><code>0 25px 50px -12px rgb(0 0 0 / 0.25)</code></td></tr><tr><td class="token-name"><code>--shadow-base</code></td><td class="token-value"><code>0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)</code></td><td class="token-value"><code>0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)</code></td></tr><tr><td class="token-name"><code>--shadow-inner</code></td><td class="token-value"><code>inset 0 2px 4px 0 rgb(0 0 0 / 0.05)</code></td><td class="token-value"><code>inset 0 2px 4px 0 rgb(0 0 0 / 0.05)</code></td></tr><tr><td class="token-name"><code>--shadow-lg</code></td><td class="token-value"><code>0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)</code></td><td class="token-value"><code>0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)</code></td></tr><tr><td class="token-name"><code>--shadow-md</code></td><td class="token-value"><code>0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)</code></td><td class="token-value"><code>0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)</code></td></tr><tr><td class="token-name"><code>--shadow-none</code></td><td class="token-value"><code>none</code></td><td class="token-value"><code>none</code></td></tr><tr><td class="token-name"><code>--shadow-sm</code></td><td class="token-value"><code>0 1px 2px 0 rgb(0 0 0 / 0.05)</code></td><td class="token-value"><code>0 1px 2px 0 rgb(0 0 0 / 0.05)</code></td></tr><tr><td class="token-name"><code>--shadow-xl</code></td><td class="token-value"><code>0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)</code></td><td class="token-value"><code>0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)</code></td></tr></tbody></table>
+<h3>Spacing</h3>
+<table class="token-table"><thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead><tbody><tr><td class="token-name"><code>--spacing-0</code></td><td class="token-value"><code>0</code></td><td class="token-value"><code>0</code></td></tr><tr><td class="token-name"><code>--spacing-1</code></td><td class="token-value"><code>0.25rem</code></td><td class="token-value"><code>0.25rem</code></td></tr><tr><td class="token-name"><code>--spacing-10</code></td><td class="token-value"><code>2.5rem</code></td><td class="token-value"><code>2.5rem</code></td></tr><tr><td class="token-name"><code>--spacing-11</code></td><td class="token-value"><code>2.75rem</code></td><td class="token-value"><code>2.75rem</code></td></tr><tr><td class="token-name"><code>--spacing-12</code></td><td class="token-value"><code>3rem</code></td><td class="token-value"><code>3rem</code></td></tr><tr><td class="token-name"><code>--spacing-16</code></td><td class="token-value"><code>4rem</code></td><td class="token-value"><code>4rem</code></td></tr><tr><td class="token-name"><code>--spacing-2</code></td><td class="token-value"><code>0.5rem</code></td><td class="token-value"><code>0.5rem</code></td></tr><tr><td class="token-name"><code>--spacing-20</code></td><td class="token-value"><code>5rem</code></td><td class="token-value"><code>5rem</code></td></tr><tr><td class="token-name"><code>--spacing-24</code></td><td class="token-value"><code>6rem</code></td><td class="token-value"><code>6rem</code></td></tr><tr><td class="token-name"><code>--spacing-3</code></td><td class="token-value"><code>0.75rem</code></td><td class="token-value"><code>0.75rem</code></td></tr><tr><td class="token-name"><code>--spacing-32</code></td><td class="token-value"><code>8rem</code></td><td class="token-value"><code>8rem</code></td></tr><tr><td class="token-name"><code>--spacing-4</code></td><td class="token-value"><code>1rem</code></td><td class="token-value"><code>1rem</code></td></tr><tr><td class="token-name"><code>--spacing-40</code></td><td class="token-value"><code>10rem</code></td><td class="token-value"><code>10rem</code></td></tr><tr><td class="token-name"><code>--spacing-48</code></td><td class="token-value"><code>12rem</code></td><td class="token-value"><code>12rem</code></td></tr><tr><td class="token-name"><code>--spacing-5</code></td><td class="token-value"><code>1.25rem</code></td><td class="token-value"><code>1.25rem</code></td></tr><tr><td class="token-name"><code>--spacing-56</code></td><td class="token-value"><code>14rem</code></td><td class="token-value"><code>14rem</code></td></tr><tr><td class="token-name"><code>--spacing-6</code></td><td class="token-value"><code>1.5rem</code></td><td class="token-value"><code>1.5rem</code></td></tr><tr><td class="token-name"><code>--spacing-64</code></td><td class="token-value"><code>16rem</code></td><td class="token-value"><code>16rem</code></td></tr><tr><td class="token-name"><code>--spacing-8</code></td><td class="token-value"><code>2rem</code></td><td class="token-value"><code>2rem</code></td></tr></tbody></table>
+<h3>Other</h3>
+<table class="token-table"><thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead><tbody><tr><td class="token-name"><code>--borderRadius-2xl</code></td><td class="token-value"><code>1rem</code></td><td class="token-value"><code>1rem</code></td></tr><tr><td class="token-name"><code>--borderRadius-3xl</code></td><td class="token-value"><code>1.5rem</code></td><td class="token-value"><code>1.5rem</code></td></tr><tr><td class="token-name"><code>--borderRadius-base</code></td><td class="token-value"><code>0.25rem</code></td><td class="token-value"><code>0.25rem</code></td></tr><tr><td class="token-name"><code>--borderRadius-full</code></td><td class="token-value"><code>9999px</code></td><td class="token-value"><code>9999px</code></td></tr><tr><td class="token-name"><code>--borderRadius-lg</code></td><td class="token-value"><code>0.5rem</code></td><td class="token-value"><code>0.5rem</code></td></tr><tr><td class="token-name"><code>--borderRadius-md</code></td><td class="token-value"><code>0.375rem</code></td><td class="token-value"><code>0.375rem</code></td></tr><tr><td class="token-name"><code>--borderRadius-none</code></td><td class="token-value"><code>0</code></td><td class="token-value"><code>0</code></td></tr><tr><td class="token-name"><code>--borderRadius-sm</code></td><td class="token-value"><code>0.125rem</code></td><td class="token-value"><code>0.125rem</code></td></tr><tr><td class="token-name"><code>--borderRadius-xl</code></td><td class="token-value"><code>0.75rem</code></td><td class="token-value"><code>0.75rem</code></td></tr><tr><td class="token-name"><code>--borderWidth-0</code></td><td class="token-value"><code>0</code></td><td class="token-value"><code>0</code></td></tr><tr><td class="token-name"><code>--borderWidth-1</code></td><td class="token-value"><code>1px</code></td><td class="token-value"><code>1px</code></td></tr><tr><td class="token-name"><code>--borderWidth-2</code></td><td class="token-value"><code>2px</code></td><td class="token-value"><code>2px</code></td></tr><tr><td class="token-name"><code>--borderWidth-4</code></td><td class="token-value"><code>4px</code></td><td class="token-value"><code>4px</code></td></tr><tr><td class="token-name"><code>--borderWidth-8</code></td><td class="token-value"><code>8px</code></td><td class="token-value"><code>8px</code></td></tr><tr><td class="token-name"><code>--fontFamily-brand</code></td><td class="token-value"><code>'PP Monument Extended', sans-serif</code></td><td class="token-value"><code>'PP Monument Extended', sans-serif</code></td></tr><tr><td class="token-name"><code>--fontFamily-mono</code></td><td class="token-value"><code>ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace</code></td><td class="token-value"><code>ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace</code></td></tr><tr><td class="token-name"><code>--fontFamily-sans</code></td><td class="token-value"><code>Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif</code></td><td class="token-value"><code>Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif</code></td></tr><tr><td class="token-name"><code>--fontFamily-serif</code></td><td class="token-value"><code>Georgia, Cambria, 'Times New Roman', Times, serif</code></td><td class="token-value"><code>Georgia, Cambria, 'Times New Roman', Times, serif</code></td></tr><tr><td class="token-name"><code>--fontSize-2xl</code></td><td class="token-value"><code>1.5rem</code></td><td class="token-value"><code>1.5rem</code></td></tr><tr><td class="token-name"><code>--fontSize-3xl</code></td><td class="token-value"><code>1.875rem</code></td><td class="token-value"><code>1.875rem</code></td></tr><tr><td class="token-name"><code>--fontSize-4xl</code></td><td class="token-value"><code>2.25rem</code></td><td class="token-value"><code>2.25rem</code></td></tr><tr><td class="token-name"><code>--fontSize-5xl</code></td><td class="token-value"><code>3rem</code></td><td class="token-value"><code>3rem</code></td></tr><tr><td class="token-name"><code>--fontSize-6xl</code></td><td class="token-value"><code>3.75rem</code></td><td class="token-value"><code>3.75rem</code></td></tr><tr><td class="token-name"><code>--fontSize-7xl</code></td><td class="token-value"><code>4.5rem</code></td><td class="token-value"><code>4.5rem</code></td></tr><tr><td class="token-name"><code>--fontSize-8xl</code></td><td class="token-value"><code>6rem</code></td><td class="token-value"><code>6rem</code></td></tr><tr><td class="token-name"><code>--fontSize-9xl</code></td><td class="token-value"><code>8rem</code></td><td class="token-value"><code>8rem</code></td></tr><tr><td class="token-name"><code>--fontSize-base</code></td><td class="token-value"><code>1rem</code></td><td class="token-value"><code>1rem</code></td></tr><tr><td class="token-name"><code>--fontSize-lg</code></td><td class="token-value"><code>1.125rem</code></td><td class="token-value"><code>1.125rem</code></td></tr><tr><td class="token-name"><code>--fontSize-sm</code></td><td class="token-value"><code>0.875rem</code></td><td class="token-value"><code>0.875rem</code></td></tr><tr><td class="token-name"><code>--fontSize-xl</code></td><td class="token-value"><code>1.25rem</code></td><td class="token-value"><code>1.25rem</code></td></tr><tr><td class="token-name"><code>--fontSize-xs</code></td><td class="token-value"><code>0.75rem</code></td><td class="token-value"><code>0.75rem</code></td></tr><tr><td class="token-name"><code>--fontWeight-black</code></td><td class="token-value"><code>900</code></td><td class="token-value"><code>900</code></td></tr><tr><td class="token-name"><code>--fontWeight-bold</code></td><td class="token-value"><code>700</code></td><td class="token-value"><code>700</code></td></tr><tr><td class="token-name"><code>--fontWeight-extrabold</code></td><td class="token-value"><code>800</code></td><td class="token-value"><code>800</code></td></tr><tr><td class="token-name"><code>--fontWeight-extralight</code></td><td class="token-value"><code>200</code></td><td class="token-value"><code>200</code></td></tr><tr><td class="token-name"><code>--fontWeight-light</code></td><td class="token-value"><code>300</code></td><td class="token-value"><code>300</code></td></tr><tr><td class="token-name"><code>--fontWeight-medium</code></td><td class="token-value"><code>500</code></td><td class="token-value"><code>500</code></td></tr><tr><td class="token-name"><code>--fontWeight-normal</code></td><td class="token-value"><code>400</code></td><td class="token-value"><code>400</code></td></tr><tr><td class="token-name"><code>--fontWeight-semibold</code></td><td class="token-value"><code>600</code></td><td class="token-value"><code>600</code></td></tr><tr><td class="token-name"><code>--fontWeight-thin</code></td><td class="token-value"><code>100</code></td><td class="token-value"><code>100</code></td></tr><tr><td class="token-name"><code>--letterSpacing-normal</code></td><td class="token-value"><code>0</code></td><td class="token-value"><code>0</code></td></tr><tr><td class="token-name"><code>--letterSpacing-tight</code></td><td class="token-value"><code>-0.025em</code></td><td class="token-value"><code>-0.025em</code></td></tr><tr><td class="token-name"><code>--letterSpacing-tighter</code></td><td class="token-value"><code>-0.05em</code></td><td class="token-value"><code>-0.05em</code></td></tr><tr><td class="token-name"><code>--letterSpacing-wide</code></td><td class="token-value"><code>0.025em</code></td><td class="token-value"><code>0.025em</code></td></tr><tr><td class="token-name"><code>--letterSpacing-wider</code></td><td class="token-value"><code>0.05em</code></td><td class="token-value"><code>0.05em</code></td></tr><tr><td class="token-name"><code>--letterSpacing-widest</code></td><td class="token-value"><code>0.1em</code></td><td class="token-value"><code>0.1em</code></td></tr><tr><td class="token-name"><code>--lineHeight-loose</code></td><td class="token-value"><code>2</code></td><td class="token-value"><code>2</code></td></tr><tr><td class="token-name"><code>--lineHeight-none</code></td><td class="token-value"><code>1</code></td><td class="token-value"><code>1</code></td></tr><tr><td class="token-name"><code>--lineHeight-normal</code></td><td class="token-value"><code>1.5</code></td><td class="token-value"><code>1.5</code></td></tr><tr><td class="token-name"><code>--lineHeight-relaxed</code></td><td class="token-value"><code>1.625</code></td><td class="token-value"><code>1.625</code></td></tr><tr><td class="token-name"><code>--lineHeight-snug</code></td><td class="token-value"><code>1.375</code></td><td class="token-value"><code>1.375</code></td></tr><tr><td class="token-name"><code>--lineHeight-tight</code></td><td class="token-value"><code>1.25</code></td><td class="token-value"><code>1.25</code></td></tr></tbody></table>
+
+    </section>
+
+      <footer class="guide-footer">
+        <p>This guide is auto-generated from the canonical <code>governance/</code> markdown files and the live token CSS in <code>src/styles/tokens/</code>. Re-run <code>node governance/build-guide.mjs</code> after editing any source. The MCP <code>strata-ds</code> server reads the same files.</p>
+        <p>If the CSS tokens table reflects unexpected values, check your working tree — uncommitted edits in <code>variables.css</code> and <code>variables-dark.css</code> are picked up as-is.</p>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+(function () {
+  // Theme toggle with localStorage persistence
+  var html = document.documentElement;
+  var saved = null;
+  try { saved = localStorage.getItem('strata-guide-theme'); } catch (_) {}
+  if (saved === 'dark') html.classList.add('dark');
+  else if (saved === 'light') html.classList.remove('dark');
+  else if (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) html.classList.add('dark');
+
+  var btn = document.getElementById('theme-toggle');
+  if (btn) {
+    btn.addEventListener('click', function () {
+      var nowDark = html.classList.toggle('dark');
+      try { localStorage.setItem('strata-guide-theme', nowDark ? 'dark' : 'light'); } catch (_) {}
+      btn.textContent = nowDark ? 'Light mode' : 'Dark mode';
+    });
+    btn.textContent = html.classList.contains('dark') ? 'Light mode' : 'Dark mode';
+  }
+
+  // Scroll-spy
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.guide-section'));
+  var links = {};
+  document.querySelectorAll('nav.toc a[data-id]').forEach(function (a) {
+    links[a.getAttribute('data-id')] = a;
+  });
+  function setActive(id) {
+    Object.keys(links).forEach(function (k) {
+      links[k].classList.toggle('active', k === id);
+    });
+  }
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) setActive(e.target.id);
+      });
+    }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+    sections.forEach(function (s) { obs.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>
