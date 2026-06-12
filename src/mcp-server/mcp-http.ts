@@ -142,10 +142,13 @@ function createServer() {
     {}, async () => ({ content: [{ type: 'text', text: readGovernanceFile('LAWS.md') }] }));
 
   server.tool('get_rules',
-    'DS rules for a specific category.',
+    'DS rules for a specific category. 17 categories cover: tokens (color/brand/typography/elevation), components (containers/buttons/icons), code conventions (code-usage), composition (modal-patterns, layout-density, spacing-rhythm, responsive-behavior, data-display), states (empty-states, loading-states), microcopy + accessibility.',
     { category: z.enum([
       'color-tokens', 'brand-colors', 'containers-and-cards',
       'buttons-and-actions', 'icons', 'typography', 'elevation', 'code-usage',
+      'modal-patterns', 'layout-density', 'spacing-rhythm',
+      'responsive-behavior', 'empty-states', 'loading-states',
+      'microcopy-tone', 'accessibility-focus', 'data-display',
     ]) },
     async ({ category }) => {
       const map: Record<string, string> = {
@@ -157,6 +160,15 @@ function createServer() {
         'typography': 'rules/06-typography.md',
         'elevation': 'rules/07-elevation.md',
         'code-usage': 'code-usage.md',
+        'modal-patterns': 'rules/08-modal-patterns.md',
+        'layout-density': 'rules/09-layout-density.md',
+        'spacing-rhythm': 'rules/10-spacing-rhythm.md',
+        'responsive-behavior': 'rules/11-responsive-behavior.md',
+        'empty-states': 'rules/12-empty-states.md',
+        'loading-states': 'rules/13-loading-states.md',
+        'microcopy-tone': 'rules/14-microcopy-tone.md',
+        'accessibility-focus': 'rules/15-accessibility-focus.md',
+        'data-display': 'rules/16-data-display.md',
       };
       return { content: [{ type: 'text', text: readGovernanceFile(map[category]) }] };
     });
@@ -175,13 +187,41 @@ function createServer() {
     async ({ query }) => ({ content: [{ type: 'text', text: searchGovernance(query) }] }));
 
   server.tool('get_overview',
-    'Full DS context: laws + tokens + anti-patterns in one call.',
+    'High-level map of all DS governance: laws + tokens + anti-patterns + the headlines of every rule category. For full text of a specific rule call get_rules({category}).',
     {}, async () => {
+      const ruleCategories: Array<[string, string]> = [
+        ['color-tokens', 'rules/01-color-tokens.md'],
+        ['brand-colors', 'rules/02-brand-colors.md'],
+        ['containers-and-cards', 'rules/03-containers-and-cards.md'],
+        ['buttons-and-actions', 'rules/04-buttons-and-actions.md'],
+        ['icons', 'rules/05-icons.md'],
+        ['typography', 'rules/06-typography.md'],
+        ['elevation', 'rules/07-elevation.md'],
+        ['code-usage', 'code-usage.md'],
+        ['modal-patterns', 'rules/08-modal-patterns.md'],
+        ['layout-density', 'rules/09-layout-density.md'],
+        ['spacing-rhythm', 'rules/10-spacing-rhythm.md'],
+        ['responsive-behavior', 'rules/11-responsive-behavior.md'],
+        ['empty-states', 'rules/12-empty-states.md'],
+        ['loading-states', 'rules/13-loading-states.md'],
+        ['microcopy-tone', 'rules/14-microcopy-tone.md'],
+        ['accessibility-focus', 'rules/15-accessibility-focus.md'],
+        ['data-display', 'rules/16-data-display.md'],
+      ];
+      const ruleHeadlines = ruleCategories.map(([slug, path]) => {
+        const md = readGovernanceFile(path);
+        const headings = md.split('\n').filter((l) => /^##\s+/.test(l)).slice(0, 6);
+        return `### ${slug}\n${headings.join('\n')}`;
+      }).join('\n\n');
       const text = [
-        '# Strata DS — Complete Governance\n',
+        '# Strata DS — Governance map\n',
+        '> Call `get_rules({category})` for the full text of any category below.',
+        '> Call `get_laws()`, `get_tokens()`, `get_anti_patterns()` for the full text of those.',
+        '',
         '## LAWS\n', readGovernanceFile('LAWS.md'),
         '\n## TOKENS\n', readGovernanceFile('tokens/token-reference.md'),
         '\n## ANTI-PATTERNS\n', readGovernanceFile('anti-patterns/common-errors.md'),
+        '\n## RULE CATEGORIES (headings only)\n', ruleHeadlines,
       ].join('\n');
       return { content: [{ type: 'text', text }] };
     });
