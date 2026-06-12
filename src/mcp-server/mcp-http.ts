@@ -143,7 +143,10 @@ function createServer() {
 
   server.tool('get_rules',
     'DS rules for a specific category.',
-    { category: z.enum(['color-tokens', 'brand-colors', 'containers-and-cards', 'buttons-and-actions', 'icons']) },
+    { category: z.enum([
+      'color-tokens', 'brand-colors', 'containers-and-cards',
+      'buttons-and-actions', 'icons', 'typography', 'elevation', 'code-usage',
+    ]) },
     async ({ category }) => {
       const map: Record<string, string> = {
         'color-tokens': 'rules/01-color-tokens.md',
@@ -151,6 +154,9 @@ function createServer() {
         'containers-and-cards': 'rules/03-containers-and-cards.md',
         'buttons-and-actions': 'rules/04-buttons-and-actions.md',
         'icons': 'rules/05-icons.md',
+        'typography': 'rules/06-typography.md',
+        'elevation': 'rules/07-elevation.md',
+        'code-usage': 'code-usage.md',
       };
       return { content: [{ type: 'text', text: readGovernanceFile(map[category]) }] };
     });

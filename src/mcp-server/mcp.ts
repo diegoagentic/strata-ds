@@ -70,6 +70,9 @@ server.tool(
       'containers-and-cards',
       'buttons-and-actions',
       'icons',
+      'typography',
+      'elevation',
+      'code-usage',
     ]).describe('The rule category to retrieve'),
   },
   async ({ category }) => {
@@ -79,6 +82,9 @@ server.tool(
       'containers-and-cards': 'rules/03-containers-and-cards.md',
       'buttons-and-actions': 'rules/04-buttons-and-actions.md',
       'icons': 'rules/05-icons.md',
+      'typography': 'rules/06-typography.md',
+      'elevation': 'rules/07-elevation.md',
+      'code-usage': 'code-usage.md',
     };
     return {
       content: [{ type: 'text', text: readGovernanceFile(fileMap[category]) }],
