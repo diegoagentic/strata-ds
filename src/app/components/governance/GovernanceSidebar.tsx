@@ -67,7 +67,7 @@ export function GovernanceSidebar({ sections }: GovernanceSidebarProps) {
           </p>
           <p className="text-sm font-bold text-foreground">Rules guide</p>
         </div>
-        <nav className="px-2 py-3 max-h-[calc(100vh-12rem)] overflow-y-auto" aria-label="Governance sections">
+        <nav className="px-2 py-3 max-h-[calc(100vh-12rem)] overflow-y-auto" aria-label="UI Laws sections">
           {groups.map((group) => (
             <div key={group.name} className="mb-3 last:mb-0">
               <div className="px-2 mb-1 text-[10px] font-bold uppercase tracking-wider text-muted-foreground/70">
