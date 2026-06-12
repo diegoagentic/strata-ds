@@ -231,6 +231,21 @@ function anonymize(text) {
 
 // ── Run ─────────────────────────────────────────────────────────────────
 
+function extractText(content) {
+  if (typeof content === 'string') return content;
+  if (!Array.isArray(content)) return '';
+  return content
+    .filter((p) => typeof p === 'string' || (p && (p.type === 'text' || typeof p.text === 'string')))
+    .map((p) => (typeof p === 'string' ? p : p.text ?? ''))
+    .join('\n');
+}
+
+function snippetWide(text, max = 360) {
+  const trimmed = String(text).trim().replace(/\s+/g, ' ');
+  if (trimmed.length <= max) return trimmed;
+  return trimmed.slice(0, max - 1) + '…';
+}
+
 function run() {
   if (!statSync(PROJECTS_ROOT, { throwIfNoEntry: false })?.isDirectory()) {
     console.error(`Projects root not found: ${PROJECTS_ROOT}`);
@@ -252,6 +267,8 @@ function run() {
     samples: [],
     sessions_touched: new Set(),
     per_session: new Map(), // sessionPath -> count
+    // F39: forensic pairs — Map<sessionPath, Array<{assistant, user, lineIdx}>>
+    forensic_by_session: new Map(),
   });
 
   for (const jsonl of walk(PROJECTS_ROOT)) {
@@ -262,27 +279,26 @@ function run() {
       raw = readFileSync(jsonl, 'utf8');
     } catch (_) { stats.skipped++; continue; }
     const lines = raw.split('\n');
+    // Pass 1: build chronological turn array so we can look BACK from each
+    // user correction to the prior assistant message (F39).
+    const turns = []; // [{ role, text }]
     for (const line of lines) {
       if (!line.trim()) continue;
       let obj;
       try { obj = JSON.parse(line); } catch (_) { continue; }
       stats.messages++;
-      // Claude Code session shape varies; we look for role=user with text content
       const role = obj.role ?? obj.message?.role ?? obj.type;
-      if (role !== 'user') continue;
-      stats.user_messages++;
-      // Content can be a string or an array of parts
       const content = obj.content ?? obj.message?.content ?? obj.text;
-      let text = '';
-      if (typeof content === 'string') text = content;
-      else if (Array.isArray(content)) {
-        text = content
-          .filter((p) => typeof p === 'string' || (p && (p.type === 'text' || typeof p.text === 'string')))
-          .map((p) => (typeof p === 'string' ? p : p.text ?? ''))
-          .join('\n');
-      }
-      if (!text) continue;
-      // Count excluded noise separately (for visibility)
+      const text = extractText(content);
+      if (!role || !text) continue;
+      turns.push({ role, text });
+    }
+    // Pass 2: scan user corrections, capture prior assistant context
+    for (let i = 0; i < turns.length; i++) {
+      const t = turns[i];
+      if (t.role !== 'user') continue;
+      stats.user_messages++;
+      const text = t.text;
       if (text.length > 6 && text.length < 4000 && looksLikeNoise(text)
           && CORRECTION_HINTS.some((rx) => rx.test(text))) {
         stats.excluded_noise++;
@@ -290,14 +306,39 @@ function run() {
       }
       if (!looksLikeCorrection(text)) continue;
       stats.corrections++;
+      // Find the most recent assistant turn before this one
+      let assistantText = '';
+      for (let j = i - 1; j >= 0; j--) {
+        if (turns[j].role === 'assistant') {
+          assistantText = turns[j].text;
+          break;
+        }
+      }
       const topics = classify(text);
       const anonText = anonymize(text);
+      const anonAssist = anonymize(assistantText);
       for (const tKey of topics) {
         const bucket = byTopic.get(tKey);
         bucket.count++;
         bucket.sessions_touched.add(jsonl);
         bucket.per_session.set(jsonl, (bucket.per_session.get(jsonl) ?? 0) + 1);
         if (bucket.samples.length < 6) bucket.samples.push(snippet(anonText));
+        // F39: store forensic pair per session (cap at 8 pairs per session
+        // to bound memory)
+        if (assistantText && assistantText.length > 20) {
+          let sessionPairs = bucket.forensic_by_session.get(jsonl);
+          if (!sessionPairs) {
+            sessionPairs = [];
+            bucket.forensic_by_session.set(jsonl, sessionPairs);
+          }
+          if (sessionPairs.length < 8) {
+            sessionPairs.push({
+              assistant: snippetWide(anonAssist),
+              user: snippetWide(anonText),
+              turnIdx: i,
+            });
+          }
+        }
       }
     }
   }
@@ -357,6 +398,39 @@ function run() {
       lines.push('- > ' + s.replace(/\n+/g, ' '));
     }
     lines.push('');
+  }
+
+  // ── F39: Forensic dive on high-intensity buckets ─────────────────────
+  lines.push('## High-intensity session forensics');
+  lines.push('');
+  lines.push('For buckets where users had to correct the same topic many times in a single session, the assistant likely kept producing the violating pattern despite earlier feedback. Below: for each high-intensity bucket, the top sessions ranked by in-session correction count, with one to three representative (assistant turn → user correction) pairs.');
+  lines.push('');
+  for (const b of sorted) {
+    if (b.max_per_session < 5) continue;
+    if (b.topic.key === 'other') continue;
+    // Pick top 3 sessions for this bucket by per-session count
+    const topSessions = [...b.per_session.entries()]
+      .sort((a, x) => x[1] - a[1])
+      .slice(0, 3);
+    if (topSessions.length === 0) continue;
+    lines.push(`### ${b.topic.label}`);
+    lines.push(`_Linked rule(s): ${b.topic.rule_ref} · Strength: ${b.strength} · ${b.count} signals across ${b.distinct_sessions} sessions_`);
+    lines.push('');
+    for (const [sessionPath, count] of topSessions) {
+      const pairs = b.forensic_by_session.get(sessionPath) ?? [];
+      if (pairs.length === 0) continue;
+      lines.push(`**Session intensity: ${count} corrections** · sample pairs:`);
+      lines.push('');
+      // Show 1-3 pairs per session, prefer evenly distributed turns
+      const sampled = pairs.length <= 3 ? pairs : [pairs[0], pairs[Math.floor(pairs.length / 2)], pairs[pairs.length - 1]];
+      for (const p of sampled) {
+        lines.push(`- _Assistant (turn ${p.turnIdx})_:`);
+        lines.push(`  > ${p.assistant.replace(/\n+/g, ' ')}`);
+        lines.push(`- _User correction_:`);
+        lines.push(`  > ${p.user.replace(/\n+/g, ' ')}`);
+        lines.push('');
+      }
+    }
   }
 
   // Rule-recommendation section

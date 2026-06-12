@@ -5,10 +5,10 @@
 
 ## Coverage
 
-- Sessions scanned: **438**
-- Total messages: 118.333
-- User messages: 32.996
-- **Correction signals (after exclusion filter)**: 588
+- Sessions scanned: **439**
+- Total messages: 118.777
+- User messages: 2451
+- **Correction signals (after exclusion filter)**: 589
 - Excluded as noise (env / IDE / git / cache talk that triggered a correction word): 96
 - Skipped files (read error): 0
 
@@ -18,7 +18,7 @@ Strength score balances raw count with distinct-session breadth and max in-sessi
 
 | Rank | Bucket | Signals | Distinct sessions | Max in 1 session | Strength | Linked rule(s) |
 |---:|---|---:|---:|---:|---:|---|
-| 1 | Other corrections (uncategorized) | 338 | 38 | 206 | 12455 | — |
+| 1 | Other corrections (uncategorized) | 339 | 39 | 206 | 12578 | — |
 | 2 | Modal / overlay / dialog structure | 110 | 56 | 28 | 2825 | rules/08-modal-patterns |
 | 3 | Microcopy / button labels / error messages | 70 | 43 | 22 | 1567 | rules/14-microcopy-tone |
 | 4 | Token violations (hex, primitives, dark: cascades) | 52 | 36 | 11 | 880 | LAW 1, rules/01-color-tokens, anti-patterns ERROR 01-05 |
@@ -32,8 +32,8 @@ Strength score balances raw count with distinct-session breadth and max in-sessi
 
 > Project / client names are anonymized (`[client]`, `[doc-id]`, `[email]`). Up to 6 samples per bucket.
 
-### Other corrections (uncategorized) — 338 signals · 38 sessions · max 206/session
-_Linked rule(s): — · Strength: 12455_
+### Other corrections (uncategorized) — 339 signals · 39 sessions · max 206/session
+_Linked rule(s): — · Strength: 12578_
 
 - > pero lo que falla no es el vercer es la version local
 - > tambien hay que verificaqr segun el estado del funel y las operaciones que haga el experto la descarga se actualice y como ui revisa el dise;o del docuemnto para refinarlo y m…
@@ -120,11 +120,351 @@ _Linked rule(s): rules/04-buttons-and-actions, code-usage · Strength: 8_
 - > DESIGN SYSTEM MANAGER AUDIT · Component layer You are the Strata DS Manager auditing the 13 manufacturer/* components I built and their wire-up in detail pages. Goal: identif…
 - > File: c:\Users\User\Documents\design-system\strata-projects\config-evolution\inbound-outbound\src\Transactions.tsx (large, ~3200 lines). I'm refining the PER-ROW actions in t…
 
+## High-intensity session forensics
+
+For buckets where users had to correct the same topic many times in a single session, the assistant likely kept producing the violating pattern despite earlier feedback. Below: for each high-intensity bucket, the top sessions ranked by in-session correction count, with one to three representative (assistant turn → user correction) pairs.
+
+### Modal / overlay / dialog structure
+_Linked rule(s): rules/08-modal-patterns · Strength: 2825 · 110 signals across 56 sessions_
+
+**Session intensity: 28 corrections** · sample pairs:
+
+- _Assistant (turn 93)_:
+  > ## ✅ Listo **TypeScript exit 0** · Server respondiendo 200 · Vite HMR detectó cambios automáticamente. ### Nuevo orden (verificado en el bundle servido) 1. 📐 **[client]** ← más reciente, arriba 2. 📊 Workscapes 3. 🏛️ BFI 4. 🪑 Leland 5. 🏢 MBI 6. 🔧 WRG 7. 🏗️ Continua 8. 🏢 Dupler 9. 📦 OPS Demo (Demo 2) 10. 🏗️ COI 11. 🪑 Acme Corp ← más antiguo, abajo …
+- _User correction_:
+  > hay que refinar el demo de [client] por un lado hay que enfocar que el app que se esta generando a lo largo de la demo esta siendo vista desde el punto d evista de la manager d elos diseñadores y poor lo cual se necesita mostrar mas la visibilidad y el tracking de ellos y pder asignar en el proyecto de smart cmparator hay un funnel que podemos utilizar para…
+
+- _Assistant (turn 696)_:
+  > Te lo cuento como una historia · qué hace [client] cuando alguien le pide cotizar la mano de obra y la entrega de unos muebles de oficina · paso a paso · sin tecnicismos. ### Antes de empezar · el contexto [client] **no instala** los muebles ellos mismos. Contratan a empresas externas (instaladores) y cobran un margen. Así que cuando una constructora les pi…
+- _User correction_:
+  > hay que revisar a lo largo del demo de labor de [client] basados en la documentacion los documentos que se reciben para ajusta r el modal de revision en cada caso y ajustar los tabs ya que en este momento se esta mostrando las opciones que vienen heredadas del primer flujo de design specs entonces debemos validad los adjuntos y previsualizaciones en cada mo…
+
+- _Assistant (turn 917)_:
+  > Los 4 bugs arreglados. TS limpio · Vite build 17.67s · HTTP 200. ### Resumen de los 3 cambios **1. [[client]DocumentReviewModal.tsx](strata-projects/config-evolution/demo-[client]/src/components/[client]/[client]DocumentReviewModal.tsx) · DefaultDocTabs** (líneas 528-544): - Nuevo `useEffect([stage])` que llama `setActiveTab(DEFAULT_DOC[stage])` cada vez qu…
+- _User correction_:
+  > revisando el flujo y los subpaso del paso 1.1 siento que es redundante ytener 2 modales que hacen lo mismo entonces cuando se le de click a la notificacion se deberia mostarar el modal de revision y no el modal de la lista de de mails , el boton que muetra view inbox deberia mostrar el modal de revision tambien sin señalar el ultimo que llego, por otro lado…
+
+**Session intensity: 14 corrections** · sample pairs:
+
+- _Assistant (turn 584)_:
+  > Commit `3550cf9` pusheado. **Cambios:** 1. **Summary strip compacto** (queda inline en el step): - Icono balanza + "2 items to review before scenarios" - Subtítulo 1-line: "1 field mismatch · 1 inventory suggestion · neither blocks advancement" - Chips live: "+$7,450 pending" (ámbar) + "−$3,000 saved" (verde) cuando aplica - Contador "0 / 2 resolved" a la d…
+- _User correction_:
+  > hay que revisar a lo largo del demo lo modales implementados ya que la forma de implementacion no se han implementado bien ya que la navbar sigue presente y no se oclta e impide la legibilidad y realizar acciones , revisemos si podemos acultar la navbar debajo de l modal o reoganizar los modales del demo de MBI de otra manera para mejorar la legibilidad
+
+- _Assistant (turn 5013)_:
+  > También actualizo la tabla de verificación:
+- _User correction_:
+  > viendo lo que has implementado esta mal y hay que refinar todo el plan y todo el flujo 1 y todos sus pasos la ui principal debe ser el funnel y la vista de detalle que es el modal de revision y lo pusiste comjo un paso 3 y dejaste la misma interfase y eso no es correcto las accriones de revision y lo que se debee hacer en el flujo deberian adptarse a la vis…
+
+- _Assistant (turn 5307)_:
+  > Listo. Los cambios en el tab Attachments del paso 1.8 (CPR): - **Solo 3 archivos** con badge de categoría (CPR / Invoice / Sign-In) - **Preview** abre un lightbox flotante sobre fondo oscuro — click fuera cierra - **CPR-NYPL-17706.pdf** y **signin-NYPL-17706.pdf** se muestran rotados 90° dentro del iframe para que queden horizontales correctamente — la caja…
+- _User correction_:
+  > en el paos 1.8 despues de revisar la informacion y verificarla no solo debe mantener al tanto a los stakeholders debe tambien actualizar la informacion a core en el estado actual que va el mensaje deberia cambiar teniendo en cuenta la revison y el paso en que vamos a este punto el mensaje deberia enviarse por medio del mismo modal que venimos utilizando en …
+
+**Session intensity: 9 corrections** · sample pairs:
+
+- _Assistant (turn 152)_:
+  > Pusheado: **`5eb5f07`** · `f944077..5eb5f07`. ## Resumen del fix de coherencia **Modelo único de números** ahora consistente en todo el demo: | Concepto | Valor | |---|---| | **Producto** (sin cambios) | $235,560 | | **Labor inicial** (4 categorías @ rates realistas NYC) | **$7,640** | | └ Teamsters | 24h × $75 = $1,800 | | └ Carpenters | 50h × $90 = $4,500…
+- _User correction_:
+  > debemos refinar el proceso segun el feedback que se nos dio con una financiera el tema de credit line ya viene lista de la plataforma core entonces los subpasos de aplicar este paso no deberian ir pero deberiamos resaltar que esa informacion viene de ese lado y en los dos lasdos de la revision en el modal panel derecho y panel izquierdo deberian reflejar qu…
+
+- _Assistant (turn 798)_:
+  > ✅ **demo-leland corriendo en [http://localhost:8085/](http://localhost:8085/)** — HTTP 200, Vite ready en 647ms. Ambos servers ahora activos: - **demo-leland** → :8085 (background ID `bqyf51u1r`) - **inbound-outbound** → :8086 (background ID `b6lmtb6wx`) Compartime el feedback de BFI y planeamos.
+- _User correction_:
+  > en el flujo del demo de BFI debemos revisar los pasos usbpasos modles e interacciones que habla wendy para dar una mejor identificacion de los cartones y que se pueda referenciar y mejorar la trazabilidad identifica en primer lugar el modal ddonde ella señala lo que hace falta e n el flujo de claims y luego revisa el resto de flujos si podemos referenciar e…
+
+- _Assistant (turn 995)_:
+  > P59 done · type check clean. Summary: **Structural consolidation** - `sc1.2b` (Export BOM CET→CAP) and `sc1.3b` (Field verify) **eliminados** del tour. Sus contenidos viven ahora como fases internas dentro de sc1.2 y sc1.3 respectivamente - Removidos también de [[client].ts](demo-leland/src/config/profiles/[client].ts) (steps, behavior, messages, SELF_INDIC…
+- _User correction_:
+  > hay que refinar el flujo 2 primero quiero aclarar sobre que informacion o contendo estas haciendo estas verificaciones y sugerencias que djunto como primer imagen ? por otro lado hay que ajustar los tabs del modal para que sean similares al flujo 1 y aqui tambien lo mas importante el tab de bom surge en este punto asumamos por ahora que el designer lo const…
+
+### Microcopy / button labels / error messages
+_Linked rule(s): rules/14-microcopy-tone · Strength: 1567 · 70 signals across 43 sessions_
+
+**Session intensity: 22 corrections** · sample pairs:
+
+- _Assistant (turn 88)_:
+  > Listo, `fbee5a7` pusheado. Aquí está el resumen de lo que cambió: --- ## QuoteDetail — Quick Actions + CTA primario **Quick Actions** (barra superior) — ahora solo 4 acciones secundarias: `Edit Quote · Download PDF · Send to Customer · Duplicate` **Sección CTA primaria** (nueva, debajo de Quick Actions): - **"Advance to [siguiente etapa]"** — botón secundar…
+- _User correction_:
+  > al probar lo implementado las quick action de convertir a po o cambiar al siguiete estado no se ven donde mencione que debian estar y no se creo el boton deir al siguiente estado y no todos los botones mestran el label por otro lado los botones contextuale sd elas cards no estan cumpleindo su fncion y solo estan redigiendo a la pagina de detale se deberia s…
+
+- _Assistant (turn 825)_:
+  > Servidor arriba en `http://localhost:8085/` (Vite v7.3.1 · 451 ms · background `brovu5gfj`). Recarga el navegador y `html2canvas` + `jspdf` ya están disponibles para PEDExportModal en la rama `demo`.
+- _User correction_:
+  > en el demo de MBI debemos revisar la guia debemos reviar el wording y la sexplicaciones para omiti nombres propios y cmabiarlos por lroles y enfatizar en la sacciones que ocurren en cada paso y no tantno en las cantidades
+
+- _Assistant (turn 1233)_:
+  > Commit `988c1e3`. Estado final: el scrollbar visual vuelve a ser el `scrollbar-micro` original (2px sutil) y se mantienen solo los cambios de sensibilidad: - **Drag-to-scroll** en cualquier parte del canvas (cursor `grab`) - **Shift+wheel** / gestos horizontales - **Multiplicador 1.4×** para que un movimiento corto cubra más distancia Push pendiente.
+- _User correction_:
+  > quedo perfecto gracias, haz push y despues de esto vuelvea revisar el texto del ticket y dime como se esta cumpliendo con la simplementaciones y como se puede probar prfavor:[SDB-1408] Ticket E — front-react-strata-ui: Dealer comparison view (Action Center + ACK detail) Description Ticket E — front-react-strata-ui: Dealer Comparison View Epic: SDB-1408 — PO…
+
+**Session intensity: 6 corrections** · sample pairs:
+
+- _Assistant (turn 858)_:
+  > TS sin errores nuevos (el `strata-design-system` TS2307 es el baseline pre-existente). Dev server :8085 responde con HMR aplicado. Cambios listos. ### Resumen **App.tsx:123**: `appName={isDemoActive ? [client]AppName : 'Strata for [client]'}` · ahora siempre pasa una etiqueta significativa. **Navbar.tsx:185**: fallback defensivo cambiado de `'Strata AI'` → …
+- _User correction_:
+  > cambia el texto de la navbar por que se repide el nombre office works quita office works de la letra gri y haz un lasto de linea para la letara en bold
+
+- _Assistant (turn 2560)_:
+  > **Commit `9cc6e46`** pusheado. 2 fixes en este round: ## Para validar en `:8085` (refresh) ### 1. Tabs Summary / Fields / Line Items Abre el modal Compare (cualquiera de los 3 — ergotron / [client] / AIS): - **Summary** (default) — el contenido actual (AI Summary card + Discrepancies) - **Fields** — tabla 4 columnas: `Field · PO value · ACK value · Status p…
+- _User correction_:
+  > el modal no es consitente en cuanto a su altura cuando seleccionamos y el tab de summary debera estar mas resaltado y teenr un texto que denote mas urgencia y prioridad
+
+- _Assistant (turn 2685)_:
+  > TS clean. Cambios aplicados: **1. Field type label — palabra completa + mixed case** ([DiscrepancyList.tsx:55-72,96,111](src/components/comparison/DiscrepancyList.tsx#L55)) - Map de expansión: `Qty` → `Quantity`, `Mfg` → `Manufacturer`, `UOM` → `Unit of Measure`, etc. - Se quitó `uppercase tracking-wider` — ahora muestra `Quantity` en lugar de `QTY` con tip…
+- _User correction_:
+  > para el caso anterior primero resaltemos que la backorder ya esta de una forma visual r como que strata ya nageando encontro una back order y en texto sugiera aceptar pero por esta sugerido no deberia cambiar el boton a verte sino que hasta que el usuario lo cambie o lo acepte
+
+**Session intensity: 2 corrections** · sample pairs:
+
+- _Assistant (turn 64)_:
+  > Implementación completa y typecheck limpio (exit 0). Resumen del refinamiento (piloto OrderDetail): ## Componentes nuevos (reutilizables) - **[TransactionStickyHeader.tsx](inbound-outbound/src/components/transactions/TransactionStickyHeader.tsx)** — barra **sticky** mínima (`sticky top-24 z-40`, bajo el navbar flotante). Muestra solo lo **primario**: **Orde…
+- _User correction_:
+  > va bien el rediseño pero debemos refinar una parte en la cerda de informacion de la transaccion dejemps visible las cards con metricas y aun lado de ellas el estado actual y abajo de estas metricas un boton que diga ver mas y darle click muestre toda la infomacion actual de la card para no satrar al usuario desd eel inicio esto debemos hacerlo a lo largo de…
+
+- _Assistant (turn 421)_:
+  > Sí, ya está. ✅ - Commit **`705e67e`** ("fix: real SIF preview modal in [client]") está en `master` y **pusheado**. - `git status -sb` → `## master...origin/master` sin ahead/behind → **local y remoto sincronizados**, árbol limpio. El fix del Preview SIF se commiteó y pusheó en la respuesta anterior (`d2842d2..705e67e`). Todo en `github.com/diegoagentic/inbo…
+- _User correction_:
+  > vamso a hacer un refinamiento en la vista de transactions las quick actions de transactions que estan cerca a los filtros borremos la de email y la de duplicate deberia ser mas funcional podria ser la misma visualizacion que tenemos en export de ese modal con la opcion de elegir que orden y duplicarla y simalar ese proceso en otroas tarnsacciones tabien qui…
+
+### Token violations (hex, primitives, dark: cascades)
+_Linked rule(s): LAW 1, rules/01-color-tokens, anti-patterns ERROR 01-05 · Strength: 880 · 52 signals across 36 sessions_
+
+**Session intensity: 11 corrections** · sample pairs:
+
+- _Assistant (turn 487)_:
+  > ✅ Push exitoso. 16 commits MBI ahora en `github.com/diegoagentic/demo-strata` branch `main`: ``` fb1c582..5b1e0b0 demo → main ``` ### Commits pusheados - Phase 0.A-0.D (foundation + mock data + routing) - Phase 2.1-2.7 (Budget Builder completo con ⭐ $18K hero) - Phase 3.A-3.C (Accounting AI · Document AI + Reconciliation + AR + Forecast) - Phase 4.A-4.C (Qu…
+- _User correction_:
+  > hay que hacer una revision general de los colores y el uso de las variabes del demo de MBI ya que los conenedores de muchos componentes en muchas de las paginas no tienen los colores que se utilizan para generar la sensacion viusla d ecapas y niveles ya que hay elementos que tiwnn ontenedores dentro de contenedores revisa en otros demos como s eha implement…
+
+- _Assistant (turn 931)_:
+  > # Plan refinado — Create Record Modal ## 1. Mapa visual del modal de referencia Tamaños, espaciado y jerarquía extraídos del código: ``` ┌─────────────────────────────── 1120 × 760 (rounded-[20px]) ──────────────────────────────┐ │ ┌── LeftRail (300w, gradient FAFAFA→F2F3F5) ──┐ ┌── Main (flex-1) ──────────────────────┐│ │ │ ┌── Brand block (px-5 pt-5 pb-4)…
+- _User correction_:
+  > frente a las preguntas la 1 no la entiendo me puedes explicar , frenta la 2: sigamos tu recomendacion, para la pregunta 3: si reemplacemoslo 4: usemos la recmendacion y que todo sean tokens de strata tabto par amodo claro y oscuro , 5 trabajemos en una sola PR por ahora y no hagas push
+
+- _Assistant (turn 1233)_:
+  > Commit `988c1e3`. Estado final: el scrollbar visual vuelve a ser el `scrollbar-micro` original (2px sutil) y se mantienen solo los cambios de sensibilidad: - **Drag-to-scroll** en cualquier parte del canvas (cursor `grab`) - **Shift+wheel** / gestos horizontales - **Multiplicador 1.4×** para que un movimiento corto cubra más distancia Push pendiente.
+- _User correction_:
+  > quedo perfecto gracias, haz push y despues de esto vuelvea revisar el texto del ticket y dime como se esta cumpliendo con la simplementaciones y como se puede probar prfavor:[SDB-1408] Ticket E — front-react-strata-ui: Dealer comparison view (Action Center + ACK detail) Description Ticket E — front-react-strata-ui: Dealer Comparison View Epic: SDB-1408 — PO…
+
+**Session intensity: 5 corrections** · sample pairs:
+
+- _Assistant (turn 465)_:
+  > Implementación completa de los 2 cambios consolidados. ### **Cambio 1 · Acordeón "Strata suggests"** ([PeerReviewScene.tsx](strata-projects/config-evolution/demo-leland/src/components/[client]/PeerReviewScene.tsx)) - Nuevo `import { ChevronRight }`. - State `expandedRules: Set<number>` + handler `toggleRule(i)` para expand/collapse. - `saveRule(rule, ruleIn…
+- _User correction_:
+  > aun hay elemenetos que no se pueden leer tienen poca accsesibilidad no se reconocen iconos y textos con branded color
+
+- _Assistant (turn 2135)_:
+  > Hotfix commited (`ab3c908`). Recargá la página · ya debería verse. Aquí te dejo la **lista visual completa** de los cambios para verificar manualmente: --- ## Phase 1 · Foundation (cross-cutting) ### Donde verificar visualmente **1. Dashboard** (`/dashboard`) - Quote details card · campo `Valid Until` → debe decir `Expiration Date` **2. Transactions · tab n…
+- _User correction_:
+  > hay varias cosas el estilo del boton de subir cambio los estilos que tenia con el color branded , quiero entender en que punto se hablo de este modlo de inbox monitor esta ocupando mucho espacio d elo importante revisa en que momen5o se pidio y si se pidio tendriamso que dejarlo como una accion secundaria al lado de subir documento y que se abara como un mo…
+
+- _Assistant (turn 2478)_:
+  > **Commit `1e1bfc3`** pusheado a Vercel. Cierra los 2 frentes que pediste. ## Para validar en `:8085` ### 1. Preflight Sync (icono avión ✈) Click en cualquier card **Reconciled** (o list view row Reconciled) → icono airplane verde → abre modal "Purchase Order preflight" (o Quote/Acknowledgment según type): | Pieza | Esperado | |---|---| | Header | "{Type} pr…
+- _User correction_:
+  > en la revision del docuemnto debemos generar una propuesta donde la IA de estrta identifique algunos items de la lista y los muestre como verificados en la base de datos y si no esta verificado mostrar un boton de que se necesita sicronizar y resaltarlo mucho puede ser fondo branded y icono gris y al darle click que salga un call to acton que explique que e…
+
+**Session intensity: 2 corrections** · sample pairs:
+
+- _Assistant (turn 752)_:
+  > Adaptando el modal para que detecte si ya hay un doc preseleccionado y saltee el step `select`.
+- _User correction_:
+  > la creacion de purchase order no funiciona y en otros proyectos ya esta funcionando debemos hacer que tambien se genere esa funcionlidad revisa el codigo d eotro proyecto para traerlo y adaptarlo desd ela vsita de detalle del demo de Inbound el boton de la accion principal no tienen los coolores branded ni la funcion send acknowledgemnd hace nada en las pur…
+
+- _Assistant (turn 971)_:
+  > P57 done · type check clean. Summary: **Step split** - `sc1.0` now ends after sending the clarification email · CTA reads "Open & send message" · on Send (RequestInfoDialog 900ms) → `onValidate()` advances to sc1.0b - `sc1.0b` is a new step where Caitlin's reply arrives. Right panel renders directly with success banner + designer list (CapacityHeatmap with …
+- _User correction_:
+  > hay que refinar el paso 1.2 en ciertas cosass primero la card del funel tiene un chip que se desborda y hay que reubicarlo por otro lado se creo un banner o franja narnja que no es necesaria por otro lado la lista de manat visualmente no se a los otros componentes de las otras listas de los diseñadores hay que unificar estilos y diseños y tambien tiene icon…
+
+### Layout / density / spacing complaints
+_Linked rule(s): rules/09-layout-density, rules/10-spacing-rhythm · Strength: 842 · 54 signals across 42 sessions_
+
+**Session intensity: 8 corrections** · sample pairs:
+
+- _Assistant (turn 786)_:
+  > Commits `f8c870c` (right-align headers) y `a054be0` (funnel scroll). Mejoras al funnel: | Antes | Después | |---|---| | `scrollbar-micro` 2px casi invisible | `scrollbar-funnel` 12px con thumb mínimo 80px, primary on hover | | Solo arrastrable por la barra | **Click + drag en cualquier parte del canvas** (cursor `grab` → `grabbing`) con multiplier 1.4× | | …
+- _User correction_:
+  > en el cambio que te pedi era cambiar como el rango de sensibilidad mas no los estilos del scroll
+
+- _Assistant (turn 2284)_:
+  > Listo, pusheado. Ahora el flujo es: 1. Click "Review hold" en la card (Enterprise Holdings o Boeing) → abre modal centrado con backdrop blur 2. El modal muestra: **Account summary** (PO, monto, días vencidos, salesperson) + **Hold reason** (card ámbar con fecha de instalación o conteo de punch list + explicación) 3. Dos opciones: **"Project complete · relea…
+- _User correction_:
+  > cuando termines esta tarea quiero que me ayudes a ver si este feedback fue implementado si se peyde refinar y como probarlo heads up on round-2 feedback from Wendy on the MBI demo. Two changes that need to land in the deployed demo (the local docs / tech architecture / alignment HTMLs are already updated; this is just the deployed app). 1. AI Extraction pan…
+
+- _Assistant (turn 5435)_:
+  > TypeScript 0 errores. Commit `e761665` pusheado — rediseño visual del kanban aplicado: columnas con headers limpios, avatares circulares, tipografía más grande, padding aumentado y badges mejorados, alineado con el estilo del OCR kanban de [client].
+- _User correction_:
+  > aun hay discrepancias visuales hay contenedores y otros elementos visuales de mart comparator revisa las secciones los filtros las cards tienen contenedores busqyueda y un boton de modo grid y lista eso no eta las cards estan flotando y los titulos en el funel son diferentes
+
+**Session intensity: 3 corrections** · sample pairs:
+
+- _Assistant (turn 87)_:
+  > Vite arrancó limpio en 599ms. Sin errores. ## ✅ Server reiniciado correctamente - Proceso viejo (PID 14116) matado - Cache `.vite/deps` borrada - Server fresh corriendo en `http://localhost:8085/` - Cache de Vite reconstruyéndose desde cero - **11 profiles servidos** (vs. 10 antes) — [client] incluido ## Próximo paso (tu turno) En el browser: 1. **Refresca …
+- _User correction_:
+  > ya apareceel demo de [client] lo que sucede es que al estar al final d ela lista no se ve entonces a la lista agreguemosle un scroll interno para navegar y elegir que demo ver y por otro lado ordenemos los dmeos por orden de creacion para que lso mas recientes esten arriba
+
+- _Assistant (turn 350)_:
+  > Commit + push completos. - **Commit**: `f086034 refactor([client]): TeknionPreviewPanel BI/PO upgrade + sc1.2 polish` - **Stat**: 2 files · +156 / −23 - **Push**: `4a3da39..f086034 master -> master` en `diegoagentic/demo-2026-strata`
+- _User correction_:
+  > en el paso 3.2 hay que resolver un gap pero se describe pero el usuario no ude tomar accion y para atualziarlo segun la documentacio habria que subir un nuevo archivo o editar manualmente aceptando opciones
+
+- _Assistant (turn 2393)_:
+  > **Fase 4 cerrada** — commit `3c00a35`. -357 / +224 líneas en `OCRTracking.tsx` + nuevo `OcrDocCard.tsx`. **Para validar en `:8085` (refresh):** | Pieza | Esperado | |---|---| | Breadcrumb | Top-left, **arriba** del navbar pill, opaco 80% (matchea screenshot 1) | | Card header | Doc icon outlined gris + Vendor bold + pill TYPE (QUOTE = violeta) + avatar dere…
+- _User correction_:
+  > revisandolo las card de produccion son mas anchas a comparacion de local y el local el contenedor tiene un scroll interno para visibilzarlo mejor tambien el boton de cambiar de funnel a lista no tiene los mismo iconos y no esta ubicado donde corresponde apate falta el boton de carga de ahivos ese proceso te lo pase en los screenshots y ya tenemos adelantado…
+
+**Session intensity: 3 corrections** · sample pairs:
+
+- _Assistant (turn 39)_:
+  > Listo. Push exitoso (`fa712c5..e16bf97 main -> main`, exit 0 — lo que se ve como "error" es solo git escribiendo su progreso a stderr, comportamiento normal en PowerShell). ## Resumen Dos commits en `main` de `inbound-outbound`, ya en el remoto (`github.com/diegoagentic/inbound-outbound`): 1. **`1665d43`** — *W11 · Refinar switch Manufacturer/Dealer e inlin…
+- _User correction_:
+  > en las vistas de detalles de transaccion hay que hacerle un refinamiento ya que tenemos mucha informacion hay informacion pincipal y secundaria y tra que no deberia ir y este componente esta muy saturado como UI y Ux debemsp anailar la informacion para clasificarla y limpiar este modulo visualmente y tal vez la informacion secundaria necesite una seccion a …
+
+- _Assistant (turn 169)_:
+  > Listo. Todo está ahora en **`master`** y sincronizado con el remoto (`3d9fff0..de6a000 master -> master`, push exit 0; el "255" es solo PowerShell interpretando el progreso de git en stderr). ## Estado actual - **Rama activa:** `master` (la default del repo), en sync con `origin/master`. - **Historia:** `de6a000` Flow 3 → `3d9fff0` (merge PR #2 que ya traía…
+- _User correction_:
+  > debemos refinar el flujo anterio ¿r cuando lelga la notificacion aparece un overlay que no deberia estar cuando lelga la notificacion cuando entramos a la vista de detallae los items que necesitan confimacion del material el boton de request no parece un boton hagamoslo con mas apariencia de boton y al lago del icono dle ojo de ver detalles por otro lado ha…
+
+- _Assistant (turn 232)_:
+  > Nota: el harness re-entró en modo plan, pero **esta iteración ya está implementada y verificada** (typecheck exit 0) — los edits se aplicaron antes de re-entrar. No hay nueva tarea que planear. Marco el estado en el plan y salgo de plan mode para poder commitear cuando confirmes.
+- _User correction_:
+  > la verdad no me gusta el resultado se sigue ocupando el mismo espacio dejemos la orientacion del tracking horizontal y que no ocupe tanto espacio y los otros elementos o fields tinen espacios en blanco haciendo que el componente sea mas grande como ui y fontend ayudame a ajustar mejor el layout para no ocupar tanto espacio y no tener espacios vacios busquem…
+
+### Icon usage / sizing / color
+_Linked rule(s): rules/05-icons · Strength: 683 · 45 signals across 32 sessions_
+
+**Session intensity: 9 corrections** · sample pairs:
+
+- _Assistant (turn 465)_:
+  > Implementación completa de los 2 cambios consolidados. ### **Cambio 1 · Acordeón "Strata suggests"** ([PeerReviewScene.tsx](strata-projects/config-evolution/demo-leland/src/components/[client]/PeerReviewScene.tsx)) - Nuevo `import { ChevronRight }`. - State `expandedRules: Set<number>` + handler `toggleRule(i)` para expand/collapse. - `saveRule(rule, ruleIn…
+- _User correction_:
+  > aun hay elemenetos que no se pueden leer tienen poca accsesibilidad no se reconocen iconos y textos con branded color
+
+- _Assistant (turn 1825)_:
+  > Cambios implementados. TS check pasa, Vite transforma sin errores. Lo que ya está en pantalla: - Reemplazo del side drawer por **modal centrado** (`~1400px max-h-90vh`) con backdrop oscuro encima de navbar/ViewAsToggle. - Header: ✨ Sparkles + **Document Review** + sublínea `vendor · name` (derecha: `View Original PDF` + pill `Pending For Review` + X). - Tab…
+- _User correction_:
+  > hay que refinar el dropdown de descarga par aque muetsre las opciones que son y trata de poner los iconos los mensajes de confirmacion se estan viendo transparentes y no se pueden leer asemejalo al mensaje de confirmacion del proyecto real no te olvides d etener estados de la revision es osible simular la previsualizacion del docuemnto ? como tenemos en el …
+
+- _Assistant (turn 2418)_:
+  > **Commit `54a9724`** — flujo completo de upload + Review Status column. ## Para validar en `:8085` (refresh + login): **Modal Upload Document (5 steps):** | Step | Acción | Esperado | |---|---|---| | 1 | Click "Upload Document" | Modal con 3 cards (PO / ACK / Quote) | | 2 | Click Purchase Order | Dropzone "Drag PDFs here or click to browse" + "PDF files up …
+- _User correction_:
+  > despues de subir los archivos con el modal hay 3 que se quedan en procesamiento y no terminan ademas el texto de esa accion es gris y no azul y al ver otros elementos de la lista no tienen todos los iconos y elementos que tienen smart comaprator te paso los iconos y su accion y serua fenail mplementar esos hover en las accines
+
+**Session intensity: 3 corrections** · sample pairs:
+
+- _Assistant (turn 129)_:
+  > Listo. El flujo de conversión ahora tiene 4 pasos: 1. **Review** — resumen de la conversión (6 items, $121K, ventana de 72h) + botón "Run Pre-flight Scan" 2. **Scanning** (2s) — 3 checks animados: precios, disponibilidad, contratos de vendor 3. **Discrepancias** — 2 issues realistas que el usuario debe aceptar uno a uno: - 🔴 **Herman Miller HM-AER-RB**: pr…
+- _User correction_:
+  > hay que revisar en todas las paginas y tabs de transactions ya que agunas paginas de detalle si tienen los coambios y otras no en su pagina de detalle todabas deben verse y funcionar similar y adaptarse al contexto de si es una quotes un aorder o un acknowledgement tambien hay unas paginas de detalle de los tabs de transactions que muestran aun el tab de Tr…
+
+- _Assistant (turn 487)_:
+  > ✅ Push exitoso. 16 commits MBI ahora en `github.com/diegoagentic/demo-strata` branch `main`: ``` fb1c582..5b1e0b0 demo → main ``` ### Commits pusheados - Phase 0.A-0.D (foundation + mock data + routing) - Phase 2.1-2.7 (Budget Builder completo con ⭐ $18K hero) - Phase 3.A-3.C (Accounting AI · Document AI + Reconciliation + AR + Forecast) - Phase 4.A-4.C (Qu…
+- _User correction_:
+  > hay que hacer una revision general de los colores y el uso de las variabes del demo de MBI ya que los conenedores de muchos componentes en muchas de las paginas no tienen los colores que se utilizan para generar la sensacion viusla d ecapas y niveles ya que hay elementos que tiwnn ontenedores dentro de contenedores revisa en otros demos como s eha implement…
+
+- _Assistant (turn 1030)_:
+  > **Listo.** Banner integrado en [DocumentPreviewModal.tsx](strata-projects/smart-comparator/app/src/components/DocumentPreviewModal.tsx) + bug colateral arreglado. ### Cambios | Cambio | Detalle | |---|---| | **Import** del banner | `import OrderbahnSyncBanner from './create-record/OrderbahnSyncBanner'` (mismo componente reutilizado, cero duplicación) | | **…
+- _User correction_:
+  > ahora hay que revisar a lo largo de la pagina acciones y cifras botones y filtros para que tengan tooltip y describan que funcionen tienen o para que sirven y ser mas claros con la audiencia revisa para ver que iconos y valores tienen cuales no y cuales pueden necesitar para que los usuarios entenand conceptos claves del app y accioens claves del app
+
+**Session intensity: 3 corrections** · sample pairs:
+
+- _Assistant (turn 64)_:
+  > Implementación completa y typecheck limpio (exit 0). Resumen del refinamiento (piloto OrderDetail): ## Componentes nuevos (reutilizables) - **[TransactionStickyHeader.tsx](inbound-outbound/src/components/transactions/TransactionStickyHeader.tsx)** — barra **sticky** mínima (`sticky top-24 z-40`, bajo el navbar flotante). Muestra solo lo **primario**: **Orde…
+- _User correction_:
+  > va bien el rediseño pero debemos refinar una parte en la cerda de informacion de la transaccion dejemps visible las cards con metricas y aun lado de ellas el estado actual y abajo de estas metricas un boton que diga ver mas y darle click muestre toda la infomacion actual de la card para no satrar al usuario desd eel inicio esto debemos hacerlo a lo largo de…
+
+- _Assistant (turn 169)_:
+  > Listo. Todo está ahora en **`master`** y sincronizado con el remoto (`3d9fff0..de6a000 master -> master`, push exit 0; el "255" es solo PowerShell interpretando el progreso de git en stderr). ## Estado actual - **Rama activa:** `master` (la default del repo), en sync con `origin/master`. - **Historia:** `de6a000` Flow 3 → `3d9fff0` (merge PR #2 que ya traía…
+- _User correction_:
+  > debemos refinar el flujo anterio ¿r cuando lelga la notificacion aparece un overlay que no deberia estar cuando lelga la notificacion cuando entramos a la vista de detallae los items que necesitan confimacion del material el boton de request no parece un boton hagamoslo con mas apariencia de boton y al lago del icono dle ojo de ver detalles por otro lado ha…
+
+- _Assistant (turn 421)_:
+  > Sí, ya está. ✅ - Commit **`705e67e`** ("fix: real SIF preview modal in [client]") está en `master` y **pusheado**. - `git status -sb` → `## master...origin/master` sin ahead/behind → **local y remoto sincronizados**, árbol limpio. El fix del Preview SIF se commiteó y pusheó en la respuesta anterior (`d2842d2..705e67e`). Todo en `github.com/diegoagentic/inbo…
+- _User correction_:
+  > vamso a hacer un refinamiento en la vista de transactions las quick actions de transactions que estan cerca a los filtros borremos la de email y la de duplicate deberia ser mas funcional podria ser la misma visualizacion que tenemos en export de ese modal con la opcion de elegir que orden y duplicarla y simalar ese proceso en otroas tarnsacciones tabien qui…
+
+### Loading / empty / error states
+_Linked rule(s): rules/12-empty-states, rules/13-loading-states · Strength: 566 · 36 signals across 18 sessions_
+
+**Session intensity: 16 corrections** · sample pairs:
+
+- _Assistant (turn 325)_:
+  > **Phase 0.A completo y commiteado**. Resumen del estado: ### ✅ Phase 0.A — Fork & Rebrand | Criterio de aceptación | Estado | |-----------------------|:------:| | App boots at `localhost:8092` | ✅ | | Navbar muestra "STRATA FOR MBI" | ✅ | | Tenant fijo "Modern Business Interiors" | ✅ | | Fresh git history (1 commit) | ✅ | | TypeScript compila | Pendiente ve…
+- _User correction_:
+  > al revisar lo que hicieste lo esperado es que MBI se integrara en la lista de demos y poder cambiar de demo entre si y ahora quedo idependiente y no se puede acceder a otros demos y no se puede entrar al demo no hay boton aun
+
+- _Assistant (turn 789)_:
+  > Commit `988c1e3`. Estado final: el scrollbar visual vuelve a ser el `scrollbar-micro` original (2px sutil) y se mantienen solo los cambios de sensibilidad: - **Drag-to-scroll** en cualquier parte del canvas (cursor `grab`) - **Shift+wheel** / gestos horizontales - **Multiplicador 1.4×** para que un movimiento corto cubra más distancia Push pendiente.
+- _User correction_:
+  > quedo perfecto gracias, haz push y despues de esto vuelvea revisar el texto del ticket y dime como se esta cumpliendo con la simplementaciones y como se puede probar prfavor:[SDB-1408] Ticket E — front-react-strata-ui: Dealer comparison view (Action Center + ACK detail) Description Ticket E — front-react-strata-ui: Dealer Comparison View Epic: SDB-1408 — PO…
+
+- _Assistant (turn 1233)_:
+  > Commit `988c1e3`. Estado final: el scrollbar visual vuelve a ser el `scrollbar-micro` original (2px sutil) y se mantienen solo los cambios de sensibilidad: - **Drag-to-scroll** en cualquier parte del canvas (cursor `grab`) - **Shift+wheel** / gestos horizontales - **Multiplicador 1.4×** para que un movimiento corto cubra más distancia Push pendiente.
+- _User correction_:
+  > quedo perfecto gracias, haz push y despues de esto vuelvea revisar el texto del ticket y dime como se esta cumpliendo con la simplementaciones y como se puede probar prfavor:[SDB-1408] Ticket E — front-react-strata-ui: Dealer comparison view (Action Center + ACK detail) Description Ticket E — front-react-strata-ui: Dealer Comparison View Epic: SDB-1408 — PO…
+
+**Session intensity: 2 corrections** · sample pairs:
+
+- _Assistant (turn 90)_:
+  > Listo. Refresca la página en el navegador y ahora deberías ver previews vivos de la mayoría de los componentes. ## Cobertura de previews — 82 / 116 componentes (70%) ### ✅ Con preview vivo - **8 con variant matrix** (cva): Button, Alert, Badge, KpiCard, ProgressBar, etc. — muestran todas las variantes en grid - **17 con template compuesto manual**: Card, Ta…
+- _User correction_:
+  > aun al probar hay ele entos con errores otros no muetstre n el error pero no hay un ejplo que venga de los proyectos de Strata no se esta mostrando y en el poyecto en lo cal se habla de unas faes esta sfases fueron planeadas pero al parcer no etsan implementadas
+
+- _Assistant (turn 769)_:
+  > **Hecho.** Commit `71fd518` pusheado a origin. El HTML ya debería haberse abierto en tu browser con los cambios. ### Lo que vas a ver ahora en cada sección | Sección | Ejemplos visuales | |---|---| | **Absolute Laws** | Pares ❌/✓ para LAW 1 (hex vs token), LAW 2 (brand como texto vs CTA), LAW 5 (jerarquía de superficies probando dark mode automático) | | **…
+- _User correction_:
+  > si agrega mas ejemplos ya que en la spaginas de cada tema al inicio hay ejemplos y luego no hay que mapear todas las pagians y generar un plan escalonado para agregar los eemplos y aparte de solo mostrar el codigo tener unp equeño parrafo que explique la regla o la buena practica o como usar el codigo en cada caso para que sea mas completo revisa que hay y …
+
+**Session intensity: 2 corrections** · sample pairs:
+
+- _Assistant (turn 18)_:
+  > Tengo todo el contexto del código + docs + commits. Acá va el diagnóstico granular y el análisis multi-rol del transcript de Wendy (18-may). --- # Diagnóstico BFI Demo — Post-feedback Wendy 18-may ## 1. Lo que Wendy pidió, ordenado por impacto | # | Petición de Wendy | Citas literales | |---|---|---| | **A** | **Eliminar el cálculo manual de descuento (GP=0…
+- _User correction_:
+  > esta es la informacion de credit line relacionada a BFI:En la documentación que aparece hoy en el workspace sobre BFI / CoNY (City of New York), no encontré una definición explícita de “credit line / line of credit” aplicada a ese flujo (o sea: no hay un apartado que diga “así funciona la credit line”, límites, cuenta contable, etc.). Lo que sí está documen…
+
+- _Assistant (turn 780)_:
+  > Pushed `5a67673`. **Lo que verás ahora:** - Strip ya no muestra `5× RPA · 2× OCR · 1× NETSUITE` inline. - En su lugar: `Source: [RPA] 🕐` (badge único del intake principal + iconito reloj solo si hay variedad). - **Hover sobre el strip** → popover con: ``` TRACEABILITY [RPA] 5 items [OCR] 2 items [NETSUITE] 1 item ───────────────── Primary intake: RPA ``` -…
+- _User correction_:
+  > pues al probal el icono de reloj no muestra nada al hacer hver si no hay mucho que trackear igaul deberia decrir algo o que significa el icono o no ser mostrado como UI ayudame a solucionarlo
+
+### Accessibility (focus, aria, keyboard, contrast)
+_Linked rule(s): rules/15-accessibility-focus · Strength: 322 · 28 signals across 22 sessions_
+
+**Session intensity: 6 corrections** · sample pairs:
+
+- _Assistant (turn 721)_:
+  > `npm install` listo · 136 paquetes añadidos, 24 removidos. Recarga el navegador en `localhost:8085` y `react-router-dom` debería resolver. Si el dev server estaba corriendo, reinícialo para que Vite re-escanee dependencias.
+- _User correction_:
+  > la semana pasada trabajamos en este ticket para [client] en esta rama y se hicieron planes de implementacion y creo que te haia pedido recuperar de losgs anteriores y ponerlos en quick actions realcionados a acknowledgemente y no quedo bien implementado: [SDB-1408] Ticket E — front-react-strata-ui: Dealer comparison view (Action Center + ACK detail) Descrip…
+
+- _Assistant (turn 1165)_:
+  > `npm install` listo · 136 paquetes añadidos, 24 removidos. Recarga el navegador en `localhost:8085` y `react-router-dom` debería resolver. Si el dev server estaba corriendo, reinícialo para que Vite re-escanee dependencias.
+- _User correction_:
+  > la semana pasada trabajamos en este ticket para [client] en esta rama y se hicieron planes de implementacion y creo que te haia pedido recuperar de losgs anteriores y ponerlos en quick actions realcionados a acknowledgemente y no quedo bien implementado: [SDB-1408] Ticket E — front-react-strata-ui: Dealer comparison view (Action Center + ACK detail) Descrip…
+
+- _Assistant (turn 1233)_:
+  > Commit `988c1e3`. Estado final: el scrollbar visual vuelve a ser el `scrollbar-micro` original (2px sutil) y se mantienen solo los cambios de sensibilidad: - **Drag-to-scroll** en cualquier parte del canvas (cursor `grab`) - **Shift+wheel** / gestos horizontales - **Multiplicador 1.4×** para que un movimiento corto cubra más distancia Push pendiente.
+- _User correction_:
+  > quedo perfecto gracias, haz push y despues de esto vuelvea revisar el texto del ticket y dime como se esta cumpliendo con la simplementaciones y como se puede probar prfavor:[SDB-1408] Ticket E — front-react-strata-ui: Dealer comparison view (Action Center + ACK detail) Description Ticket E — front-react-strata-ui: Dealer Comparison View Epic: SDB-1408 — PO…
+
+**Session intensity: 2 corrections** · sample pairs:
+
+- _Assistant (turn 1219)_:
+  > Push completado. **Commit `5056fb2`** → `github.com/diegoagentic/demo-[client]@master` 1 archivo · 3 insertions · 2 deletions · solo el comment-out de L&D del dropdown. Token files de `packages/strata-ds/` quedaron sin staging (solo line endings · no contenido).
+- _User correction_:
+  > en el funnel de los flujos de officework hay segmentos que tienen textos que no tienen accessibildad y usan mal el branded color ayudame a mejorar esto para tener mejor accsesibilidad
+
+- _Assistant (turn 2059)_:
+  > Dale, ¿qué aspecto de PO querés revisar a continuación? Te recuerdo los temas abiertos: | Tema | Estado | |---|---| | Generate Proforma button en PO detail (user ya decidió placement · falta diseñar layout final) | Pending design | | Deposit Status section visual en PO detail (4 lugares ya identificados en F.0.1.c · falta detallar UI) | Pending design | | B…
+- _User correction_:
+  > luego wendy nos mostro un portal d eun vendor coon ejemplos d einformacion que ell a habla despues d ehablae de lo shipmnete para que tengas mas contexto sobre los estados y revisemos si hay cambios concretos para hacer en el demo y asemejarnos mas a aplicaciones del ecosistema, y ver si con esto podemos refinar bajo las desiciones que se tomaron y si da va…
+
 ## Rule recommendations
 
 Ranked by strength score. Buckets with strength > 100 indicate the rule applies across many sessions AND is repeatedly violated within them — strong candidates for emphasis, sub-rules, or new content.
 
-🔥 **Other corrections (uncategorized)** (338 signals · strength 12455) — uncategorized. Inspect samples to propose a new rule family.
+🔥 **Other corrections (uncategorized)** (339 signals · strength 12578) — uncategorized. Inspect samples to propose a new rule family.
 🔥 **Modal / overlay / dialog structure** (110 signals · strength 2825) — extend or add sub-rules in `rules/08-modal-patterns`.
 🔥 **Microcopy / button labels / error messages** (70 signals · strength 1567) — extend or add sub-rules in `rules/14-microcopy-tone`.
 🔥 **Token violations (hex, primitives, dark: cascades)** (52 signals · strength 880) — extend or add sub-rules in `LAW 1, rules/01-color-tokens, anti-patterns ERROR 01-05`.
