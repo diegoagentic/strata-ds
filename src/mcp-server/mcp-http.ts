@@ -7,6 +7,9 @@ import * as http from 'http';
 import * as url from 'url';
 import { validateCode, formatValidation } from './validator.js';
 import { getGovernancePath } from './lib/source.js';
+import { checkVersion, formatVersionReport } from './lib/version.js';
+import { listComponents, formatComponentList } from './lib/components.js';
+import { installSkill, formatInstallResult } from './lib/skills.js';
 
 // Resolve governance path: F38.2 source layer (env override → gh tarball
 // cache → bundled fallback). Backward-compat: GOVERNANCE_PATH env var still
@@ -272,6 +275,80 @@ function createServer() {
     async ({ description, context }) => ({
       content: [{ type: 'text', text: `DS gap/violation reported:\n\nDescription: ${description}\nContext: ${context || 'n/a'}\n\nThis will be reviewed by the DS team.` }],
     }));
+
+  server.tool('get_session_briefing',
+    'Compact briefing for the start of a session: laws + tokens snapshot + headlines of every rule category + workflow. Call this BEFORE generating any UI. Keep it under 4 KB so it fits cheaply in context.',
+    {}, async () => {
+      const laws = readGovernanceFile('LAWS.md');
+      const RULE_FILES: Array<[string, string]> = [
+        ['color-tokens', 'rules/01-color-tokens.md'],
+        ['brand-colors', 'rules/02-brand-colors.md'],
+        ['containers-and-cards', 'rules/03-containers-and-cards.md'],
+        ['buttons-and-actions', 'rules/04-buttons-and-actions.md'],
+        ['icons', 'rules/05-icons.md'],
+        ['typography', 'rules/06-typography.md'],
+        ['elevation', 'rules/07-elevation.md'],
+        ['code-usage', 'code-usage.md'],
+        ['modal-patterns', 'rules/08-modal-patterns.md'],
+        ['layout-density', 'rules/09-layout-density.md'],
+        ['spacing-rhythm', 'rules/10-spacing-rhythm.md'],
+        ['responsive-behavior', 'rules/11-responsive-behavior.md'],
+        ['empty-states', 'rules/12-empty-states.md'],
+        ['loading-states', 'rules/13-loading-states.md'],
+        ['microcopy-tone', 'rules/14-microcopy-tone.md'],
+        ['accessibility-focus', 'rules/15-accessibility-focus.md'],
+        ['data-display', 'rules/16-data-display.md'],
+      ];
+      const briefing = RULE_FILES.map(([slug, file]) => {
+        const md = readGovernanceFile(file);
+        const heading = (md.split('\n').find((l) => /^#\s+/.test(l)) ?? '').replace(/^#\s+/, '');
+        const firstH2 = (md.split('\n').find((l) => /^##\s+/.test(l)) ?? '').replace(/^##\s+/, '');
+        return `- **${slug}** — ${heading}${firstH2 ? ` · first sub-rule: ${firstH2}` : ''}`;
+      }).join('\n');
+      const text = [
+        '# Strata DS — Session briefing',
+        '',
+        '## Absolute laws',
+        laws,
+        '',
+        '## Rule categories (17 total)',
+        briefing,
+        '',
+        '## Mandatory workflow',
+        '1. Read these laws before generating UI.',
+        '2. For any new component: call `plan_ui({description})`.',
+        '3. For specific guidance: call `get_rules({category})`.',
+        '4. For exact token values: call `get_tokens()`.',
+        '5. Before committing AI-generated TSX: call `validate_component_against_rules({code})` and fix every reported error.',
+      ].join('\n');
+      return { content: [{ type: 'text', text }] };
+    });
+
+  server.tool('check_version',
+    'Check whether the consumer project is on the latest published Strata DS version. Walks up from the search root looking for a package.json that depends on the DS, then compares against the latest GitHub release.',
+    { searchRoot: z.string().optional().describe('Project root to walk up from. Defaults to process.cwd().') },
+    async ({ searchRoot }) => {
+      const report = checkVersion(searchRoot);
+      return { content: [{ type: 'text', text: formatVersionReport(report) }] };
+    });
+
+  server.tool('list_components',
+    'Grouped catalog of every DS component (Strata Components, Application UI, Forms, Overlays, Data Visualization). Each entry includes the canonical import string.',
+    {}, async () => {
+      const entries = listComponents();
+      return { content: [{ type: 'text', text: formatComponentList(entries) }] };
+    });
+
+  server.tool('install_skill',
+    'Installs the planning-strata-ui Agent Skill into either the current project (./.claude/skills/) or the current user (~/.claude/skills/). The skill teaches a coding agent the canonical workflow for any Strata UI task.',
+    {
+      target: z.enum(['user', 'project']).describe('Where to install the skill.'),
+      projectRoot: z.string().optional().describe('Project root path. Used when target=project. Defaults to process.cwd().'),
+    },
+    async ({ target, projectRoot }) => {
+      const r = installSkill(target, projectRoot);
+      return { content: [{ type: 'text', text: formatInstallResult(r) }] };
+    });
 
   server.tool('validate_component_against_rules',
     'Lint a TSX / JSX / CSS snippet against the Strata DS rules. Returns per-violation: rule reference (LAW-N or rules/0X), severity, the offending match, a suggested fix. Use this before committing any component code generated by AI or hand-written.',
