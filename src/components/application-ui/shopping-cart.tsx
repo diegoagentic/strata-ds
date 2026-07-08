@@ -25,7 +25,7 @@ export function ShoppingCart({ open, onClose, items }: { open: boolean, onClose:
                 <SlideOverTitle>Shopping Cart</SlideOverTitle>
             </SlideOverHeader>
             <SlideOverBody className="flex flex-col">
-                <ul role="list" className="-my-6 divide-y divide-zinc-200 dark:divide-zinc-800 flex-1 overflow-y-auto px-4 sm:px-6">
+                <ul role="list" className="-my-6 divide-y divide-border flex-1 overflow-y-auto px-4 sm:px-6">
                     {items.map((product) => (
                         <li key={product.id} className="flex py-6">
                             <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-border">
@@ -52,7 +52,7 @@ export function ShoppingCart({ open, onClose, items }: { open: boolean, onClose:
                                     <div className="flex">
                                         <button
                                             type="button"
-                                            className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400"
+                                            className="font-medium text-status-info hover:text-status-info/80"
                                         >
                                             Remove
                                         </button>
@@ -70,7 +70,7 @@ export function ShoppingCart({ open, onClose, items }: { open: boolean, onClose:
                     </div>
                     <p className="mt-0.5 text-sm text-muted-foreground">Shipping and taxes calculated at checkout.</p>
                     <div className="mt-6">
-                        <Button className="w-full flex items-center justify-center rounded-md border border-transparent px-6 py-3 text-base font-medium text-white shadow-sm" variant="default">
+                        <Button className="w-full flex items-center justify-center rounded-md border border-transparent px-6 py-3 text-base font-medium shadow-sm" variant="default">
                             Checkout
                         </Button>
                     </div>
@@ -79,7 +79,7 @@ export function ShoppingCart({ open, onClose, items }: { open: boolean, onClose:
                             or{' '}
                             <button
                                 type="button"
-                                className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400"
+                                className="font-medium text-status-info hover:text-status-info/80"
                                 onClick={() => onClose(false)}
                             >
                                 Continue Shopping
