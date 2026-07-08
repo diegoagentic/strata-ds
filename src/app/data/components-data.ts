@@ -302,6 +302,17 @@ const componentsMap: Record<string, ComponentSpec> = {
     example: `<CopyButton value="npm install @strata-ds" />`,
   },
 
+  "create-order-dialog": {
+    id: "create-order-dialog",
+    name: "CreateOrderDialog",
+    import: `import { CreateOrderDialog } from "@/components/application-ui/create-order"`,
+    category: "Application UI",
+    description: "Multi-step order creation dialog with initial selection, template picker, quote picker, file import, manual creation, draft review, and processing views.",
+    tokens: { "bg-card": "Dialog surface", "border-border": "Section borders", "text-foreground": "Titles", "text-muted-foreground": "Descriptions" },
+    whenToUse: ["Ordering flows in dealer and manufacturer apps", "Any workflow where users create a new order from scratch, a template, a quote, or an imported file"],
+    antiPatterns: [...COMMON_ANTI_PATTERNS],
+  },
+
   divider: {
     id: "divider",
     name: "Divider",
