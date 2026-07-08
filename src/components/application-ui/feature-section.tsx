@@ -28,7 +28,7 @@ export function Feature({ className, ...props }: ComponentPropsWithoutRef<'div'>
 
 export function FeatureIcon({ className, ...props }: ComponentPropsWithoutRef<'div'>) {
     return (
-        <div className={clsx(className, "mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-600")}>
+        <div className={clsx(className, "mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-status-info")}>
             {props.children}
         </div>
     )
