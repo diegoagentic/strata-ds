@@ -35,7 +35,7 @@ export function ProductCard({
 } & ComponentPropsWithoutRef<'div'>) {
     return (
         <div className={clsx(className, 'group relative')} {...props}>
-            <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-zinc-200 dark:bg-zinc-800 xl:aspect-h-8 xl:aspect-w-7">
+            <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-muted xl:aspect-h-8 xl:aspect-w-7">
                 <img
                     src={product.imageSrc}
                     alt={product.imageAlt}
@@ -47,7 +47,7 @@ export function ProductCard({
                     </div>
                 )}
             </div>
-            <h3 className="mt-4 text-sm text-muted-foreground dark:text-zinc-200">
+            <h3 className="mt-4 text-sm text-foreground">
                 <a href={product.href}>
                     <span className="absolute inset-0" />
                     {product.name}
@@ -57,7 +57,7 @@ export function ProductCard({
                 <p className="text-lg font-medium text-foreground">{product.price}</p>
                 {product.rating && (
                     <div className="flex items-center">
-                        <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
+                        <Star className="h-4 w-4 fill-status-warning text-status-warning" />
                         <span className="ml-1 text-sm text-muted-foreground">{product.rating}</span>
                     </div>
                 )}
