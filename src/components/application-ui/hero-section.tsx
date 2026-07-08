@@ -28,7 +28,7 @@ export function HeroSubtitle({ className, ...props }: ComponentPropsWithoutRef<'
             {...props}
             className={clsx(
                 className,
-                "mt-6 text-lg leading-8 text-muted-foreground dark:text-zinc-300"
+                "mt-6 text-lg leading-8 text-muted-foreground"
             )}
         />
     )
