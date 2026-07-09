@@ -21,7 +21,7 @@ export function ProductGallery({ images, className, ...props }: { images: { id: 
                     {images.map((image) => (
                         <Tab
                             key={image.id}
-                            className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-white text-sm font-medium uppercase text-zinc-900 hover:bg-muted focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
+                            className="relative flex h-24 cursor-pointer items-center justify-center rounded-md bg-card text-sm font-medium uppercase text-foreground hover:bg-muted focus:outline-none focus:ring focus:ring-opacity-50 focus:ring-offset-4"
                         >
                             {({ selected }) => (
                                 <>
@@ -31,7 +31,7 @@ export function ProductGallery({ images, className, ...props }: { images: { id: 
                                     </span>
                                     <span
                                         className={clsx(
-                                            selected ? 'ring-indigo-500' : 'ring-transparent',
+                                            selected ? 'ring-primary' : 'ring-transparent',
                                             'pointer-events-none absolute inset-0 rounded-md ring-2 ring-offset-2'
                                         )}
                                         aria-hidden="true"
