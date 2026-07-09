@@ -113,7 +113,7 @@ export function SharedOrderCard({
           "group relative bg-card/40 rounded-2xl border transition-all duration-200 overflow-hidden flex flex-col",
           (isActive || isExpanded)
             ? "border-brand-500/50 ring-1 ring-brand-500/20 shadow-lg"
-            : "border-zinc-200 dark:border-white/10 shadow-sm hover:shadow-md",
+            : "border-border shadow-sm hover:shadow-md",
           className
         )}
         onClick={onClick}
@@ -127,7 +127,7 @@ export function SharedOrderCard({
         <div className="p-4">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-3">
-              <div className="h-8 w-8 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-700 text-white flex items-center justify-center text-xs font-bold shadow-sm ring-2 ring-background">
+              <div className="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground flex items-center justify-center text-xs font-bold shadow-sm ring-2 ring-background">
                 {initials}
               </div>
               <div className="space-y-0.5">
@@ -153,7 +153,7 @@ export function SharedOrderCard({
                 <span
                   className={cn(
                     "inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium border shadow-sm ring-1 ring-inset",
-                    statusBadgeClass || "bg-zinc-100 text-muted-foreground ring-zinc-600/20"
+                    statusBadgeClass || "bg-muted text-muted-foreground ring-border"
                   )}
                 >
                   {status}
@@ -213,7 +213,7 @@ export function SharedOrderCard({
               <div className="flex flex-col gap-3 pt-2">
                 <button
                   type="button"
-                  className="w-full py-2.5 text-xs font-bold text-muted-foreground bg-white border border-zinc-200 rounded-lg hover:bg-muted hover:text-zinc-900 transition-colors shadow-sm cursor-pointer"
+                  className="w-full py-2.5 text-xs font-bold text-muted-foreground bg-card border border-border rounded-lg hover:bg-muted hover:text-foreground transition-colors shadow-sm cursor-pointer"
                   onClick={(e) => {
                     e.stopPropagation();
                     onSecondaryAction?.(e);
@@ -223,7 +223,7 @@ export function SharedOrderCard({
                 </button>
                 <button
                   type="button"
-                  className="w-full py-3 text-sm font-bold text-primary-foreground bg-primary hover:bg-brand-300 rounded-lg shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3 text-sm font-bold text-primary-foreground bg-primary hover:bg-primary/90 rounded-lg shadow-sm hover:shadow transition-all flex items-center justify-center gap-2 cursor-pointer"
                   onClick={(e) => {
                     e.stopPropagation();
                     onPrimaryAction?.(e);
@@ -262,7 +262,7 @@ export function SharedOrderCard({
       <div className="p-5">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-indigo-400 to-indigo-600 text-white flex items-center justify-center text-sm font-bold shadow-md">
+            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary to-primary/70 text-primary-foreground flex items-center justify-center text-sm font-bold shadow-md">
               {initials}
             </div>
             <div>
@@ -273,7 +273,7 @@ export function SharedOrderCard({
           <div className="flex items-center gap-1">
             <button
               type="button"
-              className="p-1 rounded-full hover:bg-primary hover:text-primary-foreground dark:hover:bg-primary text-muted-foreground hover:text-zinc-900 dark:hover:text-primary-foreground transition-colors cursor-pointer"
+              className="p-1 rounded-full text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 onDocumentClick?.(e);
@@ -284,7 +284,7 @@ export function SharedOrderCard({
             </button>
             <button
               type="button"
-              className="p-1 rounded-full hover:bg-primary hover:text-primary-foreground dark:hover:bg-primary text-muted-foreground hover:text-zinc-900 dark:hover:text-primary-foreground transition-colors cursor-pointer"
+              className="p-1 rounded-full text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 onEditClick?.(e);
@@ -295,7 +295,7 @@ export function SharedOrderCard({
             </button>
             <button
               type="button"
-              className="p-1 rounded-full hover:bg-primary hover:text-primary-foreground dark:hover:bg-primary text-muted-foreground dark:hover:text-primary-foreground transition-colors cursor-pointer"
+              className="p-1 rounded-full text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 onMoreClick?.(e);
@@ -322,7 +322,7 @@ export function SharedOrderCard({
               <span
                 className={cn(
                   'inline-flex items-center rounded-full px-2 py-1 text-xs font-medium ring-1 ring-inset',
-                  statusBadgeClass || 'bg-zinc-100 text-muted-foreground'
+                  statusBadgeClass || 'bg-muted text-muted-foreground'
                 )}
               >
                 {status}
@@ -338,7 +338,7 @@ export function SharedOrderCard({
             <div className="flex-1 space-y-6">
               {projectManager && (
                 <div className="flex items-center gap-3">
-                  <div className="h-8 w-8 rounded-full bg-gray-100 dark:bg-zinc-800 flex items-center justify-center text-muted-foreground">
+                  <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center text-muted-foreground">
                     <User className="h-4 w-4" aria-hidden />
                   </div>
                   <div>
@@ -354,7 +354,7 @@ export function SharedOrderCard({
 
               {stages && (
                 <div className="relative py-2">
-                  <div className="absolute top-3 left-0 w-full h-0.5 bg-gray-200 dark:bg-zinc-700" />
+                  <div className="absolute top-3 left-0 w-full h-0.5 bg-border" />
                   <div className="relative z-10 flex justify-between">
                     {stages.map((stage) => (
                       <div
@@ -366,7 +366,7 @@ export function SharedOrderCard({
                             'h-6 w-6 rounded-full flex items-center justify-center',
                             stage.status === 'completed' && 'bg-primary text-primary-foreground',
                             stage.status === 'current' && 'bg-primary text-primary-foreground',
-                            stage.status === 'pending' && 'bg-gray-200 dark:bg-zinc-700 text-muted-foreground',
+                            stage.status === 'pending' && 'bg-muted text-muted-foreground',
                           )}
                         >
                           {stage.status === 'completed' ? (
@@ -374,7 +374,7 @@ export function SharedOrderCard({
                           ) : stage.status === 'current' ? (
                             <div className="h-2 w-2 rounded-full bg-primary-foreground" />
                           ) : (
-                            <div className="h-2 w-2 rounded-full bg-white/50" />
+                            <div className="h-2 w-2 rounded-full bg-muted-foreground/40" />
                           )}
                         </div>
                         <span
@@ -396,14 +396,14 @@ export function SharedOrderCard({
 
             {actionRequiredMessage && (
               <div className="w-full md:w-[280px]">
-                <div className="rounded-xl border border-orange-200 dark:border-orange-500/20 bg-orange-50 dark:bg-orange-500/10 p-4">
+                <div className="rounded-xl border border-warning/30 bg-warning-light p-4">
                   <div className="flex gap-3">
-                    <AlertTriangle className="h-5 w-5 text-orange-500 flex-shrink-0" aria-hidden />
+                    <AlertTriangle className="h-5 w-5 text-warning flex-shrink-0" aria-hidden />
                     <div>
-                      <p className="text-sm font-bold text-orange-900 dark:text-orange-100">
+                      <p className="text-sm font-bold text-warning">
                         Action Required
                       </p>
-                      <p className="text-xs text-orange-700 dark:text-orange-300 mt-1">
+                      <p className="text-xs text-warning/80 mt-1">
                         {actionRequiredMessage}
                       </p>
                     </div>
@@ -416,7 +416,7 @@ export function SharedOrderCard({
           <div className="mt-4 flex justify-end pb-4">
             <button
               type="button"
-              className="text-sm font-medium text-primary hover:underline cursor-pointer"
+              className="text-sm font-medium text-status-info hover:underline cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 onExpandToggle?.();
