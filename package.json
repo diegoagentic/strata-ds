@@ -30,7 +30,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/scan-security.mjs && vite build",
     "server": "npx tsx src/mcp-server/mcp-http.ts",
     "server:dev": "npx tsx --watch src/mcp-server/mcp-http.ts",
     "build:guide": "node governance/build-guide.mjs",
@@ -48,7 +48,8 @@
     "audit:tokens:fix": "node scripts/audit-tokens.mjs --fix",
     "install-hooks": "node scripts/install-hooks.mjs",
     "analyze:refinements": "node scripts/analyze-refinements.mjs",
-    "analyze:refinements:update": "node scripts/analyze-refinements.mjs --update"
+    "analyze:refinements:update": "node scripts/analyze-refinements.mjs --update",
+    "scan:security": "node scripts/scan-security.mjs"
   },
   "keywords": [
     "design-system",
