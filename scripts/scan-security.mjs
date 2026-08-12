@@ -27,13 +27,20 @@ const ROOT = path.resolve(__dirname, '..')
    2. EVAL+ATOB (jul 14 post-cleanup) · `eval("global.o=..." + atob('...'))`
       · el payload real vive base64-encoded, decode + eval en runtime.
       atob('dmFyIF8kX2FlYjA=') === "var _$_aeb0=" (start of raw payload).
+   2b. RAW v3 (ago 12, 2026) · misma familia, marcadores distintos:
+      `/*C260521A*/global['e']='NPM';global.i='5-2-234';/*RS260605*/`
+      + shuffler `_$_7752`. Precedido de ~2000 espacios de relleno para
+      quedar fuera de pantalla al final de la última línea. Los patterns
+      v1 NO la detectaban · por eso pasó sin ruido. Generalizados aquí.
    3. CREATE_REQUIRE prelude · `import { createRequire } from 'module';
       const require = createRequire(import.meta.url);` al inicio del
       file · solo dispara la evaluación posterior · no siempre malware
       pero altamente sospechoso en archivos que originalmente no lo tenían. */
 const PATTERNS = [
-    /_\$_aeb0/,                          // v1 raw shuffler
-    /global\.o='5-2-234-du'/,            // v1 + v2 marker
+    /_\$_[0-9a-f]{4}/,                   // v1/v3 shuffler · aeb0, 7752, y cualquier sufijo hex
+    /global\.[a-z]='5-2-234/,            // v1/v2/v3 marker · global.o='5-2-234-du', global.i='5-2-234'
+    /global\[["']e["']\]='NPM'/,         // v3 marker
+    /\/\*(C260521A|RS260605)\*\//,       // v3 build stamps
     /Tmx\('sorcpf/,                      // v1 decoder function
     /rEf\(4950\)/,                       // v1 entry point call
     /eval\(["']global\.o=/,              // v2 eval wrapper
