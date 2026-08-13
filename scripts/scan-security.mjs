@@ -28,10 +28,13 @@ const ROOT = path.resolve(__dirname, '..')
       · el payload real vive base64-encoded, decode + eval en runtime.
       atob('dmFyIF8kX2FlYjA=') === "var _$_aeb0=" (start of raw payload).
    2b. RAW v3 (ago 12, 2026) · misma familia, marcadores distintos:
-      `/*C260521A*/global['e']='NPM';global.i='5-2-234';/*RS260605*/`
-      + shuffler `_$_7752`. Precedido de ~2000 espacios de relleno para
-      quedar fuera de pantalla al final de la última línea. Los patterns
-      v1 NO la detectaban · por eso pasó sin ruido. Generalizados aquí.
+      sellos de build C260521A y RS260605 entre delimitadores de comentario,
+      seguidos de global['e']='NPM' y global.i='5-2-234', mas el shuffler
+      _$_7752. Precedido de ~2000 espacios de relleno para quedar fuera de
+      pantalla al final de la ultima linea. Los patterns v1 NO la detectaban
+      · por eso paso sin ruido. Generalizados en PATTERNS.
+      (Nota: los marcadores no se escriben literales aqui porque cerrarian
+       este bloque de comentario.)
    3. CREATE_REQUIRE prelude · `import { createRequire } from 'module';
       const require = createRequire(import.meta.url);` al inicio del
       file · solo dispara la evaluación posterior · no siempre malware
